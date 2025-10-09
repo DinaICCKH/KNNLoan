@@ -96,14 +96,7 @@
                                 <tr id="tr_@rowindex">
                                     <td style="text-align:center;">@rowindex</td>
                                     <td style="color:blue;text-decoration:underline;">
-                                        @if (@x.RestructureOption == "Change Period")
-                                        {
-                                            <a href="/amendments/PreviewRestructure?DocEntry=@x.DocEntry">@x.DocEntry</a>
-                                        }
-                                        else
-                                        {
-                                            <a href="/amendments/PreviewRestructureAmt?DocEntry=@x.DocEntry">@x.DocEntry</a>
-                                        }
+                                        <a href="/sales/PreviewReprocessingAdd?DocEntry=@x.DocEntry">@x.DocEntry</a>
                                     </td>
                                     <td>@(x.PostingDate?.ToString("dd-MMM-yyyy") ?? "-")</td>
                                     <td>@x.DocNumRef </td>
