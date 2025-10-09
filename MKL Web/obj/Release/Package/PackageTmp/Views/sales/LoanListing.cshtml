@@ -1,0 +1,64 @@
+﻿@using MKL_Web.Models;
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Loan Listing";
+    List<ICC_Get_List_LoanResult> applist = ViewBag.ChangeOwnerApporovalListing;
+}
+<head>
+    <title>@ViewBag.Title</title>
+</head>
+<div class="row">
+    <section class="content-header content-header-title">
+        <h5>@ViewBag.Title</h5>
+    </section>
+    <!-- left column -->
+    <div class="col-md-12">
+        <!-- general form elements -->
+        <div class="box box-primary">
+            <div class="table-responsive">
+                <table id="table_pr_assignment" class="table table-bordered table-hover dataTable no-footer">
+                    <thead>
+                        <tr class="bg-gray" role="row">
+                            <th class="sorting_disabled" style="width: 3%">No</th>
+                            <th class="sorting_disabled" style="width: 4%">DocNo</th>
+                            <th class="sorting_disabled" style="width: 8%">Doc Date</th>
+                            <th class="sorting_disabled" style="width: 10%">Card Code</th>
+                            <th class="sorting_disabled" style="width: 16%">Card Name</th>
+                            <th class="sorting_disabled" style="width: 10%;">Item Code</th>
+                            <th class="sorting_disabled" style="width: 12%">Item Name</th>
+                            <th class="sorting_disabled" style="width: 10%">Serial No</th>
+                            <th class="sorting_disabled" style="width: 5%">Status</th>
+                            <th class="sorting_disabled" style="width: 22%">Remark</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{
+                            int rowindex = 1;
+                            foreach (var x in applist)
+                            {
+                                <tr id="tr_@rowindex">
+                                    <td style="text-align:center;">@rowindex</td>
+                                    <td style="cursor:pointer;color:blue;text-decoration:underline;text-align:left;">
+
+                                        <a href="/sales/PreviewLoan?DocEntry=@x.DocEntry">@x.DocEntry</a>
+
+                                    </td>
+                                    <td style="text-align:left;">@x.DocDate.Value.ToString("dd-MMM-yyyy")</td>
+                                    <td style="text-align:left;">@x.CardCode</td>
+                                    <td style="text-align:left;">@x.CardName</td>
+                                    <td style="text-align:left;">@x.ItemCode</td>
+                                    <td style="text-align:left;">@x.ItemName</td>
+                                    <td style="text-align:left;">@x.DistNumber</td>
+                                    <td style="text-align:left;">@x.DocStatus</td>
+                                    <td style="text-align:left;">@x.Comment</td>
+                                </tr>
+                                rowindex++;
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

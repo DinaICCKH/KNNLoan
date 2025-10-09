@@ -1,0 +1,205 @@
+﻿.skin-purple .main-header .navbar {
+    background-color: #12243c;
+}
+.skin-purple .main-header .logo {
+    background-color: #12243c;
+}
+.skin-purple .wrapper, .skin-purple .main-sidebar, .skin-purple .left-side {
+    background-color: #12243c;
+}
+.skin-purple .sidebar-menu > li:hover > a, .skin-purple .sidebar-menu > li.active > a, .skin-purple .sidebar-menu > li.menu-open > a {
+    background-color: #12243c;
+}
+.sidebar-menu > li > a {
+    /*padding:6px 6px 6px 6px;*/
+    padding: 0px
+}
+.sidebar-menu > li {
+    padding: 8px 2px 4px 6px;
+}
+.skin-purple .sidebar-menu > li.header {
+    background-color: #f0c380;
+    font-size: 12px;
+    text-align:center;
+    color:white;
+}
+.sidebar-menu li.header {
+    padding: 15px 10px 5px 10px  !important;
+    text-align: start;
+}
+.skin-purple .main-header .logo {
+    background-color: #12243c;
+}
+body{
+    font-size:12px;
+}
+.skin-purple .sidebar-menu .treeview-menu > li > a {
+    font-size: 12px;
+}
+.table > tbody > tr > td, .table > tbody > tr > th, .table > tfoot > tr > td, .table > tfoot > tr > th, .table > thead > tr > td, .table > thead > tr > th{
+    padding:2px;
+}
+.table>thead>th{
+    font-size:12px;
+    font-weight:normal;
+}
+.bg-gray{
+    color:none;
+}
+.table > thead > tr > th {
+    text-align: left;
+}
+.clszeropadding-left{
+    padding-left:0px;
+}
+.loader {
+    display: none;
+    position: fixed;
+    z-index: 100;
+    background-image: url('../Images/loading.gif');
+    opacity: 0.4;
+    background-repeat: no-repeat;
+    background-position: center;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    top: 0;
+    background-size: 300px 300px;
+    z-index:999999;
+}
+.content-header{
+    padding-top:0px;
+    padding-left:10px;
+    padding-right:10px;
+    padding-bottom:5px;
+}
+.content-header-title {
+    padding-top: 0px;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+.padding-top-button{
+    padding-top:10px;
+    padding-bottom:10px;
+}
+.padding-top{
+    padding-top:10px;
+}
+.mkl_table_border > tbody > tr > td, .mkl_table_border > tbody > tr > th, .mkl_table_border > tfoot > tr > td, .mkl_table_border > tfoot > tr > th, .mkl_table_border > thead > tr > td, .mkl_table_border > thead > tr > th {
+    border: 1px solid silver;
+}
+.controlLabel {
+    border: none;
+    font-weight: 400;
+    font-size:12px;
+}
+.form-control{
+    margin:0px;
+    font-size:12px;
+    height:26px;
+    padding-left:5px;
+    padding-right:0px;
+}
+.form-group {
+    margin: 0px;
+}
+fieldset.scheduler-border {
+    border: 1px solid #ddd !important;
+    /*padding: 0 1.4em 1.4em 1.4em !important;*/
+    padding-left:10px;
+    /*margin: 0 0 1.5em 0 !important;*/
+    -webkit-box-shadow: 0px 0px 0px 0px #000;
+    box-shadow: 0px 0px 0px 0px #000;
+    margin-top: 10px !important;
+}
+
+legend.scheduler-border {
+    font-size: 12px;
+    text-align: left !important;
+    width: auto;
+    border-bottom: none;
+    margin-top: -15px;
+    background-color: white;
+    color: #555;
+    margin-bottom: -5px;
+}
+.btn{
+    font-size:12px;
+    padding:3px 12px;
+}
+.table {
+    margin-bottom: 5px;
+}
+.table-condensed {
+    font-size: 11px;
+}
+.input-group-addon{
+    padding:6px 6px;
+    font-size:12px;
+}
+.input-group-addon-remove{
+    padding-top:6px;
+    padding-bottom:6px;
+    padding-left:0px;
+    padding-right:4px;
+
+}
+.input-group-addon, .input-group-btn{
+    width:1%;
+}
+.main-sidebar{
+    width:13%;
+}
+.treeview-menu{
+    padding-left:0px;
+}
+.content-wrapper, .main-footer{
+    margin-left:14%;
+}
+.box-header > .fa, .box-header > .glyphicon, .box-header > .ion, .box-header .box-title {
+    font-size: 14px;
+    font-weight:bold;
+}
+.dropdown-menu-btn {
+    font-size: 12px;
+    background-color: transparent;
+    border: none;
+}
+.modal-header{
+    padding:0px;
+    padding-left:5px;
+}
+.modal-dialog-popup{
+    width:600px;
+}
+.modal-dialog-popup-filter {
+    width: 900px;
+}
+.amount{
+    text-align:right;
+    padding-right:5px;
+}
+.header-color {
+    background-color: #12243c !important;
+    color: white;
+    border-color: #12243c;
+}
+.ui-autocomplete {
+    z-index: 2147483647;
+}
+.po_currrent_term{
+    background-color:gold !important;
+}
+.form-control-insde{
+    padding-left:3px;
+    padding-right:0px;
+}
+.datepicker {
+    z-index: 99999 !important;
+}
+
+
+
+
+
+

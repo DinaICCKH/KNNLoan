@@ -1,0 +1,71 @@
+﻿@using MKL_Web.Models;
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Change Owner Approval Status Report";
+    List<V_ARMemo> po = ViewBag.armemoList;
+    List<ICC_Get_List_Approval_ChangeOwnerResult> applist = ViewBag.ChangeOwnerApporovalListing;
+    }
+    <head>
+        <title>@ViewBag.Title</title>
+    </head>
+    <div class="row">
+        <section class="content-header content-header-title">
+            <h5>@ViewBag.Title</h5>
+        </section>
+        <!-- left column -->
+        <div class="col-md-12">
+            <!-- general form elements -->
+            <div class="box box-primary">
+                <div class="table-responsive">
+                    <table id="table_pr_assignment" class="table table-bordered table-hover dataTable no-footer">
+                        <thead>
+                            <tr class="bg-gray" role="row">
+                                <th class="sorting_disabled" style="width: 4%">Draft ID</th>
+                                <th class="sorting_disabled" style="width: 6%">In.Entry</th>
+                                <th class="sorting_disabled" style="width: 8%">Doc Date</th>
+                                <th class="sorting_disabled" style="width: 10%">Old Customer</th>
+                                <th class="sorting_disabled" style="width: 10%">New Customer</th>
+                                <th class="sorting_disabled" style="width: 12%">Item Name</th>
+                                <th class="sorting_disabled" style="width: 10%">Serial No</th>
+                                <th class="sorting_disabled" style="width: 10%;">App.Template</th>
+                                <th class="sorting_disabled" style="width: 8%;">Requester</th>
+                                <th class="sorting_disabled" style="width: 8%;">Next Approver</th>
+                                <th class="sorting_disabled" style="width: 5%">Status</th>
+                                <th class="sorting_disabled" style="width: 9%">Remark</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{
+                            int rowindex = 1;
+                            foreach (var x in applist)
+                            {
+                            <tr id="tr_@rowindex">
+                                <td style="text-align:center;">@x.DrafID</td>
+                                <td style="cursor:pointer;color:blue;text-decoration:underline;text-align:left;">
+                                
+                                    <a href="/amendments/EditChangeOwner?DocEntry=@x.BaseEntry">@x.BaseEntry</a>
+                                  
+                     
+                                </td>
+                                <td style="text-align:left;">@x.DocDate.Value.ToString("dd-MMM-yyyy")</td>
+                                <td style="text-align:left;">@x.OldCustomerName</td>
+                                <td style="text-align:left;">@x.NewCustomerName</td>
+                                @*<td style="text-align:right;">@x.SubTotal.Value.ToString("N2")</td>*@
+                                <td style="text-align:left;">@x.ItemName</td>
+                                <td style="text-align:left;">@x.DistNumber</td>
+                                <td style="text-align:left;">@x.AppTemplate</td>
+                                 <td style="text-align:left;">@x.CreateBy</td>
+                                <td style="text-align:left;">@x.NextApprover</td>
+                                <td style="text-align:center;">@x.Status</td>
+                                <td style="text-align:left;">@x.Remark</td>
+                            </tr>
+                            rowindex++;
+                            }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>

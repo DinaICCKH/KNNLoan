@@ -1,0 +1,264 @@
+﻿@using MKL_Web.Models;
+@{
+    ViewBag.Title = "AR Memo";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    List<v_CostCenter> project = ViewBag.project;
+    List<v_CostCenter> block = ViewBag.block;
+    List<v_OCRD> cust = ViewBag.cust;
+    AR aR = ViewBag.ar;
+    List<AR1> aR1s = ViewBag.ar1;
+    v_Contact con = ViewBag.contact;
+    decimal total = 0;
+    string DocNum = ViewBag.DocNum;
+}
+<head>
+    <script src="../../Scripts/js/sales.js"></script>
+</head>
+<div class="modal fade" id="modal-cust_list">
+    <div class="modal-dialog modal-dialog-popup-filter">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 id="pop_h5">Customer Filter</h5>
+            </div>
+            <div class="modal-body no-padding">
+                <div class="table-responsive" style="height:500px;overflow:auto">
+                    <table id="table_pop_customer_list" class="table">
+                        <thead>
+                            <tr>
+                                <td style="width:10%;">
+                                    <div class="form-group">
+                                        <label for="inputEmail3" class="form-control controlLabel">Find:</label>
+                                    </div>
+                                </td>
+                                <td colspan="2">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control form-control-insde" id="txt_pop_filter_vendor_name" placeholder="Customer Code or Customer Name">
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th style="width:15%">Customer Code</th>
+                                <th style="width:25%">Customer Name</th>
+                                <th style="width:25%">Customer KH</th>
+                                <th style="width:10%">Gender</th>
+                                <th style="width:15%">Phone</th>
+                                <th style="width:15%">ID</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{
+                                int rowindex = 1;
+                                foreach (var x in cust)
+                                {
+                                    <tr id="tr_pop_customer_@rowindex" onclick="tr_pop_customer_selected(@rowindex)">
+                                        <td id="td_pop_vendor_cust_code_@rowindex">@x.CardCode</td>
+                                        <td id="td_pop_vendor_cust_name_@rowindex">@x.CardName</td>
+                                        <td id="td_pop_vendor_cust_fname_@rowindex">@x.CardFName</td>
+                                        <td id="td_pop_vendor_cust_gender_@rowindex">@x.U_Gender</td>
+                                        <td id="td_pop_vendor_phone_@rowindex">@x.Phone1</td>
+                                        <td id="td_pop_vendor_cust_id_@rowindex">@x.AddID</td>
+                                        <td></td>
+                                    </tr>
+                                    rowindex++;
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer" style="padding:5px;">
+                <button type="button" class="btn btn-success pull-left btn-flat" onclick="cmd_pop_choose_customer()">Choose</button>
+                <button type="button" class="btn btn-danger pull-left btn-flat" data-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<div class="row">
+    <input type="hidden" id="txt_bp_selected_row" />
+    <input type="hidden" id="txt_item_selected_row" />
+    <input type="hidden" id="txt_payment_schedule_selected_row" />
+    <input type="hidden" id="txt_entry" value="-1" />
+    <input type="hidden" id="txt_project" value="@aR.OcrCode" />
+    <div class="col-md-12">
+        <div class="box box-primary">
+            <div class="box-header with-border">
+                <h5 class="box-title">@ViewBag.Title</h5>
+            </div>
+            <div class="box-header with-border">
+                <table class="table" role="none">
+                    <thead>
+                        <tr>
+                            <td style="width:10%;">
+                                <div class="form-group">
+                                    <label for="inputEmail3" class="form-control controlLabel">Customer Code</label>
+                                </div>
+                            </td>
+                            <td style="width:40%;">
+                                <div class="input-group">
+                                    <input type="text" class="form-control form-control-insde" id="txt_card_code" readonly="readonly" placeholder="Customer Code" value="@aR.CardCode">
+                                    <div class="input-group-addon">
+                                        <i class="fa fa-user text-info" style="cursor:not-allowed"></i>
+                                    </div>
+                                </div>
+                            </td>
+                            <td style="width:10%;">
+                                <div class="form-group">
+                                    <label for="inputEmail3" class="form-control controlLabel">CN No</label>
+                                </div>
+                            </td>
+                            <td style="width:40%;">
+                                <table style="width:100%">
+                                    <tr>
+                                        <td style="width:40%">
+                                            <div class="form-group">
+                                                <input type="text" class="form-control form-control-insde" id="txt_doc_num" readonly="readonly" placeholder="AR No" value="@DocNum">
+                                            </div>
+                                        </td>
+                                        <td style="width:20%;">
+                                            <div class="form-group">
+                                                <label for="inputEmail3" class="form-control controlLabel">Status</label>
+                                            </div>
+                                        </td>
+                                        <td style="width:40%">
+                                            <div class="form-group">
+                                                <input type="text" class="form-control form-control-insde" id="txt_doc_status" readonly="readonly" placeholder="Doc Status" value="Open">
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td style="width:10%;">
+                                <div class="form-group">
+                                    <label for="inputEmail3" class="form-control controlLabel">Customer Name</label>
+                                </div>
+                            </td>
+                            <td style="width:40%;">
+                                <div class="form-group">
+                                    <input type="text" class="form-control form-control-insde" id="txt_card_name" placeholder="Customer Name" readonly value="@aR.CardName">
+                                </div>
+                            </td>
+                            <td style="width:10%;">
+                                <div class="form-group">
+                                    <label for="inputEmail3" class="form-control controlLabel">Posting Date</label>
+                                </div>
+                            </td>
+                            <td style="width:40%;">
+                                <div class="form-group">
+                                    <div class="input-group date">
+                                        <div class="input-group-addon">
+                                            <i class="fa fa-calendar"></i>
+                                        </div>
+                                        <input type="text" class="form-control pull-right datetime form-control-insde" readonly="readonly" id="txt_doc_date" onchange="txt_docdate_memo_change()" placeholder="Posting Date" value="@aR.DocDate.Value.ToString("dd-MMM-yyyy")">
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width:10%;">
+                                <div class="form-group">
+                                    <label for="inputEmail3" class="form-control controlLabel">Contact</label>
+                                </div>
+                            </td>
+                            <td style="width:40%;">
+                                <div class="form-group">
+                                    <select class="form-control form-control-insde" id="cbo_contact_person" disabled>
+                                        @if (con != null)
+                                        {
+                                            <option value="@con.CntctCode">@con.Name</option>
+                                        }
+                                    </select>
+                                </div>
+                            </td>
+                            <td style="width:10%;">
+                                <div class="form-group">
+                                    <label for="inputEmail3" class="form-control controlLabel">Due Date</label>
+                                </div>
+                            </td>
+                            <td style="width:40%;">
+                                <div class="form-group">
+                                    <div class="input-group date">
+                                        <div class="input-group-addon">
+                                            <i class="fa fa-calendar"></i>
+                                        </div>
+                                        <input type="text" class="form-control pull-right datetime form-control-insde" readonly="readonly" id="txt_due_date" placeholder="Delivery Date" value="@aR.DueDate.Value.ToString("dd-MMM-yyyy")">
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="4">
+                                <table class="table" style="margin-bottom:0px;" id="table_invoice_list">
+                                    <thead>
+                                        <tr class="bg-gray" role="row">
+                                            <td style="width:1%;">#</td>
+                                            <td style="width:15%">Item Code</td>
+                                            <td>Description</td>
+                                            <td style="width:12%;text-align:right;">Amount</td>
+                                            <td style="width:12%;text-align:right;">Applied Amount</td>
+                                            <td style="width:12%;text-align:right;">Project</td>
+                                            <td style="width:12%;text-align:right;">Block</td>
+                                            <td style="width:12%;text-align:right;">House Code</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @{
+                                            int i = 0;
+                                            int index = 1;
+                                            decimal paidAmt = decimal.Parse((aR.PaidAmt == null ? 0 : aR.PaidAmt).ToString());
+                                            decimal subtotal = decimal.Parse(aR.SubTotal.ToString());
+                                            decimal openAmt = subtotal - paidAmt;
+                                            foreach (AR1 r1 in aR1s)
+                                            {
+                                                <tr id="tr_line_memo_@i">
+                                                    <td>@index</td>
+                                                    <td style="text-align:right;display:none;" id="txt_linenum_memo_@i">@i</td>
+                                                    <td id="txt_itemcode_memo_@i">@r1.ItemCode</td>
+                                                    <td id="txt_itemname_memo_@i">@r1.ItemName</td>
+                                                    <td style="text-align:right;" id="txt_line_total_ar_@i">@r1.LineTotal.Value.ToString("N2")</td>
+                                                    <td><input type="text" class="form-control form-control-insde" style="text-align:right;" id="txt_line_memo_total_@i" onchange="txt_line_memo_total_change(@i)" placeholder="Customer Name" value="@r1.LineTotal.Value.ToString("N2")"></td>
+                                                    <td style="text-align:right;" id="txt_ocrcode_memo_@i">@r1.OcrCode</td>
+                                                    <td style="text-align:right;" id="txt_ocrcode2_memo_@i">@r1.OcrCode2</td>
+                                                    <td style="text-align:right;" id="txt_ocrcode3_memo_@i">@r1.OcrCode3</td>
+                                                    <td style="text-align:right;display:none;" id="txt_base_entry_memo_@i">@r1.DocEntry</td>
+                                                    <td style="text-align:right;display:none;" id="txt_base_line_memo_@i">@r1.LineNum</td>
+                                                </tr>
+                                                total = total + decimal.Parse(r1.LineTotal.ToString());
+                                                i++;
+                                                index++;
+                                            }
+                                        }
+                                    </tbody>
+                                    <tfoot>
+                                        <tr class="bg-gray">
+                                            <td colspan="3" style="text-align:right">Document Total:</td>
+                                            <td style="text-align:right;">@total.ToString("N2")</td>
+                                            <td style="text-align:right;" id="txt_total_applied">@total.ToString("N2")</td>
+                                            <td colspan="3"></td>
+                                        </tr>
+                                        <tr class="bg-gray">
+                                            <td colspan="3" style="text-align:right">Balance Due:</td>
+                                            <td style="text-align:right;"></td>
+                                            <td style="text-align:right;" id="txt_total_balance_due">@openAmt.ToString("N2")</td>
+                                            <td colspan="3"></td>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </td>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+            <div class="box-footer">
+                <button type="button" class="btn btn-primary btn-flat" onclick="cmd_save_memo()">Submit</button>
+                <button type="button" class="btn btn-warning btn-flat">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+

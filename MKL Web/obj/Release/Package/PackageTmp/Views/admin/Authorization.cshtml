@@ -1,0 +1,182 @@
+﻿@using MKL_Web.Models;
+@{
+    ViewBag.Title = "Authorization";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    List<USR> usrlist = ViewBag.usrlist;
+    List<MenuMain> main = ViewBag.mainmenu;
+    List<MenuSub> sub = ViewBag.mainsub;
+}
+
+<head>
+    <title>@ViewBag.Title</title>
+</head>
+<div class="row">
+    <div class="modal fade" id="modal_user_ist" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog modal-dialog-popup-filter">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5>User List</h5>
+                </div>
+                <div class="modal-body no-padding">
+                    <div class="table-responsive" style="height:500px;overflow:auto">
+                        <table id="table_popup_user_list" class="table">
+                            <thead>
+                                <tr style="background-color:yellow">
+                                    <td colspan="2">Copy Authorization From User:</td>
+                                    <td id="td_auth_copy_from"></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">
+                                        <div class="form-group">
+                                            <label for="inputEmail3" class="form-control controlLabel">Find:</label>
+                                        </div>
+                                    </td>
+                                    <td colspan="2">
+                                        <div class="form-group">
+                                            <input type="text" class="form-control form-control-insde" id="txt_pop_up_apply_user" onkeyup="txt_pop_up_apply_user_Find_Stage_User()" autofocus placeholder="Find User">
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th style="width:5%">#</th>
+                                    <th style="width:15%">User Code</th>
+                                    <th>User Name</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @{
+                                    int rowindex = 0;
+                                    foreach (var x in usrlist)
+                                    {
+                                        <tr>
+                                            <td><input type="checkbox" class="chk_auth" id="ck_@rowindex" /></td>
+                                            <td id="td_user_code_@rowindex">@x.UserCode</td>
+                                            <td id="td_user_name_@rowindex">@x.UserName</td>
+                                        </tr>
+                                        rowindex++;
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="modal-footer" style="padding:5px;">
+                    <button type="button" class="btn btn-success pull-left btn-flat" onclick="cmd_apply_all_auth()">Apply</button>
+                    <button type="button" class="btn btn-danger pull-left btn-flat" data-dismiss="modal">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-12">
+        <!-- general form elements -->
+        <div class="box box-primary">
+            <div class="col-md-6">
+                <div class="table-responsive">
+                    <table id="table_user_list" class="table table-bordered table-hover dataTable no-footer" role="grid">
+                        <thead>
+                            <tr>
+                                <td>Find</td>
+                                <td colspan="2"><input type="text" class="form-control" id="txt_find_user" placeholder="Find User"></td>
+                            </tr>
+                            <tr class="bg-gray" role="row">
+                                <th class="sorting_disabled" rowspan="1" colspan="1" style="width: 10%">User Code</th>
+                                <th class="sorting_disabled" rowspan="1" colspan="2" style="width: 20%">Full Name</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{
+                                int index = 0;
+                                foreach (var x in usrlist)
+                                {
+                                    <tr id="tr_auth_@index" role="row" class="odd" style="cursor:pointer" onclick="tr_auth_user(@index)">
+                                        <td id="td_user_code_@index">@x.UserCode</td>
+                                        <td id="td_user_name_@index">@x.UserName</td>
+                                        <td><button type="button" class="btn btn-default" onclick="cmd_auth_copy_to(@index)">>></button></td>
+                                    </tr>
+                                    index++;
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <input type="hidden" id="txt_selected_user" />
+                <div class="table-responsive">
+                    <table id="table_auth" class="table table-bordered table-hover dataTable no-footer" role="grid">
+                        <thead>
+                            <tr class="bg-gray" role="row">
+                                <th class="sorting_disabled" rowspan="1" colspan="1" style="width: 30%">Subject</th>
+                                <th class="sorting_disabled" rowspan="1" colspan="1" style="width: 20%">Authorization</th>
+                                <th class="sorting_disabled" rowspan="1" colspan="1" style="width: 20%">Hide Price</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{
+                                foreach (var x in main.OrderBy(a => a.VisOrder).ToList())
+                                {
+                                    <tr>
+                                        <td style="display:none">Main</td>
+                                        <td style="display:none">@x.MMCode</td>
+                                        <td>@x.MName</td>
+                                    </tr>
+                                    foreach (var a in sub.Where(b => b.MMCode == x.MMCode && b.Levels == 1).ToList())
+                                    {
+                                        <tr>
+                                            <td style="display:none">Sub</td>
+                                            <td style="display:none">@a.SMCode</td>
+                                            <td style="padding-left:10%;">@a.SMName</td>
+                                            <td>
+                                                <select class="form-control" id="cbo_auth_@a.SMCode" onchange="cbo_change_auth(@a.SMCode)">
+                                                    <option value="F">Full</option>
+                                                    <option value="R">Read-Only</option>
+                                                    <option value="N" selected>None</option>
+                                                </select>
+                                            </td>
+                                            <td>
+                                                <select class="form-control" id="cbo_hide_@a.SMCode" onchange="cbo_change_hide(@a.SMCode)">
+                                                    <option value="Y" selected>Yes</option>
+                                                    <option value="N">No</option>
+                                                </select>
+                                            </td>
+                                        </tr>
+                                        foreach (var z in sub.Where(b => b.MMCode == x.MMCode && b.Levels == 2 && b.LinkID == a.SMCode).ToList())
+                                        {
+                                            <tr>
+                                                <td style="display:none">Sub</td>
+                                                <td style="display:none">@z.SMCode</td>
+                                                <td style="padding-left:20%;">@z.SMName</td>
+                                                <td>
+                                                    <select class="form-control auth_@a.SMCode" id="cbo_auth_@z.SMCode">
+                                                        <option value="F">Full</option>
+                                                        <option value="R">Read-Only</option>
+                                                        <option value="N" selected>None</option>
+                                                    </select>
+                                                </td>
+                                                <td>
+                                                    <select class="form-control hide_@a.SMCode" id="cbo_hide_@z.SMCode">
+                                                        <option value="Y" selected>Yes</option>
+                                                        <option value="N">No</option>
+                                                    </select>
+                                                </td>
+                                            </tr>
+                                        }
+                                    }
+                                }
+                            }
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td>
+                                    <button type="button" class="btn btn-primary btn-flat" onclick="cmd_save_auth()">Submit</button>
+                                </td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
