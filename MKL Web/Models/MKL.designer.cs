@@ -1189,6 +1189,20 @@ namespace MKL_Web.Models
 			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), fdate, tdate, createBy);
 			return ((ISingleResult<ICC_Get_RepocessingListResult>)(result.ReturnValue));
 		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.ICC_Get_RepocessingList_Approved")]
+		public ISingleResult<ICC_Get_RepocessingList_ApprovedResult> ICC_Get_RepocessingList_Approved([global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Date")] System.Nullable<System.DateTime> fdate, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Date")] System.Nullable<System.DateTime> tdate, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="CreateBy", DbType="NVarChar(250)")] string createBy)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), fdate, tdate, createBy);
+			return ((ISingleResult<ICC_Get_RepocessingList_ApprovedResult>)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.ICC_Get_List_Repocessing_By_ID_Approved")]
+		public ISingleResult<ICC_Get_List_Repocessing_By_ID_ApprovedResult> ICC_Get_List_Repocessing_By_ID_Approved([global::System.Data.Linq.Mapping.ParameterAttribute(Name="DocEntry", DbType="Int")] System.Nullable<int> docEntry)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), docEntry);
+			return ((ISingleResult<ICC_Get_List_Repocessing_By_ID_ApprovedResult>)(result.ReturnValue));
+		}
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Controller")]
@@ -46330,6 +46344,868 @@ namespace MKL_Web.Models
 				if ((this._Remark != value))
 				{
 					this._Remark = value;
+				}
+			}
+		}
+	}
+	
+	public partial class ICC_Get_RepocessingList_ApprovedResult
+	{
+		
+		private int _DocEntry;
+		
+		private System.Nullable<System.DateTime> _PostingDate;
+		
+		private string _DocNumRef;
+		
+		private string _RestructureOption;
+		
+		private string _ApprovalStage;
+		
+		private string _TemplateDesc;
+		
+		private string _NextApprover;
+		
+		private System.Nullable<System.DateTime> _CreateDate;
+		
+		private string _CreateBy;
+		
+		private string _Status;
+		
+		private string _Remark;
+		
+		public ICC_Get_RepocessingList_ApprovedResult()
+		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DocEntry", DbType="Int NOT NULL")]
+		public int DocEntry
+		{
+			get
+			{
+				return this._DocEntry;
+			}
+			set
+			{
+				if ((this._DocEntry != value))
+				{
+					this._DocEntry = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PostingDate", DbType="Date")]
+		public System.Nullable<System.DateTime> PostingDate
+		{
+			get
+			{
+				return this._PostingDate;
+			}
+			set
+			{
+				if ((this._PostingDate != value))
+				{
+					this._PostingDate = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DocNumRef", DbType="NVarChar(50)")]
+		public string DocNumRef
+		{
+			get
+			{
+				return this._DocNumRef;
+			}
+			set
+			{
+				if ((this._DocNumRef != value))
+				{
+					this._DocNumRef = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_RestructureOption", DbType="VarChar(3) NOT NULL", CanBeNull=false)]
+		public string RestructureOption
+		{
+			get
+			{
+				return this._RestructureOption;
+			}
+			set
+			{
+				if ((this._RestructureOption != value))
+				{
+					this._RestructureOption = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ApprovalStage", DbType="NVarChar(250)")]
+		public string ApprovalStage
+		{
+			get
+			{
+				return this._ApprovalStage;
+			}
+			set
+			{
+				if ((this._ApprovalStage != value))
+				{
+					this._ApprovalStage = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TemplateDesc", DbType="NVarChar(200)")]
+		public string TemplateDesc
+		{
+			get
+			{
+				return this._TemplateDesc;
+			}
+			set
+			{
+				if ((this._TemplateDesc != value))
+				{
+					this._TemplateDesc = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_NextApprover", DbType="NVarChar(250)")]
+		public string NextApprover
+		{
+			get
+			{
+				return this._NextApprover;
+			}
+			set
+			{
+				if ((this._NextApprover != value))
+				{
+					this._NextApprover = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CreateDate", DbType="DateTime")]
+		public System.Nullable<System.DateTime> CreateDate
+		{
+			get
+			{
+				return this._CreateDate;
+			}
+			set
+			{
+				if ((this._CreateDate != value))
+				{
+					this._CreateDate = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CreateBy", DbType="NVarChar(20)")]
+		public string CreateBy
+		{
+			get
+			{
+				return this._CreateBy;
+			}
+			set
+			{
+				if ((this._CreateBy != value))
+				{
+					this._CreateBy = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Status", DbType="NVarChar(20)")]
+		public string Status
+		{
+			get
+			{
+				return this._Status;
+			}
+			set
+			{
+				if ((this._Status != value))
+				{
+					this._Status = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Remark", DbType="NVarChar(200)")]
+		public string Remark
+		{
+			get
+			{
+				return this._Remark;
+			}
+			set
+			{
+				if ((this._Remark != value))
+				{
+					this._Remark = value;
+				}
+			}
+		}
+	}
+	
+	public partial class ICC_Get_List_Repocessing_By_ID_ApprovedResult
+	{
+		
+		private string _CardCode;
+		
+		private string _CardName;
+		
+		private string _PhoneNo;
+		
+		private int _DocEntry;
+		
+		private System.Nullable<System.DateTime> _DocDate;
+		
+		private System.Nullable<System.DateTime> _DeliveryDate;
+		
+		private string _ItemCode;
+		
+		private string _ItemName;
+		
+		private System.Nullable<decimal> _DocTotalBef;
+		
+		private System.Nullable<decimal> _InstallmentAmt;
+		
+		private string _PaymentOption;
+		
+		private int _Remaining;
+		
+		private System.Nullable<decimal> _AnnualRate;
+		
+		private System.Nullable<decimal> _PeriodMonths;
+		
+		private System.Nullable<System.DateTime> _StartPayment;
+		
+		private System.Nullable<System.DateTime> _MaturityPayment;
+		
+		private string _SerialNo;
+		
+		private System.Nullable<System.DateTime> _PostingDate;
+		
+		private int _DocEntry1;
+		
+		private string _DocNumRef;
+		
+		private string _Remark;
+		
+		private string _NextApprover;
+		
+		private string _CreateBy;
+		
+		private System.Nullable<System.DateTime> _CreateDate;
+		
+		private string _ApprovalStatus;
+		
+		private string _ApprovalTemplate;
+		
+		private string _TemplateDesc;
+		
+		private string _LastApprover;
+		
+		private int _BaseEntry;
+		
+		private System.Nullable<decimal> _TotalAR;
+		
+		private System.Nullable<decimal> _VarianAmt;
+		
+		private System.Nullable<decimal> _BalanceDue;
+		
+		private decimal _GeneratedAR;
+		
+		private System.Nullable<decimal> _LoanBalance;
+		
+		private string _RowType;
+		
+		private string _RowType1;
+		
+		public ICC_Get_List_Repocessing_By_ID_ApprovedResult()
+		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CardCode", DbType="NVarChar(100)")]
+		public string CardCode
+		{
+			get
+			{
+				return this._CardCode;
+			}
+			set
+			{
+				if ((this._CardCode != value))
+				{
+					this._CardCode = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CardName", DbType="NVarChar(250)")]
+		public string CardName
+		{
+			get
+			{
+				return this._CardName;
+			}
+			set
+			{
+				if ((this._CardName != value))
+				{
+					this._CardName = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PhoneNo", DbType="NVarChar(50)")]
+		public string PhoneNo
+		{
+			get
+			{
+				return this._PhoneNo;
+			}
+			set
+			{
+				if ((this._PhoneNo != value))
+				{
+					this._PhoneNo = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DocEntry", DbType="Int NOT NULL")]
+		public int DocEntry
+		{
+			get
+			{
+				return this._DocEntry;
+			}
+			set
+			{
+				if ((this._DocEntry != value))
+				{
+					this._DocEntry = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DocDate", DbType="Date")]
+		public System.Nullable<System.DateTime> DocDate
+		{
+			get
+			{
+				return this._DocDate;
+			}
+			set
+			{
+				if ((this._DocDate != value))
+				{
+					this._DocDate = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DeliveryDate", DbType="Date")]
+		public System.Nullable<System.DateTime> DeliveryDate
+		{
+			get
+			{
+				return this._DeliveryDate;
+			}
+			set
+			{
+				if ((this._DeliveryDate != value))
+				{
+					this._DeliveryDate = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ItemCode", DbType="NVarChar(50)")]
+		public string ItemCode
+		{
+			get
+			{
+				return this._ItemCode;
+			}
+			set
+			{
+				if ((this._ItemCode != value))
+				{
+					this._ItemCode = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ItemName", DbType="NVarChar(100)")]
+		public string ItemName
+		{
+			get
+			{
+				return this._ItemName;
+			}
+			set
+			{
+				if ((this._ItemName != value))
+				{
+					this._ItemName = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DocTotalBef", DbType="Decimal(18,2)")]
+		public System.Nullable<decimal> DocTotalBef
+		{
+			get
+			{
+				return this._DocTotalBef;
+			}
+			set
+			{
+				if ((this._DocTotalBef != value))
+				{
+					this._DocTotalBef = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_InstallmentAmt", DbType="Decimal(18,2)")]
+		public System.Nullable<decimal> InstallmentAmt
+		{
+			get
+			{
+				return this._InstallmentAmt;
+			}
+			set
+			{
+				if ((this._InstallmentAmt != value))
+				{
+					this._InstallmentAmt = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PaymentOption", DbType="VarChar(1) NOT NULL", CanBeNull=false)]
+		public string PaymentOption
+		{
+			get
+			{
+				return this._PaymentOption;
+			}
+			set
+			{
+				if ((this._PaymentOption != value))
+				{
+					this._PaymentOption = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Remaining", DbType="Int NOT NULL")]
+		public int Remaining
+		{
+			get
+			{
+				return this._Remaining;
+			}
+			set
+			{
+				if ((this._Remaining != value))
+				{
+					this._Remaining = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AnnualRate", DbType="Decimal(19,6)")]
+		public System.Nullable<decimal> AnnualRate
+		{
+			get
+			{
+				return this._AnnualRate;
+			}
+			set
+			{
+				if ((this._AnnualRate != value))
+				{
+					this._AnnualRate = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PeriodMonths", DbType="Decimal(19,6)")]
+		public System.Nullable<decimal> PeriodMonths
+		{
+			get
+			{
+				return this._PeriodMonths;
+			}
+			set
+			{
+				if ((this._PeriodMonths != value))
+				{
+					this._PeriodMonths = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_StartPayment", DbType="Date")]
+		public System.Nullable<System.DateTime> StartPayment
+		{
+			get
+			{
+				return this._StartPayment;
+			}
+			set
+			{
+				if ((this._StartPayment != value))
+				{
+					this._StartPayment = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_MaturityPayment", DbType="Date")]
+		public System.Nullable<System.DateTime> MaturityPayment
+		{
+			get
+			{
+				return this._MaturityPayment;
+			}
+			set
+			{
+				if ((this._MaturityPayment != value))
+				{
+					this._MaturityPayment = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SerialNo", DbType="NVarChar(100)")]
+		public string SerialNo
+		{
+			get
+			{
+				return this._SerialNo;
+			}
+			set
+			{
+				if ((this._SerialNo != value))
+				{
+					this._SerialNo = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PostingDate", DbType="Date")]
+		public System.Nullable<System.DateTime> PostingDate
+		{
+			get
+			{
+				return this._PostingDate;
+			}
+			set
+			{
+				if ((this._PostingDate != value))
+				{
+					this._PostingDate = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DocEntry1", DbType="Int NOT NULL")]
+		public int DocEntry1
+		{
+			get
+			{
+				return this._DocEntry1;
+			}
+			set
+			{
+				if ((this._DocEntry1 != value))
+				{
+					this._DocEntry1 = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DocNumRef", DbType="NVarChar(50)")]
+		public string DocNumRef
+		{
+			get
+			{
+				return this._DocNumRef;
+			}
+			set
+			{
+				if ((this._DocNumRef != value))
+				{
+					this._DocNumRef = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Remark", DbType="NVarChar(200)")]
+		public string Remark
+		{
+			get
+			{
+				return this._Remark;
+			}
+			set
+			{
+				if ((this._Remark != value))
+				{
+					this._Remark = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_NextApprover", DbType="NVarChar(250)")]
+		public string NextApprover
+		{
+			get
+			{
+				return this._NextApprover;
+			}
+			set
+			{
+				if ((this._NextApprover != value))
+				{
+					this._NextApprover = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CreateBy", DbType="NVarChar(20)")]
+		public string CreateBy
+		{
+			get
+			{
+				return this._CreateBy;
+			}
+			set
+			{
+				if ((this._CreateBy != value))
+				{
+					this._CreateBy = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CreateDate", DbType="DateTime")]
+		public System.Nullable<System.DateTime> CreateDate
+		{
+			get
+			{
+				return this._CreateDate;
+			}
+			set
+			{
+				if ((this._CreateDate != value))
+				{
+					this._CreateDate = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ApprovalStatus", DbType="NVarChar(20)")]
+		public string ApprovalStatus
+		{
+			get
+			{
+				return this._ApprovalStatus;
+			}
+			set
+			{
+				if ((this._ApprovalStatus != value))
+				{
+					this._ApprovalStatus = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ApprovalTemplate", DbType="NVarChar(50)")]
+		public string ApprovalTemplate
+		{
+			get
+			{
+				return this._ApprovalTemplate;
+			}
+			set
+			{
+				if ((this._ApprovalTemplate != value))
+				{
+					this._ApprovalTemplate = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TemplateDesc", DbType="NVarChar(200)")]
+		public string TemplateDesc
+		{
+			get
+			{
+				return this._TemplateDesc;
+			}
+			set
+			{
+				if ((this._TemplateDesc != value))
+				{
+					this._TemplateDesc = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_LastApprover", DbType="NVarChar(250)")]
+		public string LastApprover
+		{
+			get
+			{
+				return this._LastApprover;
+			}
+			set
+			{
+				if ((this._LastApprover != value))
+				{
+					this._LastApprover = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_BaseEntry", DbType="Int NOT NULL")]
+		public int BaseEntry
+		{
+			get
+			{
+				return this._BaseEntry;
+			}
+			set
+			{
+				if ((this._BaseEntry != value))
+				{
+					this._BaseEntry = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TotalAR", DbType="Decimal(18,2)")]
+		public System.Nullable<decimal> TotalAR
+		{
+			get
+			{
+				return this._TotalAR;
+			}
+			set
+			{
+				if ((this._TotalAR != value))
+				{
+					this._TotalAR = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_VarianAmt", DbType="Decimal(18,2)")]
+		public System.Nullable<decimal> VarianAmt
+		{
+			get
+			{
+				return this._VarianAmt;
+			}
+			set
+			{
+				if ((this._VarianAmt != value))
+				{
+					this._VarianAmt = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_BalanceDue", DbType="Decimal(18,2)")]
+		public System.Nullable<decimal> BalanceDue
+		{
+			get
+			{
+				return this._BalanceDue;
+			}
+			set
+			{
+				if ((this._BalanceDue != value))
+				{
+					this._BalanceDue = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_GeneratedAR", DbType="Decimal(19,6) NOT NULL")]
+		public decimal GeneratedAR
+		{
+			get
+			{
+				return this._GeneratedAR;
+			}
+			set
+			{
+				if ((this._GeneratedAR != value))
+				{
+					this._GeneratedAR = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_LoanBalance", DbType="Decimal(23,6)")]
+		public System.Nullable<decimal> LoanBalance
+		{
+			get
+			{
+				return this._LoanBalance;
+			}
+			set
+			{
+				if ((this._LoanBalance != value))
+				{
+					this._LoanBalance = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_RowType", DbType="NVarChar(50)")]
+		public string RowType
+		{
+			get
+			{
+				return this._RowType;
+			}
+			set
+			{
+				if ((this._RowType != value))
+				{
+					this._RowType = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_RowType1", DbType="NVarChar(50)")]
+		public string RowType1
+		{
+			get
+			{
+				return this._RowType1;
+			}
+			set
+			{
+				if ((this._RowType1 != value))
+				{
+					this._RowType1 = value;
 				}
 			}
 		}

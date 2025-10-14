@@ -252,9 +252,10 @@
                                     </legend>
 
                                     <!-- Toggleable content - shown by default -->
-                                    <div id="penalty_table_wrapper" class="row" style="margin:0px;margin-top:10px;margin-left:-10px;">
-                                        <table class="table" style="margin-bottom:0px;" id="table_penalty_list">
-                                            <thead>
+                                    <div id="penalty_table_wrapper" class="row" style="position: relative; overflow: auto; height: 100%; min-height: 30vh">
+                                        <table class="table" style="margin-bottom: 0px; position: absolute; min-width: 2000px; width: 100%;" id="table_penalty_list">
+                                            <thead style="position:sticky; top: 0; z-index: 1000;">
+
                                                 <tr class="bg-gray" role="row">
                                                     <td style="width:2%; text-align:left;">#</td>
                                                     <td style="width: 7%; text-align: left;">Posting Date</td>
@@ -280,7 +281,7 @@
 
                                                 </tr>
                                             </thead>
-                                            <tbody>
+<tbody>
                                                 @{
                                                     int index = 1;
                                                     foreach (var item in HeaderChange)

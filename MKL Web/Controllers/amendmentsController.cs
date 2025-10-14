@@ -1498,32 +1498,43 @@ namespace MKL_Web.Controllers
                                             db.InstallmentRowDrafs.Context.SubmitChanges();
 
                                             /// This will be used to update the status of Accrual penalty
+                                            /// This will be used to update the status of Accrual penalty
                                             var accrualIDs = installment_row.Select(r => r.BaseEntry).ToList();
 
+                                            // Get SO record based on accrual IDs
                                             var sO = db.SOs.FirstOrDefault(a => accrualIDs.Contains(a.DocEntry));
 
-                                            int refNo = Convert.ToInt32(header.ChangeRef);
-                                            var sORef = db.SOs.FirstOrDefault(a => Convert.ToInt32(a.ChangeItemRefNo)== refNo);
-
-
-                                            // If both documents exist, update them
-                                            if (sO != null && sORef != null)
+                                            if (sO != null)
                                             {
-                                                string msg = $"This document is linked with pending approve change Item draft No: {LastEntry} -> Reference: {header.DocNumRef}";
+                                                int refNo = Convert.ToInt32(header.ChangeRef);
 
-                                                sO.LastError = msg;
-                                                sO.Frozenfor = "Y";
-
-                                                sORef.LastError = msg;
-                                                sORef.Frozenfor = "Y";
-
-                                                // Commit both updates at once
+                                                // Update ChangeItemRefNo for main SO
+                                                sO.ChangeItemRefNo = refNo.ToString();
                                                 db.SOs.Context.SubmitChanges();
+
+                                                // Now fetch the referenced SO based on ChangeItemRefNo
+                                                var sORef = db.SOs.FirstOrDefault(a => Convert.ToInt32(a.ChangeItemRefNo) == refNo);
+
+                                                // If both documents exist, update them
+                                                if (sORef != null)
+                                                {
+                                                    string msg = $"This document is linked with pending approve change Item draft No: {LastEntry} -> Reference: {header.DocNumRef}";
+
+                                                    sO.LastError = msg;
+                                                    sO.Frozenfor = "Y";
+
+                                                    sORef.LastError = msg;
+                                                    sORef.Frozenfor = "Y";
+
+                                                    // Commit both updates at once
+                                                    db.SOs.Context.SubmitChanges();
+                                                }
+                                                else
+                                                {
+                                                    status = "Error";
+                                                }
                                             }
-                                            else
-                                            {
-                                                status = "Error";
-                                            }
+
                                         }
 
                                         // For Update Generate approval Document Generate

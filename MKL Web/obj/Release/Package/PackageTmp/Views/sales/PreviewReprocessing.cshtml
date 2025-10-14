@@ -1,6 +1,6 @@
 ﻿@using MKL_Web.Models;
 @{
-    ViewBag.Title = "Reprocessing Approved";
+    ViewBag.Title = "Repocessing Approved";
     Layout = "~/Views/Shared/_Layout.cshtml";
     List<CNInstallmentRowDraf> installment = ViewBag.installment;
     List<ICC_Get_List_Reprocessing_By_IDResult> header = ViewBag.Header;
@@ -458,35 +458,36 @@
                                                     </button>
 
                                                 </div>
-                                                <table class="table" style="margin-bottom:0px;" id="table_payment_schedule_AR">
-                                                    <thead>
-                                                        <tr class="bg-gray" role="row">
+                                                <div style="position: relative; overflow: auto; height: 100%; min-height: 30vh">
+                                                    <table class="table" style="margin-bottom: 0px; position: absolute; min-width: 2000px; width: 100%;" id="table_payment_schedule_AR">
+                                                        <thead style="position:sticky; top: 0; z-index: 1000;">
+                                                            <tr class="bg-gray" role="row">
 
-                                                            <td style="width:4%; text-align:left;">#</td>
-                                                            <td style="width: 7%; text-align: left;">DocDate</td>
-                                                            <td style="width: 7%; text-align: left;">DueDate</td>
-                                                            <td style="width: 7%; text-align: left;">Principle</td>
-                                                            <td style="width: 6%; text-align: left;">Interest</td>
-                                                            <td style="width: 7%; text-align: left;">MonthlyPay</td>
-                                                            <td style="width: 6%; text-align: left;">Remain</td>
-                                                            <td style="width: 7%; text-align: left;">Remain+Interest</td>
-                                                            <td style="width: 6%; text-align: left;">C.Principle</td>
-                                                            <td style="width: 7%; text-align: left;">C.Interest</td>
-                                                            <td style="width: 7%; text-align: left; ">C.Principle+Interest</td>
-                                                            <td style="width: 5%; text-align: left;">Reason</td>
-                                                            <td style="width: 26%; text-align: left;">Remark</td>
-                                                            <td style="width: 4%; text-align: left;">ARNo</td>
-                                                            <td style="width: 4%; text-align: left;">PayNo</td>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody style="vertical-align: middle;">
-                                                        @{
-                                                            int index = 1;
-                                                            foreach (var item in installment)
-                                                            {
-
-                                                                if (item.RowType == "AR")
+                                                                <td style="width:4%; text-align:left;">#</td>
+                                                                <td style="width: 7%; text-align: left;">DocDate</td>
+                                                                <td style="width: 7%; text-align: left;">DueDate</td>
+                                                                <td style="width: 7%; text-align: left;">Principle</td>
+                                                                <td style="width: 6%; text-align: left;">Interest</td>
+                                                                <td style="width: 7%; text-align: left;">MonthlyPay</td>
+                                                                <td style="width: 6%; text-align: left;">Remain</td>
+                                                                <td style="width: 7%; text-align: left;">Remain+Interest</td>
+                                                                <td style="width: 6%; text-align: left;">C.Principle</td>
+                                                                <td style="width: 7%; text-align: left;">C.Interest</td>
+                                                                <td style="width: 7%; text-align: left; ">C.Principle+Interest</td>
+                                                                <td style="width: 5%; text-align: left;">Reason</td>
+                                                                <td style="width: 26%; text-align: left;">Remark</td>
+                                                                <td style="width: 4%; text-align: left;">ARNo</td>
+                                                                <td style="width: 4%; text-align: left;">PayNo</td>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody style="vertical-align: middle;">
+                                                            @{
+                                                                int index = 1;
+                                                                foreach (var item in installment)
                                                                 {
+
+                                                                    if (item.RowType == "AR")
+                                                                    {
                                                                         <tr>
                                                                             <td>@index</td>
                                                                             <td>@Convert.ToDateTime(item.PaymentDate).ToString("dd-MMM-yyyy")</td>
@@ -509,110 +510,112 @@
 
                                                                 }
                                                             }
-                                                    </tbody>
-                                                    <tfoot>
-                                                        <tr>
-                                                            <td class="bg-gray" style="text-align:right;"></td>
-                                                            <td class="bg-gray" style="text-align:right;"></td>
-                                                            <td class="bg-gray" style="text-align:left;"><b>Total</b></td>
-                                                            <td class="bg-gray" style="text-align:left;" id="txt_total_principleAR">0.00</td>
-                                                            <td class="bg-gray" style="text-align:left;" id="txt_total_interestAR">0.00</td>
-                                                            <td class="bg-gray" style="text-align:left;" id="txt_total_monthlyAR">0.00</td>
-                                                            <td class="bg-gray" style="text-align:right;"></td>
-                                                            <td class="bg-gray" style="text-align:right;"></td>
-                                                            <td class="bg-gray" style="text-align:right;"></td>
-                                                            <td class="bg-gray" style="text-align:right;"></td>
-                                                            <td class="bg-gray" style="text-align:right;"></td>
-                                                            <td class="bg-gray" style="text-align:right;"></td>
-                                                            <td class="bg-gray" style="text-align:right;"></td>
-                                                            <td class="bg-gray" style="text-align:right;"></td>
-                                                            <td class="bg-gray" style="text-align:right;"></td>
-                                                        </tr>
-                                                    </tfoot>
-                                                </table>
-                                            </div>
-                                            <!-- /.tab-pane -->
-                                            <div class="tab-pane" id="tab_2">
-                                                <div class="text-right" style="margin-top: 0px; margin-bottom: 10px;">
-                                                    <button type="button" class="btn btn-success btn-flat" id="btn_copy_schedule_to_excel" onclick="copyTableToClipboard('table_payment_schedule',3,'Buy Back')">
-                                                        <i class="fa fa-copy"></i> Copy Table
-                                                    </button>
-
+                                                        </tbody>
+                                                        <tfoot>
+                                                            <tr>
+                                                                <td class="bg-gray" style="text-align:right;"></td>
+                                                                <td class="bg-gray" style="text-align:right;"></td>
+                                                                <td class="bg-gray" style="text-align:left;"><b>Total</b></td>
+                                                                <td class="bg-gray" style="text-align:left;" id="txt_total_principleAR">0.00</td>
+                                                                <td class="bg-gray" style="text-align:left;" id="txt_total_interestAR">0.00</td>
+                                                                <td class="bg-gray" style="text-align:left;" id="txt_total_monthlyAR">0.00</td>
+                                                                <td class="bg-gray" style="text-align:right;"></td>
+                                                                <td class="bg-gray" style="text-align:right;"></td>
+                                                                <td class="bg-gray" style="text-align:right;"></td>
+                                                                <td class="bg-gray" style="text-align:right;"></td>
+                                                                <td class="bg-gray" style="text-align:right;"></td>
+                                                                <td class="bg-gray" style="text-align:right;"></td>
+                                                                <td class="bg-gray" style="text-align:right;"></td>
+                                                                <td class="bg-gray" style="text-align:right;"></td>
+                                                                <td class="bg-gray" style="text-align:right;"></td>
+                                                            </tr>
+                                                        </tfoot>
+                                                    </table>
                                                 </div>
-                                                <table class="table" style="margin-bottom:0px;" id="table_payment_schedule">
-
-                                                    <thead>
-                                                        <tr class="bg-gray" role="row">
-
-                                                            <td style="width:4%; text-align:left;">#</td>
-                                                            <td style="width: 7%; text-align: left;">DocDate</td>
-                                                            <td style="width: 7%; text-align: left;">DueDate</td>
-                                                            <td style="width: 7%; text-align: left;">Principle</td>
-                                                            <td style="width: 6%; text-align: left;">Interest</td>
-                                                            <td style="width: 7%; text-align: left;">MonthlyPay</td>
-                                                            <td style="width: 6%; text-align: left;">Remain</td>
-                                                            <td style="width: 7%; text-align: left;">Remain+Interest</td>
-                                                            <td style="width: 6%; text-align: left;">C.Principle</td>
-                                                            <td style="width: 7%; text-align: left;">C.Interest</td>
-                                                            <td style="width: 7%; text-align: left; ">C.Principle+Interest</td>
-                                                            <td style="width: 5%; text-align: left;">Reason</td>
-                                                            <td style="width: 26%; text-align: left;">Remark</td>
-                                                            <td style="width: 4%; text-align: left;">ARNo</td>
-                                                            <td style="width: 4%; text-align: left;">PayNo</td>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody style="vertical-align: middle;">
-                                                        @{
-                                                            int index2 = 1;
-                                                            foreach (var item in installment)
-                                                            {
-                                                                if (item.RowType == "Installment")
-                                                                {
-                                                                    <tr>
-                                                                        <td>@index2</td>
-                                                                        <td>@Convert.ToDateTime(item.PaymentDate).ToString("dd-MMM-yyyy")</td>
-                                                                        <td>@Convert.ToDateTime(item.DueDate).ToString("dd-MMM-yyyy")</td>
-                                                                        <td class="principle">@String.Format("{0:N2}", item.Principle)</td>
-                                                                        <td class="interest">@String.Format("{0:N2}", item.Interest)</td>
-                                                                        <td class="monthly">@String.Format("{0:N2}", item.Monthly)</td>
-                                                                        <td>@String.Format("{0:N2}", item.Remaining)</td>
-                                                                        <td>@String.Format("{0:N2}", item.Remaining + item.Interest)</td>
-                                                                        <td>@String.Format("{0:N2}", item.CuPayment)</td>
-                                                                        <td>@String.Format("{0:N2}", item.CuInterest)</td>
-                                                                        <td>@String.Format("{0:N2}", item.CuPayment + item.CuInterest)</td>
-                                                                        <td>@item.Method</td>
-                                                                        <td>@item.Remarks</td>
-                                                                        <td>@item.ARNo</td>
-                                                                        <td>@item.PaymentNo</td>
-                                                                    </tr>
-                                                                    index2++;
-                                                                }
-                                                            }
-                           
-                                                        }
-                                                    </tbody>
-                                                    <tfoot>
-                                                        <tr>
-                                                            <td class="bg-gray" style="text-align:right;"></td>
-                                                            <td class="bg-gray" style="text-align:right;"></td>
-                                                            <td class="bg-gray" style="text-align:left;"><b>Total</b></td>
-                                                            <td class="bg-gray" style="text-align:left;" id="txt_total_principle">0.00</td>
-                                                            <td class="bg-gray" style="text-align:left;" id="txt_total_interest">0.00</td>
-                                                            <td class="bg-gray" style="text-align:left;" id="txt_total_monthly">0.00</td>
-                                                            <td class="bg-gray" style="text-align:right;"></td>
-                                                            <td class="bg-gray" style="text-align:right;"></td>
-                                                            <td class="bg-gray" style="text-align:right;"></td>
-                                                            <td class="bg-gray" style="text-align:right;"></td>
-                                                            <td class="bg-gray" style="text-align:right;"></td>
-                                                            <td class="bg-gray" style="text-align:right;"></td>
-                                                            <td class="bg-gray" style="text-align:right;"></td>
-                                                            <td class="bg-gray" style="text-align:right;"></td>
-                                                            <td class="bg-gray" style="text-align:right;"></td>
-                                                        </tr>
-                                                    </tfoot>
-                                                </table>
                                             </div>
-                                        </div>
+                                                <!-- /.tab-pane -->
+                                                <div class="tab-pane" id="tab_2">
+                                                    <div class="text-right" style="margin-top: 0px; margin-bottom: 10px;">
+                                                        <button type="button" class="btn btn-success btn-flat" id="btn_copy_schedule_to_excel" onclick="copyTableToClipboard('table_payment_schedule',3,'Buy Back')">
+                                                            <i class="fa fa-copy"></i> Copy Table
+                                                        </button>
+
+                                                    </div>
+                                                    <div style="position: relative; overflow: auto; height: 100%; min-height: 30vh">
+                                                        <table class="table" style="margin-bottom: 0px; position: absolute; min-width: 2000px; width: 100%;" id="table_payment_schedule">
+                                                            <thead style="position:sticky; top: 0; z-index: 1000;">
+                                                                <tr class="bg-gray" role="row">
+
+                                                                    <td style="width:4%; text-align:left;">#</td>
+                                                                    <td style="width: 7%; text-align: left;">DocDate</td>
+                                                                    <td style="width: 7%; text-align: left;">DueDate</td>
+                                                                    <td style="width: 7%; text-align: left;">Principle</td>
+                                                                    <td style="width: 6%; text-align: left;">Interest</td>
+                                                                    <td style="width: 7%; text-align: left;">MonthlyPay</td>
+                                                                    <td style="width: 6%; text-align: left;">Remain</td>
+                                                                    <td style="width: 7%; text-align: left;">Remain+Interest</td>
+                                                                    <td style="width: 6%; text-align: left;">C.Principle</td>
+                                                                    <td style="width: 7%; text-align: left;">C.Interest</td>
+                                                                    <td style="width: 7%; text-align: left; ">C.Principle+Interest</td>
+                                                                    <td style="width: 5%; text-align: left;">Reason</td>
+                                                                    <td style="width: 26%; text-align: left;">Remark</td>
+                                                                    <td style="width: 4%; text-align: left;">ARNo</td>
+                                                                    <td style="width: 4%; text-align: left;">PayNo</td>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody style="vertical-align: middle;">
+                                                                @{
+                                                                    int index2 = 1;
+                                                                    foreach (var item in installment)
+                                                                    {
+                                                                        if (item.RowType == "Installment")
+                                                                        {
+                                                                            <tr>
+                                                                                <td>@index2</td>
+                                                                                <td>@Convert.ToDateTime(item.PaymentDate).ToString("dd-MMM-yyyy")</td>
+                                                                                <td>@Convert.ToDateTime(item.DueDate).ToString("dd-MMM-yyyy")</td>
+                                                                                <td class="principle">@String.Format("{0:N2}", item.Principle)</td>
+                                                                                <td class="interest">@String.Format("{0:N2}", item.Interest)</td>
+                                                                                <td class="monthly">@String.Format("{0:N2}", item.Monthly)</td>
+                                                                                <td>@String.Format("{0:N2}", item.Remaining)</td>
+                                                                                <td>@String.Format("{0:N2}", item.Remaining + item.Interest)</td>
+                                                                                <td>@String.Format("{0:N2}", item.CuPayment)</td>
+                                                                                <td>@String.Format("{0:N2}", item.CuInterest)</td>
+                                                                                <td>@String.Format("{0:N2}", item.CuPayment + item.CuInterest)</td>
+                                                                                <td>@item.Method</td>
+                                                                                <td>@item.Remarks</td>
+                                                                                <td>@item.ARNo</td>
+                                                                                <td>@item.PaymentNo</td>
+                                                                            </tr>
+                                                                            index2++;
+                                                                        }
+                                                                    }
+
+                                                                }
+                                                            </tbody>
+                                                            <tfoot>
+                                                                <tr>
+                                                                    <td class="bg-gray" style="text-align:right;"></td>
+                                                                    <td class="bg-gray" style="text-align:right;"></td>
+                                                                    <td class="bg-gray" style="text-align:left;"><b>Total</b></td>
+                                                                    <td class="bg-gray" style="text-align:left;" id="txt_total_principle">0.00</td>
+                                                                    <td class="bg-gray" style="text-align:left;" id="txt_total_interest">0.00</td>
+                                                                    <td class="bg-gray" style="text-align:left;" id="txt_total_monthly">0.00</td>
+                                                                    <td class="bg-gray" style="text-align:right;"></td>
+                                                                    <td class="bg-gray" style="text-align:right;"></td>
+                                                                    <td class="bg-gray" style="text-align:right;"></td>
+                                                                    <td class="bg-gray" style="text-align:right;"></td>
+                                                                    <td class="bg-gray" style="text-align:right;"></td>
+                                                                    <td class="bg-gray" style="text-align:right;"></td>
+                                                                    <td class="bg-gray" style="text-align:right;"></td>
+                                                                    <td class="bg-gray" style="text-align:right;"></td>
+                                                                    <td class="bg-gray" style="text-align:right;"></td>
+                                                                </tr>
+                                                            </tfoot>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         <!-- /.tab-content -->
                                     </div>
                                 </fieldset>

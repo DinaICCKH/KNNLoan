@@ -401,7 +401,7 @@
 
                         <tr class="change-period">
                             <td colspan="4">
-                                <fieldset class="scheduler-border">
+                                <fieldset class="scheduler-border"  style="padding: 5px;">
                                     <legend class="scheduler-border" style="font-weight: bold;">
                                         <span style="cursor: pointer;" onclick="toggle()">
                                             Schedule List
@@ -423,9 +423,9 @@
                                     </div>
 
                                     <!-- Toggleable content - shown by default -->
-                                    <div id="table_wrapper" class="row" style="margin:0px;margin-top:10px;margin-left:-10px;">
-                                        <table class="table" style="margin-bottom:0px;" id="table_payment_schedule">
-                                            <thead>
+                                    <div id="table_wrapper" class="row" style="margin:0px;margin-top:10px; position: relative; min-height: 30vh; height: 100%; overflow: auto">
+                                        <table class="table" style="margin-bottom: 0px; position: absolute; min-width: 2000px; width: 100%;" id="table_payment_schedule">
+                                            <thead style="position:sticky; top: 0; z-index: 1000;">
                                                 <tr class="bg-gray" role="row">
 
                                                     <td style="width:1%; text-align:left;">#</td>

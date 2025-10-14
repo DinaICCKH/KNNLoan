@@ -1,19 +1,51 @@
 ﻿@using MKL_Web.Models;
 @{
-    ViewBag.Title = "Restructure Period";
+    ViewBag.Title = "Repocessing";
     Layout = "~/Views/Shared/_Layout.cshtml";
-
-    string docdate = DateTime.Now.ToString("dd-MMM-yyyy");
-    List<InstallmentRowDraf> installment = ViewBag.installment;
-    List<ICC_Get_List_Restructure_By_IDResult> header = ViewBag.Header;
+    List<CNInstallmentRow> installment = ViewBag.installment;
+    List<ICC_Get_List_Repocessing_By_ID_ApprovedResult> header = ViewBag.Header;
     List<ICC_Approval_Check_EnableButtonResult> Checkbutton = ViewBag.Checkbutton;
 }
 <head>
     <script src="../../Scripts/js/sales.js"></script>
     <script src="~/Scripts/js/Dina_CustomizationFormSettingandCopytoClibord.js"></script>
+    <script>
+        $(document).ready(function () {
+
+            $('.datetime').datepicker({
+                autoclose: true,
+                format: 'dd-M-yyyy'
+            });
+
+            // Event delegation: Bind click event to dynamically created remove icons
+            $("#table_customer_list").on("click", ".fa-remove", function () {
+                $(this).closest("tr").remove(); // Remove the row
+            });
+        });
+
+    </script>
 </head>
 
+
 <div class="row">
+    <input type="hidden" id="txt_module_id" value="BuyBack" />
+    <input type="hidden" id="txt_bp_selected_row" />
+    <input type="hidden" id="txt_item_selected_row" />
+    <input type="hidden" id="txt_payment_schedule_selected_row" />
+    <input type="hidden" id="txt_so_entry" value="-1" />
+    <input type="hidden" id="txt_so_line" value="-1" />
+    <input type="hidden" id="txt_ocrcode" value="-1" />
+    <input type="hidden" id="txt_ocrcode2" value="-1" />
+    <input type="hidden" id="txt_ocrcode3" value="-1" />
+    <table id="tbl_Remove_List" style="display:none;">
+        <thead>
+            <tr>
+                <td>HeaderLine</td>
+                <td>DetailLine</td>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
 
     @{
         var H = header?.FirstOrDefault();
@@ -42,28 +74,17 @@
         var LastApprover = H?.LastApprover ?? "";
 
         var BaseEntry = H?.BaseEntry ?? -1;
-        var RestructureOption = H?.RestructureOption ?? "";
+
+        var DocNumRef = H?.DocNumRef ?? "";
+
+        var GeneratedAR = H?.GeneratedAR ?? 0;
+        var LoanBalance = H?.LoanBalance ?? 0;
+        var TotalAR = H?.TotalAR ?? 0;
+        var VarianAmt = H?.VarianAmt ?? 0;
+        var BuyBack = H?.BalanceDue ?? 0;
 
     }
 
-    <input type="hidden" id="txt_module_id" value="ChangeSchedule" />
-    <input type="hidden" id="txt_bp_selected_row" />
-    <input type="hidden" id="txt_item_selected_row" value="-1" />
-    <input type="hidden" id="txt_payment_schedule_selected_row" value="-1" />
-    <input type="hidden" id="txt_so_entry" value="-1" />
-    <input type="hidden" id="txt_so_line" value="-1" />
-    <input type="hidden" id="txt_ocrcode" value="-1" />
-    <input type="hidden" id="txt_ocrcode2" value="-1" />
-    <input type="hidden" id="txt_ocrcode3" value="-1" />
-    <table id="tbl_Remove_List" style="display:none;">
-        <thead>
-            <tr>
-                <td>HeaderLine</td>
-                <td>DetailLine</td>
-            </tr>
-        </thead>
-        <tbody></tbody>
-    </table>
     <div class="col-md-12">
         <div class="box box-primary">
             <div class="box-header with-border">
@@ -90,7 +111,7 @@
                             </td>
                             <td style="width:40%;">
                                 <div class="form-group">
-                                    <input type="text" class="form-control form-control-insde" id="txt_doc_num" readonly="readonly" placeholder="AR Memo No" value="@BaseEntry">
+                                    <input type="text" class="form-control form-control-insde" id="txt_doc_num" readonly="readonly" placeholder="AR Memo No" value="@DocNumRef">
                                 </div>
                             </td>
                         </tr>
@@ -188,7 +209,7 @@
                                                     </td>
                                                     <td style="width:40%;">
                                                         <div class="form-group">
-                                                            <input type="text" class="form-control form-control-insde" readonly="readonly" id="txt_before_discount_amount" placeholder="AR Amount" value="@DocTotalBef">
+                                                            <input type="text" class="form-control form-control-insde" readonly="readonly" id="txt_before_discount_amount" placeholder="AR Amount" value="@TotalAR">
                                                         </div>
                                                     </td>
                                                     <td style="width:10%;">
@@ -200,14 +221,58 @@
                                                         <div class="form-group">
                                                             <table style="width:100%;" id="table_doc_discount">
                                                                 <tr>
-                                                                    <td style="width:40%;"><input type="text" readonly="readonly" class="form-control form-control-insde" id="txt_installment_amount" placeholder="Instalment Amount" value="@InstallmentAmt"></td>
-                                                                    <td style="width:30%;text-align:right;padding-right:10px">Restructure Option</td>
-                                                                    <td style="width:30%;"><input type="text" class="form-control form-control-insde" id="txt_installment_rate" readonly="readonly" value="@RestructureOption"></td>
+                                                                    <td style="width:40%;"><input type="text" readonly="readonly" class="form-control form-control-insde" id="txt_installment_amount" placeholder="Instalment Amount" value="@DocTotalBef"></td>
+
                                                                 </tr>
                                                             </table>
                                                         </div>
                                                     </td>
                                                 </tr>
+
+                                                <tr>
+                                                    <td style="width:10%;">
+                                                        <div class="form-group">
+                                                            <label for="txt_amount_paid" style="padding-left:2px;" class="form-control controlLabel">Amount Paid</label>
+                                                        </div>
+                                                    </td>
+                                                    <td style="width:40%;">
+                                                        <div class="form-group">
+                                                            <table style="width:100%;">
+                                                                <tr>
+                                                                    <td style="width:40%;">
+                                                                        <input type="text" readonly="readonly" class="form-control form-control-insde" id="txt_start_payment" value="@GeneratedAR.ToString("N2")">
+                                                                    </td>
+                                                                    <td style="width:30%;text-align:right;padding-right:10px">Loan Balance</td>
+                                                                    <td style="width:30%;">
+                                                                        <input type="text" readonly="readonly" class="form-control form-control-insde" id="txt_maturity_payment" value="@LoanBalance.ToString("N2")">
+                                                                    </td>
+                                                                </tr>
+                                                            </table>
+                                                        </div>
+                                                    </td>
+
+                                                    <td style="width:10%;">
+                                                        <div class="form-group">
+                                                            <label for="txt_buyback_amt" style="padding-left:2px;" class="form-control controlLabel">Buyback Amt</label>
+                                                        </div>
+                                                    </td>
+                                                    <td style="width:40%;">
+                                                        <div class="form-group">
+                                                            <table style="width:100%;">
+                                                                <tr>
+                                                                    <td style="width:40%;">
+                                                                        <input type="text" readonly="readonly" class="form-control form-control-insde" id="txt_start_payment2" placeholder="Start Payment" value="@BuyBack">
+                                                                    </td>
+                                                                    <td style="width:30%;text-align:right;padding-right:10px">Varian Amt</td>
+                                                                    <td style="width:30%;">
+                                                                        <input type="text" readonly="readonly" class="form-control form-control-insde" id="txt_maturity_payment2" placeholder="Posting Date" value="@VarianAmt">
+                                                                    </td>
+                                                                </tr>
+                                                            </table>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+
 
                                                 <tr>
 
@@ -294,7 +359,7 @@
                                                 </tr>
 
                                                 <tr>
-                                                    <td style="width: 10%;">
+                                                    @*<td style="width: 10%;">
                                                         <div class="form-group">
                                                             <label for="inputEmail3" class="form-control controlLabel">Last Approver</label>
                                                         </div>
@@ -303,7 +368,7 @@
                                                         <div class="form-group">
                                                             <input type="text" class="form-control form-control-insde" readonly="readonly" id="txt_last_approver" value="@LastApprover">
                                                         </div>
-                                                    </td>
+                                                    </td>*@
                                                     <td style="width: 10%; ">
                                                         <div class="form-group">
                                                             <label for="inputEmail3" style="padding-left:2px;" class="form-control controlLabel">Request Date</label>
@@ -324,7 +389,7 @@
 
                                                                     <td style="width:10%;">
                                                                         <div class="form-group">
-                                                                            <label for="inputEmail3" class="form-control controlLabel">Draf ID</label>
+                                                                            <label for="inputEmail3" class="form-control controlLabel">CN ID</label>
                                                                         </div>
                                                                     </td>
                                                                     <td style="width:40%;">
@@ -338,7 +403,7 @@
                                                     </td>
                                                 </tr>
 
-                                                <tr>
+                                                <!--<tr>
                                                     <td style="width:10%;">
                                                         <div class="form-group">
                                                             <label for="inputEmail3" class="form-control controlLabel">Requester Comment</label>
@@ -350,20 +415,20 @@
                                                             <textarea class="form-control form-control-insde" id="txt_draf_ID" readonly rows="3">@Comment</textarea>
 
                                                         </div>
-                                                    </td>
+                                                    </td>-->
 
-                                                    <td style="width:10%;">
+                                                    @*<td style="width:10%;">
                                                         <div class="form-group">
                                                             <label for="inputEmail3" style="padding-left:2px;" class="form-control controlLabel">Approver Comment</label>
                                                         </div>
-                                                    </td>
-                                                    <td style="width:40%;">
+                                                    </td>*@
+                                                    @*<td style="width:40%;">
                                                         <div class="form-group">
                                                             <textarea class="form-control form-control-insde" id="txt_approverComment" placeholder="Approver Comment" rows="3" style="resize: vertical;"></textarea>
                                                         </div>
-                                                    </td>
+                                                    </td>*@
 
-                                                </tr>
+                                                <!--</tr>-->
 
                                             </thead>
                                         </table>
@@ -371,112 +436,190 @@
                                 </fieldset>
                             </td>
                         </tr>
-
-
-                        <tr class="change-period">
+                        <tr>
                             <td colspan="4">
                                 <fieldset class="scheduler-border">
                                     <legend class="scheduler-border" style="font-weight: bold;">
-                                        <span style="cursor: pointer;" onclick="toggle()">
+                                        <span style="cursor: pointer;" onclick="toggleCustomTable()">
                                             Schedule List
-                                            <i id="toggle_chnagePeriod_icon" class="fa fa-chevron-up" style="margin-left: 5px;"></i>
+                                            <i id="toggle_icon" class="fa fa-chevron-up" style="margin-left: 5px; padding-bottom:10px !important"></i>
                                         </span>
                                     </legend>
+                                    <div class="nav-tabs-custom" id="customer_table_wrapper">
+                                        <ul class="nav nav-tabs">
+                                            <li class="active"><a href="#tab_1" data-toggle="tab" aria-expanded="true">Invoice</a></li>
+                                            <li class=""><a href="#tab_2" data-toggle="tab" aria-expanded="false">Buyback</a></li>
+                                        </ul>
+                                        <div class="tab-content">
+                                            <div class="tab-pane active" id="tab_1">
+                                                <div class="text-right" style="margin-top: 0px; margin-bottom: 10px;">
+                                                    <button type="button" class="btn btn-success btn-flat" id="btn_copy_schedule_to_excel" onclick="copyTableToClipboard('table_payment_schedule_AR',3,'Schedule List')">
+                                                        <i class="fa fa-copy"></i> Copy Table
+                                                    </button>
 
-                                    <div class="text-right" style="margin-top: 0px; margin-bottom: 10px;">
+                                                </div>
+                                                <div style="position: relative; overflow: auto; height: 100%; min-height: 30vh">
+                                                    <table class="table" style="margin-bottom: 0px; position: absolute; min-width: 2000px; width: 100%;" id="table_payment_schedule_AR">
+                                                        <thead style="position:sticky; top: 0; z-index: 1000;">
+                                                            <tr class="bg-gray" role="row">
 
-                                        <!-- Settings button -->
-                                        <button type="button" class="btn btn-check btn-flat" onclick="openColumnSettings('table_payment_schedule')">
-                                            <i class="fa fa-cog"></i> Settings
-                                        </button>
+                                                                <td style="width:4%; text-align:left;">#</td>
+                                                                <td style="width: 7%; text-align: left;">DocDate</td>
+                                                                <td style="width: 7%; text-align: left;">DueDate</td>
+                                                                <td style="width: 7%; text-align: left;">Principle</td>
+                                                                <td style="width: 6%; text-align: left;">Interest</td>
+                                                                <td style="width: 7%; text-align: left;">MonthlyPay</td>
+                                                                <td style="width: 6%; text-align: left;">Remain</td>
+                                                                <td style="width: 7%; text-align: left;">Remain+Interest</td>
+                                                                <td style="width: 6%; text-align: left;">C.Principle</td>
+                                                                <td style="width: 7%; text-align: left;">C.Interest</td>
+                                                                <td style="width: 7%; text-align: left; ">C.Principle+Interest</td>
+                                                                <td style="width: 5%; text-align: left;">Reason</td>
+                                                                <td style="width: 26%; text-align: left;">Remark</td>
+                                                                <td style="width: 4%; text-align: left;">ARNo</td>
+                                                                <td style="width: 4%; text-align: left;">PayNo</td>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody style="vertical-align: middle;">
+                                                            @{
+                                                                int index = 1;
+                                                                foreach (var item in installment)
+                                                                {
 
-                                        <button type="button" class="btn btn-success btn-flat" id="btn_copy_schedule_to_excel" onclick="copyTableToClipboard('table_payment_schedule',1,'Restructure change Period')">
-                                            <i class="fa fa-copy"></i> Copy Table
-                                        </button>
+                                                                    if (item.RowType == "AR")
+                                                                    {
+                                                                        <tr>
+                                                                            <td>@index</td>
+                                                                            <td>@Convert.ToDateTime(item.PaymentDate).ToString("dd-MMM-yyyy")</td>
+                                                                            <td>@Convert.ToDateTime(item.DueDate).ToString("dd-MMM-yyyy")</td>
+                                                                            <td class="principle">@String.Format("{0:N2}", item.Principle)</td>
+                                                                            <td class="interest">@String.Format("{0:N2}", item.Interest)</td>
+                                                                            <td class="monthly">@String.Format("{0:N2}", item.Monthly)</td>
+                                                                            <td>@String.Format("{0:N2}", item.Remaining)</td>
+                                                                            <td>@String.Format("{0:N2}", item.Remaining + item.Interest)</td>
+                                                                            <td>@String.Format("{0:N2}", item.CuPayment)</td>
+                                                                            <td>@String.Format("{0:N2}", item.CuInterest)</td>
+                                                                            <td>@String.Format("{0:N2}", item.CuPayment + item.CuInterest)</td>
+                                                                            <td>@item.Method</td>
+                                                                            <td>@item.Remarks</td>
+                                                                            <td>@item.ARNo</td>
+                                                                            <td>@item.PaymentNo</td>
+                                                                        </tr>
+                                                                        index++;
+                                                                    }
 
-                                    </div>
+                                                                }
+                                                            }
+                                                        </tbody>
+                                                        <tfoot>
+                                                            <tr>
+                                                                <td class="bg-gray" style="text-align:right;"></td>
+                                                                <td class="bg-gray" style="text-align:right;"></td>
+                                                                <td class="bg-gray" style="text-align:left;"><b>Total</b></td>
+                                                                <td class="bg-gray" style="text-align:left;" id="txt_total_principleAR">0.00</td>
+                                                                <td class="bg-gray" style="text-align:left;" id="txt_total_interestAR">0.00</td>
+                                                                <td class="bg-gray" style="text-align:left;" id="txt_total_monthlyAR">0.00</td>
+                                                                <td class="bg-gray" style="text-align:right;"></td>
+                                                                <td class="bg-gray" style="text-align:right;"></td>
+                                                                <td class="bg-gray" style="text-align:right;"></td>
+                                                                <td class="bg-gray" style="text-align:right;"></td>
+                                                                <td class="bg-gray" style="text-align:right;"></td>
+                                                                <td class="bg-gray" style="text-align:right;"></td>
+                                                                <td class="bg-gray" style="text-align:right;"></td>
+                                                                <td class="bg-gray" style="text-align:right;"></td>
+                                                                <td class="bg-gray" style="text-align:right;"></td>
+                                                            </tr>
+                                                        </tfoot>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                            <!-- /.tab-pane -->
+                                            <div class="tab-pane" id="tab_2">
+                                                <div class="text-right" style="margin-top: 0px; margin-bottom: 10px;">
+                                                    <button type="button" class="btn btn-success btn-flat" id="btn_copy_schedule_to_excel" onclick="copyTableToClipboard('table_payment_schedule',3,'Buy Back')">
+                                                        <i class="fa fa-copy"></i> Copy Table
+                                                    </button>
 
-                                    <!-- Toggleable content - shown by default -->
-                                    <div id="table_wrapper" class="row" style="position: relative; overflow: auto; height: 100%; min-height: 30vh">
-                                        <table class="table" style="margin-bottom: 0px; position: absolute; min-width: 2000px; width: 100%;" id="table_payment_schedule">
-                                            <thead style="position:sticky; top: 0; z-index: 1000;">
-                                                <tr class="bg-gray" role="row">
+                                                </div>
+                                                <div style="position: relative; overflow: auto; height: 100%; min-height: 30vh">
+                                                    <table class="table" style="margin-bottom: 0px; position: absolute; min-width: 2000px; width: 100%;" id="table_payment_schedule">
+                                                        <thead style="position:sticky; top: 0; z-index: 1000;">
+                                                            <tr class="bg-gray" role="row">
 
-                                                    <td style="width:4%; text-align:left;">#</td>
-                                                    <td style="width: 7%; text-align: left;">DocDate</td>
-                                                    <td style="width: 7%; text-align: left;">DueDate</td>
-                                                    <td style="width: 7%; text-align: left;">Principle</td>
-                                                    <td style="width: 6%; text-align: left;">Interest</td>
-                                                    <td style="width: 7%; text-align: left;">MonthlyPay</td>
-                                                    <td style="width: 6%; text-align: left;">Remain</td>
-                                                    <td style="width: 7%; text-align: left;">Remain+Int</td>
-                                                    <td style="width: 6%; text-align: left;">C.Principle</td>
-                                                    <td style="width: 7%; text-align: left;">C.Interest</td>
-                                                    <td style="width: 7%; text-align: left; ">C.Principle+Int</td>
-                                                    <td style="width: 5%; text-align: left;">Reason</td>
-                                                    <td style="width: 4%; text-align: left;">ARNo</td>
-                                                    <td style="width: 4%; text-align: left;">PayNo</td>
-                                                    <td style="width: 4%; text-align: left;">ARNo.Int</td>
-                                                    <td style="width: 4%; text-align: left;">PayNo.Int</td>
+                                                                <td style="width:4%; text-align:left;">#</td>
+                                                                <td style="width: 7%; text-align: left;">DocDate</td>
+                                                                <td style="width: 7%; text-align: left;">DueDate</td>
+                                                                <td style="width: 7%; text-align: left;">Principle</td>
+                                                                <td style="width: 6%; text-align: left;">Interest</td>
+                                                                <td style="width: 7%; text-align: left;">MonthlyPay</td>
+                                                                <td style="width: 6%; text-align: left;">Remain</td>
+                                                                <td style="width: 7%; text-align: left;">Remain+Interest</td>
+                                                                <td style="width: 6%; text-align: left;">C.Principle</td>
+                                                                <td style="width: 7%; text-align: left;">C.Interest</td>
+                                                                <td style="width: 7%; text-align: left; ">C.Principle+Interest</td>
+                                                                <td style="width: 5%; text-align: left;">Reason</td>
+                                                                <td style="width: 26%; text-align: left;">Remark</td>
+                                                                <td style="width: 4%; text-align: left;">ARNo</td>
+                                                                <td style="width: 4%; text-align: left;">PayNo</td>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody style="vertical-align: middle;">
+                                                            @{
+                                                                int index2 = 1;
+                                                                foreach (var item in installment)
+                                                                {
+                                                                    if (item.RowType == "Installment")
+                                                                    {
+                                                                        <tr>
+                                                                            <td>@index2</td>
+                                                                            <td>@Convert.ToDateTime(item.PaymentDate).ToString("dd-MMM-yyyy")</td>
+                                                                            <td>@Convert.ToDateTime(item.DueDate).ToString("dd-MMM-yyyy")</td>
+                                                                            <td class="principle">@String.Format("{0:N2}", item.Principle)</td>
+                                                                            <td class="interest">@String.Format("{0:N2}", item.Interest)</td>
+                                                                            <td class="monthly">@String.Format("{0:N2}", item.Monthly)</td>
+                                                                            <td>@String.Format("{0:N2}", item.Remaining)</td>
+                                                                            <td>@String.Format("{0:N2}", item.Remaining + item.Interest)</td>
+                                                                            <td>@String.Format("{0:N2}", item.CuPayment)</td>
+                                                                            <td>@String.Format("{0:N2}", item.CuInterest)</td>
+                                                                            <td>@String.Format("{0:N2}", item.CuPayment + item.CuInterest)</td>
+                                                                            <td>@item.Method</td>
+                                                                            <td>@item.Remarks</td>
+                                                                            <td>@item.ARNo</td>
+                                                                            <td>@item.PaymentNo</td>
+                                                                        </tr>
+                                                                        index2++;
+                                                                    }
+                                                                }
 
-                                                    <td style="width: 18%; text-align: left;">Remark</td>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                @{
-                                                    int index = 1;
-                                                    foreach (var item in installment)
-                                                    {
-                                                        <tr>
-                                                            <td>@index</td>
-                                                            <td>@Convert.ToDateTime(item.PaymentDate).ToString("dd-MMM-yyyy")</td>
-                                                            <td>@Convert.ToDateTime(item.DueDate).ToString("dd-MMM-yyyy")</td>
-                                                            <td class="principle">@String.Format("{0:N2}", item.Principle)</td>
-                                                            <td class="interest">@String.Format("{0:N2}", item.Interest)</td>
-                                                            <td class="monthly">@String.Format("{0:N2}", item.Monthly)</td>
-                                                            <td>@String.Format("{0:N2}", item.Remaining)</td>
-                                                            <td>@String.Format("{0:N2}", item.Remaining + item.Interest)</td>
-                                                            <td>@String.Format("{0:N2}", item.CuPayment)</td>
-                                                            <td>@String.Format("{0:N2}", item.CuInterest)</td>
-                                                            <td>@String.Format("{0:N2}", item.CuPayment + item.CuInterest)</td>
-                                                            <td>@item.Method</td>
-
-                                                            <td>@item.ARNo</td>
-                                                            <td>@item.PaymentNo</td>
-                                                            <td>@item.ARNoInterest</td>
-                                                            <td>@item.PaymentNoInterest</td>
-                                                            <td>@item.Remarks</td>
-                                                        </tr>
-                                                        index++;
-                                                    }
-                                                }
-                                            </tbody>
-
-                                            <tfoot>
-                                                <tr>
-                                                    <td class="bg-gray" style="text-align:right;"></td>
-                                                    <td class="bg-gray" style="text-align:right;"></td>
-                                                    <td class="bg-gray" style="text-align:left;"><b>Total</b></td>
-                                                    <td class="bg-gray" style="text-align:left;" id="txt_total_principle">0.00</td>
-                                                    <td class="bg-gray" style="text-align:left;" id="txt_total_interest">0.00</td>
-                                                    <td class="bg-gray" style="text-align:left;" id="txt_total_monthly">0.00</td>
-                                                    <td class="bg-gray" style="text-align:right;"></td>
-                                                    <td class="bg-gray" style="text-align:right;"></td>
-                                                    <td class="bg-gray" style="text-align:right;"></td>
-                                                    <td class="bg-gray" style="text-align:right;"></td>
-                                                    <td class="bg-gray" style="text-align:right;"></td>
-                                                    <td class="bg-gray" style="text-align:right;"></td>
-                                                    <td class="bg-gray" style="text-align:right;"></td>
-                                                    <td class="bg-gray" style="text-align:right;"></td>
-                                                    <td class="bg-gray" style="text-align:right;"></td>
-                                                    <td class="bg-gray" style="text-align:right;"></td>
-                                                    <td class="bg-gray" style="text-align:right;"></td>
-                                                </tr>
-                                            </tfoot>
-
-                                        </table>
+                                                            }
+                                                        </tbody>
+                                                        <tfoot>
+                                                            <tr>
+                                                                <td class="bg-gray" style="text-align:right;"></td>
+                                                                <td class="bg-gray" style="text-align:right;"></td>
+                                                                <td class="bg-gray" style="text-align:left;"><b>Total</b></td>
+                                                                <td class="bg-gray" style="text-align:left;" id="txt_total_principle">0.00</td>
+                                                                <td class="bg-gray" style="text-align:left;" id="txt_total_interest">0.00</td>
+                                                                <td class="bg-gray" style="text-align:left;" id="txt_total_monthly">0.00</td>
+                                                                <td class="bg-gray" style="text-align:right;"></td>
+                                                                <td class="bg-gray" style="text-align:right;"></td>
+                                                                <td class="bg-gray" style="text-align:right;"></td>
+                                                                <td class="bg-gray" style="text-align:right;"></td>
+                                                                <td class="bg-gray" style="text-align:right;"></td>
+                                                                <td class="bg-gray" style="text-align:right;"></td>
+                                                                <td class="bg-gray" style="text-align:right;"></td>
+                                                                <td class="bg-gray" style="text-align:right;"></td>
+                                                                <td class="bg-gray" style="text-align:right;"></td>
+                                                            </tr>
+                                                        </tfoot>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- /.tab-content -->
                                     </div>
                                 </fieldset>
+
                             </td>
                         </tr>
                     </thead>
@@ -485,40 +628,15 @@
             <div class="box-footer">
                 <button id="btnReject" type="button" class="btn btn-primary btn-flat"
                         style="background-color:red; border-color:red;"
-                        onclick="cmd_save_approval_Restructure('Reject')">
+                        onclick="cmd_save_approval_Reprocessing('Reject')">
                     Reject
                 </button>
 
                 <button id="btnApprove" type="button" class="btn btn-primary btn-flat"
-                        onclick="cmd_save_approval_Restructure('Approve')">
+                        onclick="cmd_save_approval_Reprocessing('Approve')">
                     Approve
                 </button>
             </div>
-
-            <!-- Place this modal once in your page (e.g., just before closing </body> or inside your container) -->
-
-            <div id="columnSettingsModal" style="display:none; position:fixed; top:10%; left:50%; transform:translateX(-50%); background:#fff; width:420px; max-width:90%; border-radius:8px; box-shadow:0 5px 15px rgba(0,0,0,0.3); z-index:9999; font-family:sans-serif;">
-
-                <!-- Modal Header -->
-                <div style="background:#007bff; color:white; padding:12px 16px; border-top-left-radius:8px; border-top-right-radius:8px; display:flex; justify-content:space-between; align-items:center;">
-                    <h5 style="margin:0;"><i class="fa fa-sliders"></i> Column Settings</h5>
-                    <button onclick="closeColumnSettings()" style="background:none; border:none; font-size:20px; color:white; cursor:pointer;"><i class="fa fa-times"></i></button>
-                </div>
-
-                <!-- Modal Body -->
-                <div style="padding:16px;">
-                    <p style="font-weight:bold; margin-bottom:10px; color:#333;">Select columns to display:</p>
-                    <div id="columnCheckboxes" style="max-height:400px; overflow-y:auto; border:1px solid #ddd; padding:10px; border-radius:4px; background:#f9f9f9;"></div>
-
-                    <!-- Modal Footer -->
-                    <div style="text-align:right; margin-top:15px;">
-                        <button class="btn btn-success btn-sm" onclick="saveColumnSettings()"><i class="fa fa-save"></i> Save</button>
-                        <button class="btn btn-secondary btn-sm" onclick="closeColumnSettings()"><i class="fa fa-times-circle"></i> Cancel</button>
-                        <button class="btn btn-warning btn-sm" onclick="resetColumnSettings()"><i class="fa fa-refresh"></i> Reset</button>
-                    </div>
-                </div>
-            </div>
-
         </div>
     </div>
 </div>
@@ -546,6 +664,7 @@
 <div id="alert-container" style="position: fixed; top: 20px; right: 20px; z-index: 9999;"></div>
 
 
+
 <script>
     $(document).ready(function () {
 
@@ -563,18 +682,26 @@
                  $('#btnApprove').hide();
         }
 
-        function sumColumn(className) {
+        function sumColumnInTable(tableId, className) {
             let total = 0;
-            $("." + className).each(function () {
+            $("#" + tableId + " ." + className).each(function () {
                 let val = parseFloat($(this).text().replace(/,/g, ''));
                 if (!isNaN(val)) total += val;
             });
             return total.toFixed(2);
         }
 
-        $('#txt_total_principle').text(sumColumn("principle"));
-        $('#txt_total_interest').text(sumColumn("interest"));
-        $('#txt_total_monthly').text(sumColumn("monthly"));
+
+        // For #table_payment_schedule
+        $('#txt_total_principle').text(sumColumnInTable("table_payment_schedule", "principle"));
+        $('#txt_total_interest').text(sumColumnInTable("table_payment_schedule", "interest"));
+        $('#txt_total_monthly').text(sumColumnInTable("table_payment_schedule", "monthly"));
+
+        // For #table_payment_schedule_AR, if you have separate totals
+        $('#txt_total_principleAR').text(sumColumnInTable("table_payment_schedule_AR", "principle"));
+        $('#txt_total_interestAR').text(sumColumnInTable("table_payment_schedule_AR", "interest"));
+        $('#txt_total_monthlyAR').text(sumColumnInTable("table_payment_schedule_AR", "monthly"));
+
 
         // Load column settings UI
         buildColumnSettingsCheckboxes();
@@ -596,5 +723,3 @@
     }
 
 </script>
-
-

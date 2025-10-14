@@ -7487,6 +7487,7 @@
     <Content Include="Views\sales\PreviewReprocessing.cshtml" />
     <Content Include="Views\amendments\PreviewChangeItem.cshtml" />
     <Content Include="Views\othersales\BuyBackList.cshtml" />
+    <Content Include="Views\sales\PreviewRepocessingApproved.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

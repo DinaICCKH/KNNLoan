@@ -128,7 +128,7 @@ namespace MKL_Web.Controllers
             DateTime fromDate = fdate ?? new DateTime(1999, 1, 1);
             DateTime toDate = tdate ?? new DateTime(1999, 1, 1);
 
-            var result = db.ICC_Get_RepocessingList(
+            var result = db.ICC_Get_RepocessingList_Approved(
                 fromDate,
                 toDate,
                 CreateBy ?? ""

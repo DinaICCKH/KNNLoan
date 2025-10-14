@@ -1,6 +1,6 @@
 ﻿@using MKL_Web.Models;
 @{
-    ViewBag.Title = "Reprocessing";
+    ViewBag.Title = "Repocessing";
     Layout = "~/Views/Shared/_Layout.cshtml";
     List<v_CostCenter> project = ViewBag.project;
     List<v_CostCenter> block = ViewBag.block;
@@ -689,7 +689,7 @@
                                                 <div style="position: relative; overflow: auto; height: 100%; min-height: 30vh ">
                                                     <table class="table" style="margin-bottom: 0px; position: absolute; min-width: 2000px; width: 100%;" id="table_payment_schedule">
 
-                                                        <thead style="margin-bottom: 0px; position: absolute; min-width: 2000px; width: 100%;">
+                                                        <thead style="position:sticky; top: 0; z-index: 1000;">
                                                             <tr class="bg-gray" role="row">
                                                                 <td style="width:1%; text-align:left;"></td>
                                                                 <td style="width:1%; text-align:left;">
@@ -697,23 +697,24 @@
                                                                     <i class='fa fa-circle text-yellow' id='tr_payment_detail_uncheck_all' style='cursor:pointer; display:none' onclick='uncheck_tr_payment_detail()'></i>
                                                                 </td>
                                                                 <td style="width:1%; text-align:left;">#</td>
-                                                                <td style="width: 7%; text-align: left;">DocDate</td>
-                                                                <td style="width: 7%; text-align: left;">DueDate</td>
-                                                                <td style="width: 7%; text-align: left;">Principle</td>
-                                                                <td style="width: 6%; text-align: left;">Interest</td>
-                                                                <td style="width: 7%; text-align: left;">MonthlyPay</td>
-                                                                <td style="width: 6%; text-align: left;">Remain</td>
-                                                                <td style="width: 7%; text-align: left;">Re+Int</td>
-                                                                <td style="width: 6%; text-align: left;">C.Prin</td>
-                                                                <td style="width: 7%; text-align: left;">C.Int</td>
-                                                                <td style="width: 7%; text-align: left; ">C.Princ+Int</td>
-                                                                <td style="width: 5%; text-align: left;">Pay.Type</td>
-                                                                <td style="width: 4%; text-align: left;">APNo</td>
-                                                                <td style="width: 4%; text-align: left;">PayNo</td>
-                                                                <td style="width: 4%; text-align: left;">APNo.Int</td>
-                                                                <td style="width: 4%; text-align: left;">PayNo.Int</td>
-                                                                <td style="width: 10%; text-align: left;">Remark</td>
+                                                                <td style="width:6%; text-align:left;">DocDate</td>
+                                                                <td style="width:6%; text-align:left;">DueDate</td>
+                                                                <td style="width:6%; text-align:left;">Principle</td>
+                                                                <td style="width:5%; text-align:left;">Interest</td>
+                                                                <td style="width:6%; text-align:left;">MonthlyPay</td>
+                                                                <td style="width:5%; text-align:left;">Remain</td>
+                                                                <td style="width:6%; text-align:left;">Re+Int</td>
+                                                                <td style="width:5%; text-align:left;">C.Prin</td>
+                                                                <td style="width:6%; text-align:left;">C.Int</td>
+                                                                <td style="width:6%; text-align:left;">C.Princ+Int</td>
+                                                                <td style="width:5%; text-align:left;">Pay.Type</td>
+                                                                <td style="width:4%; text-align:left;">APNo</td>
+                                                                <td style="width:4%; text-align:left;">PayNo</td>
+                                                                <td style="width:4%; text-align:left;">APNo.Int</td>
+                                                                <td style="width:4%; text-align:left;">PayNo.Int</td>
+                                                                <td style="width:10%; text-align:left;">Remark</td>
                                                             </tr>
+
                                                         </thead>
                                                         <tbody style="vertical-align: middle;"></tbody>
                                                         <tfoot>

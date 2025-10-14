@@ -2007,6 +2007,20 @@ namespace MKL_Web.Controllers
             return View();
         }
 
+
+        public ActionResult PreviewRepocessingApproved(int DocEntry)
+        {
+
+            ViewBag.installment = db.CNInstallmentRows
+                .Where(x => x.BaseEntry == DocEntry)
+                .OrderBy(x => x.PaymentDate)
+                .ToList();
+
+            ViewBag.Header = db.ICC_Get_List_Repocessing_By_ID_Approved(DocEntry).ToList();
+            ViewBag.Checkbutton = db.ICC_Approval_Check_EnableButton("Reprocessing", DocEntry, Session["UCode"].ToString()).ToList();
+            return View();
+        }
+
         public JsonResult save_approval_Reprocessing(SO header)
         {
             string status = "OK";

@@ -701,7 +701,7 @@
 
                         <tr class="change-amount">
                             <td colspan="4">
-                                <fieldset class="scheduler-border">
+                                <fieldset class="scheduler-border" style="padding: 5px">
                                     <legend class="scheduler-border" style="font-weight: bold;">
                                         <span style="cursor: pointer;" onclick="toggleChangeAmountTable()">
                                             Schedule List change amount
@@ -722,15 +722,12 @@
                                         <button type="button" class="btn btn-success btn-flat" id="btn_copy_schedule_to_excel" onclick="copyTableToClipboard('table_payment_schedule_restructureAmt',1,'Reschedule for change amount')">
                                             <i class="fa fa-copy"></i> Copy Table
                                         </button>
-
-
-
                                     </div>
 
                                     <!-- Toggleable content - shown by default -->
-                                    <div id="chnageAmount_table_wrapper" class="row" style="margin:0px;margin-top:10px;margin-left:-10px;">
-                                        <table class="table" style="margin-bottom:0px;" id="table_payment_schedule_restructureAmt">
-                                            <thead>
+                                    <div id="chnageAmount_table_wrapper" class="row" style="margin:0px;margin-top:10px; position: relative; min-height: 30vh; height: 100%; overflow: auto">
+                                        <table class="table" style="margin-bottom: 0px; position: absolute; min-width: 2000px; width: 100%;" id="table_payment_schedule_restructureAmt">
+                                            <thead style="position:sticky; top: 0; z-index: 1000;">
                                                 <tr class="bg-gray" role="row">
                                                     <td style="width:1%; text-align:left;">#</td>
                                                     <td style="width: 9%; text-align: left;">DocDate</td>
