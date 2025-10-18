@@ -811,7 +811,8 @@ namespace MKL_Web.Controllers
             });
         }
 
-        public JsonResult save_payment_shcedule(SO header, List<InstallmentRow> installment_row, List<InstallmentRow> del_list)
+
+        public JsonResult save_payment_shcedule(InstallmentRowDrafH header, List<InstallmentRowDraf> installment_row)
         {
             status = "OK";
             int LastEntry = 0;
@@ -820,141 +821,306 @@ namespace MKL_Web.Controllers
                 var trans = TransWithCommitted();
                 try
                 {
-                    using (trans)
+                    if (header != null)
                     {
-                        if (header != null)
+                        using (trans)
                         {
-                            SO s = db.SOs.Where(a => a.DocEntry == header.DocEntry).FirstOrDefault();
-                            if (s != null)
+
+                            // For Get Approval Template 
+                            var monthlyTotal = installment_row.Sum(x => x.Monthly);
+
+                            var rawResult = db.ICC_ApprovalTempate_Check("LN", "A", monthlyTotal);
+
+                            var list = rawResult.Select(x => new ApprovalTemplate
                             {
-                                s.DocTotalBef = header.DocTotalBef;
-                                s.DiscountAmt = header.DiscountAmt;
-                                s.DiscountPer = header.DiscountPer;
-                                s.Referral = header.Referral;
-                                s.ConPeriod = header.ConPeriod;
-                                s.DocDate = header.DocDate;
-                                s.DueDate = header.DueDate;
-                                s.SubTotal = header.SubTotal;
-                                s.BalanceDue = header.BalanceDue;
-                                s.SAPIntegrationStatus = "Update";
-                                db.SOs.Context.SubmitChanges();
+                                AppStageCode = Convert.ToInt32(x.AppStageCode),
+                                AppTemplateID = x.AppTemplateID,
+                                TemplateDesc = x.TemplateDesc,
+                                Type = x.Type.ToString(),
+                                FromAmt = Convert.ToDecimal(x.FromAmt),
+                                ToAmt = Convert.ToDecimal(x.ToAmt),
+                                DocID = x.DocID,
+                                NextApprover = x.NextApprover
+                            }).ToList();
 
-                                SO1 s_1 = s.SO1s.ToList().LastOrDefault();
-                                if (s_1 != null)
-                                {
-                                    s_1.LineTotal = header.SubTotal;
-                                    s_1.DiscountAmt = header.DiscountAmt;
-                                    s_1.DiscountPer = header.DiscountPer;
-                                    db.SO1s.Context.SubmitChanges();
-                                }
-                                    
-                                InstallmentRow in_row = db.InstallmentRows.Where(a => a.BaseEntry == s.DocEntry && a.BaseLine == s_1.LineNum && a.Method=="B").FirstOrDefault();
-                                if (in_row != null)
-                                {
-                                    //// add old installmentRow to installment row history
-                                    int lastInstanc = (int)(db.InstallmentRowHistories.Where(a => a.BaseLine == header.DocEntry).ToList().LastOrDefault() == null ? 0 : db.InstallmentRowHistories.Where(a => a.BaseLine == header.DocEntry).ToList().LastOrDefault().logInstanc);
-                                    InstallmentRowHistory Hrow = new InstallmentRowHistory();
-                                    Hrow=new InstallmentRowHistory
-                                                {
-                                                    ID = in_row.ID,
-                                                    BaseEntry = in_row.BaseEntry,
-                                                    BaseLine = in_row.BaseLine,
-                                                    VisOrder = in_row.VisOrder,
-                                                    ItemCode = in_row.ItemCode,
-                                                    Principle = in_row.Principle,
-                                                    Interest = in_row.Interest,
-                                                    Monthly = in_row.Monthly,
-                                                    PaymentDate = in_row.PaymentDate,
-                                                    DueDate = in_row.DueDate,
-                                                    Remaining = in_row.Remaining,
-                                                    ReIncloudInter = in_row.ReIncloudInter,
-                                                    RowStatus = in_row.RowStatus,
-                                                    CuInterest = in_row.CuInterest,
-                                                    CuPayment = in_row.CuPayment,
-                                                    FixedPayment = in_row.FixedPayment,
-                                                    ARNo = in_row.ARNo,
-                                                    PaymentNo = in_row.PaymentNo,
-                                                    Method = in_row.Method,
-                                                    InstallmentAmt = in_row.InstallmentAmt,
-                                                    DiscountAmt = in_row.DiscountAmt,
-                                                    DepositAmt = in_row.DepositAmt,
-                                                    AnnualRate = in_row.AnnualRate,
-                                                    PeriodMonths = in_row.PeriodMonths,
-                                                    HouseStatus = in_row.HouseStatus,
-                                                    Remarks = in_row.Remarks,
-                                                    Syn = in_row.Syn,
-                                                    ErrorLog = in_row.ErrorLog,
-                                                    DiscountAmount = in_row.DiscountAmount,
-                                                    DiscountPer = in_row.DiscountPer,
-                                                    SpecialDisAmount = in_row.SpecialDisAmount,
-                                                    SpecialDisPer = in_row.SpecialDisPer,
-                                                    AdditionalDisAmount = in_row.AdditionalDisAmount,
-                                                    AdditionalDisPer = in_row.AdditionalDisPer,
-                                                    ItemName = in_row.ItemName,
-                                                    OcrCode = in_row.OcrCode,
-                                                    OcrCode2 = in_row.OcrCode2,
-                                                    OcrCode3 = in_row.OcrCode3,
-                                                    logInstanc = lastInstanc + 1,
-                                                    HistoryDate = DateTime.Now,
-                                                    ARNoInterest = in_row.ARNoInterest,
-                                                    PaymentNoInterest = in_row.PaymentNoInterest,
-                                                };
 
-                                    in_row.Remaining = (header.SubTotal - s.DepositAmt);
-                                    in_row.ReIncloudInter = in_row.Interest + (header.SubTotal - s.DiscountAmt);
-                                    in_row.DiscountAmount = installment_row[0].DiscountAmount;
-                                    in_row.DiscountAmt = installment_row[0].DiscountAmt;
-                                    in_row.DiscountPer= installment_row[0].DiscountPer;
-                                    in_row.SpecialDisAmount = installment_row[0].SpecialDisAmount;
-                                    in_row.SpecialDisPer = installment_row[0].SpecialDisPer;
-                                    db.InstallmentRows.Context.SubmitChanges();
+                            if (!list.Any())
+                            {
+                                status = "Error: No approval template found.";
+                                return Json(new { status, LastEntry }, JsonRequestBehavior.AllowGet);
+                            }
+                            else
+                            {
+
+                                var AppTemplate = list.FirstOrDefault();
+                                if (AppTemplate != null)
+                                {
+                                    int AppStageCode = AppTemplate.AppStageCode;
+                                    int AppTemplateID = AppTemplate.AppTemplateID;
+                                    string TemplateDesc = AppTemplate.TemplateDesc;
+                                    string Type = AppTemplate.Type;
+                                    decimal FromAmt = AppTemplate.FromAmt;
+                                    decimal ToAmt = AppTemplate.ToAmt;
+                                    string DocID = AppTemplate.DocID;
+                                    string NextApprover = AppTemplate.NextApprover;
+
+                                    if (header == null || installment_row == null)
+                                    {
+                                        status = "blank";
+                                    }
+                                    else
+                                    {
+                                        InstallmentRowDrafH H = new InstallmentRowDrafH();
+                                        H = db.InstallmentRowDrafHs.Where(a => a.DocEntry == header.DocEntry).FirstOrDefault();
+                                        if (H == null)
+                                        {
+                                            H = header;
+                                            H.PostingDate = header.PostingDate;
+                                            H.CreateDate = DateTime.Now;
+                                            H.UpdateDate = DateTime.Now;
+                                            H.CreateBy = Session["UCode"].ToString();
+                                            H.DocNumRef = header.DocNumRef;
+                                            H.Remark = header.Remark;
+                                            H.RestructureOption = header.RestructureOption;
+                                            H.ApprovalStage = AppStageCode.ToString();
+                                            H.NextApprover = NextApprover;
+                                            H.Status = "Draf";
+                                            H.ApprovalTemplate = AppTemplateID.ToString();
+                                            H.DocType = "LN";
+                                            H.EffictiveDate = header.EffictiveDate;
+                                            db.InstallmentRowDrafHs.InsertOnSubmit(H);
+                                            db.InstallmentRowDrafHs.Context.SubmitChanges();
+
+                                            LastEntry = H.DocEntry;
+
+                                            List<InstallmentRowDraf> d = new List<InstallmentRowDraf>();
+                                            installment_row.ForEach(a => a.DocEntry = H.DocEntry);
+                                            d = installment_row;
+                                            db.InstallmentRowDrafs.InsertAllOnSubmit(d);
+                                            db.InstallmentRowDrafs.Context.SubmitChanges();
+
+                                            /// This will be used to update the status of Accrual penalty
+                                            var accrualIDs = installment_row.Select(r => r.BaseEntry).ToList();
+
+                                            var sO = db.SOs.FirstOrDefault(a => accrualIDs.Contains(a.DocEntry));
+
+                                            if (sO != null)
+                                            {
+                                                sO.LastError = "This document is linked with pending approve Reschedule draft No: " + LastEntry + " -> Reference: " + header.DocNumRef;
+                                                sO.Frozenfor = "Y";
+
+                                                db.SOs.Context.SubmitChanges(); // Commit change
+                                            }
+                                            else
+                                            {
+                                                status = "Error";
+                                            }
+                                        }
+
+                                        // For Update Generate approval Document Generate
+                                        var resut = db.ICC_ApprovalDocument_Generate(AppStageCode, LastEntry, "Reschedule");
+
+                                        var list2 = resut.Select(x => new ExcecResult
+                                        {
+                                            Result = x.Result
+
+                                        }).ToList();
+                                        var resultvalue = list2.FirstOrDefault();
+                                        if (resultvalue.Result != "Success")
+                                        {
+                                            status = "Fail";
+                                        }
+
+                                        var link = "/amendments/PreviewReschedule?DocEntry=" + LastEntry;
+
+                                        // For Update Generate approval ALERT Document Generate
+                                        var resut3 = db.ICC_ApprovalDocumentAlert_Generate(AppStageCode, LastEntry, "Loan Installment", AppTemplateID.ToString(), Session["UCode"].ToString(), link, NextApprover);
+
+                                        var list3 = resut3.Select(x => new ExcecResult
+                                        {
+                                            Result = x.Result
+
+                                        }).ToList();
+                                        var resultvalue3 = list3.FirstOrDefault();
+                                        if (resultvalue3.Result != "Success")
+                                        {
+                                            status = "Fail";
+                                        }
+                                    }
+
+
+                                    if (status == "OK")
+                                    {
+                                        trans.Complete();
+                                        trans.Dispose();
+                                    }
+                                    else
+                                    {
+                                        status = "Error";
+                                    }
                                 }
                             }
                         }
-                        if (del_list != null)
-                        {
-                            InstallmentRow del = new InstallmentRow();
-                            foreach(InstallmentRow a in del_list)
-                            {
-                                del = new InstallmentRow();
-                                del = db.InstallmentRows.Where(b => b.ID == a.ID && b.RowStatus == "O").FirstOrDefault();
-                                db.InstallmentRows.DeleteOnSubmit(del);
-                                db.InstallmentRows.Context.SubmitChanges();
-                            }
-                        }
-                         if (installment_row != null)
-                        {
-                            db.InstallmentRows.InsertAllOnSubmit(installment_row);
-                            db.InstallmentRows.Context.SubmitChanges();
-                        }
-                        SO so = db.SOs.Where(a => a.DocEntry == installment_row[0].BaseEntry).FirstOrDefault();
-                        so.Reason = "SLD";
-                        so.DocStatus = "Sold";
-                        db.SOs.Context.SubmitChanges();
-
-                        SO1 s1 = db.SO1s.Where(a => a.DocEntry == installment_row[0].BaseEntry && a.LineNum==installment_row[0].BaseLine).ToList().LastOrDefault();
-                        s1.Reason = "SLD";
-                        s1.LineStatus = "Sold";
-                        db.SO1s.Context.SubmitChanges();
-
-                        //Update SAP AR Credit Memo
-                        db.ICC_UpdateSAPDocumentStatus("LoanScheduleGenerate",header.DocEntry.ToString(),"");
-                        db.SO1s.Context.SubmitChanges();
-
-                        if (status == "OK")
-                        {
-                            trans.Complete();
-                            trans.Dispose();
-                        }
+                    }
+                    else
+                    {
+                        status = "Error";
                     }
                 }
                 catch (Exception ex)
                 {
                     status = "Failed";
+                    //ErrorDes = ex.Message;
                 }
             }
-            return Json(new { status = status, LastEntry = LastEntry },JsonRequestBehavior.AllowGet);
+            return Json(new { status = status, LastEntry = LastEntry }, JsonRequestBehavior.AllowGet);
         }
+
+
+        //public JsonResult save_payment_shcedule(SO header, List<InstallmentRow> installment_row, List<InstallmentRow> del_list)
+        //{
+        //    status = "OK";
+        //    int LastEntry = 0;
+        //    if (status == "OK")
+        //    {
+        //        var trans = TransWithCommitted();
+        //        try
+        //        {
+        //            using (trans)
+        //            {
+        //                if (header != null)
+        //                {
+        //                    SO s = db.SOs.Where(a => a.DocEntry == header.DocEntry).FirstOrDefault();
+        //                    if (s != null)
+        //                    {
+        //                        s.DocTotalBef = header.DocTotalBef;
+        //                        s.DiscountAmt = header.DiscountAmt;
+        //                        s.DiscountPer = header.DiscountPer;
+        //                        s.Referral = header.Referral;
+        //                        s.ConPeriod = header.ConPeriod;
+        //                        s.DocDate = header.DocDate;
+        //                        s.DueDate = header.DueDate;
+        //                        s.SubTotal = header.SubTotal;
+        //                        s.BalanceDue = header.BalanceDue;
+        //                        s.SAPIntegrationStatus = "Update";
+        //                        db.SOs.Context.SubmitChanges();
+
+        //                        SO1 s_1 = s.SO1s.ToList().LastOrDefault();
+        //                        if (s_1 != null)
+        //                        {
+        //                            s_1.LineTotal = header.SubTotal;
+        //                            s_1.DiscountAmt = header.DiscountAmt;
+        //                            s_1.DiscountPer = header.DiscountPer;
+        //                            db.SO1s.Context.SubmitChanges();
+        //                        }
+                                    
+        //                        InstallmentRow in_row = db.InstallmentRows.Where(a => a.BaseEntry == s.DocEntry && a.BaseLine == s_1.LineNum && a.Method=="B").FirstOrDefault();
+        //                        if (in_row != null)
+        //                        {
+        //                            //// add old installmentRow to installment row history
+        //                            int lastInstanc = (int)(db.InstallmentRowHistories.Where(a => a.BaseLine == header.DocEntry).ToList().LastOrDefault() == null ? 0 : db.InstallmentRowHistories.Where(a => a.BaseLine == header.DocEntry).ToList().LastOrDefault().logInstanc);
+        //                            InstallmentRowHistory Hrow = new InstallmentRowHistory();
+        //                            Hrow=new InstallmentRowHistory
+        //                                        {
+        //                                            ID = in_row.ID,
+        //                                            BaseEntry = in_row.BaseEntry,
+        //                                            BaseLine = in_row.BaseLine,
+        //                                            VisOrder = in_row.VisOrder,
+        //                                            ItemCode = in_row.ItemCode,
+        //                                            Principle = in_row.Principle,
+        //                                            Interest = in_row.Interest,
+        //                                            Monthly = in_row.Monthly,
+        //                                            PaymentDate = in_row.PaymentDate,
+        //                                            DueDate = in_row.DueDate,
+        //                                            Remaining = in_row.Remaining,
+        //                                            ReIncloudInter = in_row.ReIncloudInter,
+        //                                            RowStatus = in_row.RowStatus,
+        //                                            CuInterest = in_row.CuInterest,
+        //                                            CuPayment = in_row.CuPayment,
+        //                                            FixedPayment = in_row.FixedPayment,
+        //                                            ARNo = in_row.ARNo,
+        //                                            PaymentNo = in_row.PaymentNo,
+        //                                            Method = in_row.Method,
+        //                                            InstallmentAmt = in_row.InstallmentAmt,
+        //                                            DiscountAmt = in_row.DiscountAmt,
+        //                                            DepositAmt = in_row.DepositAmt,
+        //                                            AnnualRate = in_row.AnnualRate,
+        //                                            PeriodMonths = in_row.PeriodMonths,
+        //                                            HouseStatus = in_row.HouseStatus,
+        //                                            Remarks = in_row.Remarks,
+        //                                            Syn = in_row.Syn,
+        //                                            ErrorLog = in_row.ErrorLog,
+        //                                            DiscountAmount = in_row.DiscountAmount,
+        //                                            DiscountPer = in_row.DiscountPer,
+        //                                            SpecialDisAmount = in_row.SpecialDisAmount,
+        //                                            SpecialDisPer = in_row.SpecialDisPer,
+        //                                            AdditionalDisAmount = in_row.AdditionalDisAmount,
+        //                                            AdditionalDisPer = in_row.AdditionalDisPer,
+        //                                            ItemName = in_row.ItemName,
+        //                                            OcrCode = in_row.OcrCode,
+        //                                            OcrCode2 = in_row.OcrCode2,
+        //                                            OcrCode3 = in_row.OcrCode3,
+        //                                            logInstanc = lastInstanc + 1,
+        //                                            HistoryDate = DateTime.Now,
+        //                                            ARNoInterest = in_row.ARNoInterest,
+        //                                            PaymentNoInterest = in_row.PaymentNoInterest,
+        //                                        };
+
+        //                            in_row.Remaining = (header.SubTotal - s.DepositAmt);
+        //                            in_row.ReIncloudInter = in_row.Interest + (header.SubTotal - s.DiscountAmt);
+        //                            in_row.DiscountAmount = installment_row[0].DiscountAmount;
+        //                            in_row.DiscountAmt = installment_row[0].DiscountAmt;
+        //                            in_row.DiscountPer= installment_row[0].DiscountPer;
+        //                            in_row.SpecialDisAmount = installment_row[0].SpecialDisAmount;
+        //                            in_row.SpecialDisPer = installment_row[0].SpecialDisPer;
+        //                            db.InstallmentRows.Context.SubmitChanges();
+        //                        }
+        //                    }
+        //                }
+        //                if (del_list != null)
+        //                {
+        //                    InstallmentRow del = new InstallmentRow();
+        //                    foreach(InstallmentRow a in del_list)
+        //                    {
+        //                        del = new InstallmentRow();
+        //                        del = db.InstallmentRows.Where(b => b.ID == a.ID && b.RowStatus == "O").FirstOrDefault();
+        //                        db.InstallmentRows.DeleteOnSubmit(del);
+        //                        db.InstallmentRows.Context.SubmitChanges();
+        //                    }
+        //                }
+        //                 if (installment_row != null)
+        //                {
+        //                    db.InstallmentRows.InsertAllOnSubmit(installment_row);
+        //                    db.InstallmentRows.Context.SubmitChanges();
+        //                }
+        //                SO so = db.SOs.Where(a => a.DocEntry == installment_row[0].BaseEntry).FirstOrDefault();
+        //                so.Reason = "SLD";
+        //                so.DocStatus = "Sold";
+        //                db.SOs.Context.SubmitChanges();
+
+        //                SO1 s1 = db.SO1s.Where(a => a.DocEntry == installment_row[0].BaseEntry && a.LineNum==installment_row[0].BaseLine).ToList().LastOrDefault();
+        //                s1.Reason = "SLD";
+        //                s1.LineStatus = "Sold";
+        //                db.SO1s.Context.SubmitChanges();
+
+        //                //Update SAP AR Credit Memo
+        //                db.ICC_UpdateSAPDocumentStatus("LoanScheduleGenerate",header.DocEntry.ToString(),"");
+        //                db.SO1s.Context.SubmitChanges();
+
+        //                if (status == "OK")
+        //                {
+        //                    trans.Complete();
+        //                    trans.Dispose();
+        //                }
+        //            }
+        //        }
+        //        catch (Exception ex)
+        //        {
+        //            status = "Failed";
+        //        }
+        //    }
+        //    return Json(new { status = status, LastEntry = LastEntry },JsonRequestBehavior.AllowGet);
+        //}
         public JsonResult save_hold_unit(List<HoldUnit> hold_List)
         {
             try
@@ -1459,7 +1625,24 @@ namespace MKL_Web.Controllers
 
             return Json(new { status, lastEntry });
         }
+        public ActionResult LoanInstallmentApprovalListing(string Status = "Draf", DateTime? fdate = null, DateTime? tdate = null, string CreateBy = "")
+        {
+            // Use default date if null
+            DateTime fromDate = fdate ?? new DateTime(1999, 1, 1);
+            DateTime toDate = tdate ?? new DateTime(1999, 1, 1);
 
+            var result = db.ICC_Get_List_Approval_LoanInstallment(
+                Status ?? "Draf",
+                fromDate,
+                toDate,
+                CreateBy ?? ""
+            ).ToList();
+
+
+            ViewBag.Listing = result;
+
+            return View();
+        }
         public ActionResult LoanListing()
         {
             ViewBag.ChangeOwnerApporovalListing = db.ICC_Get_List_Loan(

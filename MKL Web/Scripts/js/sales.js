@@ -3446,7 +3446,7 @@ function cmd_save_payment_shcedule() {
 
         var head = {
             DocEntry: $("#txt_so_entry").val(),
-            DocDate: docdate[2] + "/" + docdate[1] + "/" + docdate[0],
+            PostingDate: docdate[2] + "/" + docdate[1] + "/" + docdate[0],
             DueDate: reqdate[2] + "/" + reqdate[1] + "/" + reqdate[0],
             CardCode: $("#txt_card_code").val(),
             CardName: $("#txt_card_name").val(),
