@@ -1,0 +1,65 @@
+﻿
+@using MKL_Web.Models;
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    string pagename = ViewBag.Title;
+    List<USR> usrlist = ViewBag.usrlist;
+    List<PermissionRole> permission = ViewBag.permission;
+    PermissionRole role = null;
+}
+<head>
+    <title>@ViewBag.Title</title>
+</head>
+<div class="row">
+    <section class="content-header content-header-title">
+        <h1>@pagename</h1>
+        @Html.ActionLink("Back to Admin", "admin", "admin")
+    </section>
+    <!-- left column -->
+    <div class="col-md-12">
+        <!-- general form elements -->
+        <div class="box box-primary">
+            <div class="table-responsive">
+                <div class="btn-group-horizontal col-md-1 clszeropadding-left padding-top-button">
+                    @Html.ActionLink("Add User", "newacct", "admin", new { @class = "btn btn-block btn-info btn-flat" })
+                </div>
+                <table id="table_admin_main_menu" class="table table-bordered table-hover dataTable no-footer" role="grid">
+                    <thead>
+                        <tr class="bg-gray" role="row">
+                            <th class="sorting_disabled" rowspan="1" colspan="1" style="width: 10%">User Code</th>
+                            <th class="sorting_disabled" rowspan="1" colspan="1" style="width: 20%">Full Name</th>
+                            <th class="sorting_disabled" rowspan="1" colspan="1" style="width: 10%">Role</th>
+                            <th class="sorting_disabled" rowspan="1" colspan="1" style="width: 10%">Gender</th>
+                            <th class="sorting_disabled" rowspan="1" colspan="1" style="width: 10%">Phone</th>
+                            <th class="sorting_disabled" rowspan="1" colspan="1" style="width: 15%">Email</th>
+                            <th class="sorting_disabled" rowspan="1" colspan="1" style="width: 10%">Status</th>
+                            <th class="sorting_disabled" rowspan="1" colspan="1">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{
+                            foreach (var x in usrlist)
+                            {
+                                role = permission.Where(y => y.PerRoleCode == x.PerRoleCode).FirstOrDefault();
+                                <tr role="row" class="odd">
+                                    <td>@x.UserCode</td>
+                                    <td>@x.UserName</td>
+                                    <td>@role.PerRoleDes</td>
+                                    <td>@x.Gender</td>
+                                    <td>@x.Phone1</td>
+                                    <td>@x.Email</td>
+                                    <td>@x.UserStatus</td>
+                                    <td>
+                                        <span class="label label-warning" style="cursor:pointer" onclick="cmd_save_admin('resetpassword','@x.UserCode')">Reset Password</span>|@Html.ActionLink("Edit", "editacct", "admin", new { acct = x.UserCode }, new { @class = "label label-danger" })
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+

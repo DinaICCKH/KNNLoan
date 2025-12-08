@@ -1,0 +1,59 @@
+﻿@page {
+    size: A4 portrait;
+    margin: 20mm;
+}
+@media print {
+    .btn-print {
+        display: none;
+    }
+}
+
+@media print {
+    body {
+        font-size: 12px !important;
+        font-family: 'Khmer OS Battambang', serif !important;
+    }
+
+    table {
+        font-size: 12px !important;
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    th, td {
+        padding: 4px !important;
+        font-size: 12px !important;
+    }
+
+    .btn-print {
+        display: none !important; /* Hide print and export buttons in PDF */
+    }
+
+    .page-number {
+        position: fixed;
+        bottom: 10mm;
+        right: 10mm;
+        font-size: 12px;
+    }
+}
+
+@media print {
+    body {
+        zoom: 0.7;
+        transform: scale(0.7);
+        transform-origin: top left;
+    }
+}
+@media print {
+    .btn-print,
+    .btn-export,
+    .print-reminder,
+    .page-footer {
+        display: none !important;
+    }
+
+    body {
+        margin: 0;
+        padding: 0;
+    }
+}

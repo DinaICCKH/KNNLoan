@@ -1,0 +1,184 @@
+﻿@using MKL_Web.Models;
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    string pagename = ViewBag.Title;
+    string adminpage = "";
+    List<Main> mainmenu = ViewBag.mainmenu;
+    List<Sub> submenu = ViewBag.submenu;
+    List<Cntroller> conlist = ViewBag.controller;
+    List<ControllerAction> conaction = ViewBag.controlleraction;
+}
+<head>
+    <title>@ViewBag.Title</title>
+</head>
+<div class="row">
+    <select id="cbo_admin_sub_menu_main_menu" style="display:none">
+        @{
+            foreach (var x in mainmenu)
+            {
+                <option value="@x.MainCode">@x.MainName</option>
+            }
+        }
+    </select>
+    <select id="cbo_admin_sub_menu_controller" style="display:none">
+        @{
+            foreach (var x in conlist)
+            {
+                <option value="@x.ControllerCode">@x.ControllerName</option>
+            }
+        }
+    </select>
+
+    <section class="content-header content-header-title">
+        <h1>@pagename</h1>
+        @Html.ActionLink("Back to Admin", "admin", "admin")|@Html.ActionLink("Create Main Menu", "mainmenu", "admin")
+    </section>
+    <!-- left column -->
+    <div class="col-md-12">
+        <!-- general form elements -->
+        <div class="box box-primary">
+            <div class="table-responsive">
+                <table id="table_admin_sub_menu" class="table table-bordered table-hover dataTable no-footer" role="grid">
+                    <thead>
+                        <tr class="bg-gray" role="row">
+                            <th class="sorting_disabled" rowspan="1" colspan="1" style="width: 5%">Order</th>
+                            <th class="sorting_disabled" rowspan="1" colspan="1" style="width: 17%">Sub Name</th>
+                            <th class="sorting_disabled" rowspan="1" colspan="1" style="width: 13%">Under Main</th>
+                            <th class="sorting_disabled" rowspan="1" colspan="1" style="width: 7%">Level</th>
+                            <th class="sorting_disabled" rowspan="1" colspan="1" style="width: 13%">Under Sub</th>
+                            <th class="sorting_disabled" rowspan="1" colspan="1" style="width: 15%">Link To</th>
+                            <th class="sorting_disabled" rowspan="1" colspan="1" style="width: 15%">Link Action</th>
+                            <th style="width:150px" class="sorting_disabled" rowspan="1" colspan="1">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{
+                            int rowindex = 1;
+                            foreach (var x in submenu)
+                            {
+                        <tr role="row" class="odd">
+                            <td style="display:none">
+                                <input type="text" class="form-control" placeholder="Sub Code" readonly="readonly" value="@x.SubCode">
+                            </td>
+                            <td>
+                                <input type="number" class="form-control" placeholder="Order" value="@x.VisOrder">
+                            </td>
+                            <td>
+                                <input type="text" class="form-control" placeholder="Sub Name" value="@x.SubName">
+                            </td>
+                            <td>
+                                <select class="form-control" name="main" id="cbo_admin_sub_menu_main_code_@rowindex">
+                                    @{
+                                        foreach (var y in mainmenu)
+                                        {
+                                            if (x.MainCode == y.MainCode)
+                                            {
+                                                <option value="@x.MainCode" selected>@y.MainName</option>
+                                            }
+                                            else
+                                            {
+                                                <option value="@y.MainCode">@y.MainName</option>
+                                            }
+                                        }
+                                    }
+                                </select>
+                            </td>
+                            <td>
+                                <select class="form-control" name="level" onchange="cbo_admin_sub_menu_change(1,@rowindex)" id="cbo_admin_sub_menu_under_level_action_@rowindex">
+                                    @{
+                                        if (x.Levels == 1)
+                                        {
+                                            <option value="1" selected>1</option>
+                                            <option value="2">2</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="1">1</option>
+                                            <option value="2" selected>2</option>
+                                        }
+                                    }
+
+                                </select>
+                            </td>
+                            <td>
+                                <select class="form-control" name="under" id="cbo_admin_sub_menu_under_sub_action_@rowindex">
+                                    @{
+                                        if (x.Levels == 2)
+                                        {
+                                            foreach (var y in submenu.Where(a => a.Levels == 1 && a.MainCode==x.MainCode).ToList())
+                                            {
+                                                if (y.SubCode == x.FatherCode)
+                                                {
+                                                    <option value="@x.FatherCode" selected>@y.SubName</option>
+                                                }
+                                                else
+                                                {
+                                                    <option value="@y.SubCode">@y.SubName</option>
+                                                }
+                                            }
+                                        }
+                                    }
+                                </select>
+                            </td>
+                            <td>
+                                <select class="form-control" name="controller" onchange="cbo_admin_sub_menu_change(2,@rowindex)" id="cbo_admin_sub_menu_link_to_action_@rowindex">
+                                    @{
+                                        <option value=""></option>
+                                        foreach (var y in conlist.Where(a=>a.MainCode==x.MainCode).ToList())
+                                        {
+                                            if (x.ControllerCode == y.ControllerCode)
+                                            {
+                                                <option value="@x.ControllerCode" selected>@y.ControllerName</option>
+                                            }
+                                            else
+                                            {
+                                                <option value="@y.ControllerCode">@y.ControllerName</option>
+                                            }
+                                        }
+                                    }
+                                </select>
+                            </td>
+                            <td>
+                                <select class="form-control" name="action" id="cbo_admin_sub_menu_link_action_@rowindex">
+                                    @{
+                                        foreach (var y in conaction.Where(a => a.ControllerCode == x.ControllerCode).ToList())
+                                        {
+                                            if (y.ActionCode == x.ControllerAction)
+                                            {
+                                                <option value="@x.ControllerAction" selected>@y.Remark</option>
+                                            }
+                                            else
+                                            {
+                                                <option value="@y.ActionCode">@y.Remark</option>
+                                            }
+                                        }
+                                    }
+                                </select>
+                            </td>
+                            <td>
+                                <select class="form-control" name="status">
+                                    <option value="Active">Active</option>
+                                    <option value="Inactive">Inactive</option>
+                                </select>
+                            </td>
+                        </tr>
+                                rowindex++;
+                            }
+                        }
+
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td>
+                                <button type="button" style="padding-left:10%;" class="btn btn-block btn-info btn-flat" id="cmd_pa_submit" onclick="add_new_sub_menu()">Add Menu</button>
+                            </td>
+                            <td colspan="7">
+                                <button type="button" style="width:10%;" class="btn btn-block btn-primary btn-flat" id="cmd_pa_submit" onclick="cmd_save_admin('submenu')">Submit</button>
+                            </td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

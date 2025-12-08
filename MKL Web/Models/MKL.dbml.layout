@@ -550,14 +550,14 @@
         <classShapeMoniker Id="c035f175-7ffc-4f77-a95a-be586a39dcb0" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(7.49273076923077 : 9.075); (7.875 : 9.45726923076923); (7.875 : 10.85); (8.07291666666667 : 10.85 : JumpStart); (8.23958333333333 : 10.85 : JumpEnd); (8.625 : 10.85)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+    <associationConnector edgePoints="[(7.49273076923077 : 9.075); (7.875 : 9.45726923076923); (7.875 : 10.85); (8.625 : 10.85)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/MKLDataContext/AppTemplate/AppTemplate_AppTemplateOcrCode" />
       <nodes>
         <classShapeMoniker Id="e4bcefbb-d3e9-42ce-aee2-b9f6d9ce052c" />
         <classShapeMoniker Id="bc71d2d3-4f34-48c3-8070-6624fbb74eb4" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(6.46511288461538 : 9.075); (6.46511288461538 : 10.225); (7.79166666666667 : 10.225 : JumpStart); (7.95833333333333 : 10.225 : JumpEnd); (8.07291666666667 : 10.225 : JumpStart); (8.23958333333333 : 10.225 : JumpEnd); (8.5 : 10.225)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+    <associationConnector edgePoints="[(6.46511288461538 : 9.075); (6.46511288461538 : 10.225); (7.79166666666667 : 10.225 : JumpStart); (7.95833333333333 : 10.225 : JumpEnd); (8.5 : 10.225)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/MKLDataContext/AppTemplate/AppTemplate_AppTemplateInit" />
       <nodes>
         <classShapeMoniker Id="e4bcefbb-d3e9-42ce-aee2-b9f6d9ce052c" />

@@ -192,8 +192,20 @@ namespace MKL_Web.Controllers
                                 DocID = x.DocID
                             }).ToList();
 
+                            var result = db.InstallmentRows.Where(x => (x.ARNo != -1 && x.PaymentNo == -1) || ( x.ARNo == -1 && x.PaymentNo != -1)).ToList();
+                            var checkInterest = db.InstallmentRows.Where(x => (x.ARNoInterest != -1 && x.PaymentNoInterest == -1) || (x.ARNoInterest == -1 && x.PaymentNoInterest != -1)).ToList();
+                            if (result.Any())
+                            {
+                                status = "Error: Cancel Generated AR Invoice in SAP first before change owner.";
+                                return Json(new { status, LastEntry }, JsonRequestBehavior.AllowGet);
+                            }
+                            if (checkInterest.Any())
+                            {
+                                status = "Error: Cancel Generated AR Invoice interest in SAP first before change owner.";
+                                return Json(new { status, LastEntry }, JsonRequestBehavior.AllowGet);
+                            }
 
-                            if (!list.Any())
+                            if (!list.Any() || result.Any())
                             {
                                 status = "Error: No approval template found.";
                                 return Json(new { status, LastEntry }, JsonRequestBehavior.AllowGet);
@@ -259,9 +271,6 @@ namespace MKL_Web.Controllers
                                             status = "Fail";
                                         }
                                     }
-
-
-                                    
 
                                     if (status == "OK")
                                     {

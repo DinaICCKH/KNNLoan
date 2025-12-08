@@ -1,5 +1,11 @@
 ﻿
 //Client Action
+
+/// global variable
+
+let payment_option;
+
+
 function get_nextd_date(date) {
     var date = date.split("-");
     var docdate = new Date(date[2] + "/" + date[1] + "/" + date[0]);
@@ -307,7 +313,9 @@ function cmd_payment_generate() {
     }
     else {
         var allow = 0;
-        switch ($("#cbo_payment_option").val()) {
+        const cb_payment_option = $("#cbo_payment_option").val()
+        payment_option = cb_payment_option
+        switch (cb_payment_option) {
             case "B":
                 if (parseFloat(convert2digit($("#txt_deposit_amount").val())) == 0) {
                     alert("Deposit Amount is required");
@@ -3426,7 +3434,7 @@ function cmd_save_payment_shcedule() {
         ShowAlertCus("No data to save!", "warning");
     } else if (parseFloat(remainingAmt) != 0) {
         ShowAlertCus("Remaining amount must equal to zero!", "warning");
-    } else {
+    } else {    
         
         var installmentRow_List = [];
         var del_list = [];
@@ -3446,7 +3454,7 @@ function cmd_save_payment_shcedule() {
 
         var head = {
             DocEntry: $("#txt_so_entry").val(),
-            DocDate: docdate[2] + "/" + docdate[1] + "/" + docdate[0],
+            PostingDate: docdate[2] + "/" + docdate[1] + "/" + docdate[0],
             DueDate: reqdate[2] + "/" + reqdate[1] + "/" + reqdate[0],
             CardCode: $("#txt_card_code").val(),
             CardName: $("#txt_card_name").val(),
@@ -3459,10 +3467,13 @@ function cmd_save_payment_shcedule() {
             DocTotalBef: befDis,
             CreatedBy: $("#txt_shared_userid").val(),
             Referral: ($("#txt_referral").val() || "-1"),
-            ConPeriod: 1
+            ConPeriod: 1,
+            Rate: $("#txt_installment_rate").val(),
+            PeriodM: $("#txt_period").val(),
+            StartPayDate: $("#txt_start_payment").val(),
+            DocNumRef: $("#txt_doc_num").val(),
+            RestructureOption: payment_option  // global variable
         };
-
-
 
         $("#table_payment_schedule >tbody >tr").each(function (index) {
             index++;
@@ -4942,6 +4953,45 @@ function cmd_save_approval_Reschedule(Type) {
 
 }
 
+function cmd_save_approval_Loan(Type) {
+
+    var head = {
+        DocEntry: $("#txt_draf_ID").val(),
+        Comment: $("#txt_approverComment").val(),
+        DocStatus: Type
+    };
+    $.ajax({
+        contentType: 'application/json; charset=utf-8',
+        dataType: 'json',
+        type: 'POST',
+        url: '/sales/save_approval_loan',
+        data: JSON.stringify(
+            {
+                'header': head
+            }),
+        beforeSend: function () {
+            $("#loading").show();
+        },
+        complete: function () {
+            $("#loading").hide();
+        },
+        success: function (data) {
+            if (data.status === "OK") {
+                ShowAlertCus("Update Record was saved", "success");
+
+                setTimeout(function () {
+                    window.location.href = "/sales/LoanInstallmentApprovalListing";
+                }, 1500); // Wait 1.5 seconds before redirect
+            } else {
+                ShowAlertCus("Error while saving", "danger");
+            }
+        },
+
+        failure: function (response) {
+            $('#result').html(response);
+        }
+    });
+}
 function cmd_save_approval_Reprocessing(Type) {
 
     var head = {
@@ -4991,7 +5041,10 @@ function cmd_save_change_item() {
         ShowAlertCus("No data to save!", "warning");
     } else if (parseFloat(remainingAmt) < 0) {
         ShowAlertCus("Remaining amount less than zero!", "warning");
-    } else {
+    } else if (parseFloat(remainingAmt) > 0) {
+        ShowAlertCus("Remaining amount large than zero!", "warning");
+    }
+    else {
         var docdate = $('#txt_doc_date').val().trim().split("-");
         var reqdate = $('#txt_due_date').val().trim().split("-");
         var installmentRow_List = [];

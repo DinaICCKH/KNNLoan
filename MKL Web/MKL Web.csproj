@@ -7324,7 +7324,6 @@
     <None Include="Models\SAP.dbml.layout">
       <DependentUpon>SAP.dbml</DependentUpon>
     </None>
-    <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\cdnjspdfmake0.2.7.js" />
     <Content Include="Scripts\cdnjvfs_fonts0.2.7.js" />
@@ -7487,10 +7486,17 @@
     <Content Include="Views\sales\PreviewReprocessing.cshtml" />
     <Content Include="Views\amendments\PreviewChangeItem.cshtml" />
     <Content Include="Views\othersales\BuyBackList.cshtml" />
+<<<<<<< HEAD
     <Content Include="Views\sales\PreviewRepocessingApproved.cshtml" />
+=======
+    <Content Include="Views\sales\PreviewReprocessingAdd.cshtml" />
+    <Content Include="Views\sales\LoanInstallmentApprovalListing.cshtml" />
+    <Content Include="Views\sales\PreviewLoanDraf.cshtml" />
+>>>>>>> c5f29b1 (update v2)
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Properties\PublishProfiles\" />
     <Folder Include="Views\getData\" />
   </ItemGroup>
   <ItemGroup>

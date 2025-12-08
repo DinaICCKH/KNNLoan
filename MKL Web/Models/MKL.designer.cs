@@ -1190,6 +1190,7 @@ namespace MKL_Web.Models
 			return ((ISingleResult<ICC_Get_RepocessingListResult>)(result.ReturnValue));
 		}
 		
+<<<<<<< HEAD
 		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.ICC_Get_RepocessingList_Approved")]
 		public ISingleResult<ICC_Get_RepocessingList_ApprovedResult> ICC_Get_RepocessingList_Approved([global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Date")] System.Nullable<System.DateTime> fdate, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Date")] System.Nullable<System.DateTime> tdate, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="CreateBy", DbType="NVarChar(250)")] string createBy)
 		{
@@ -1202,6 +1203,27 @@ namespace MKL_Web.Models
 		{
 			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), docEntry);
 			return ((ISingleResult<ICC_Get_List_Repocessing_By_ID_ApprovedResult>)(result.ReturnValue));
+=======
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.ICC_Get_List_Approval_LoanInstallment")]
+		public ISingleResult<ICC_Get_List_Approval_LoanInstallmentResult> ICC_Get_List_Approval_LoanInstallment([global::System.Data.Linq.Mapping.ParameterAttribute(Name="Status", DbType="NVarChar(50)")] string status, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Date")] System.Nullable<System.DateTime> fdate, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Date")] System.Nullable<System.DateTime> tdate, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="CreateBy", DbType="NVarChar(250)")] string createBy)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), status, fdate, tdate, createBy);
+			return ((ISingleResult<ICC_Get_List_Approval_LoanInstallmentResult>)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.ICC_Get_List_LoanInstallment_By_ID")]
+		public ISingleResult<ICC_Get_List_LoanInstallment_By_IDResult> ICC_Get_List_LoanInstallment_By_ID([global::System.Data.Linq.Mapping.ParameterAttribute(Name="DocEntry", DbType="Int")] System.Nullable<int> docEntry)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), docEntry);
+			return ((ISingleResult<ICC_Get_List_LoanInstallment_By_IDResult>)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.ICC_Approval_LoanDraf_Submit_Doc")]
+		public ISingleResult<ICC_Approval_LoanDraf_Submit_DocResult> ICC_Approval_LoanDraf_Submit_Doc([global::System.Data.Linq.Mapping.ParameterAttribute(Name="AppStatus", DbType="NVarChar(50)")] string appStatus, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Approver", DbType="NVarChar(50)")] string approver, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="ID", DbType="Int")] System.Nullable<int> iD, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Comment", DbType="NVarChar(MAX)")] string comment)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), appStatus, approver, iD, comment);
+			return ((ISingleResult<ICC_Approval_LoanDraf_Submit_DocResult>)(result.ReturnValue));
+>>>>>>> c5f29b1 (update v2)
 		}
 	}
 	
@@ -46349,7 +46371,11 @@ namespace MKL_Web.Models
 		}
 	}
 	
+<<<<<<< HEAD
 	public partial class ICC_Get_RepocessingList_ApprovedResult
+=======
+	public partial class ICC_Get_List_Approval_LoanInstallmentResult
+>>>>>>> c5f29b1 (update v2)
 	{
 		
 		private int _DocEntry;
@@ -46358,8 +46384,11 @@ namespace MKL_Web.Models
 		
 		private string _DocNumRef;
 		
+<<<<<<< HEAD
 		private string _RestructureOption;
 		
+=======
+>>>>>>> c5f29b1 (update v2)
 		private string _ApprovalStage;
 		
 		private string _TemplateDesc;
@@ -46374,7 +46403,11 @@ namespace MKL_Web.Models
 		
 		private string _Remark;
 		
+<<<<<<< HEAD
 		public ICC_Get_RepocessingList_ApprovedResult()
+=======
+		public ICC_Get_List_Approval_LoanInstallmentResult()
+>>>>>>> c5f29b1 (update v2)
 		{
 		}
 		
@@ -46394,7 +46427,11 @@ namespace MKL_Web.Models
 			}
 		}
 		
+<<<<<<< HEAD
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PostingDate", DbType="Date")]
+=======
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PostingDate", DbType="DateTime")]
+>>>>>>> c5f29b1 (update v2)
 		public System.Nullable<System.DateTime> PostingDate
 		{
 			get
@@ -46410,7 +46447,11 @@ namespace MKL_Web.Models
 			}
 		}
 		
+<<<<<<< HEAD
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DocNumRef", DbType="NVarChar(50)")]
+=======
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DocNumRef", DbType="NVarChar(250)")]
+>>>>>>> c5f29b1 (update v2)
 		public string DocNumRef
 		{
 			get
@@ -46426,6 +46467,7 @@ namespace MKL_Web.Models
 			}
 		}
 		
+<<<<<<< HEAD
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_RestructureOption", DbType="VarChar(3) NOT NULL", CanBeNull=false)]
 		public string RestructureOption
 		{
@@ -46442,6 +46484,8 @@ namespace MKL_Web.Models
 			}
 		}
 		
+=======
+>>>>>>> c5f29b1 (update v2)
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ApprovalStage", DbType="NVarChar(250)")]
 		public string ApprovalStage
 		{
@@ -46506,7 +46550,11 @@ namespace MKL_Web.Models
 			}
 		}
 		
+<<<<<<< HEAD
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CreateBy", DbType="NVarChar(20)")]
+=======
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CreateBy", DbType="NVarChar(250)")]
+>>>>>>> c5f29b1 (update v2)
 		public string CreateBy
 		{
 			get
@@ -46522,7 +46570,11 @@ namespace MKL_Web.Models
 			}
 		}
 		
+<<<<<<< HEAD
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Status", DbType="NVarChar(20)")]
+=======
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Status", DbType="NVarChar(50)")]
+>>>>>>> c5f29b1 (update v2)
 		public string Status
 		{
 			get
@@ -46538,7 +46590,11 @@ namespace MKL_Web.Models
 			}
 		}
 		
+<<<<<<< HEAD
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Remark", DbType="NVarChar(200)")]
+=======
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Remark", DbType="NVarChar(500)")]
+>>>>>>> c5f29b1 (update v2)
 		public string Remark
 		{
 			get
@@ -46555,14 +46611,22 @@ namespace MKL_Web.Models
 		}
 	}
 	
+<<<<<<< HEAD
 	public partial class ICC_Get_List_Repocessing_By_ID_ApprovedResult
+=======
+	public partial class ICC_Get_List_LoanInstallment_By_IDResult
+>>>>>>> c5f29b1 (update v2)
 	{
 		
 		private string _CardCode;
 		
 		private string _CardName;
 		
+<<<<<<< HEAD
 		private string _PhoneNo;
+=======
+		private string _CntCode;
+>>>>>>> c5f29b1 (update v2)
 		
 		private int _DocEntry;
 		
@@ -46578,6 +46642,13 @@ namespace MKL_Web.Models
 		
 		private System.Nullable<decimal> _InstallmentAmt;
 		
+<<<<<<< HEAD
+=======
+		private System.Nullable<decimal> _Rate;
+		
+		private System.Nullable<int> _PeriodM;
+		
+>>>>>>> c5f29b1 (update v2)
 		private string _PaymentOption;
 		
 		private int _Remaining;
@@ -46600,6 +46671,11 @@ namespace MKL_Web.Models
 		
 		private string _Remark;
 		
+<<<<<<< HEAD
+=======
+		private string _RestructureOption;
+		
+>>>>>>> c5f29b1 (update v2)
 		private string _NextApprover;
 		
 		private string _CreateBy;
@@ -46616,6 +46692,7 @@ namespace MKL_Web.Models
 		
 		private int _BaseEntry;
 		
+<<<<<<< HEAD
 		private System.Nullable<decimal> _TotalAR;
 		
 		private System.Nullable<decimal> _VarianAmt;
@@ -46635,6 +46712,19 @@ namespace MKL_Web.Models
 		}
 		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CardCode", DbType="NVarChar(100)")]
+=======
+		private System.Nullable<int> _PeriodM1;
+		
+		private System.Nullable<decimal> _Rate1;
+		
+		private System.Nullable<System.DateTime> _EffictiveDate;
+		
+		public ICC_Get_List_LoanInstallment_By_IDResult()
+		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CardCode", DbType="NVarChar(20)")]
+>>>>>>> c5f29b1 (update v2)
 		public string CardCode
 		{
 			get
@@ -46650,7 +46740,11 @@ namespace MKL_Web.Models
 			}
 		}
 		
+<<<<<<< HEAD
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CardName", DbType="NVarChar(250)")]
+=======
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CardName", DbType="NVarChar(100)")]
+>>>>>>> c5f29b1 (update v2)
 		public string CardName
 		{
 			get
@@ -46666,6 +46760,7 @@ namespace MKL_Web.Models
 			}
 		}
 		
+<<<<<<< HEAD
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PhoneNo", DbType="NVarChar(50)")]
 		public string PhoneNo
 		{
@@ -46678,6 +46773,20 @@ namespace MKL_Web.Models
 				if ((this._PhoneNo != value))
 				{
 					this._PhoneNo = value;
+=======
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CntCode", DbType="NVarChar(50)")]
+		public string CntCode
+		{
+			get
+			{
+				return this._CntCode;
+			}
+			set
+			{
+				if ((this._CntCode != value))
+				{
+					this._CntCode = value;
+>>>>>>> c5f29b1 (update v2)
 				}
 			}
 		}
@@ -46794,7 +46903,43 @@ namespace MKL_Web.Models
 			}
 		}
 		
+<<<<<<< HEAD
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PaymentOption", DbType="VarChar(1) NOT NULL", CanBeNull=false)]
+=======
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Rate", DbType="Decimal(18,6)")]
+		public System.Nullable<decimal> Rate
+		{
+			get
+			{
+				return this._Rate;
+			}
+			set
+			{
+				if ((this._Rate != value))
+				{
+					this._Rate = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PeriodM", DbType="Int")]
+		public System.Nullable<int> PeriodM
+		{
+			get
+			{
+				return this._PeriodM;
+			}
+			set
+			{
+				if ((this._PeriodM != value))
+				{
+					this._PeriodM = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PaymentOption", DbType="NVarChar(10)")]
+>>>>>>> c5f29b1 (update v2)
 		public string PaymentOption
 		{
 			get
@@ -46906,7 +47051,11 @@ namespace MKL_Web.Models
 			}
 		}
 		
+<<<<<<< HEAD
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PostingDate", DbType="Date")]
+=======
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PostingDate", DbType="DateTime")]
+>>>>>>> c5f29b1 (update v2)
 		public System.Nullable<System.DateTime> PostingDate
 		{
 			get
@@ -46938,7 +47087,11 @@ namespace MKL_Web.Models
 			}
 		}
 		
+<<<<<<< HEAD
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DocNumRef", DbType="NVarChar(50)")]
+=======
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DocNumRef", DbType="NVarChar(250)")]
+>>>>>>> c5f29b1 (update v2)
 		public string DocNumRef
 		{
 			get
@@ -46954,7 +47107,11 @@ namespace MKL_Web.Models
 			}
 		}
 		
+<<<<<<< HEAD
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Remark", DbType="NVarChar(200)")]
+=======
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Remark", DbType="NVarChar(500)")]
+>>>>>>> c5f29b1 (update v2)
 		public string Remark
 		{
 			get
@@ -46970,6 +47127,25 @@ namespace MKL_Web.Models
 			}
 		}
 		
+<<<<<<< HEAD
+=======
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_RestructureOption", DbType="VarChar(18) NOT NULL", CanBeNull=false)]
+		public string RestructureOption
+		{
+			get
+			{
+				return this._RestructureOption;
+			}
+			set
+			{
+				if ((this._RestructureOption != value))
+				{
+					this._RestructureOption = value;
+				}
+			}
+		}
+		
+>>>>>>> c5f29b1 (update v2)
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_NextApprover", DbType="NVarChar(250)")]
 		public string NextApprover
 		{
@@ -46986,7 +47162,11 @@ namespace MKL_Web.Models
 			}
 		}
 		
+<<<<<<< HEAD
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CreateBy", DbType="NVarChar(20)")]
+=======
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CreateBy", DbType="NVarChar(250)")]
+>>>>>>> c5f29b1 (update v2)
 		public string CreateBy
 		{
 			get
@@ -47018,7 +47198,11 @@ namespace MKL_Web.Models
 			}
 		}
 		
+<<<<<<< HEAD
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ApprovalStatus", DbType="NVarChar(20)")]
+=======
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ApprovalStatus", DbType="NVarChar(50)")]
+>>>>>>> c5f29b1 (update v2)
 		public string ApprovalStatus
 		{
 			get
@@ -47098,6 +47282,7 @@ namespace MKL_Web.Models
 			}
 		}
 		
+<<<<<<< HEAD
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TotalAR", DbType="Decimal(18,2)")]
 		public System.Nullable<decimal> TotalAR
 		{
@@ -47110,10 +47295,25 @@ namespace MKL_Web.Models
 				if ((this._TotalAR != value))
 				{
 					this._TotalAR = value;
+=======
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PeriodM1", DbType="Int")]
+		public System.Nullable<int> PeriodM1
+		{
+			get
+			{
+				return this._PeriodM1;
+			}
+			set
+			{
+				if ((this._PeriodM1 != value))
+				{
+					this._PeriodM1 = value;
+>>>>>>> c5f29b1 (update v2)
 				}
 			}
 		}
 		
+<<<<<<< HEAD
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_VarianAmt", DbType="Decimal(18,2)")]
 		public System.Nullable<decimal> VarianAmt
 		{
@@ -47126,10 +47326,25 @@ namespace MKL_Web.Models
 				if ((this._VarianAmt != value))
 				{
 					this._VarianAmt = value;
+=======
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Rate1", DbType="Decimal(18,6)")]
+		public System.Nullable<decimal> Rate1
+		{
+			get
+			{
+				return this._Rate1;
+			}
+			set
+			{
+				if ((this._Rate1 != value))
+				{
+					this._Rate1 = value;
+>>>>>>> c5f29b1 (update v2)
 				}
 			}
 		}
 		
+<<<<<<< HEAD
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_BalanceDue", DbType="Decimal(18,2)")]
 		public System.Nullable<decimal> BalanceDue
 		{
@@ -47206,6 +47421,46 @@ namespace MKL_Web.Models
 				if ((this._RowType1 != value))
 				{
 					this._RowType1 = value;
+=======
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_EffictiveDate", DbType="DateTime")]
+		public System.Nullable<System.DateTime> EffictiveDate
+		{
+			get
+			{
+				return this._EffictiveDate;
+			}
+			set
+			{
+				if ((this._EffictiveDate != value))
+				{
+					this._EffictiveDate = value;
+				}
+			}
+		}
+	}
+	
+	public partial class ICC_Approval_LoanDraf_Submit_DocResult
+	{
+		
+		private string _Result;
+		
+		public ICC_Approval_LoanDraf_Submit_DocResult()
+		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Result", DbType="NVarChar(MAX)")]
+		public string Result
+		{
+			get
+			{
+				return this._Result;
+			}
+			set
+			{
+				if ((this._Result != value))
+				{
+					this._Result = value;
+>>>>>>> c5f29b1 (update v2)
 				}
 			}
 		}

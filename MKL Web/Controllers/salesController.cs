@@ -71,7 +71,19 @@ namespace MKL_Web.Controllers
             return View();
         }
 
+        public ActionResult PreviewLoanDraf(int DocEntry)
+        {
+            ViewBag.installment = db.InstallmentRowDrafs
+            .Where(x => x.DocEntry == DocEntry)
+            .OrderBy(x => x.PaymentDate)
+            .ToList();
 
+            ViewBag.Header = db.ICC_Get_List_LoanInstallment_By_ID(DocEntry).ToList();
+            ViewBag.Checkbutton = db.ICC_Approval_Check_EnableButton("Loan", DocEntry, Session["UCode"].ToString()).ToList();
+            
+            ViewBag.payment_option = db.InstallmentLists.Where(x => x.InsCode != "B").ToList();
+            return View();
+        }
         public ActionResult LoanSchedule()
         {
             var armemoList=db.V_ARMemos.Where(a=>a.SAPIntegrationStatus=="N").ToList();
@@ -847,7 +859,7 @@ namespace MKL_Web.Controllers
                             if (!list.Any())
                             {
                                 status = "Error: No approval template found.";
-                                return Json(new { status, LastEntry }, JsonRequestBehavior.AllowGet);
+                                return Json(new { status, LastEntry}, JsonRequestBehavior.AllowGet);
                             }
                             else
                             {
@@ -879,15 +891,19 @@ namespace MKL_Web.Controllers
                                             H.CreateDate = DateTime.Now;
                                             H.UpdateDate = DateTime.Now;
                                             H.CreateBy = Session["UCode"].ToString();
-                                            H.DocNumRef = header.DocNumRef;
                                             H.Remark = header.Remark;
-                                            H.RestructureOption = header.RestructureOption;
                                             H.ApprovalStage = AppStageCode.ToString();
                                             H.NextApprover = NextApprover;
                                             H.Status = "Draf";
                                             H.ApprovalTemplate = AppTemplateID.ToString();
                                             H.DocType = "LN";
                                             H.EffictiveDate = header.EffictiveDate;
+                                            H.Rate = header.Rate;
+                                            H.PeriodM = header.PeriodM;
+                                            H.StartPayDate = header.StartPayDate;
+                                            H.DocNumRef = header.DocNumRef;
+                                            H.RestructureOption = header.RestructureOption;
+
                                             db.InstallmentRowDrafHs.InsertOnSubmit(H);
                                             db.InstallmentRowDrafHs.Context.SubmitChanges();
 
@@ -906,7 +922,7 @@ namespace MKL_Web.Controllers
 
                                             if (sO != null)
                                             {
-                                                sO.LastError = "This document is linked with pending approve Reschedule draft No: " + LastEntry + " -> Reference: " + header.DocNumRef;
+                                                sO.LastError = "This document is linked with pending approve Loan draft No: " + LastEntry + " -> Reference: " + header.DocNumRef;
                                                 sO.Frozenfor = "Y";
 
                                                 db.SOs.Context.SubmitChanges(); // Commit change
@@ -918,7 +934,7 @@ namespace MKL_Web.Controllers
                                         }
 
                                         // For Update Generate approval Document Generate
-                                        var resut = db.ICC_ApprovalDocument_Generate(AppStageCode, LastEntry, "Reschedule");
+                                        var resut = db.ICC_ApprovalDocument_Generate(AppStageCode, LastEntry, "Loan");
 
                                         var list2 = resut.Select(x => new ExcecResult
                                         {
@@ -931,10 +947,10 @@ namespace MKL_Web.Controllers
                                             status = "Fail";
                                         }
 
-                                        var link = "/amendments/PreviewReschedule?DocEntry=" + LastEntry;
+                                        var link = "/sales/PreviewLoanDraf?DocEntry=" + LastEntry;
 
                                         // For Update Generate approval ALERT Document Generate
-                                        var resut3 = db.ICC_ApprovalDocumentAlert_Generate(AppStageCode, LastEntry, "Loan Installment", AppTemplateID.ToString(), Session["UCode"].ToString(), link, NextApprover);
+                                        var resut3 = db.ICC_ApprovalDocumentAlert_Generate(AppStageCode, LastEntry, "Loan", AppTemplateID.ToString(), Session["UCode"].ToString(), link, NextApprover);
 
                                         var list3 = resut3.Select(x => new ExcecResult
                                         {
@@ -1194,7 +1210,6 @@ namespace MKL_Web.Controllers
             });
         }
        
-  
         public JsonResult save_memo(CN header, List<CN1> detail)
         {
             try
@@ -1638,10 +1653,62 @@ namespace MKL_Web.Controllers
                 CreateBy ?? ""
             ).ToList();
 
-
             ViewBag.Listing = result;
-
             return View();
+        }
+
+        public JsonResult save_approval_loan(SO header)
+        {
+            string status = "OK";
+            int lastEntry = 0;
+
+            try
+            {
+                using (var trans = TransWithCommitted())
+                {
+                    try
+                    {
+                        try
+                        {
+                            // For Update Generate approval Document Generate
+                            var resut = db.ICC_Approval_LoanDraf_Submit_Doc(header.DocStatus, Session["UCode"].ToString(), header.DocEntry, header.Comment?.ToString() ?? "");
+
+                            var list2 = resut.Select(x => new ExcecResult
+                            {
+                                Result = x.Result
+                            }).ToList();
+                            var resultvalue = list2.FirstOrDefault();
+                            if (resultvalue.Result != "Success")
+                            {
+                                status = "Fail";
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            status = "Error";
+                        }
+
+
+                        if (status == "OK")
+                        {
+                            trans.Complete();
+                            trans.Dispose();
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        status = "Error";
+                        return Json(new { status, error = ex.Message });
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                status = "Error";
+                return Json(new { status, error = ex.Message });
+            }
+
+            return Json(new { status, lastEntry });
         }
         public ActionResult LoanListing()
         {
