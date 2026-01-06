@@ -115,18 +115,29 @@
                 <div class="table-responsive" style="height:500px;overflow:auto">
                     <table id="table_pop_special_payment" class="table">
                         <thead>
-                            <tr>
+                            <input type="hidden" id="txt_module_id" value="ChangeHouse" />
+
+                            <tr id="installment_amount_row">
                                 <td colspan="7">
                                     <div class="form-group">
-                                        <label for="inputEmail3" class="form-control controlLabel" style="text-align:right;color:red">Installment Amount</label>
+                                        <label class="form-control controlLabel" style="text-align:right;color:red">
+                                            Installment Amount
+                                        </label>
                                     </div>
                                 </td>
                                 <td>
                                     <div class="form-group">
-                                        <input type="text" style="text-align:right" class="form-control form-control-insde" id="txt_pop_special_installment_amount" readonly="readonly" placeholder="Installment Amount" value="0.00">
+                                        <input type="text"
+                                               style="text-align:right"
+                                               class="form-control form-control-insde"
+                                               id="txt_pop_special_installment_amount"
+                                               readonly
+                                               placeholder="Installment Amount"
+                                               value="0.00">
                                     </div>
                                 </td>
                             </tr>
+
                             <tr>
                                 <td colspan="7">
                                     <div class="form-group">
@@ -136,6 +147,18 @@
                                 <td>
                                     <div class="form-group">
                                         <input type="text" style="text-align:right" class="form-control form-control-insde" id="txt_pop_remaining_amount" readonly="readonly" placeholder="Remaining Amt" value="0.00">
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="7">
+                                    <div class="form-group">
+                                        <label for="inputEmail3" class="form-control controlLabel" style="text-align:right">Serial</label>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="form-group">
+                                        <input type="text" style="text-align:right" class="form-control form-control-insde" id="txt_serial" readonly="readonly">
                                     </div>
                                 </td>
                             </tr>
@@ -613,7 +636,7 @@
 
                                                     <td style="width:10%;">
                                                         <div class="form-group">
-                                                            <label for="inputEmail3" class="form-control controlLabel">Old AR Amt</label>
+                                                            <label for="inputEmail3" class="form-control controlLabel">Old AR Amount</label>
                                                         </div>
                                                     </td>
 
@@ -681,7 +704,7 @@
                                                                     </td>
                                                                     <td style="width:20%;">
                                                                         <div class="form-group">
-                                                                            <label for="inputEmail3" style="padding-left:2.5px;" class="form-control controlLabel">Outstanding Amt</label>
+                                                                            <label for="inputEmail3" style="padding-left:2.5px;" class="form-control controlLabel">Outs.Old loan Amt</label>
                                                                         </div>
                                                                     </td>
 
@@ -727,20 +750,22 @@
                                                                 <tr>
                                                                     <td style="width:40%;">
                                                                         <div class="form-group">
-                                                                            <input type="text" class="form-control form-control-insde" id="txt_buyback_amt" readonly="readonly" placeholder="Buyback" value="0.00">
+                                                                            <input type="text" class="form-control form-control-insde" id="txt_buyback_amt" placeholder="Buyback" value="0.00">
                                                                         </div>
                                                                     </td>
+
                                                                     <td style="width:20%;">
                                                                         <div class="form-group">
-                                                                            <label for="inputEmail3" style="padding-left:2.5px;" class="form-control controlLabel">Varian Amt</label>
+                                                                            <label for="inputEmail3" style="padding-left:2.5px;" class="form-control controlLabel">Remaining</label>
                                                                         </div>
                                                                     </td>
 
                                                                     <td style="width:30%;">
                                                                         <div class="form-group">
-                                                                            <input type="text" class="form-control form-control-insde" readonly="readonly" id="txt_varian_amount" value="0.00">
+                                                                            <input type="text" class="form-control form-control-insde" readonly="readonly" id="txt_remaining_amount" placeholder="After Disc. Amt" value="0.00">
                                                                         </div>
                                                                     </td>
+
                                                                 </tr>
                                                             </table>
                                                         </div>
@@ -773,13 +798,13 @@
                                                 <tr>
                                                     <td style="width:10%;">
                                                         <div class="form-group">
-                                                            <label for="inputEmail3" style="padding-left:2px; color:red" class="form-control controlLabel">Remaining</label>
+                                                            <label for="inputEmail3" style="padding-left:2px; color:red" class="form-control controlLabel">Remark</label>
                                                         </div>
                                                     </td>
                                                     <td style="width:40%;">
                                                         <div class="form-group">
-                                                            <input type="text" class="form-control form-control-insde" readonly="readonly" id="txt_remaining_amount" placeholder="After Disc. Amt" value="0.00">
 
+                                                            <textarea class="form-control form-control-insde" id="txt_reamark" rows="2"></textarea>
                                                         </div>
                                                     </td>
 
@@ -817,18 +842,6 @@
                                                     </td>
                                                 </tr>
 
-                                                <tr>
-                                                    <td style="width:10%;">
-                                                        <div class="form-group">
-                                                            <label for="txt_reamark" style="padding-left:2px; color:red" class="form-control controlLabel">Remark</label>
-                                                        </div>
-                                                    </td>
-                                                    <td style="width:40%;">
-                                                        <div class="form-group">
-                                                            <textarea class="form-control form-control-insde" id="txt_reamark" rows="2"></textarea>
-                                                        </div>
-                                                    </td>
-                                                </tr>
 
 
                                                 <tr>
@@ -852,72 +865,79 @@
                         <tr>
                             <td colspan="4">
 
-                                 <fieldset class="scheduler-border">
-                                     <legend class="scheduler-border" style="font-weight: bold;">
-                                         <span style="cursor: pointer;" onclick="toggleCustomTable()">
-                                             Schedule List
-                                             <i id="toggle_icon" class="fa fa-chevron-up" style="margin-left: 5px; padding-bottom:10px !important"></i>
-                                         </span>
-                                     </legend>
-                                     <div style="overflow-x: auto; width: 100%; padding: 5px" id="customer_table_wrapper">
-                                         <div class="text-right" style="margin-top: 0px; margin-bottom: 10px;">
-                                             <button type="button" class="btn btn-success btn-flat" id="btn_copy_schedule_to_excel" onclick="copyTableToClipboard('table_payment_schedule',3,'Schedule List')">
-                                                 <i class="fa fa-copy"></i> Copy Table
-                                             </button>
+                                <fieldset class="scheduler-border">
+                                    <legend class="scheduler-border" style="font-weight: bold;">
+                                        <span style="cursor: pointer;" onclick="toggleCustomTable()">
+                                            Schedule List
+                                            <i id="toggle_icon" class="fa fa-chevron-up" style="margin-left: 5px; padding-bottom:10px !important"></i>
+                                        </span>
+                                    </legend>
+                                    <div style="overflow-x: auto; width: 100%; padding: 5px" id="customer_table_wrapper">
+                                        <div class="text-right" style="margin-top: 0px; margin-bottom: 10px;">
+                                            <button type="button" class="btn btn-success btn-flat" id="btn_copy_schedule_to_excel" onclick="copyTableToClipboard('table_payment_schedule',3,'Schedule List')">
+                                                <i class="fa fa-copy"></i> Copy Table
+                                            </button>
 
-                                         </div>
-                                         <div style="position: relative; overflow: auto; height: 100%; min-height: 30vh ">
-                                             <table class="table" style="margin-bottom: 0px; position: absolute; min-width: 2000px; width: 100%;" id="table_payment_schedule">
-                                                 <thead style="position:sticky; top: 0; z-index: 1000;">
-                                                     <tr class="bg-gray" role="row">
-                                                         <td style="width:1%; text-align:left;"></td>
-                                                         <td style="width:1%; text-align:left;">
-                                                             <i class='fa fa-circle text-danger' style='cursor:pointer;display:none;' id='tr_payment_detail_check_all' onclick='check_tr_payment_detail()'></i>
-                                                             <i class='fa fa-circle text-yellow' id='tr_payment_detail_uncheck_all' style='cursor:pointer; display:none' onclick='uncheck_tr_payment_detail()'></i>
-                                                         </td>
-                                                         <td style="width:1%; text-align:left;">#</td>
-                                                         <td style="width: 7%; text-align: left;">DocDate</td>
-                                                         <td style="width: 7%; text-align: left;">DueDate</td>
-                                                         <td style="width: 7%; text-align: left;">Principle</td>
-                                                         <td style="width: 6%; text-align: left;">Interest</td>
-                                                         <td style="width: 7%; text-align: left;">MonthlyPay</td>
-                                                         <td style="width: 6%; text-align: left;">Remain</td>
-                                                         <td style="width: 7%; text-align: left;">Remain+Interest</td>
-                                                         <td style="width: 6%; text-align: left;">C.Principle</td>
-                                                         <td style="width: 7%; text-align: left;">C.Interest</td>
-                                                         <td style="width: 7%; text-align: left; ">C.Principle+Interest</td>
-                                                         <td style="width: 5%; text-align: left;">Pay.Type</td>
-                                                         <td style="width: 18%; text-align: left;">Remark</td>
-                                                         <td style="width: 4%; text-align: left;">ARNo</td>
-                                                         <td style="width: 4%; text-align: left;">PayNo</td>
-                                                     </tr>
-                                                 </thead>
-                                                 <tbody></tbody>
-                                                 <tfoot>
-                                                     <tr>
-                                                         <td class="bg-gray" style="text-align:left;"></td>
-                                                         <td class="bg-gray" style="text-align:right;"></td>
-                                                         <td class="bg-gray" style="text-align:right;"></td>
-                                                         <td class="bg-gray" style="text-align:right;"></td>
-                                                         <td class="bg-gray" style="text-align:left;"><b>Total</b></td>
-                                                         <td class="bg-gray" style="text-align:left;" id="txt_total_principle">0.00</td>
-                                                         <td class="bg-gray" style="text-align:left;" id="txt_total_interest">0.00</td>
-                                                         <td class="bg-gray" style="text-align:left;" id="txt_total_monthly">0.00</td>
-                                                         <td class="bg-gray" style="text-align:right;"></td>
-                                                         <td class="bg-gray" style="text-align:right;"></td>
-                                                         <td class="bg-gray" style="text-align:right;"></td>
-                                                         <td class="bg-gray" style="text-align:right;"></td>
-                                                         <td class="bg-gray" style="text-align:right;"></td>
-                                                         <td class="bg-gray" style="text-align:right;"></td>
-                                                         <td class="bg-gray" style="text-align:right;"></td>
-                                                         <td class="bg-gray" style="text-align:right;"></td>
-                                                         <td class="bg-gray" style="text-align:right;"></td>
-                                                     </tr>
-                                                 </tfoot>
-                                             </table>
-                                         </div>
-                                     </div>
-                                 </fieldset>
+                                        </div>
+                                        <div style="position: relative; overflow: auto; height: 100%; min-height: 30vh ">
+                                            <table class="table" style="margin-bottom: 0px; position: absolute; min-width: 2000px; width: 100%;" id="table_payment_schedule">
+                                                <thead style="position:sticky; top: 0; z-index: 1000;">
+                                                    <tr class="bg-gray" role="row">
+                                                        <td style="width:1%; text-align:left;"></td>
+                                                        <td style="width:1%; text-align:left;">
+                                                            <i class='fa fa-circle text-danger' style='cursor:pointer;display:none;' id='tr_payment_detail_check_all' onclick='check_tr_payment_detail()'></i>
+                                                            <i class='fa fa-circle text-yellow' id='tr_payment_detail_uncheck_all' style='cursor:pointer; display:none' onclick='uncheck_tr_payment_detail()'></i>
+                                                        </td>
+                                                        <td style="width:1%; text-align:left;">#</td>
+                                                        <td style="width: 7%; text-align: left;">DocDate</td>
+                                                        <td style="width: 7%; text-align: left;">DueDate</td>
+                                                        <td style="width: 8%; text-align: left;">Serial</td>
+                                                        <td style="width: 6%; text-align: left;">Principle</td>
+                                                        <td style="width: 6%; text-align: left;">Interest</td>
+                                                        <td style="width: 6%; text-align: left;">MonthlyPay</td>
+                                                        <td style="width: 6%; text-align: left;">Remain</td>
+                                                        <td style="width: 6%; text-align: left;">Remain+Interest</td>
+                                                        <td style="width: 6%; text-align: left;">C.Principle</td>
+                                                        <td style="width: 6%; text-align: left;">C.Interest</td>
+                                                        <td style="width: 6%; text-align: left; ">C.Principle+Interest</td>
+                                                        <td style="width: 5%; text-align: left;">Pay.Type</td>
+
+                                                        <td style="width: 4%; text-align: left;">ARNo</td>
+                                                        <td style="width: 4%; text-align: left;">PayNo</td>
+                                                        <th style="width: 4%; text-align: left;">Int.ARNo</th>
+                                                        <th style="width: 4%; text-align: left;">Int.PayNo</th>
+                                                        <td style="width: 9%; text-align: left;">Remark</td>
+                                                    </tr>
+                                                </thead>
+                                                <tbody></tbody>
+                                                <tfoot>
+                                                    <tr>
+                                                        <td class="bg-gray" style="text-align:left;"></td>
+                                                        <td class="bg-gray" style="text-align:right;"></td>
+                                                        <td class="bg-gray" style="text-align:right;"></td>
+                                                        <td class="bg-gray" style="text-align:right;"></td>
+                                                        <td class="bg-gray" style="text-align:right;"></td>
+                                                        <td class="bg-gray" style="text-align:left;"><b>Total</b></td>
+                                                        <td class="bg-gray" style="text-align:left;" id="txt_total_principle">0.00</td>
+                                                        <td class="bg-gray" style="text-align:left;" id="txt_total_interest">0.00</td>
+                                                        <td class="bg-gray" style="text-align:left;" id="txt_total_monthly">0.00</td>
+                                                        <td class="bg-gray" style="text-align:right;"></td>
+                                                        <td class="bg-gray" style="text-align:right;"></td>
+                                                        <td class="bg-gray" style="text-align:right;"></td>
+                                                        <td class="bg-gray" style="text-align:right;"></td>
+                                                        <td class="bg-gray" style="text-align:right;"></td>
+                                                        <td class="bg-gray" style="text-align:right;"></td>
+                                                        <td class="bg-gray" style="text-align:right;"></td>
+                                                        <td class="bg-gray" style="text-align:right;"></td>
+                                                        <td class="bg-gray" style="text-align:right;"></td>
+                                                        <td class="bg-gray" style="text-align:right;"></td>
+                                                        <td class="bg-gray" style="text-align:right;"></td>
+                                                    </tr>
+                                                </tfoot>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </fieldset>
                             </td>
                         </tr>
                     </thead>
@@ -941,4 +961,68 @@
         </div>
     </div>
 </div>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<script>
+    const txtBuyback = document.getElementById("txt_buyback_amt");
+    let valueBeforeEdit = txtBuyback.value;
+
+    // 🔹 Store value before editing
+    txtBuyback.addEventListener("focus", function () {
+        valueBeforeEdit = this.value;
+        this.value = this.value.replace(/,/g, ''); // remove commas for edit
+    });
+
+    // 🔹 Allow only numbers and one decimal point
+    txtBuyback.addEventListener("input", function () {
+        this.value = this.value
+            .replace(/[^0-9.]/g, '')      // remove non-numeric
+            .replace(/(\..*)\./g, '$1');  // allow only one dot
+    });
+
+    // 🔹 On blur → format + confirm change
+    txtBuyback.addEventListener("blur", function () {
+
+        if (this.value === '') {
+            this.value = '0';
+        }
+
+        // format with thousand separator
+        this.value = formatAmount(this.value);
+
+        // compare with previous value
+        if (this.value !== valueBeforeEdit) {
+
+            Swal.fire({
+                title: 'Confirm Change',
+                text: 'You have changed the buyback amount. The schedule will be reloaded again.',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Yes',
+                cancelButtonText: 'No',
+                allowOutsideClick: false
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    get_selected_payment_schedule_changeitem_by_so();
+                } else {
+                    this.value = valueBeforeEdit; // revert value
+                }
+            });
+        }
+    });
+
+    // 🔹 Format number → 14,000.00
+    function formatAmount(value) {
+        let num = parseFloat(value);
+        if (isNaN(num)) num = 0;
+
+        return num.toLocaleString('en-US', {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2
+        });
+    }
+</script>
+
+
 

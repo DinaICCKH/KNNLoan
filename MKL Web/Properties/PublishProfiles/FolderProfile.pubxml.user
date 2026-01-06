@@ -2,8 +2,8 @@
 <!-- https://go.microsoft.com/fwlink/?LinkID=208121. -->
 <Project>
   <PropertyGroup>
-    <_PublishTargetUrl>D:\KNN\Projects\KNN_Loan_Application\MKL Web\bin\app.publish\</_PublishTargetUrl>
-    <History>True|2025-10-23T07:58:55.4175987Z||;</History>
+    <_PublishTargetUrl>D:\KNN Project\KNN_Loan_Application\KNN_Loan_Application\MKL Web\bin\app.publish\</_PublishTargetUrl>
+    <History>True|2026-01-06T06:02:37.9169778Z||;True|2026-01-05T12:29:25.5440476+07:00||;True|2025-10-23T14:58:55.4175987+07:00||;</History>
     <LastFailureDetails />
   </PropertyGroup>
   <ItemGroup>
@@ -23,10 +23,10 @@
       <publishTime>10/09/2025 10:34:47</publishTime>
     </File>
     <File Include="bin/MKL Web.dll">
-      <publishTime>10/23/2025 14:58:26</publishTime>
+      <publishTime>01/06/2026 13:02:27</publishTime>
     </File>
     <File Include="bin/MKL Web.pdb">
-      <publishTime>10/23/2025 14:58:26</publishTime>
+      <publishTime>01/06/2026 13:02:27</publishTime>
     </File>
     <File Include="bin/Newtonsoft.Json.dll">
       <publishTime>10/09/2025 10:34:47</publishTime>
@@ -21590,10 +21590,10 @@
       <publishTime>10/09/2025 10:34:43</publishTime>
     </File>
     <File Include="Models/MKL.dbml">
-      <publishTime>10/21/2025 15:47:14</publishTime>
+      <publishTime>01/05/2026 10:56:48</publishTime>
     </File>
     <File Include="Models/SAP.dbml">
-      <publishTime>10/09/2025 10:34:43</publishTime>
+      <publishTime>12/08/2025 10:26:15</publishTime>
     </File>
     <File Include="Photo/logo.png">
       <publishTime>10/09/2025 10:34:43</publishTime>
@@ -21785,7 +21785,7 @@
       <publishTime>10/09/2025 10:34:43</publishTime>
     </File>
     <File Include="Scripts/js/sales.js">
-      <publishTime>10/23/2025 14:03:38</publishTime>
+      <publishTime>01/06/2026 13:02:10</publishTime>
     </File>
     <File Include="Scripts/js/Vendor.js">
       <publishTime>10/09/2025 10:34:43</publishTime>
@@ -21815,7 +21815,7 @@
       <publishTime>10/09/2025 10:34:43</publishTime>
     </File>
     <File Include="Views/admin/AppTemplate.cshtml">
-      <publishTime>10/16/2025 15:11:39</publishTime>
+      <publishTime>12/08/2025 10:07:34</publishTime>
     </File>
     <File Include="Views/admin/Authorization.cshtml">
       <publishTime>10/09/2025 10:34:43</publishTime>
@@ -21866,7 +21866,7 @@
       <publishTime>10/09/2025 10:34:43</publishTime>
     </File>
     <File Include="Views/amendments/ChangeHouse.cshtml">
-      <publishTime>10/09/2025 10:34:43</publishTime>
+      <publishTime>01/06/2026 10:51:46</publishTime>
     </File>
     <File Include="Views/amendments/ChangeOwner.cshtml">
       <publishTime>10/09/2025 10:34:43</publishTime>
@@ -21896,7 +21896,7 @@
       <publishTime>10/09/2025 10:34:43</publishTime>
     </File>
     <File Include="Views/amendments/PreviewChangeItem.cshtml">
-      <publishTime>10/09/2025 10:34:43</publishTime>
+      <publishTime>12/08/2025 10:07:34</publishTime>
     </File>
     <File Include="Views/amendments/PreviewReschedule.cshtml">
       <publishTime>10/21/2025 13:39:22</publishTime>
@@ -21905,7 +21905,7 @@
       <publishTime>10/09/2025 11:11:25</publishTime>
     </File>
     <File Include="Views/amendments/PreviewRestructureAmt.cshtml">
-      <publishTime>10/09/2025 11:12:14</publishTime>
+      <publishTime>12/08/2025 10:07:34</publishTime>
     </File>
     <File Include="Views/amendments/RescheduleApporovalListing.cshtml">
       <publishTime>10/09/2025 10:34:43</publishTime>
@@ -21914,7 +21914,7 @@
       <publishTime>10/09/2025 10:34:43</publishTime>
     </File>
     <File Include="Views/amendments/Restructure.cshtml">
-      <publishTime>10/14/2025 15:14:30</publishTime>
+      <publishTime>12/08/2025 10:07:34</publishTime>
     </File>
     <File Include="Views/amendments/RestructureApporovalListing.cshtml">
       <publishTime>10/09/2025 10:34:43</publishTime>
@@ -21950,7 +21950,7 @@
       <publishTime>10/09/2025 10:34:43</publishTime>
     </File>
     <File Include="Views/othersales/BuyBackList.cshtml">
-      <publishTime>10/09/2025 15:09:48</publishTime>
+      <publishTime>12/08/2025 10:07:34</publishTime>
     </File>
     <File Include="Views/othersales/HandOver.cshtml">
       <publishTime>10/09/2025 10:34:43</publishTime>
@@ -21998,7 +21998,7 @@
       <publishTime>10/09/2025 10:34:43</publishTime>
     </File>
     <File Include="Views/sales/LoanInstallmentApprovalListing.cshtml">
-      <publishTime>10/21/2025 13:37:57</publishTime>
+      <publishTime>12/08/2025 10:07:35</publishTime>
     </File>
     <File Include="Views/sales/LoanListing.cshtml">
       <publishTime>10/09/2025 10:34:43</publishTime>
@@ -22028,10 +22028,13 @@
       <publishTime>10/21/2025 13:41:10</publishTime>
     </File>
     <File Include="Views/sales/PreviewLoanDraf.cshtml">
-      <publishTime>10/22/2025 11:39:05</publishTime>
+      <publishTime>12/08/2025 10:07:35</publishTime>
+    </File>
+    <File Include="Views/sales/PreviewRepocessingApproved.cshtml">
+      <publishTime>12/08/2025 10:07:34</publishTime>
     </File>
     <File Include="Views/sales/PreviewReprocessing.cshtml">
-      <publishTime>10/09/2025 11:17:01</publishTime>
+      <publishTime>12/08/2025 10:07:34</publishTime>
     </File>
     <File Include="Views/sales/PreviewReprocessingAdd.cshtml">
       <publishTime>10/09/2025 15:52:27</publishTime>
@@ -22073,7 +22076,7 @@
       <publishTime>10/09/2025 10:34:43</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>10/23/2025 14:58:29</publishTime>
+      <publishTime>01/05/2026 12:28:45</publishTime>
     </File>
   </ItemGroup>
 </Project>

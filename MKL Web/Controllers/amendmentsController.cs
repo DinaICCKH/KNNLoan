@@ -156,10 +156,6 @@ namespace MKL_Web.Controllers
             return View();
         }
 
-
-
-        
-       
         
         public JsonResult save_change_owner(SO header, List<InstallmentRow> installment_row, List<InstallmentRow> del_list)
         {
@@ -192,16 +188,36 @@ namespace MKL_Web.Controllers
                                 DocID = x.DocID
                             }).ToList();
 
-                            var result = db.InstallmentRows.Where(x => (x.ARNo != -1 && x.PaymentNo == -1) || ( x.ARNo == -1 && x.PaymentNo != -1)).ToList();
-                            var checkInterest = db.InstallmentRows.Where(x => (x.ARNoInterest != -1 && x.PaymentNoInterest == -1) || (x.ARNoInterest == -1 && x.PaymentNoInterest != -1)).ToList();
+
+                            var result = db.InstallmentRows
+                                .Where(x =>
+                                    (
+                                        (x.ARNo != -1 && x.PaymentNo == -1) ||
+                                        (x.ARNo == -1 && x.PaymentNo != -1)
+                                    )
+                                    && x.BaseEntry == header.DocEntry
+                                )
+                                .ToList();
+
+                            // Check unpaid interest AR
+                            var checkInterest = db.InstallmentRows
+                                .Where(x =>
+                                    (
+                                        (x.ARNoInterest != -1 && x.PaymentNoInterest == -1) ||
+                                        (x.ARNoInterest == -1 && x.PaymentNoInterest != -1)
+                                    )
+                                    && x.BaseEntry == header.DocEntry
+                                )
+                                .ToList();
+
                             if (result.Any())
                             {
-                                status = "Error: Cancel Generated AR Invoice in SAP first before change owner.";
+                                status = "Error: Cancel Generated AR Invoice that not yet paid in SAP first before change owner.";
                                 return Json(new { status, LastEntry }, JsonRequestBehavior.AllowGet);
                             }
                             if (checkInterest.Any())
                             {
-                                status = "Error: Cancel Generated AR Invoice interest in SAP first before change owner.";
+                                status = "Error: Cancel Generated AR Invoice that not yet paid interest in SAP first before change owner.";
                                 return Json(new { status, LastEntry }, JsonRequestBehavior.AllowGet);
                             }
 
@@ -284,33 +300,7 @@ namespace MKL_Web.Controllers
 
                                 }
 
-                                ///This will use when no need for approval process 
-
-                                //SO sO = new SO();
-                                //sO = db.SOs.Where(a => a.DocEntry == header.DocEntry).FirstOrDefault();
-                                //if (sO != null)
-                                //{
-                                //    //// update SO header
-                                //    sO.Comment = header.Comment + ", SO was change owner from " + sO.CardCode + " to " + header.CardCode;
-                                //    sO.UpdatedBy = header.CreatedBy;
-                                //    sO.UpdatedDate = DateTime.Now;
-                                //    sO.OldCardCode = header.OldCardCode;
-                                //    sO.OldCardName = header.OldCardName;
-                                //    sO.CardCode = header.CardCode;
-                                //    sO.CardName = header.CardName;
-                                //    sO.DocStatus = "Closed";
-                                //    db.SOs.Context.SubmitChanges();
-                                //    db.ICC_UpdateSAPDocumentStatus("CompleteChangeOwner", header.DocEntry.ToString(), "Sync");
-                                //    if (status == "OK")
-                                //    {
-                                //        trans.Complete();
-                                //        trans.Dispose();
-                                //    }
-                                //}
-                                //else
-                                //{
-                                //    status = "Error";
-                                //}
+                                
 
                             }
                         }

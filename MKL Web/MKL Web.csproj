@@ -146,9 +146,9 @@
       <DependentUpon>MKL.dbml</DependentUpon>
     </Compile>
     <Compile Include="Models\MKL.designer.cs">
+      <DependentUpon>MKL.dbml</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>MKL.dbml</DependentUpon>
     </Compile>
     <Compile Include="Models\Payment_Schedule.cs" />
     <Compile Include="Models\PenaltyList.cs" />
@@ -7308,19 +7308,19 @@
     <Content Include="Content\bower_components\select2\src\scss\_dropdown.scss" />
     <Content Include="Content\bower_components\select2\src\scss\_multiple.scss" />
     <Content Include="Content\bower_components\select2\src\scss\_single.scss" />
-    <Content Include="Models\MKL.dbml">
-      <Generator>MSLinqToSQLGenerator</Generator>
-      <SubType>Designer</SubType>
-      <LastGenOutput>MKL.designer.cs</LastGenOutput>
-    </Content>
-    <None Include="Models\MKL.dbml.layout">
-      <DependentUpon>MKL.dbml</DependentUpon>
-    </None>
     <Content Include="Models\SAP.dbml">
       <Generator>MSLinqToSQLGenerator</Generator>
       <LastGenOutput>SAP.designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="Models\MKL.dbml">
+      <Generator>MSLinqToSQLGenerator</Generator>
+      <LastGenOutput>MKL.designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </Content>
+    <None Include="Models\MKL.dbml.layout">
+      <DependentUpon>MKL.dbml</DependentUpon>
+    </None>
     <None Include="Models\SAP.dbml.layout">
       <DependentUpon>SAP.dbml</DependentUpon>
     </None>
@@ -7486,13 +7486,10 @@
     <Content Include="Views\sales\PreviewReprocessing.cshtml" />
     <Content Include="Views\amendments\PreviewChangeItem.cshtml" />
     <Content Include="Views\othersales\BuyBackList.cshtml" />
-<<<<<<< HEAD
     <Content Include="Views\sales\PreviewRepocessingApproved.cshtml" />
-=======
     <Content Include="Views\sales\PreviewReprocessingAdd.cshtml" />
     <Content Include="Views\sales\LoanInstallmentApprovalListing.cshtml" />
     <Content Include="Views\sales\PreviewLoanDraf.cshtml" />
->>>>>>> c5f29b1 (update v2)
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

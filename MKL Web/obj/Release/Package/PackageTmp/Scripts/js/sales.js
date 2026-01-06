@@ -307,15 +307,13 @@ function remove_pop_special_by_line(rowindex) {
 }
 function cmd_payment_generate() {
     if ($("#cbo_payment_option").val() == "") {
-        ShowAlertCus("Please choose Payment Option","warning");
-    } else if (parseFloat(returnstringvalue($("#txt_installment_amount").val()))<=0) {
-        ShowAlertCus("Installment Amount can not less than or equal to zero!","warning");
+        ShowAlertCus("Please choose Payment Option", "warning");
+    } else if (parseFloat(returnstringvalue($("#txt_installment_amount").val())) <= 0) {
+        ShowAlertCus("Installment Amount can not less than or equal to zero!", "warning");
     }
     else {
         var allow = 0;
-        const cb_payment_option = $("#cbo_payment_option").val()
-        payment_option = cb_payment_option
-        switch (cb_payment_option) {
+        switch ($("#cbo_payment_option").val()) {
             case "B":
                 if (parseFloat(convert2digit($("#txt_deposit_amount").val())) == 0) {
                     alert("Deposit Amount is required");
@@ -333,7 +331,7 @@ function cmd_payment_generate() {
                         alert("Period(M) is required");
                         allow = 3;
                     }
-                }  
+                }
                 break;
             case "D":
                 if (parseFloat(convert2digit($("#txt_installment_rate").val())) == 0 || parseFloat(convert2digit($("#txt_period").val())) == 0) {
@@ -348,6 +346,7 @@ function cmd_payment_generate() {
     }
 }
 
+
 function check_cmd_generate_payment_option() {
     if ($("#btn_generate_payment_shcedule").text() == "Generate") {
         var rowindex = $("#table_pop_special_payment >tbody >tr").length;
@@ -359,11 +358,14 @@ function check_cmd_generate_payment_option() {
         if (returnstringvalue($("#txt_installment_amount").val()) > 0) {
             $("#modal_special_payment").modal('show');
             var rowindex = $("#table_pop_special_payment >tbody >tr").length;
+            var serial = document.getElementById("txt_new_serail").value;
+
             if (rowindex > 0) {
                 txt_special_line_payment_amount_change(1);
             } else {
                 var installment_discount = returnstringvalue($("#txt_installment_amount").val());
                 $("#txt_pop_remaining_amount").val(convert2digit(installment_discount));
+
                 cmd_pop_special_payment_add_row();
             }
             var before_discount = parseFloat(returnstringvalue($("#txt_before_discount_amount").val())) || 0;
@@ -371,8 +373,9 @@ function check_cmd_generate_payment_option() {
             var total = before_discount + after_discount;
 
             $("#txt_pop_special_installment_amount").val(convert2digit(total));
+            $("#txt_serial").val(serial);
         } else {
-            ShowAlertCus("Remaining amount equal to zero,Can not append row!","warning");
+            ShowAlertCus("Remaining amount equal to zero,Can not append row!", "warning");
         }
     }
 }
@@ -655,9 +658,9 @@ function removeAlert(id) {
 
 function cmd_change_house_choose_item() {
     if ($("#txt_card_code").val() == "") {
-        ShowAlertCus("Please Choose Customer Information!","warning");
+        ShowAlertCus("Please Choose Customer Information!", "warning");
     } else if ($("#txt_old_house_code").val() == "") {
-        ShowAlertCus("Please Choose Old Information Of House!","warning");
+        ShowAlertCus("Please Choose Old Information Of House!", "warning");
     } else {
         cmd_show_item();
     }
@@ -1777,24 +1780,33 @@ function safeParseFloat(value) {
 
 
 
+
 function get_selected_payment_schedule_changeitem_by_so() {
 
     var row = $("#txt_payment_schedule_selected_row").val();
     var Refer = $("#txt_changeitem_ref").val();
-    if (row == -1) {
+    var BuyBack = parseFloat($("#txt_buyback_amt").val().replace(/,/g, '')) || 0;
+
+    var ARNo = $("#txt_doc_num").val();
+
+    if (!row && !ARNo) {
         ShowAlertCus("No AR Memo selected!", "warning");
     } else {
         var docentry = $("#td_pop_payment_schedule_so_entry_" + row).text();
         var serialno = $("#td_pop_payment_schedule_serial_" + row).text();
         var linenum = $("#td_pop_payment_schedule_so_line_" + row).text();
-        
+        var BaseEntry = $("#txt_doc_num").val();
+        // If BaseEntry is not null/empty, use it; otherwise keep docentry
+        docentry = BaseEntry ? BaseEntry : docentry;
+
         $.ajax({
             url: '/sales/get_payment_schedule_changeitem_by_so',
             type: 'POST',
             data: {
                 soEntry: docentry,
                 rowStatus: 'All',
-                refer: Refer
+                refer: Refer,
+                buyback: BuyBack
             },
             datatype: 'json',
             async: false,
@@ -1818,9 +1830,9 @@ function get_selected_payment_schedule_changeitem_by_so() {
                 var SerialNumber = "";
 
 
-                BuybackAmt = $("#txt_buyback_amt").text('0.00');+
+                BuybackAmt = $("#txt_buyback_amt").text('0.00'); +
 
-                $("#txt_total_principle").text('0.00');
+                    $("#txt_total_principle").text('0.00');
                 $("#txt_total_interest").text('0.00');
                 $("#txt_total_monthly").text('0.00');
                 $("#txt_docentry").val(docentry);
@@ -1834,13 +1846,17 @@ function get_selected_payment_schedule_changeitem_by_so() {
                 for (let i = 0; i < mydata.length; i++) {
                     const x = mydata[i];
 
-                    // Assign the price to Item 
-                     ItemPrice = x.HouseAmount;
-                     GeneratedARAmt = x.GeneratedARAmt;
-                     OutstandingAmt = x.OutstandingAmt;
-                     VarianAmt = x.VarianAmt;
-                     SerialNumber = x.DistNumber;
 
+                    // Assign the price to Item 
+                    ItemPrice = x.HouseAmount;
+                    GeneratedARAmt = x.GeneratedARAmt;
+                    OutstandingAmt = x.OutstandingAmt;
+                    VarianAmt = x.VarianAmt;
+                    if (x.Method === "BKN") {
+                        SerialNumber = x.DistNumber;
+                    }
+
+                    BuybackAmt = x.BuybackAmt;
 
                     let highlightStyle = (x.HiglightStatus === "M") ? "background-color:#d9edf7;" : "";
 
@@ -1862,9 +1878,7 @@ function get_selected_payment_schedule_changeitem_by_so() {
                     <td style='text-align:Left; color:blue'>
                         <div class='form-group'>
                             <div class='input-group date'>
-                                <div class='input-group-addon'>
-                                    <i class='fa fa-calendar'></i>
-                                </div>
+                           
                                 <input type='text' style='text-align:Left; color:blue' class='form-control pull-right datetime form-control-insde'
                                     name='InstallmentDate_${index}' id='InstallmentDate_${index}' value='${x.InstallmentDate}' placeholder='Choose Date'
                                     ${isOpen ? "" : "disabled"} />
@@ -1873,6 +1887,7 @@ function get_selected_payment_schedule_changeitem_by_so() {
                     </td>`;
 
                     data += `<td style='text-align:Left; vertical-align: middle;' id='tr_payment_detail_paymentdate_line_${index}'>${x.DueDate}</td>`;
+                    data += `<td style='text-align:left; vertical-align: middle;' id='tr_payment_detail_serial_line_${index}'>${x.DistNumber}</td>`;
                     data += `<td style='text-align:left; vertical-align: middle;' id='tr_payment_detail_principle_line_${index}'>${convert2digit(x.Principle)}</td>`;
                     data += `<td style='text-align:Left; vertical-align: middle;' id='tr_payment_detail_interest_line_${index}'>${convert2digit(x.Interest)}</td>`;
                     data += `<td style='text-align:Left; vertical-align: middle;' id='tr_payment_detail_monthlypay_line_${index}'>${convert2digit(x.MonthlyPay)}</td>`;
@@ -1886,19 +1901,22 @@ function get_selected_payment_schedule_changeitem_by_so() {
                         <div class='form-group'>
                             <select class='form-control' style='width:100%; color:blue' id='select_method_${index}' ${isOpen ? "" : "disabled"}>`;
 
-                                    for (let m = 0; m < methodOptions.length; m++) {
-                                        const opt = methodOptions[m];
-                                        const selected = (opt.code === x.HouseStatus) ? "selected" : "";
-                                        data += `<option value='${opt.code}' ${selected}>${opt.code} - ${opt.name}</option>`;
-                                    }
+                    for (let m = 0; m < methodOptions.length; m++) {
+                        const opt = methodOptions[m];
+                        const selected = (opt.code === x.HouseStatus) ? "selected" : "";
+                        data += `<option value='${opt.code}' ${selected}>${opt.code} - ${opt.name}</option>`;
+                    }
 
-                                    data += `</select>
+                    data += `</select>
                         </div>
                     </td>`;
 
-                    data += `<td ${(isOpen ? "contenteditable='true'" : "")} style='text-align:Left; vertical-align: middle; color:blue' id='tr_payment_detail_remarks_line_${index}'>${x.Remarks}</td>`;
+
                     data += `<td style='text-align:Left; vertical-align: middle; color:red' id='tr_payment_detail_arno_line_${index}'>${x.ARNo}</td>`;
                     data += `<td style='text-align:Left; vertical-align: middle; color:red' id='tr_payment_detail_paymentno_line_${index}'>${x.PaymentNo}</td>`;
+                    data += `<td style='text-align:Left; vertical-align: middle; color:red' id='tr_payment_detail_arnointerest_line_${index}'>${x.ARNoInterest}</td>`;
+                    data += `<td style='text-align:Left; vertical-align: middle; color:red' id='tr_payment_detail_paymentnointerest_line_${index}'>${x.PaymentNoInterest}</td>`;
+                    data += `<td ${(isOpen ? "contenteditable='true'" : "")} style='text-align:Left; vertical-align: middle; color:blue' id='tr_payment_detail_remarks_line_${index}'>${x.Remarks}</td>`;
 
                     // Hidden fields
                     data += `<td style='display:none;' id='tr_payment_detail_status_line_${index}'>${x.Status.trim()}</td>`;
@@ -1924,7 +1942,7 @@ function get_selected_payment_schedule_changeitem_by_so() {
 
                     index++;
 
-                   
+
                 }
 
                 totalPrinciple = parseFloat(returnstringvalue(totalPrinciple)) + parseFloat(returnstringvalue($("#txt_total_principle").text()));
@@ -1934,15 +1952,19 @@ function get_selected_payment_schedule_changeitem_by_so() {
                 totalMonthlyPay = parseFloat(returnstringvalue(totalMonthlyPay)) + parseFloat(returnstringvalue($("#txt_total_monthly").text()));
                 $("#txt_total_monthly").text(convert2digit(totalMonthlyPay));
 
-                var remainingAmt = parseFloat(ItemPrice) - parseFloat(totalPrinciple);
+                var remainingAmt = parseFloat(ItemPrice) - parseFloat(BuybackAmt) - parseFloat(OutstandingAmt);
 
+              
                 $("#txt_before_discount_amount").val(convert2digit(ItemPrice));
                 $("#txt_after_discount").val(convert2digit(ItemPrice));
                 $("#txt_oldserial").val(SerialNumber);
                 $("#txt_generated_ar_amt").val(convert2digit(GeneratedARAmt));
                 $("#txt_outstanding_amount").val(convert2digit(OutstandingAmt));
                 $("#txt_varian_amount").val(convert2digit(VarianAmt));
+                $("#txt_buyback_amt").val(convert2digit(BuybackAmt));
+
                 var OldAmt = parseFloat(GeneratedARAmt) + parseFloat(OutstandingAmt);
+
                 $("#txt_oldafter_discount").val(convert2digit(OldAmt));
 
                 /// This is condition to put Isnull 0
@@ -1962,6 +1984,9 @@ function get_selected_payment_schedule_changeitem_by_so() {
                 } else {
                     $("#txt_remaining_amount").val(convert2digit(remainingAmt));
                     $("#txt_installment_amount").val(convert2digit(remainingAmt));
+                    $("#cbo_payment_option").prop('disabled', false);
+                    $("#txt_installment_rate").prop('readonly', false);
+                    $("#txt_period").prop('readonly', false);
                 }
 
                 disable_enable_remove_by_line();
@@ -2418,13 +2443,13 @@ function get_changeitem_information() {
         var NewItemCode = $("#td_pop_payment_schedule_ocrcode3_" + rowi).text();
         var NewItemName = $("#td_pop_payment_schedule_ocrcode_" + rowi).text();
         var serialno = $("#td_pop_payment_schedule_serial_" + rowi).text();
-        var BuybackAmt = $("#td_pop_payment_schedule_so_houseamount_" + rowi).text();
+        /*var BuybackAmt = $("#td_pop_payment_schedule_so_houseamount_" + rowi).text();*/
 
         $("#txt_changeitem_ref").val(Reference || "");
         $("#txt_item_code").val(NewItemCode || "");
         $("#txt_item_name").val(NewItemName || "");
         $("#txt_new_serail").val(serialno);
-        $("#txt_buyback_amt").val(convert2digit(BuybackAmt));
+        /* $("#txt_buyback_amt").val(convert2digit(BuybackAmt));*/
 
 
 
@@ -2445,10 +2470,14 @@ function get_special_payment() {
     var index = 0;
     var checkDate = check_special_payment_date();
     if (checkDate == 2) {
-        ShowAlertCus("Payment amount cannot be zero!","warning")
+        ShowAlertCus("Payment amount cannot be zero!", "warning")
     } else if (checkDate == 1) {
         ShowAlertCus("Invalid selected payment date!", "warning")
     } else {
+
+        var moduleId = document.getElementById("txt_module_id").value;
+        var cserial = document.getElementById("txt_serial").value;
+
         $("#table_pop_special_payment >tbody>tr").each(function () {
             var id = $(this).attr('id').replace("tr_pop_speical_payment_", "");
             var docdate = $("#txt_pop_special_payment_date_" + id).val().split("-");
@@ -2467,7 +2496,7 @@ function get_special_payment() {
             data: {
                 itemcode: $("#txt_item_code").val(), installment: returnstringvalue($("#txt_installment_amount").val()), LastRowno: $("#table_payment_schedule>tbody>tr").length
                 , BaseLine: -1, method: method, paymentdate: paymentdate, amount: amount, percent: percent, anualrate: anual, period: period
-                , remark: remark, decimalplace: 0
+                , remark: cserial, decimalplace: 0
             },
             datatype: 'json',
             beforeSend: function () {
@@ -2535,6 +2564,11 @@ function get_special_payment() {
 
 
                     data = data + "<td style='text-align:Left; vertical-align: middle;' id='tr_payment_detail_paymentdate_line_" + rowindex + "'>" + x.DueDate + "</td>";
+
+
+                    if (moduleId === "ChangeHouse") {
+                        data = data + "<td style='text-align:Left; vertical-align: middle;' id='tr_payment_detail_serial_line_" + rowindex + "'>" + x.DistNumber + "</td>";
+                    }
                     data = data + "<td style='text-align:left; vertical-align: middle;' id='tr_payment_detail_principle_line_" + rowindex + "'>" + convert2digit(x.Principle) + "</td>";
                     data = data + "<td style='text-align:Left; vertical-align: middle;' id='tr_payment_detail_interest_line_" + rowindex + "'>" + convert2digit(x.Interest) + "</td>";
                     data = data + "<td style='text-align:Left; vertical-align: middle;' id='tr_payment_detail_monthlypay_line_" + rowindex + "'>" + convert2digit(x.MonthlyPay) + "</td>";
@@ -2559,7 +2593,7 @@ function get_special_payment() {
                     data += "</div>";
                     data += "</td>";
 
-                   
+
                     data = data + "<td style='text-align:Left; vertical-align: middle; color:red' id='tr_payment_detail_arno_line_" + rowindex + "'>" + x.ARNo + "</td>";
                     data = data + "<td style='text-align:Left; vertical-align: middle; color:red' id='tr_payment_detail_paymentno_line_" + rowindex + "'>" + x.PaymentNo + "</td>";
                     data = data + "<td style='text-align:Left; vertical-align: middle; color:red' id='tr_payment_detail_arnointerest_line_" + rowindex + "'>" + x.ARNoInterest + "</td>";
@@ -2596,7 +2630,7 @@ function get_special_payment() {
                 totalMonthlyPay = parseFloat(returnstringvalue(totalMonthlyPay)) + parseFloat(returnstringvalue($("#txt_total_monthly").text()));
                 $("#txt_total_monthly").text(convert2digit(totalMonthlyPay));
 
-               
+
 
                 var beforedis = returnstringvalue($("#txt_before_discount_amount").val());
 
@@ -2614,7 +2648,7 @@ function get_special_payment() {
                     $("#btn_generate_payment_shcedule").text('Generate');
                     $("#txt_remaining_amount").val('0.00');
                     $("#txt_installment_amount").val('0.00');
-                } else if (parseFloat(convert2digit(remainingAmt)) == 0 && parseFloat(convert2digit(newremainingAmt)) != 0){
+                } else if (parseFloat(convert2digit(remainingAmt)) == 0 && parseFloat(convert2digit(newremainingAmt)) != 0) {
                     $("#txt_remaining_amount").val(convert2digit(remainingAmt));
                     $("#txt_installment_amount").val(convert2digit(remainingAmt));
                 }
@@ -2646,6 +2680,11 @@ function get_special_payment() {
 }
 function get_payment_schedule() {
 
+    var moduleId = document.getElementById("txt_module_id").value;
+
+    var el = document.getElementById("txt_new_serail");
+    var newserial = el ? el.value : "";
+
     var checkDate = 0;
     var lenRow = $("#table_payment_schedule >tbody >tr").length;
     if (lenRow > 0) {
@@ -2658,7 +2697,7 @@ function get_payment_schedule() {
     }
 
     if (checkDate == 0) {
-        if ($("#table_payment_schedule >tbody >tr").length<=1) {
+        if ($("#table_payment_schedule >tbody >tr").length <= 1) {
             var startdate = $("#txt_maturity_payment").val().trim().split("-");
             startdate = startdate[2] + "/" + startdate[1] + "/" + startdate[0];
         } else {
@@ -2689,7 +2728,7 @@ function get_payment_schedule() {
                 , AnnualRate: $("#txt_installment_rate").val()
                 , LastRowno: $("#table_payment_schedule>tbody>tr").length
                 , BaseLine: -1
-                , Remarks: ""
+                , Remarks: newserial
                 , Decimal: 0
             },
             datatype: 'json',
@@ -2733,7 +2772,7 @@ function get_payment_schedule() {
                     var x = mydata[i];
                     const principle = safeParseFloat(x.Principle);
                     const interest = safeParseFloat(x.Interest);
-                 
+
                     cumulativePrinciple += principle;
                     cumulativeInterest += interest;
 
@@ -2742,7 +2781,7 @@ function get_payment_schedule() {
 
 
 
-      /*              data = data + "<td><i class='fa fa-fw fa-remove' id='tr_payment_detail_remove_line_" + rowindex + "'  style='cursor:pointer;display:none;' onclick='cmd_tr_payment_detail_remove_line(" + rowindex + ")'></i></td>";*/
+                    /*              data = data + "<td><i class='fa fa-fw fa-remove' id='tr_payment_detail_remove_line_" + rowindex + "'  style='cursor:pointer;display:none;' onclick='cmd_tr_payment_detail_remove_line(" + rowindex + ")'></i></td>";*/
 
                     data = data + "<td><i class='fa fa-fw fa-remove' id='tr_payment_detail_remove_line_" + rowindex + "'  style='cursor:pointer;' onclick='cmd_tr_payment_detail_remove_line(" + rowindex + ")'></i></td>";
 
@@ -2769,6 +2808,12 @@ function get_payment_schedule() {
 
 
                     data = data + "<td style='text-align:Left; vertical-align: middle;' id='tr_payment_detail_paymentdate_line_" + rowindex + "'>" + x.DueDate + "</td>";
+
+                    if (moduleId === "ChangeHouse") {
+                        data += "<td style='text-align:left; vertical-align: middle;' id='tr_payment_detail_serial_line_" + rowindex + "'>" + x.DistNumber + "</td>";
+                    }
+
+
                     data = data + "<td style='text-align:left; vertical-align: middle;' id='tr_payment_detail_principle_line_" + rowindex + "'>" + convert2digit(x.Principle) + "</td>";
                     data = data + "<td style='text-align:Left; vertical-align: middle;' id='tr_payment_detail_interest_line_" + rowindex + "'>" + convert2digit(x.Interest) + "</td>";
                     data = data + "<td style='text-align:Left; vertical-align: middle;' id='tr_payment_detail_monthlypay_line_" + rowindex + "'>" + convert2digit(x.MonthlyPay) + "</td>";
@@ -2793,7 +2838,7 @@ function get_payment_schedule() {
                     data += "</div>";
                     data += "</td>";
 
-                    
+
                     data = data + "<td style='text-align:Left; vertical-align: middle; color:red' id='tr_payment_detail_arno_line_" + rowindex + "'>" + x.ARNo + "</td>";
                     data = data + "<td style='text-align:Left; vertical-align: middle; color:red' id='tr_payment_detail_paymentno_line_" + rowindex + "'>" + x.PaymentNo + "</td>";
 
@@ -2833,7 +2878,7 @@ function get_payment_schedule() {
                 $("#txt_total_monthly").text(convert2digit(totalMonthlyPay));
 
                 var afterdis = returnstringvalue($("#txt_after_discount").val());
-                
+
                 var beforedis = returnstringvalue($("#txt_before_discount_amount").val());
 
                 var remainingAmt = parseFloat(beforedis) - parseFloat(totalPrinciple);
@@ -2859,7 +2904,7 @@ function get_payment_schedule() {
                     $("#txt_installment_amount").val(convert2digit(remainingAmt));
                 }
                 // This condition is put for the calculation of reprocess 
-                else if(parseFloat(convert2digit(remainingAmt)) != 0 && parseFloat(convert2digit(newremainingAmt)) <= 0) {
+                else if (parseFloat(convert2digit(remainingAmt)) != 0 && parseFloat(convert2digit(newremainingAmt)) <= 0) {
 
                     $("#txt_remaining_amount").val('0.00');
                     $("#txt_installment_amount").val('0.00');
@@ -2884,8 +2929,8 @@ function get_payment_schedule() {
                 alert('Error while read data => ' + error);
             }
         });
-    }    
-}   
+    }
+}
 function get_AR_Memo_ChangeItemList() {
     var row = $("#txt_payment_schedule_selected_row").val();
     if (row == -1) {
@@ -3286,23 +3331,73 @@ function insert_to_remove_table(installment_id) {
 
 function cmd_tr_payment_detail_remove_line(index) {
 
+
+
     var in_id = $("#tr_payment_detail_installmentid_line_" + index).text().trim();
     if (in_id != '-1') {
         insert_to_remove_table(in_id);
     }
     $("#tr_payment_" + index).remove();
     var rowindex = $("#table_payment_schedule >tbody >tr").length;
-   
+
     if (rowindex > 0) {
         if ($("#tr_payment_detail_status_line_" + rowindex).text().trim() == "O") {
             $("#tr_payment_detail_remove_line_" + rowindex).show();
         }
         $("#txt_maturity_payment").val($("#tr_payment_detail_paymentdate_line_" + rowindex).text().trim());
     }
-    recalculate_total_remaining();
+
+    if (moduleId = "ChangeHouse") {
+        recalculate_total_remaining_ChangeProduct();
+    }
+    else {
+        recalculate_total_remaining();
+    }
 }
 
+function recalculate_total_remaining_ChangeProduct() {
 
+    var totalPrinciple = 0.00;
+    var totalInterest = 0.00;
+    var totalMonthlyPay = 0.00;
+
+    $("#table_payment_schedule >tbody>tr").each(function (index) {
+        index++;
+        var Principle = $("#tr_payment_detail_principle_line_" + index).text().trim();
+        var Interest = $("#tr_payment_detail_interest_line_" + index).text().trim();
+        var MonthlyPay = $("#tr_payment_detail_monthlypay_line_" + index).text().trim();
+
+        totalPrinciple = parseFloat(returnstringvalue(totalPrinciple)) + parseFloat(returnstringvalue(Principle));
+        totalInterest = parseFloat(returnstringvalue(totalInterest)) + parseFloat(returnstringvalue(Interest));
+        totalMonthlyPay = parseFloat(returnstringvalue(totalMonthlyPay)) + parseFloat(returnstringvalue(MonthlyPay));
+    });
+
+    $("#txt_total_principle").text(convert2digit(totalPrinciple));
+    $("#txt_total_interest").text(convert2digit(totalInterest));
+    $("#txt_total_monthly").text(convert2digit(totalMonthlyPay));
+
+    var afterdis = returnstringvalue($("#txt_after_discount").val());
+    var remainingAmt = parseFloat(afterdis) - parseFloat(totalPrinciple);
+
+
+    if (parseFloat(convert2digit(remainingAmt)) == 0) {
+        $("#txt_installment_rate").attr('readonly', 'readonly');
+        $("#txt_period").attr('readonly', 'readonly');
+        $("#txt_fixed_monthly_payment").attr('readonly', 'readonly');
+        $("#check_manual_payment").prop('checked', false);
+        $("#check_manual_payment").attr('disabled', 'disabled');
+        $("#cbo_payment_option").val('');
+        $("#cbo_payment_option").attr('disabled', 'disabled');
+        $("#btn_generate_payment_shcedule").text('Generate');
+        $("#txt_remaining_amount").val('0.00');
+        $("#txt_installment_amount").val('0.00');
+    } else {
+        $("#cbo_payment_option").removeAttr('disabled');
+        $("#cbo_payment_option").val('');
+        $("#txt_remaining_amount").val(convert2digit(remainingAmt));
+        $("#txt_installment_amount").val(convert2digit(remainingAmt));
+    }
+}
 
 
 function cmd_remove_all_row_payment_schedule() {
@@ -3477,7 +3572,7 @@ function cmd_save_payment_shcedule() {
 
         $("#table_payment_schedule >tbody >tr").each(function (index) {
             index++;
-            if ($("#tr_payment_detail_installmentid_line_" + index).text().trim() == '-1') {
+            if ($("#tr_payment_detail_installmentid_line_" + index).text().trim() != '-99') {
                 var docdate = $('#tr_payment_detail_paymentdate_line_' + index).text().trim().split("-");
                 var detail = {
                     ID: $("#tr_payment_detail_installmentid_line_" + index).text().trim(),
@@ -3777,12 +3872,11 @@ function cmd_save_change_owner() {
             dataType: 'json',
             type: 'POST',
             url: '/amendments/save_change_owner',
-            data: JSON.stringify(
-                {
-                    'header': head,
-                    'installment_row': installmentRow_List,
-                    'del_list': del_list
-                }),
+            data: JSON.stringify({
+                header: head,
+                installment_row: installmentRow_List,
+                del_list: del_list
+            }),
             beforeSend: function () {
                 $("#loading").show();
             },
@@ -3790,17 +3884,21 @@ function cmd_save_change_owner() {
                 $("#loading").hide();
             },
             success: function (data) {
-                if (data.status == "OK") {
+                if (data.status === "OK") {
                     ShowAlertCus("Changing owner was saved", "success");
                     location.reload();
                 } else {
-                    ShowAlertCus("Error while saving changing owner!","warning");
+                    ShowAlertCus(data.status, "warning");
                 }
             },
-            failure: function (response) {
-                $('#result').html(response);
+            error: function (xhr) {
+                ShowAlertCus(
+                    xhr.responseJSON?.status || "Unexpected server error",
+                    "warning"
+                );
             }
         });
+
     }
 }
 function cmd_cancel_reload() {
@@ -5038,13 +5136,10 @@ function cmd_save_change_item() {
     var remainingAmt = returnstringvalue($("#txt_remaining_amount").val());
 
     if ($("#table_payment_schedule >tbody >tr").length <= 0) {
-        ShowAlertCus("No data to save!", "warning");
-    } else if (parseFloat(remainingAmt) < 0) {
-        ShowAlertCus("Remaining amount less than zero!", "warning");
-    } else if (parseFloat(remainingAmt) > 0) {
-        ShowAlertCus("Remaining amount large than zero!", "warning");
-    }
-    else {
+        ShowAlertCus("No data change Item to save!", "warning");
+    } else if (parseFloat(remainingAmt) != 0) {
+        ShowAlertCus("Remaining amount must Zero!", "warning");
+    } else {
         var docdate = $('#txt_doc_date').val().trim().split("-");
         var reqdate = $('#txt_due_date').val().trim().split("-");
         var installmentRow_List = [];
@@ -5062,7 +5157,7 @@ function cmd_save_change_item() {
             CardCode: $("#txt_card_code").val(),
             CardName: $("#txt_card_name").val(),
             DocNumRef: $("#txt_doc_num").val(),
-            
+
             OldItemCode: $("#txt_old_house_code").val(),
             OldSerial: $("#txt_oldserial").val(),
             OldItemName: $("#txt_old_item_name").val(),
@@ -5104,6 +5199,8 @@ function cmd_save_change_item() {
                 FixedPayment: returnstringvalue($("#tr_payment_detail_fixedpayment_line_" + index).text().trim()),
                 ARNo: $("#tr_payment_detail_arno_line_" + index).text().trim(),
                 PaymentNo: $("#tr_payment_detail_paymentno_line_" + index).text().trim(),
+                ARNoInterest: $("#tr_payment_detail_arnointerest_line_" + index).text().trim(),
+                PaymentNoInterest: $("#tr_payment_detail_paymentnointerest_line_" + index).text().trim(),
                 InstallmentBaseID: $("#tr_payment_detail_baseentry_line_" + index).text().trim(),
                 InstallmentBaseVisorder: $("#tr_payment_detail_baseline_line_" + index).text().trim(),
                 Method: $("#select_method_" + index).val(),
@@ -5122,7 +5219,7 @@ function cmd_save_change_item() {
                 AdditionalDisPer: "0.00",
                 ItemName: $("#txt_item_name").val(),
                 OcrCode: $("#txt_ocrcode").val(),
-                OcrCode2: $("#txt_ocrcode2").val(),
+                OcrCode2: $("#tr_payment_detail_serial_line_" + index).text().trim(),
                 OcrCode3: $("#txt_ocrcode3").val()
             };
             installmentRow_List.push(detail);

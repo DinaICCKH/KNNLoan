@@ -557,7 +557,7 @@
         <classShapeMoniker Id="bc71d2d3-4f34-48c3-8070-6624fbb74eb4" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(6.46511288461538 : 9.075); (6.46511288461538 : 10.225); (7.79166666666667 : 10.225 : JumpStart); (7.95833333333333 : 10.225 : JumpEnd); (8.5 : 10.225)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+    <associationConnector edgePoints="[(6.46511288461538 : 9.075); (6.46511288461538 : 10.225); (7.79166666666667 : 10.225 : JumpStart); (7.95833333333333 : 10.225 : JumpEnd); (8.07291666666667 : 10.225 : JumpStart); (8.23958333333333 : 10.225 : JumpEnd); (8.5 : 10.225)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/MKLDataContext/AppTemplate/AppTemplate_AppTemplateInit" />
       <nodes>
         <classShapeMoniker Id="e4bcefbb-d3e9-42ce-aee2-b9f6d9ce052c" />

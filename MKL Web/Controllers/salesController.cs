@@ -149,6 +149,7 @@ namespace MKL_Web.Controllers
                         Remarks = x["Remarks"].ToString(),
                         ARNoInterest = x["ARNoInterest"].ToString(),
                         PaymentNoInterest = x["PaymentNoInterest"].ToString(),
+                        DistNumber = x["SerialNo"].ToString(),
                     }).ToList();
             var data = list.Select(x => new {
                 x.ID,
@@ -178,7 +179,8 @@ namespace MKL_Web.Controllers
                 x.HouseStatus,
                 x.Remarks,
                 x.ARNoInterest,
-                x.PaymentNoInterest
+                x.PaymentNoInterest,
+                x.DistNumber
             }).ToList();
             return Json(new
             {
@@ -225,6 +227,7 @@ namespace MKL_Web.Controllers
                         Remarks = x["Remarks"].ToString(),
                         ARNoInterest = x["ARNoInterest"].ToString(),
                         PaymentNoInterest = x["PaymentNoInterest"].ToString(),
+                        DistNumber = x["SerialNo"].ToString(),
                     }).ToList();
             var data = list.Select(x => new {
                 x.ID,
@@ -254,7 +257,8 @@ namespace MKL_Web.Controllers
                 x.HouseStatus,
                 x.Remarks,
                 x.ARNoInterest,
-                x.PaymentNoInterest
+                x.PaymentNoInterest,
+                x.DistNumber
             }).ToList();
             return Json(new
             {
@@ -2325,9 +2329,14 @@ namespace MKL_Web.Controllers
             return Json(new { status, lastEntry });
         }
 
-        public JsonResult get_payment_schedule_changeitem_by_so(string soEntry, string rowStatus,string refer)
+        public JsonResult get_payment_schedule_changeitem_by_so(string soEntry, string rowStatus, string refer, decimal buyback)
         {
-            string sqltext = "exec ICC_AddOn_Installment_Table_For_ChangeItem '" + soEntry + "','" + rowStatus + "','" + refer + "'";
+            string sqltext = "exec ICC_AddOn_Installment_Table_For_ChangeItem '"
+               + soEntry + "','"
+               + rowStatus + "','"
+               + refer + "','"
+               + buyback + "'";
+
             List<Payment_Schedule> list = new List<Payment_Schedule>();
             list = (from x in view.getTable(sqltext, ConfigurationManager.AppSettings["sql"].ToString()).AsEnumerable()
                     select new Payment_Schedule()
@@ -2355,6 +2364,8 @@ namespace MKL_Web.Controllers
                         BaseLine = x["BaseLine"].ToString(),
                         ARNo = x["ARNo"].ToString(),
                         PaymentNo = x["PaymentNo"].ToString(),
+                        ARNoInterest = x["ARNoInterest"].ToString(),
+                        PaymentNoInterest = x["PaymentNoInterest"].ToString(),
                         FixedPayment = x["FixedPayment"].ToString(),
                         HouseStatus = x["HouseStatus"].ToString(),
                         Remarks = x["Remarks"].ToString(),
@@ -2409,6 +2420,8 @@ namespace MKL_Web.Controllers
                 x.BaseLine,
                 x.ARNo,
                 x.PaymentNo,
+                x.ARNoInterest,
+                x.PaymentNoInterest,
                 x.FixedPayment,
                 x.HouseStatus,
                 x.Remarks,
