@@ -25,6 +25,18 @@
                         $(this).show();
                 });
             });
+
+            $("#txt_pop_filter_vendor_new_name").keyup(function () {
+                $("#table_pop_customer_new_list >tbody >tr").each(function () {
+                    var id = $(this).attr('id').replace("tr_pop_customer_new_", "");
+
+                    var text = $("#td_pop_vendor_cust_code_new_" + id).text().toLowerCase() + $("#td_pop_vendor_cust_name_new_" + id).text().toLowerCase() + $("#td_pop_vendor_phone_new_" + id).text().toLowerCase();
+                    if (text.replace(/\s+/g, '').indexOf($("#txt_pop_filter_vendor_new_name").val().replace(/\s+/g, '').toLowerCase()) == -1)
+                        $(this).hide();
+                    else
+                        $(this).show();
+                });
+            });
         });
 
 
@@ -264,7 +276,7 @@
                                                     </td>
                                                     <td style="width:40%;">
                                                         <div class="form-group">
-                                                            <input type="text" class="form-control form-control-insde" id="txt_phone" placeholder="Customer Name" onchange="txt_po_vendor_name_change()" onkeydown='txtautocompletepo()'>
+                                                            <input type="text" class="form-control form-control-insde" id="txt_phone" placeholder="Phone" onchange="txt_po_vendor_name_change()" onkeydown='txtautocompletepo()'>
                                                         </div>
                                                     </td>
                                                 </tr>

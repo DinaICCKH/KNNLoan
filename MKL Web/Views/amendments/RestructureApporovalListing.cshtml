@@ -25,7 +25,7 @@
                 new SelectListItem { Text = "Draf", Value = "Draf" },
                 new SelectListItem { Text = "Closed", Value = "Closed" },
                 new SelectListItem { Text = "Reject", Value = "Reject" },
-                new SelectListItem { Text = "Approved", Value = "Approved" }
+                new SelectListItem { Text = "Approve", Value = "Approve" }
             }, "All", new { @class = "form-control form-control-sm", style = "width: 120px;" })
         </div>
 
@@ -52,16 +52,6 @@
                     <input type="text" class="form-control pull-right datetime form-control-insde" readonly="readonly" id="tdate" placeholder="From Date">
                 </div>
             </div>
-        </div>
-
-        <div class="form-group mb-2">
-            <label for="Customer" class="mr-2">CreateBy</label>
-            @Html.TextBox("CreateBy", Request["CreateBy"], new { @class = "form-control form-control-sm", style = "width: 140px;" })
-        </div>
-
-        <div class="form-group mb-2">
-            <label for="Customer" class="mr-2">CreateBy</label>
-            @Html.TextBox("CreateBy", Request["CreateBy"], new { @class = "form-control form-control-sm", style = "width: 140px;" })
         </div>
 
         <div class="form-group mb-2">

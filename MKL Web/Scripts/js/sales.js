@@ -1136,7 +1136,21 @@ function cmd_pop_choose_customer_change_owner() {
         $("#modal-cust_list").modal('hide');
         get_contact_person_by_card_code(cardcode);
         $("#txt_bp_selected_row").val("-1");
-        clear_form_data();
+        ///Clean Old Data 
+        $("#txt_house_code").val("");
+        $("#txt_after_discount").val(0);
+        $("#txt_after_serial").val("");
+
+        $("#txt_item_name").val("");
+        $("#txt_start_payment").val("");
+        $("#txt_docentry").val("");
+
+        $("#txt_new_card_code").val("");
+        $("#txt_new_card_name").val("");
+        $("#txt_new_phone").val("");
+
+        //clear_form_data();
+
         tr_pop_customer_selected('-1');
        
     } else if (cartType == '2') {
@@ -4071,7 +4085,7 @@ function cmd_save_approval_changeowner(Type) {
         },
         success: function (data) {
             if (data.status == "OK") {
-                ShowAlert("Update Record  was saved", function () {
+                ShowAlertCus("Update Record  was saved", function () {
                     window.location.assign("/amendments/ChangeOwnerApporovalListing");
                 });
             }

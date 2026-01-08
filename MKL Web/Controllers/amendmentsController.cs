@@ -55,13 +55,6 @@ namespace MKL_Web.Controllers
 
         public ActionResult EditChangeOwner(int DocEntry)
         {
-            //var soList = db.SOs.Where(a => a.ChangeReason == "ChangeOwner").ToList();
-
-            //var soList = db.SOs.ToList();
-            //ViewBag.cust = db.v_OCRDs.Where(x => x.cardtype == 'C' && soList.Select(a => a.CardCode).Contains(x.CardCode)).ToList();
-            //ViewBag.custNew = db.v_OCRDs.Where(x => x.cardtype == 'C').ToList();
-            //ViewBag.installment = db.InstallmentLists.Where(x => x.InsCode != "B").ToList();
-
             ViewBag.Checkbutton = db.ICC_Approval_Check_EnableButton("ChangeOwner",DocEntry, Session["UCode"].ToString()).ToList();
             ViewBag.HeaderChangeOwner = db.ICC_Get_List_Approval_ChangeOwnerDraf_By_ID(DocEntry).ToList();
 
@@ -90,17 +83,38 @@ namespace MKL_Web.Controllers
             return View();
         }
 
-        public ActionResult ChangeOwnerApporovalListing()
+        public ActionResult ChangeOwnerApporovalListing(
+             string Status,
+             DateTime? fdate,
+             DateTime? tdate,
+             string Item,
+             string Serial,
+             string Customer
+        )
         {
-            ViewBag.ChangeOwnerApporovalListing = db.ICC_Get_List_Approval_ChangeOwner(
-                "Draf",
-                new DateTime(1999, 1, 1),
-                new DateTime(1999, 1, 1),
-                "", "", ""
-            ).ToList();
+            // Default values (match stored procedure logic)
+            Status = string.IsNullOrEmpty(Status) ? "Draf" : Status;
+
+            DateTime fromDate = fdate ?? new DateTime(1999, 1, 1);
+            DateTime toDate = tdate ?? new DateTime(1999, 1, 1);
+
+            Item = Item ?? string.Empty;
+            Serial = Serial ?? string.Empty;
+            Customer = Customer ?? string.Empty;
+
+            ViewBag.ChangeOwnerApporovalListing =
+                db.ICC_Get_List_Approval_ChangeOwner(
+                    Status,
+                    fromDate,
+                    toDate,
+                    Item,
+                    Serial,
+                    Customer
+                ).ToList();
 
             return View();
         }
+
 
 
 
@@ -286,6 +300,26 @@ namespace MKL_Web.Controllers
                                         {
                                             status = "Fail";
                                         }
+                                        else
+                                        {
+                                            var sO = db.SOs.FirstOrDefault(a => a.DocEntry == header.DocEntry);
+
+
+                                            if (sO != null)
+                                            {
+                                                sO.LastError = "This document is linked with pending approve Changer Owner draft No: " + resultvalue.AutoGenerateID + " -> Reference: " + header.DocEntry;
+                                                sO.Frozenfor = "Y";
+
+                                                db.SOs.Context.SubmitChanges(); // Commit change
+                                            }
+                                            else
+                                            {
+                                                status = "Error";
+                                            }
+                                        }
+
+                                        
+
                                     }
 
                                     if (status == "OK")

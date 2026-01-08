@@ -22,11 +22,12 @@
             <label for="Status" class="mr-1">Status</label>
             @Html.DropDownList("Status", new List<SelectListItem>
             {
+                new SelectListItem { Text = "All", Value = "All" },
                 new SelectListItem { Text = "Draf", Value = "Draf" },
                 new SelectListItem { Text = "Closed", Value = "Closed" },
                 new SelectListItem { Text = "Reject", Value = "Reject" },
-                new SelectListItem { Text = "Approved", Value = "Approved" }
-            }, "All", new { @class = "form-control form-control-sm", style = "width: 120px;" })
+                new SelectListItem { Text = "Approve", Value = "Approve" }
+            }, new { @class = "form-control form-control-sm", style = "width: 120px;" })
         </div>
 
         <div class="form-group mb-2">
@@ -52,16 +53,6 @@
                     <input type="text" class="form-control pull-right datetime form-control-insde" readonly="readonly" id="tdate" placeholder="From Date">
                 </div>
             </div>
-        </div>
-
-        <div class="form-group mb-2">
-            <label for="Customer" class="mr-2">CreateBy</label>
-            @Html.TextBox("CreateBy", Request["CreateBy"], new { @class = "form-control form-control-sm", style = "width: 140px;" })
-        </div>
-
-        <div class="form-group mb-2">
-            <label for="Customer" class="mr-2">CreateBy</label>
-            @Html.TextBox("CreateBy", Request["CreateBy"], new { @class = "form-control form-control-sm", style = "width: 140px;" })
         </div>
 
         <div class="form-group mb-2">
