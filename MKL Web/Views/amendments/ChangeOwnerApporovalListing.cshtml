@@ -34,19 +34,30 @@
 
         <!-- From Date -->
         <div class="form-group mb-2">
-            <label class="mr-1">From Date</label>
-            <input type="text" name="fdate" id="fdate"
+            <label class="mr-1" for="fdate">From Date</label>
+            <input type="text"
+                   name="fdate"
+                   id="fdate"
+                   value="@Request["fdate"]"
                    class="form-control form-control-sm datetime"
-                   readonly placeholder="From Date" style="width:130px" />
+                   readonly
+                   placeholder="From Date"
+                   style="width:130px" />
         </div>
 
         <!-- To Date -->
         <div class="form-group mb-2">
-            <label class="mr-1">To Date</label>
-            <input type="text" name="tdate" id="tdate"
+            <label class="mr-1" for="tdate">To Date</label>
+            <input type="text"
+                   name="tdate"
+                   id="tdate"
+                   value="@Request["tdate"]"
                    class="form-control form-control-sm datetime"
-                   readonly placeholder="To Date" style="width:130px" />
+                   readonly
+                   placeholder="To Date"
+                   style="width:130px" />
         </div>
+
 
         <!-- Item -->
         <div class="form-group mb-2">

@@ -12,6 +12,17 @@
     <script src="../../Scripts/js/sales.js"></script>
     <script src="~/Scripts/js/Dina_CustomizationFormSettingandCopytoClibord.js"></script>
 </head>
+<style>
+    /* Sky blue for AR generated */
+    .bg-light-blue {
+        background-color: #d0e7ff; /* soft sky blue */
+    }
+
+    /* Soft orange for VarianDay != 0 */
+    .bg-light-orange {
+        background-color: #ffe5cc; /* soft pastel orange */
+    }
+</style>
 
 <div class="row">
 
@@ -427,6 +438,13 @@
                                                     int index = 1;
                                                     foreach (var item in installment)
                                                     {
+                                                        // Determine ARNo cell class
+                                                        string arNoClass = "";
+                                                        if (item.ARNo != -1)
+                                                        {
+                                                            arNoClass = "bg-sky-blue";
+                                                        }
+                                                 
                                                         <tr>
                                                             <td>@index</td>
                                                             <td>@Convert.ToDateTime(item.PaymentDate).ToString("dd-MMM-yyyy")</td>
@@ -441,7 +459,7 @@
                                                             <td>@String.Format("{0:N2}", item.CuPayment + item.CuInterest)</td>
                                                             <td>@item.Method</td>
 
-                                                            <td>@item.ARNo</td>
+                                                            <td class="@arNoClass">@item.ARNo</td>
                                                             <td>@item.PaymentNo</td>
                                                             <td>@item.ARNoInterest</td>
                                                             <td>@item.PaymentNoInterest</td>

@@ -12,6 +12,18 @@
     <script src="../../Scripts/js/sales.js"></script>
     <script src="~/Scripts/js/Dina_CustomizationFormSettingandCopytoClibord.js"></script>
 </head>
+<style>
+    /* Sky blue for AR generated */
+    .bg-light-blue {
+        background-color: #d0e7ff; /* soft sky blue */
+    }
+
+    /* Soft orange for VarianDay != 0 */
+    .bg-light-orange {
+        background-color: #ffe5cc; /* soft pastel orange */
+    }
+
+</style>
 
 <div class="row">
 
@@ -440,7 +452,18 @@
                                                     int index = 1;
                                                     foreach (var item in installment)
                                                     {
-                                                        <tr>
+                                                        string rowClass = "";
+
+                                                        if (item.ARNo != -1)
+                                                        {
+                                                            rowClass = "bg-light-blue";
+                                                        }
+
+                                                        if (item.VarianDay != 0)
+                                                        {
+                                                            rowClass = "bg-light-green"; // override
+                                                        }
+                                                        <tr class="@rowClass">
                                                             <td>@index</td>
                                                             <td>@Convert.ToDateTime(item.PaymentDate).ToString("dd-MMM-yyyy")</td>
                                                             <td>@Convert.ToDateTime(item.DueDate).ToString("dd-MMM-yyyy")</td>
@@ -458,19 +481,23 @@
                                                             <td>@item.PaymentNo</td>
                                                             <td>@item.ARNoInterest</td>
                                                             <td>@item.PaymentNoInterest</td>
+
                                                             <td style="color:@(item.VarianDay > 0 ? "red" : (item.VarianDay < 0 ? "green" : "inherit"))">
                                                                 @item.VarianDay
                                                             </td>
+
                                                             <td style="color:@(item.InterestonsheduleVarian > 0 ? "red" : (item.InterestonsheduleVarian < 0 ? "green" : "inherit"))">
                                                                 @String.Format("{0:N2}", item.InterestonsheduleVarian)
                                                             </td>
 
                                                             <td>@item.Remarks</td>
                                                         </tr>
+
                                                         index++;
                                                     }
                                                 }
                                             </tbody>
+
 
                                             <tfoot>
                                                 <tr>
