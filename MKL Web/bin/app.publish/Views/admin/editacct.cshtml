@@ -1,0 +1,139 @@
+﻿@using MKL_Web.Models;
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    string pagename = ViewBag.Title;
+    List<v_Department> dep = ViewBag.deplist;
+    List<v_CostCenter> project = ViewBag.project;
+    USR u = ViewBag.usr;
+    List<v_CostCenter> blocks = ViewBag.blocklist;
+}
+<head>
+    <title>@ViewBag.Title</title>
+</head>
+
+<div class="row">
+    <!-- left column -->
+    <div class="col-md-12">
+        <div class="box box-primary">
+            <div class="box-body">
+                <div class="col-md-8" style="padding-left:0px">
+                    <table class="table" role="none" style="border:none;padding:0px">
+                        <thead>
+                            <tr>
+                                <td style="padding-top:10px;">User Code</td>
+                                <td><input type="text" class="form-control" id="txt_admin_usercode" placeholder="User Code" value="@u.UserCode"></td>
+                            </tr>
+                            <tr>
+                                <td style="padding-top:10px;">Full Name</td>
+                                <td><input type="text" class="form-control" id="txt_admin_fullname" placeholder="Full Name" value="@u.UserName"></td>
+                            </tr>
+                            <tr>
+                                <td style="padding-top:10px;width:20%;" class="no-border">Gender</td>
+                                <td>
+                                    <select class="form-control" id="cbo_admin_gender">
+                                        @{
+                                            if (u.Gender == "Male")
+                                            {
+                                                <option value="Male" selected>Male</option>
+                                                <option value="Female">Female</option>
+                                            }
+                                            else
+                                            {
+                                                <option value="Male">Male</option>
+                                                <option value="Female" selected>Female</option>
+                                            }
+                                        }
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="padding-top:10px;">Phone</td>
+                                <td><input type="text" class="form-control" id="txt_admin_phone" placeholder="Phone" value="@u.Phone1"></td>
+                            </tr>
+                            <tr>
+                                <td style="padding-top:10px;">Email</td>
+                                <td><input type="text" class="form-control" id="txt_admin_email" placeholder="Email" value="@u.Email"></td>
+                            </tr>
+                            <tr>
+                                <td style="padding-top:10px;">Position</td>
+                                <td><input type="text" class="form-control" id="txt_position" placeholder="Position" value="@u.Position"></td>
+                            </tr>
+                            <tr>
+                                <td style="padding-top:10px;">Department</td>
+                                <td>
+                                    <select class="form-control" id="cbo_department">
+                                        @{
+                                            foreach (var x in dep)
+                                            {
+                                                if (x.Code == u.DepCode)
+                                                {
+                                                    <option value="@x.Code" selected>@x.Name</option>
+                                                }
+                                                else
+                                                {
+                                                    <option value="@x.Code">@x.Name</option>
+                                                }
+                                            }
+                                        }
+                                    </select>
+                                </td>
+                            </tr>
+                            
+                            <tr>
+                                <td style="padding-top:10px;">Status</td>
+                                <td>
+                                    <select class="form-control" id="cbo_user_status">
+                                        @if (u.UserStatus == "Active")
+                                        {
+                                            <option value="Active" selected>Active</option>
+                                            <option value="Inactive">Inactive</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="Active">Active</option>
+                                            <option value="Inactive" selected>Inactive</option>
+                                        }
+
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="padding-top:10px;">Change Next LogIn?</td>
+                                <td>
+                                    <select class="form-control" id="cbo_next_change">
+                                        @if (u.ChangeNext == 'Y')
+                                        {
+                                            <option value="Y">Yes</option>
+                                            <option value="N">No</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="Y">Yes</option>
+                                            <option value="N" selected>No</option>
+                                        }
+                                    </select>
+                                </td>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+                <div class="col-md-2" style="padding-left:0px">
+                    <table>
+                        <thead>
+                            <tr>
+                                <td><img src="@u.Picture" id="img_preview" style="width:200px;height:200px;" /> </td>
+                            </tr>
+                            <tr>
+                                <td><input type="file" id="img_user_signature" accept="image/png, image/gif, image/jpeg" onchange="esignature()" /></td>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+
+            <div class="box-footer">
+                <button type="button" class="btn btn-primary btn-flat" onclick="cmd_save_user('edit')">Submit</button>
+            </div>
+        </div>
+    </div>
+</div>

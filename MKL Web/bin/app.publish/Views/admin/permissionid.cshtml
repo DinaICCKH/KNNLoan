@@ -1,0 +1,105 @@
+﻿@using MKL_Web.Models;
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    PermissionRole per = ViewBag.perdes;
+    string pagename = ViewBag.Title;
+    List<Main> main = ViewBag.mainmenu;
+    List<Sub> sub = ViewBag.submenu;
+    List<PermissionRole1> per1 = ViewBag.per1;
+    PermissionRole1 p1 = null;
+}
+<head>
+    <title>@ViewBag.Title</title>
+</head>
+<div class="row">
+    <input type="hidden" id="txtperid" value="@per.PerRoleCode" />
+    <section class="content-header content-header-title">
+        <h1>@pagename</h1>
+        @Html.ActionLink("Back to Admin", "admin", "admin")|@Html.ActionLink("Account Permission", "acctpermission", "admin")
+    </section>
+    <div class="col-md-12">
+        <div class="box box-primary">
+            <div class="box-header with-border">
+                <h3 class="box-title"><b>User Role Permissions: @per.PerRoleDes</b></h3>
+            </div>
+            <div class="box-body">
+                <div class="alert alert-danger">
+                    <i class="icon fa fa-warning"></i>
+                    To give permission, please check the boxes. If you uncheck any boxes, the user will not be able to access that page or function.
+                </div>
+                <div class="col-md-7" style="padding-left:0px">
+                    <table class="table" role="none" style="border:none;padding:0px" id="table_admin_permission">
+                        <tbody>
+                            <tr class="bg-gray">
+                                <th colspan="3" style="width:60%">Description</th>
+                                <th style="width:10%">View</th>
+                                <th style="width:10%">Add</th>
+                                <th style="width:10%">Update</th>
+                                <th style="width:10%">Delete</th>
+                            </tr>
+                            @{
+                                foreach (var x in main)
+                                {
+                                    <tr>
+                                        <td style="display:none"></td>
+                                        <td colspan="3"><h4><b>@x.MainName</b></h4></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                    foreach (var y in sub.Where(a => a.Levels == 1 && a.MainCode == x.MainCode).OrderBy(b => b.VisOrder).ToList())
+                                    {
+                                        if (sub.Where(a => a.Levels == 2 && a.FatherCode == y.SubCode).FirstOrDefault() == null)
+                                        {
+                                            p1 = per1.Where(a => a.SubCode == y.SubCode && a.PerRoleCode==per.PerRoleCode).FirstOrDefault();
+
+                                            <tr id="@y.SubCode">
+                                                <td style="display:none"></td>
+                                                <td></td>
+                                                <td colspan="2" style="padding-left:5%;">@y.SubName</td>
+                                                <td><input type="checkbox" id="ck_view_@y.SubCode" /></td>
+                                                <td><input type="checkbox" id="ck_add_@y.SubCode" /></td>
+                                                <td><input type="checkbox" id="ck_update_@y.SubCode" /></td>
+                                                <td><input type="checkbox" id="ck_delete_@y.SubCode" /></td>
+                                            </tr>
+                                        }
+                                        else
+                                        {
+                                            <tr>
+                                                <td style="display:none"></td>
+                                                <td></td>
+                                                <td colspan="2" style="padding-left:5%;">@y.SubName</td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                            </tr>
+                                        }
+                                        foreach (var z in sub.Where(a => a.Levels == 2 && a.FatherCode == y.SubCode).OrderBy(b => b.VisOrder).ToList())
+                                        {
+                                            <tr id="@z.SubCode">
+                                                <td></td>
+                                                <td></td>
+                                                <td style="padding-left:10%;">@z.SubName</td>
+                                                <td><input type="checkbox" id="ck_view_@z.SubCode" /></td>
+                                                <td><input type="checkbox" id="ck_add_@z.SubCode" /></td>
+                                                <td><input type="checkbox" id="ck_update_@z.SubCode" /></td>
+                                                <td><input type="checkbox" id="ck_delete_@z.SubCode" /></td>
+                                            </tr>
+                                        }
+                                    }
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col-md-12" style="padding-left:0px">
+                    <div class="col-md-1" style="padding-left:0px">
+                        <button type="button" style="padding-left:10%;" class="btn btn-block btn-primary btn-flat" id="cmd_pa_submit" onclick="cmd_save_admin('permission',0)">Submit</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

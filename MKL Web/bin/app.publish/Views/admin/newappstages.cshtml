@@ -1,0 +1,61 @@
+﻿
+@using MKL_Web.Models;
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    string pagename = ViewBag.Title;
+}
+<head>
+    <title>@ViewBag.Title</title>
+</head>
+<div class="row">
+    <section class="content-header content-header-title">
+        <h1>@pagename</h1>
+        @Html.ActionLink("Back to Admin", "admin", "admin")|@Html.ActionLink("Approval Stages", "appstages", "admin")
+    </section>
+    <!-- left column -->
+    <div class="col-md-12">
+        <div class="box box-primary">
+            <div class="box-body">
+                <div class="col-md-9" style="padding-left:0px">
+                    <table class="table" role="none" style="border:none;padding:0px">
+                        <tr>
+                            <td style="padding-top:10px;width:20%;" class="no-border">Stage Name</td>
+                            <td>
+                                <input type="text" class="form-control" id="txt_admin_usercode" placeholder="Stage Name">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="padding-top:10px;">No. of Approvals Required</td>
+                            <td><input type="number" class="form-control" id="txt_admin_usercode" placeholder="No. of Approvals Required"></td>
+                        </tr>
+                        <tr>
+                            <td style="padding-top:10px;">No. of Rejections Required</td>
+                            <td><input type="number" class="form-control" id="txt_admin_usercode" placeholder="No. of Rejections Required"></td>
+                        </tr>
+                    </table>
+                    <table class="table mkl_table_border" role="none" style="padding:0px">
+                        <tr class="bg-gray" role="row">
+                            <td style="padding-top:10px;width:5%;">#</td>
+                            <td style="padding-top:10px;width:20%;">Authorizer Code</td>
+                            <td style="padding-top:10px;width:75%;">Authorizer Name</td>
+                        </tr>
+                        <tr>
+                            <td style="padding-top:10px;">1</td>
+                            <td>
+                                <input type="text" class="form-control" id="txt_admin_usercode" readonly="readonly" placeholder="Authorizer Code">
+                            </td>
+                            <td>
+                                <input type="text" class="form-control" id="txt_admin_usercode" placeholder="Authorizer Name">
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <!-- /.box-body -->
+            <div class="box-footer">
+                <button type="button" class="btn btn-primary btn-flat" onclick="cmd_save_admin('user',0)">Submit</button>
+            </div>
+        </div>
+    </div>
+</div>
+

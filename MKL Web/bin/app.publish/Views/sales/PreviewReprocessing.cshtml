@@ -1,0 +1,725 @@
+﻿@using MKL_Web.Models;
+@{
+    ViewBag.Title = "Repocessing Approved";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    List<CNInstallmentRowDraf> installment = ViewBag.installment;
+    List<ICC_Get_List_Reprocessing_By_IDResult> header = ViewBag.Header;
+    List<ICC_Approval_Check_EnableButtonResult> Checkbutton = ViewBag.Checkbutton;
+}
+<head>
+    <script src="../../Scripts/js/sales.js"></script>
+    <script src="~/Scripts/js/Dina_CustomizationFormSettingandCopytoClibord.js"></script>
+    <script>
+        $(document).ready(function () {
+
+            $('.datetime').datepicker({
+                autoclose: true,
+                format: 'dd-M-yyyy'
+            });
+
+            // Event delegation: Bind click event to dynamically created remove icons
+            $("#table_customer_list").on("click", ".fa-remove", function () {
+                $(this).closest("tr").remove(); // Remove the row
+            });
+        });
+
+    </script>
+</head>
+
+
+<div class="row">
+    <input type="hidden" id="txt_module_id" value="BuyBack" />
+    <input type="hidden" id="txt_bp_selected_row" />
+    <input type="hidden" id="txt_item_selected_row" />
+    <input type="hidden" id="txt_payment_schedule_selected_row" />
+    <input type="hidden" id="txt_so_entry" value="-1" />
+    <input type="hidden" id="txt_so_line" value="-1" />
+    <input type="hidden" id="txt_ocrcode" value="-1" />
+    <input type="hidden" id="txt_ocrcode2" value="-1" />
+    <input type="hidden" id="txt_ocrcode3" value="-1" />
+    <table id="tbl_Remove_List" style="display:none;">
+        <thead>
+            <tr>
+                <td>HeaderLine</td>
+                <td>DetailLine</td>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+
+    @{
+        var H = header?.FirstOrDefault();
+        var CardCode = H?.CardCode ?? "";
+        var CardName = H?.CardName ?? "";
+        var PhoneNo = H?.PhoneNo ?? "";
+        var DocEntry = H?.DocEntry ?? -1;
+        var DocDate = H?.DocDate?.ToString("dd-MM-yyyy") ?? "";
+        var DeliveryDate = H?.DeliveryDate?.ToString("dd-MM-yyyy") ?? "";
+        var ItemCode = H?.ItemCode ?? "";
+        var ItemName = H?.ItemName ?? "";
+        var DocTotalBef = H?.DocTotalBef ?? 0;
+        var InstallmentAmt = H?.InstallmentAmt ?? 0;
+        var PaymentOption = H?.PaymentOption ?? "";
+        var Remaining = H?.Remaining ?? 0;
+        var AnnualRate = H?.AnnualRate ?? 0;
+        var StartPayment = H?.StartPayment?.ToString("dd-MM-yyyy") ?? "";
+        var MaturityPayment = H?.MaturityPayment?.ToString("dd-MM-yyyy") ?? "";
+        var SerialNo = H?.SerialNo ?? "";
+        var Comment = H?.Remark ?? "";
+        var PeriodMonths = H?.PeriodMonths ?? 1;
+
+        var CreateDate = H?.CreateDate?.ToString("dd-MM-yyyy") ?? "";
+        var CreateBy = H?.CreateBy ?? "";
+        var AppTemplate = H?.TemplateDesc ?? "";
+        var LastApprover = H?.LastApprover ?? "";
+
+        var BaseEntry = H?.BaseEntry ?? -1;
+
+        var DocNumRef = H?.DocNumRef ?? "";
+
+        var GeneratedAR = H?.GeneratedAR ?? 0;
+        var LoanBalance = H?.LoanBalance ?? 0;
+        var TotalAR = H?.TotalAR ?? 0;
+        var VarianAmt = H?.VarianAmt ?? 0;
+        var BuyBack = H?.BalanceDue ?? 0;
+
+    }
+
+    <div class="col-md-12">
+        <div class="box box-primary">
+            <div class="box-header with-border">
+                <h5 class="box-title">@ViewBag.Title</h5>
+            </div>
+            <div class="box-header with-border">
+                <table class="table" role="none">
+                    <thead>
+                        <tr>
+                            <td style="width:10%;">
+                                <div class="form-group">
+                                    <label for="inputEmail3" class="form-control controlLabel">Customer Code</label>
+                                </div>
+                            </td>
+                            <td style="width:40%;">
+                                <div class="form-group">
+                                    <input type="text" class="form-control form-control-insde" id="txt_card_code" readonly="readonly" placeholder="Customer Code" value="@CardCode">
+                                </div>
+                            </td>
+                            <td style="width:10%;">
+                                <div class="form-group">
+                                    <label for="inputEmail3" class="form-control controlLabel">AR Memo No</label>
+                                </div>
+                            </td>
+                            <td style="width:40%;">
+                                <div class="form-group">
+                                    <input type="text" class="form-control form-control-insde" id="txt_doc_num" readonly="readonly" placeholder="AR Memo No" value="@DocNumRef">
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width:10%;">
+                                <div class="form-group">
+                                    <label for="inputEmail3" class="form-control controlLabel">Customer Name</label>
+                                </div>
+                            </td>
+                            <td style="width:40%;">
+                                <div class="form-group">
+                                    <input type="text" class="form-control form-control-insde" id="txt_card_name" readonly="readonly" placeholder="Customer Name" value="@CardName">
+                                </div>
+                            </td>
+                            <td style="width:10%;">
+                                <div class="form-group">
+                                    <label for="inputEmail3" class="form-control controlLabel">Posting Date</label>
+                                </div>
+                            </td>
+                            <td style="width:40%;">
+                                <div class="form-group">
+                                    <div class="input-group date">
+                                        <div class="input-group-addon">
+                                            <i class="fa fa-calendar"></i>
+                                        </div>
+                                        <input type="text" class="form-control pull-right datetime form-control-insde" disabled readonly="readonly" id="txt_doc_date" placeholder="Posting Date" value="@DocDate">
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width:10%;">
+                                <div class="form-group">
+                                    <label for="inputEmail3" class="form-control controlLabel">Phone Number</label>
+                                </div>
+                            </td>
+                            <td style="width:40%;">
+                                <div class="form-group">
+                                    <input type="text" class="form-control form-control-insde" readonly="readonly" id="cbo_contact_person" placeholder="Item Description" value="@PhoneNo">
+                                </div>
+                            </td>
+                            <td style="width:10%;">
+                                <div class="form-group">
+                                    <label for="inputEmail3" class="form-control controlLabel">Delivery Date</label>
+                                </div>
+                            </td>
+                            <td style="width:40%;">
+                                <div class="form-group">
+                                    <div class="input-group date">
+                                        <div class="input-group-addon">
+                                            <i class="fa fa-calendar"></i>
+                                        </div>
+                                        <input type="text" class="form-control pull-right datetime form-control-insde" disabled readonly="readonly" id="txt_due_date" placeholder="Delivery Date" value="@DeliveryDate">
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td colspan="4">
+                                <fieldset class="scheduler-border">
+                                    <legend class="scheduler-border">Item Information</legend>
+                                    <div class="row" style="margin:0px;margin-top:10px;margin-left:-10px;">
+                                        <table class="table" style="margin-bottom:0px;">
+                                            <thead>
+                                                <tr>
+                                                    <td style="width:10%;">
+                                                        <div class="form-group">
+                                                            <label for="inputEmail3" class="form-control controlLabel">Item Code</label>
+                                                        </div>
+                                                    </td>
+                                                    <td style="width:40%;">
+                                                        <div class="form-group">
+
+                                                            <input type='text' class='form-control noborder' id="txt_house_code" readonly="readonly" placeholder='Item Code' value="@ItemCode">
+
+                                                        </div>
+                                                    </td>
+                                                    <td style="width:10%;">
+                                                        <div class="form-group">
+                                                            <label for="inputEmail3" style="padding-left:2px;" class="form-control controlLabel">Description</label>
+                                                        </div>
+                                                    </td>
+                                                    <td style="width:40%;">
+                                                        <div class="form-group">
+                                                            <input type="text" class="form-control form-control-insde" readonly="readonly" id="txt_item_name" placeholder="Item Description" value="@ItemName">
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="width:10%;">
+                                                        <div class="form-group">
+                                                            <label for="inputEmail3" class="form-control controlLabel">AR Amount</label>
+                                                        </div>
+                                                    </td>
+                                                    <td style="width:40%;">
+                                                        <div class="form-group">
+                                                            <input type="text" class="form-control form-control-insde" readonly="readonly" id="txt_before_discount_amount" placeholder="AR Amount" value="@TotalAR">
+                                                        </div>
+                                                    </td>
+                                                    <td style="width:10%;">
+                                                        <div class="form-group">
+                                                            <label for="inputEmail3" style="padding-left:2px;" class="form-control controlLabel">Installment Amount</label>
+                                                        </div>
+                                                    </td>
+                                                    <td style="width:40%;">
+                                                        <div class="form-group">
+                                                            <table style="width:100%;" id="table_doc_discount">
+                                                                <tr>
+                                                                    <td style="width:40%;"><input type="text" readonly="readonly" class="form-control form-control-insde" id="txt_installment_amount" placeholder="Instalment Amount" value="@DocTotalBef"></td>
+
+                                                                </tr>
+                                                            </table>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+
+                                                <tr>
+                                                    <td style="width:10%;">
+                                                        <div class="form-group">
+                                                            <label for="txt_amount_paid" style="padding-left:2px;" class="form-control controlLabel">Amount Paid</label>
+                                                        </div>
+                                                    </td>
+                                                    <td style="width:40%;">
+                                                        <div class="form-group">
+                                                            <table style="width:100%;">
+                                                                <tr>
+                                                                    <td style="width:40%;">
+                                                                        <input type="text" readonly="readonly" class="form-control form-control-insde" id="txt_start_payment" value="@GeneratedAR.ToString("N2")">
+                                                                    </td>
+                                                                    <td style="width:30%;text-align:right;padding-right:10px">Loan Balance</td>
+                                                                    <td style="width:30%;">
+                                                                        <input type="text" readonly="readonly" class="form-control form-control-insde" id="txt_maturity_payment" value="@LoanBalance.ToString("N2")">
+                                                                    </td>
+                                                                </tr>
+                                                            </table>
+                                                        </div>
+                                                    </td>
+
+                                                    <td style="width:10%;">
+                                                        <div class="form-group">
+                                                            <label for="txt_buyback_amt" style="padding-left:2px;" class="form-control controlLabel">Buyback Amt</label>
+                                                        </div>
+                                                    </td>
+                                                    <td style="width:40%;">
+                                                        <div class="form-group">
+                                                            <table style="width:100%;">
+                                                                <tr>
+                                                                    <td style="width:40%;">
+                                                                        <input type="text" readonly="readonly" class="form-control form-control-insde" id="txt_start_payment2" placeholder="Start Payment" value="@BuyBack">
+                                                                    </td>
+                                                                    <td style="width:30%;text-align:right;padding-right:10px">Varian Amt</td>
+                                                                    <td style="width:30%;">
+                                                                        <input type="text" readonly="readonly" class="form-control form-control-insde" id="txt_maturity_payment2" placeholder="Posting Date" value="@VarianAmt">
+                                                                    </td>
+                                                                </tr>
+                                                            </table>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+
+
+                                                <tr>
+
+                                                    <td style="width:10%;">
+                                                        <div class="form-group">
+                                                            <label for="inputEmail3" style="padding-left:2px;" class="form-control controlLabel">Serial No</label>
+                                                        </div>
+                                                    </td>
+                                                    <td style="width:40%;">
+                                                        <div class="form-group">
+                                                            <input type="text" class="form-control form-control-insde" readonly="readonly" id="cbo_payment_option" value="@SerialNo">
+
+                                                        </div>
+                                                    </td>
+
+
+                                                    <td style="width:10%;">
+                                                        <div class="form-group">
+                                                            <label for="inputEmail3" style="padding-left:2px;" class="form-control controlLabel">Start Payment</label>
+                                                        </div>
+                                                    </td>
+                                                    <td style="width:40%;">
+                                                        <div class="form-group">
+                                                            <table style="width:100%;" id="table_doc_discount">
+                                                                <tr>
+                                                                    <td style="width:40%;">
+                                                                        <div class="input-group date">
+                                                                            <div class="input-group-addon">
+                                                                                <i class="fa fa-calendar"></i>
+                                                                            </div>
+                                                                            <input type="text" class="form-control pull-right datetime form-control-insde" disabled readonly="readonly" id="txt_start_payment" placeholder="Start Payment" value="@StartPayment">
+                                                                        </div>
+                                                                    </td>
+                                                                    <td style="width:30%;text-align:right;padding-right:10px">Maturity Payment</td>
+                                                                    <td style="width:30%;">
+                                                                        <div class="input-group date">
+                                                                            <div class="input-group-addon">
+                                                                                <i class="fa fa-calendar"></i>
+                                                                            </div>
+                                                                            <input type="text" class="form-control pull-right datetime form-control-insde" disabled readonly="readonly" id="txt_maturity_payment" placeholder="Posting Date" value="@MaturityPayment">
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+                                                            </table>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+
+                                            </thead>
+                                        </table>
+                                    </div>
+                                </fieldset>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td colspan="4">
+                                <fieldset class="scheduler-border">
+                                    <legend class="scheduler-border" style="color:red">Approval Decision</legend>
+                                    <div class="row" style="margin:0px;margin-top:10px;margin-left:-10px;">
+                                        <table class="table" style="margin-bottom:0px;">
+                                            <thead>
+                                                <tr>
+                                                    <td style="width:10%;">
+                                                        <div class="form-group">
+                                                            <label for="inputEmail3" class="form-control controlLabel">Requester</label>
+                                                        </div>
+                                                    </td>
+                                                    <td style="width:40%;">
+                                                        <div class="form-group">
+                                                            <input type="text" class="form-control form-control-insde" readonly="readonly" value="@CreateBy" id="txt_requester_name" placeholder="Requester">
+                                                        </div>
+                                                    </td>
+                                                    <td style="width:10%;">
+                                                        <div class="form-group">
+                                                            <label for="inputEmail3" style="padding-left:2px;" class="form-control controlLabel">Approval Template</label>
+                                                        </div>
+                                                    </td>
+                                                    <td style="width:40%;">
+                                                        <div class="form-group">
+                                                            <input type="text" class="form-control form-control-insde" readonly="readonly" value="@AppTemplate" id="txt_app_template" placeholder="Approval Template">
+                                                        </div>
+                                                    </td>
+                                                </tr>
+
+                                                <tr>
+                                                    <td style="width: 10%;">
+                                                        <div class="form-group">
+                                                            <label for="inputEmail3" class="form-control controlLabel">Last Approver</label>
+                                                        </div>
+                                                    </td>
+                                                    <td style="width:40%;">
+                                                        <div class="form-group">
+                                                            <input type="text" class="form-control form-control-insde" readonly="readonly" id="txt_last_approver" value="@LastApprover">
+                                                        </div>
+                                                    </td>
+                                                    <td style="width: 10%; ">
+                                                        <div class="form-group">
+                                                            <label for="inputEmail3" style="padding-left:2px;" class="form-control controlLabel">Request Date</label>
+                                                        </div>
+                                                    </td>
+                                                    <td style="width:40%;">
+                                                        <div class="form-group">
+                                                            <table style="width:100%;" id="table_doc_discount">
+                                                                <tr>
+                                                                    <td style="width:40%;">
+                                                                        <div class="input-group date">
+                                                                            <div class="input-group-addon">
+                                                                                <i class="fa fa-calendar"></i>
+                                                                            </div>
+                                                                            <input type="text" class="form-control pull-right datetime form-control-insde" disabled readonly="readonly" id="txt_request_date" placeholder="Request Date" value="@CreateDate">
+                                                                        </div>
+                                                                    </td>
+
+                                                                    <td style="width:10%;">
+                                                                        <div class="form-group">
+                                                                            <label for="inputEmail3" class="form-control controlLabel">Draf ID</label>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td style="width:40%;">
+                                                                        <div class="form-group">
+                                                                            <input type="text" class="form-control form-control-insde" value="@DocEntry" readonly="readonly" id="txt_draf_ID">
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+                                                            </table>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+
+                                                <tr>
+                                                    <td style="width:10%;">
+                                                        <div class="form-group">
+                                                            <label for="inputEmail3" class="form-control controlLabel">Requester Comment</label>
+                                                        </div>
+                                                    </td>
+                                                    <td style="width:40%;">
+                                                        <div class="form-group">
+
+                                                            <textarea class="form-control form-control-insde" id="txt_draf_ID" readonly rows="3">@Comment</textarea>
+
+                                                        </div>
+                                                    </td>
+
+                                                    <td style="width:10%;">
+                                                        <div class="form-group">
+                                                            <label for="inputEmail3" style="padding-left:2px;" class="form-control controlLabel">Approver Comment</label>
+                                                        </div>
+                                                    </td>
+                                                    <td style="width:40%;">
+                                                        <div class="form-group">
+                                                            <textarea class="form-control form-control-insde" id="txt_approverComment" placeholder="Approver Comment" rows="3" style="resize: vertical;"></textarea>
+                                                        </div>
+                                                    </td>
+
+                                                </tr>
+
+                                            </thead>
+                                        </table>
+                                    </div>
+                                </fieldset>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="4">
+                                <fieldset class="scheduler-border">
+                                    <legend class="scheduler-border" style="font-weight: bold;">
+                                        <span style="cursor: pointer;" onclick="toggleCustomTable()">
+                                            Schedule List
+                                            <i id="toggle_icon" class="fa fa-chevron-up" style="margin-left: 5px; padding-bottom:10px !important"></i>
+                                        </span>
+                                    </legend>
+                                    <div class="nav-tabs-custom" id="customer_table_wrapper">
+                                        <ul class="nav nav-tabs">
+                                            <li class="active"><a href="#tab_1" data-toggle="tab" aria-expanded="true">Invoice</a></li>
+                                            <li class=""><a href="#tab_2" data-toggle="tab" aria-expanded="false">Buyback</a></li>
+                                        </ul>
+                                        <div class="tab-content">
+                                            <div class="tab-pane active" id="tab_1">
+                                                <div class="text-right" style="margin-top: 0px; margin-bottom: 10px;">
+                                                    <button type="button" class="btn btn-success btn-flat" id="btn_copy_schedule_to_excel" onclick="copyTableToClipboard('table_payment_schedule_AR',3,'Schedule List')">
+                                                        <i class="fa fa-copy"></i> Copy Table
+                                                    </button>
+
+                                                </div>
+                                                <div style="position: relative; overflow: auto; height: 100%; min-height: 30vh">
+                                                    <table class="table" style="margin-bottom: 0px; position: absolute; min-width: 2000px; width: 100%;" id="table_payment_schedule_AR">
+                                                        <thead style="position:sticky; top: 0; z-index: 1000;">
+                                                            <tr class="bg-gray" role="row">
+
+                                                                <td style="width:4%; text-align:left;">#</td>
+                                                                <td style="width: 7%; text-align: left;">DocDate</td>
+                                                                <td style="width: 7%; text-align: left;">DueDate</td>
+                                                                <td style="width: 7%; text-align: left;">Principle</td>
+                                                                <td style="width: 6%; text-align: left;">Interest</td>
+                                                                <td style="width: 7%; text-align: left;">MonthlyPay</td>
+                                                                <td style="width: 6%; text-align: left;">Remain</td>
+                                                                <td style="width: 7%; text-align: left;">Remain+Interest</td>
+                                                                <td style="width: 6%; text-align: left;">C.Principle</td>
+                                                                <td style="width: 7%; text-align: left;">C.Interest</td>
+                                                                <td style="width: 7%; text-align: left; ">C.Principle+Interest</td>
+                                                                <td style="width: 5%; text-align: left;">Reason</td>
+                                                                <td style="width: 26%; text-align: left;">Remark</td>
+                                                                <td style="width: 4%; text-align: left;">ARNo</td>
+                                                                <td style="width: 4%; text-align: left;">PayNo</td>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody style="vertical-align: middle;">
+                                                            @{
+                                                                int index = 1;
+                                                                foreach (var item in installment)
+                                                                {
+
+                                                                    if (item.RowType == "AR")
+                                                                    {
+                                                                        <tr>
+                                                                            <td>@index</td>
+                                                                            <td>@Convert.ToDateTime(item.PaymentDate).ToString("dd-MMM-yyyy")</td>
+                                                                            <td>@Convert.ToDateTime(item.DueDate).ToString("dd-MMM-yyyy")</td>
+                                                                            <td class="principle">@String.Format("{0:N2}", item.Principle)</td>
+                                                                            <td class="interest">@String.Format("{0:N2}", item.Interest)</td>
+                                                                            <td class="monthly">@String.Format("{0:N2}", item.Monthly)</td>
+                                                                            <td>@String.Format("{0:N2}", item.Remaining)</td>
+                                                                            <td>@String.Format("{0:N2}", item.Remaining + item.Interest)</td>
+                                                                            <td>@String.Format("{0:N2}", item.CuPayment)</td>
+                                                                            <td>@String.Format("{0:N2}", item.CuInterest)</td>
+                                                                            <td>@String.Format("{0:N2}", item.CuPayment + item.CuInterest)</td>
+                                                                            <td>@item.Method</td>
+                                                                            <td>@item.Remarks</td>
+                                                                            <td>@item.ARNo</td>
+                                                                            <td>@item.PaymentNo</td>
+                                                                        </tr>
+                                                                        index++;
+                                                                    }
+
+                                                                }
+                                                            }
+                                                        </tbody>
+                                                        <tfoot>
+                                                            <tr>
+                                                                <td class="bg-gray" style="text-align:right;"></td>
+                                                                <td class="bg-gray" style="text-align:right;"></td>
+                                                                <td class="bg-gray" style="text-align:left;"><b>Total</b></td>
+                                                                <td class="bg-gray" style="text-align:left;" id="txt_total_principleAR">0.00</td>
+                                                                <td class="bg-gray" style="text-align:left;" id="txt_total_interestAR">0.00</td>
+                                                                <td class="bg-gray" style="text-align:left;" id="txt_total_monthlyAR">0.00</td>
+                                                                <td class="bg-gray" style="text-align:right;"></td>
+                                                                <td class="bg-gray" style="text-align:right;"></td>
+                                                                <td class="bg-gray" style="text-align:right;"></td>
+                                                                <td class="bg-gray" style="text-align:right;"></td>
+                                                                <td class="bg-gray" style="text-align:right;"></td>
+                                                                <td class="bg-gray" style="text-align:right;"></td>
+                                                                <td class="bg-gray" style="text-align:right;"></td>
+                                                                <td class="bg-gray" style="text-align:right;"></td>
+                                                                <td class="bg-gray" style="text-align:right;"></td>
+                                                            </tr>
+                                                        </tfoot>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                                <!-- /.tab-pane -->
+                                                <div class="tab-pane" id="tab_2">
+                                                    <div class="text-right" style="margin-top: 0px; margin-bottom: 10px;">
+                                                        <button type="button" class="btn btn-success btn-flat" id="btn_copy_schedule_to_excel" onclick="copyTableToClipboard('table_payment_schedule',3,'Buy Back')">
+                                                            <i class="fa fa-copy"></i> Copy Table
+                                                        </button>
+
+                                                    </div>
+                                                    <div style="position: relative; overflow: auto; height: 100%; min-height: 30vh">
+                                                        <table class="table" style="margin-bottom: 0px; position: absolute; min-width: 2000px; width: 100%;" id="table_payment_schedule">
+                                                            <thead style="position:sticky; top: 0; z-index: 1000;">
+                                                                <tr class="bg-gray" role="row">
+
+                                                                    <td style="width:4%; text-align:left;">#</td>
+                                                                    <td style="width: 7%; text-align: left;">DocDate</td>
+                                                                    <td style="width: 7%; text-align: left;">DueDate</td>
+                                                                    <td style="width: 7%; text-align: left;">Principle</td>
+                                                                    <td style="width: 6%; text-align: left;">Interest</td>
+                                                                    <td style="width: 7%; text-align: left;">MonthlyPay</td>
+                                                                    <td style="width: 6%; text-align: left;">Remain</td>
+                                                                    <td style="width: 7%; text-align: left;">Remain+Interest</td>
+                                                                    <td style="width: 6%; text-align: left;">C.Principle</td>
+                                                                    <td style="width: 7%; text-align: left;">C.Interest</td>
+                                                                    <td style="width: 7%; text-align: left; ">C.Principle+Interest</td>
+                                                                    <td style="width: 5%; text-align: left;">Reason</td>
+                                                                    <td style="width: 26%; text-align: left;">Remark</td>
+                                                                    <td style="width: 4%; text-align: left;">ARNo</td>
+                                                                    <td style="width: 4%; text-align: left;">PayNo</td>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody style="vertical-align: middle;">
+                                                                @{
+                                                                    int index2 = 1;
+                                                                    foreach (var item in installment)
+                                                                    {
+                                                                        if (item.RowType == "Installment")
+                                                                        {
+                                                                            <tr>
+                                                                                <td>@index2</td>
+                                                                                <td>@Convert.ToDateTime(item.PaymentDate).ToString("dd-MMM-yyyy")</td>
+                                                                                <td>@Convert.ToDateTime(item.DueDate).ToString("dd-MMM-yyyy")</td>
+                                                                                <td class="principle">@String.Format("{0:N2}", item.Principle)</td>
+                                                                                <td class="interest">@String.Format("{0:N2}", item.Interest)</td>
+                                                                                <td class="monthly">@String.Format("{0:N2}", item.Monthly)</td>
+                                                                                <td>@String.Format("{0:N2}", item.Remaining)</td>
+                                                                                <td>@String.Format("{0:N2}", item.Remaining + item.Interest)</td>
+                                                                                <td>@String.Format("{0:N2}", item.CuPayment)</td>
+                                                                                <td>@String.Format("{0:N2}", item.CuInterest)</td>
+                                                                                <td>@String.Format("{0:N2}", item.CuPayment + item.CuInterest)</td>
+                                                                                <td>@item.Method</td>
+                                                                                <td>@item.Remarks</td>
+                                                                                <td>@item.ARNo</td>
+                                                                                <td>@item.PaymentNo</td>
+                                                                            </tr>
+                                                                            index2++;
+                                                                        }
+                                                                    }
+
+                                                                }
+                                                            </tbody>
+                                                            <tfoot>
+                                                                <tr>
+                                                                    <td class="bg-gray" style="text-align:right;"></td>
+                                                                    <td class="bg-gray" style="text-align:right;"></td>
+                                                                    <td class="bg-gray" style="text-align:left;"><b>Total</b></td>
+                                                                    <td class="bg-gray" style="text-align:left;" id="txt_total_principle">0.00</td>
+                                                                    <td class="bg-gray" style="text-align:left;" id="txt_total_interest">0.00</td>
+                                                                    <td class="bg-gray" style="text-align:left;" id="txt_total_monthly">0.00</td>
+                                                                    <td class="bg-gray" style="text-align:right;"></td>
+                                                                    <td class="bg-gray" style="text-align:right;"></td>
+                                                                    <td class="bg-gray" style="text-align:right;"></td>
+                                                                    <td class="bg-gray" style="text-align:right;"></td>
+                                                                    <td class="bg-gray" style="text-align:right;"></td>
+                                                                    <td class="bg-gray" style="text-align:right;"></td>
+                                                                    <td class="bg-gray" style="text-align:right;"></td>
+                                                                    <td class="bg-gray" style="text-align:right;"></td>
+                                                                    <td class="bg-gray" style="text-align:right;"></td>
+                                                                </tr>
+                                                            </tfoot>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        <!-- /.tab-content -->
+                                    </div>
+                                </fieldset>
+
+                            </td>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+            <div class="box-footer">
+                <button id="btnReject" type="button" class="btn btn-primary btn-flat"
+                        style="background-color:red; border-color:red;"
+                        onclick="cmd_save_approval_Reprocessing('Reject')">
+                    Reject
+                </button>
+
+                <button id="btnApprove" type="button" class="btn btn-primary btn-flat"
+                        onclick="cmd_save_approval_Reprocessing('Approve')">
+                    Approve
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div id="custom-alert" style="
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #28a745;
+    color: white;
+    padding: 15px 25px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    font-size: 16px;
+    z-index: 9999;
+    text-align: center;
+    max-width: 80%;
+    ">
+
+</div>
+
+<div id="alert-container" style="position: fixed; top: 20px; right: 20px; z-index: 9999;"></div>
+
+
+
+<script>
+    $(document).ready(function () {
+
+         var checkbutton = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Checkbutton.FirstOrDefault()));
+             var checkbuttonstatus = checkbutton?.Approver ?? "N";
+             console.log("checkbuttonstatus:", checkbuttonstatus);
+
+             if (checkbuttonstatus.toUpperCase() === 'Y') {
+                 console.log("Showing buttons");
+                 $('#btnReject').show();
+                 $('#btnApprove').show();
+             } else {
+                 console.log("Hiding buttons");
+                 $('#btnReject').hide();
+                 $('#btnApprove').hide();
+        }
+
+        function sumColumnInTable(tableId, className) {
+            let total = 0;
+            $("#" + tableId + " ." + className).each(function () {
+                let val = parseFloat($(this).text().replace(/,/g, ''));
+                if (!isNaN(val)) total += val;
+            });
+            return total.toFixed(2);
+        }
+
+
+        // For #table_payment_schedule
+        $('#txt_total_principle').text(sumColumnInTable("table_payment_schedule", "principle"));
+        $('#txt_total_interest').text(sumColumnInTable("table_payment_schedule", "interest"));
+        $('#txt_total_monthly').text(sumColumnInTable("table_payment_schedule", "monthly"));
+
+        // For #table_payment_schedule_AR, if you have separate totals
+        $('#txt_total_principleAR').text(sumColumnInTable("table_payment_schedule_AR", "principle"));
+        $('#txt_total_interestAR').text(sumColumnInTable("table_payment_schedule_AR", "interest"));
+        $('#txt_total_monthlyAR').text(sumColumnInTable("table_payment_schedule_AR", "monthly"));
+
+
+        // Load column settings UI
+        buildColumnSettingsCheckboxes();
+    });
+
+    function toggle() {
+        var wrapper = document.getElementById("table_wrapper");
+        var icon = document.getElementById("toggle_icon");
+
+        if (wrapper.style.display === "none") {
+            wrapper.style.display = "block";
+            icon.classList.remove("fa-chevron-down");
+            icon.classList.add("fa-chevron-up");
+        } else {
+            wrapper.style.display = "none";
+            icon.classList.remove("fa-chevron-up");
+            icon.classList.add("fa-chevron-down");
+        }
+    }
+
+</script>

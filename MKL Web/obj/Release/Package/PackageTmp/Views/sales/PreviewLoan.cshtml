@@ -323,7 +323,8 @@
                                                 <td style="width: 4%; text-align: left;">PayNo</td>
                                                 <td style="width: 4%; text-align: left;">ARNoInt</td>
                                                 <td style="width: 4%; text-align: left;">PayNoInt</td>
-                                                <td style="width: 18%; text-align: left;">Remark</td>
+                                                <td style="width: 8%; text-align: left;">LastError</td>
+                                                <td style="width: 10%; text-align: left;">Remark</td>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -331,7 +332,9 @@
                                                 int index = 1;
                                                 foreach (var item in installment)
                                                 {
-                                                    <tr>
+                                                    // Determine row style
+                                                    var rowStyle = item.ARNo != -1 ? "background-color: lightblue;" : "";
+                                                    <tr style="@rowStyle">
                                                         <td>@index</td>
                                                         <td>@Convert.ToDateTime(item.PaymentDate).ToString("dd-MMM-yyyy")</td>
                                                         <td>@Convert.ToDateTime(item.DueDate).ToString("dd-MMM-yyyy")</td>
@@ -349,6 +352,7 @@
                                                         <td>@item.PaymentNo</td>
                                                         <td>@item.ARNoInterest</td>
                                                         <td>@item.PaymentNoInterest</td>
+                                                        <td>@item.ErrorLog</td>
                                                         <td>@item.Remarks</td>
                                                     </tr>
                                                     index++;

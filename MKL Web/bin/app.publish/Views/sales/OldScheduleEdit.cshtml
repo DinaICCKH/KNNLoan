@@ -1,0 +1,220 @@
+﻿@using MKL_Web.Models;
+@{
+    ViewBag.Title = "Edit Old Schedule";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    List<OCRD> cust = ViewBag.cust;
+    List<v_Item_House> houselist = ViewBag.houselist;
+    string docdate = DateTime.Now.ToString("dd-MMM-yyyy");
+    SO s = ViewBag.so;
+    SO1 s1 = ViewBag.so1;
+    List<v_Contact> contact = ViewBag.contact;
+    InstallmentRow inst = ViewBag.inst;
+}
+<head>
+    <script src="../../Scripts/js/sales.js"></script>
+</head>
+
+
+<div class="row">
+    <input type="hidden" id="txt_dockey" value="@s.DocEntry" />
+    <input type="hidden" id="txt_bp_selected_row" />
+    <input type="hidden" id="txt_item_selected_row" />
+    <div class="col-md-12">
+        <div class="box box-primary">
+            <div class="box-header with-border">
+                <h5 class="box-title">@ViewBag.Title</h5>
+            </div>
+            <div class="box-header with-border">
+                <table class="table" role="none">
+                    <thead>
+                        <tr>
+                            <td style="width:10%;">
+                                <div class="form-group">
+                                    <label for="inputEmail3" class="form-control controlLabel">Customer Code</label>
+                                </div>
+                            </td>
+                            <td style="width:40%;">
+                                <div class="input-group">
+                                    <input type="text" class="form-control form-control-insde" id="txt_card_code" readonly="readonly" placeholder="Customer Code" value="@s.CardCode">
+                                    <div class="input-group-addon">
+                                        <i class="fa fa-user text-info" style="cursor:not-allowed"></i>
+                                    </div>
+                                </div>
+                            </td>
+                            <td style="width:10%;">
+                                <div class="form-group">
+                                    <label for="inputEmail3" class="form-control controlLabel">Ref No</label>
+                                </div>
+                            </td>
+                            <td style="width:40%;">
+                                <div class="form-group">
+                                    <input type="text" class="form-control form-control-insde" id="txt_doc_num" readonly="readonly" placeholder="SO No" value="@s.DocEntry">
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width:10%;">
+                                <div class="form-group">
+                                    <label for="inputEmail3" class="form-control controlLabel">Customer Name</label>
+                                </div>
+                            </td>
+                            <td style="width:40%;">
+                                <div class="form-group">
+                                    <input type="text" class="form-control form-control-insde" id="txt_card_name" placeholder="Customer Name" value="@s.CardName" readonly>
+                                </div>
+                            </td>
+                            <td style="width:10%;">
+                                <div class="form-group">
+                                    <label for="inputEmail3" class="form-control controlLabel">Posting Date</label>
+                                </div>
+                            </td>
+                            <td style="width:40%;">
+                                <div class="form-group">
+                                    <div class="input-group date">
+                                        <div class="input-group-addon">
+                                            <i class="fa fa-calendar"></i>
+                                        </div>
+                                        <input type="text" class="form-control pull-right datetime form-control-insde" readonly="readonly" id="txt_doc_date" placeholder="Posting Date" value="@s.DocDate.Value.ToString("dd-MMM-yyyy")" disabled>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width:10%;">
+                                <div class="form-group">
+                                    <label for="inputEmail3" class="form-control controlLabel">Contact</label>
+                                </div>
+                            </td>
+                            <td style="width:40%;">
+                                <div class="form-group">
+                                    <select class="form-control form-control-insde" id="cbo_contact_person" disabled>
+                                        <option value=""></option>
+                                        @foreach (var a in contact.Where(a => a.CardCode == s.CardCode).ToList())
+                                        {
+                                            if (a.CntctCode == s.ContactPerson)
+                                            {
+                                                <option selected value="@a.CntctCode">@a.Name</option>
+                                            }
+                                            else
+                                            {
+                                                <option value="@a.CntctCode">@a.Name</option>
+                                            }
+                                        }
+                                    </select>
+                                </div>
+                            </td>
+                            <td style="width:10%;">
+                                <div class="form-group">
+                                    <label for="inputEmail3" class="form-control controlLabel">Delivery Date</label>
+                                </div>
+                            </td>
+                            <td style="width:40%;">
+                                <div class="form-group">
+                                    <div class="input-group date">
+                                        <div class="input-group-addon">
+                                            <i class="fa fa-calendar"></i>
+                                        </div>
+                                        <input type="text" class="form-control pull-right datetime form-control-insde" readonly="readonly" id="txt_due_date" placeholder="Delivery Date" value="@s.DueDate.Value.ToString("dd-MMM-yyyy")" disabled>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="4">
+                                <fieldset class="scheduler-border">
+                                    <legend class="scheduler-border">Item Information</legend>
+                                    <div class="row" style="margin:0px;margin-top:10px;margin-left:-10px;">
+                                        <table class="table" style="margin-bottom:0px;">
+                                            <thead>
+                                                <tr style="display:none">
+                                                    <td>
+                                                        <input type="hidden" id="txt_ocrcode" value="@s.OcrCode" />
+                                                        <input type="hidden" id="txt_ocrcode2" value="@s1.OcrCode2" />
+                                                        <input type="hidden" id="txt_ocrcode3" value="@s1.OcrCode3" />
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="width:10%;">
+                                                        <div class="form-group">
+                                                            <label for="inputEmail3" class="form-control controlLabel">Item Code</label>
+                                                        </div>
+                                                    </td>
+                                                    <td style="width:40%;">
+                                                        <div class="input-group">
+                                                            <input type='text' style="display:none" class='form-control noborder' id="txt_item_code" readonly="readonly" placeholder='Item Code' value="@s1.ItemCode">
+                                                            <input type='text' class='form-control noborder' id="txt_house_code" readonly="readonly" placeholder='Item Code' value="@s1.ItemCode">
+                                                            <div class="input-group-addon">
+                                                                <i class="fa fa-industry text-info" style="cursor:not-allowed"></i>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td style="width:10%;">
+                                                        <div class="form-group">
+                                                            <label for="inputEmail3" style="padding-left:2px;" class="form-control controlLabel">Description</label>
+                                                        </div>
+                                                    </td>
+                                                    <td style="width:40%;">
+                                                        <div class="form-group">
+                                                            <input type="text" class="form-control form-control-insde" readonly="readonly" id="txt_item_name" placeholder="Item Description" value="@s1.ItemName">
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <div class="form-group">
+                                                            <label for="inputEmail3" class="form-control controlLabel">Loan Amount</label>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="form-group">
+                                                            <input type="text" class="form-control form-control-insde" id="txt_after_discount" placeholder="Loan Amount" value="@s.PaidAmt.Value.ToString("N2")" readonly="readonly">
+                                                        </div>
+                                                    </td>
+
+                                                    <td style="width:10%;">
+                                                        <div class="form-group">
+                                                            <label for="inputEmail3" style="padding-left:2px;" class="form-control controlLabel">Status</label>
+                                                        </div>
+                                                    </td>
+                                                    <td style="width:40%;">
+                                                        <div class="form-group">
+                                                            <select class="form-control form-control-insde" id="ddl_action">
+                                                                <option value="ChangeOwner">Change Owner</option>
+                                                                <option value="Reschedule">Reschedule</option>
+                                                                <option value="Reprocessing">Reprocessing</option>
+                                                            </select>
+                                                        </div>
+                                                    </td>
+
+                                                </tr>
+                                            </thead>
+                                        </table>
+                                    </div>
+                                </fieldset>
+                            </td>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+            <div class="box-footer">
+
+                @*@if (s.Reason == "BKN" && s.DocStatus == "Booking")
+                {
+                    <button type="button" class="btn btn-primary btn-flat" onclick="save_booking()">Submit</button>
+                    <button type="button" class="btn btn-warning btn-flat" onclick="cancel_booking()">Cancel</button>
+                }
+                else
+                {
+                    <button type="button" class="btn btn-primary btn-flat" disabled>Submit</button>
+                    <button type="button" class="btn btn-warning btn-flat" disabled>Cancel</button>
+                }*@
+
+                @*<button type="button" class="btn btn-primary btn-flat" onclick="save_booking()">Submit</button>*@
+
+                <button type="button" class="btn btn-primary btn-flat" onclick="cmd_save_updateOldSchedule()">Submit</button>
+                <button type="button" class="btn btn-warning btn-flat" onclick="">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+

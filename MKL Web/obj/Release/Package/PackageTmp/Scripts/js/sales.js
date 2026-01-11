@@ -355,14 +355,19 @@ function check_cmd_generate_payment_option() {
         }
         cmd_payment_generate();
     } else {
+        
         if (returnstringvalue($("#txt_installment_amount").val()) > 0) {
             $("#modal_special_payment").modal('show');
             var rowindex = $("#table_pop_special_payment >tbody >tr").length;
-            var serial = document.getElementById("txt_new_serail").value;
+
+            var serialElement = document.getElementById("txt_new_serail");
+            var serial = serialElement ? serialElement.value : "";
 
             if (rowindex > 0) {
+              
                 txt_special_line_payment_amount_change(1);
             } else {
+           
                 var installment_discount = returnstringvalue($("#txt_installment_amount").val());
                 $("#txt_pop_remaining_amount").val(convert2digit(installment_discount));
 
@@ -1136,7 +1141,21 @@ function cmd_pop_choose_customer_change_owner() {
         $("#modal-cust_list").modal('hide');
         get_contact_person_by_card_code(cardcode);
         $("#txt_bp_selected_row").val("-1");
-        clear_form_data();
+        ///Clean Old Data 
+        $("#txt_house_code").val("");
+        $("#txt_after_discount").val(0);
+        $("#txt_after_serial").val("");
+
+        $("#txt_item_name").val("");
+        $("#txt_start_payment").val("");
+        $("#txt_docentry").val("");
+
+        $("#txt_new_card_code").val("");
+        $("#txt_new_card_name").val("");
+        $("#txt_new_phone").val("");
+
+        //clear_form_data();
+
         tr_pop_customer_selected('-1');
        
     } else if (cartType == '2') {
@@ -2475,8 +2494,12 @@ function get_special_payment() {
         ShowAlertCus("Invalid selected payment date!", "warning")
     } else {
 
-        var moduleId = document.getElementById("txt_module_id").value;
-        var cserial = document.getElementById("txt_serial").value;
+        var moduleEl = document.getElementById("txt_module_id");
+        var serialEl = document.getElementById("txt_serial");
+
+        var moduleId = moduleEl ? moduleEl.value : "";
+        var cserial = serialEl ? serialEl.value : "";
+
 
         $("#table_pop_special_payment >tbody>tr").each(function () {
             var id = $(this).attr('id').replace("tr_pop_speical_payment_", "");
@@ -2638,22 +2661,6 @@ function get_special_payment() {
                 var newremainingAmt = parseFloat(returnstringvalue($("#txt_remaining_amount").val())) - parseFloat(totalPrinciple);
 
                 if (parseFloat(convert2digit(remainingAmt)) == 0) {
-                    $("#txt_installment_rate").attr('readonly', 'readonly');
-                    $("#txt_period").attr('readonly', 'readonly');
-                    $("#txt_fixed_monthly_payment").attr('readonly', 'readonly');
-                    $("#check_manual_payment").prop('checked', false);
-                    $("#check_manual_payment").attr('disabled', 'disabled');
-                    $("#cbo_payment_option").val('');
-                    $("#cbo_payment_option").attr('disabled', 'disabled');
-                    $("#btn_generate_payment_shcedule").text('Generate');
-                    $("#txt_remaining_amount").val('0.00');
-                    $("#txt_installment_amount").val('0.00');
-                } else if (parseFloat(convert2digit(remainingAmt)) == 0 && parseFloat(convert2digit(newremainingAmt)) != 0) {
-                    $("#txt_remaining_amount").val(convert2digit(remainingAmt));
-                    $("#txt_installment_amount").val(convert2digit(remainingAmt));
-                }
-                // This condition is put for the calculation of reprocess 
-                else if (parseFloat(convert2digit(remainingAmt)) != 0 && parseFloat(convert2digit(newremainingAmt)) <= 0) {
 
                     $("#txt_installment_rate").attr('readonly', 'readonly');
                     $("#txt_period").attr('readonly', 'readonly');
@@ -2666,6 +2673,30 @@ function get_special_payment() {
                     $("#txt_remaining_amount").val('0.00');
                     $("#txt_installment_amount").val('0.00');
                 }
+
+                // 🔧 FIX 1: move reprocess condition UP
+                else if (parseFloat(convert2digit(newremainingAmt)) <= 0) {
+
+                    $("#txt_installment_rate").attr('readonly', 'readonly');
+                    $("#txt_period").attr('readonly', 'readonly');
+                    $("#txt_fixed_monthly_payment").attr('readonly', 'readonly');
+                    $("#check_manual_payment").prop('checked', false);
+                    $("#check_manual_payment").attr('disabled', 'disabled');
+                    $("#cbo_payment_option").val('');
+                    $("#cbo_payment_option").attr('disabled', 'disabled');
+                    $("#btn_generate_payment_shcedule").text('Generate');
+                    $("#txt_remaining_amount").val('0.00');
+                    $("#txt_installment_amount").val('0.00');
+                }
+
+                // 🔧 FIX 2: change || → &&
+                else if (parseFloat(convert2digit(remainingAmt)) != 0
+                    && parseFloat(convert2digit(newremainingAmt)) != 0) {
+
+                    $("#txt_remaining_amount").val(convert2digit(remainingAmt));
+                    $("#txt_installment_amount").val(convert2digit(remainingAmt));
+                }
+
                 disable_enable_remove_by_line();
                 set_date_of_payment();
 
@@ -3347,10 +3378,10 @@ function cmd_tr_payment_detail_remove_line(index) {
         $("#txt_maturity_payment").val($("#tr_payment_detail_paymentdate_line_" + rowindex).text().trim());
     }
 
-    if (moduleId = "ChangeHouse") {
+    // 🔒 SAFE moduleId check
+    if (typeof moduleId !== "undefined" && moduleId === "ChangeHouse") {
         recalculate_total_remaining_ChangeProduct();
-    }
-    else {
+    } else {
         recalculate_total_remaining();
     }
 }
@@ -3591,8 +3622,8 @@ function cmd_save_payment_shcedule() {
                     CuInterest: returnstringvalue($("#tr_payment_detail_culnterest_line_" + index).text().trim()),
                     CuPayment: returnstringvalue($("#tr_payment_detail_cupayment_line_" + index).text().trim()),
                     FixedPayment: returnstringvalue($("#tr_payment_detail_fixedpayment_line_" + index).text().trim()),
-                    ARNo: -1,
-                    PaymentNo: -1,
+                    ARNo: returnstringvalue($("#tr_payment_detail_arno_line_" + index).text().trim()),
+                    PaymentNo: returnstringvalue($("#tr_payment_detail_paymentno_line_" + index).text().trim()),
                     /*Method: $("#tr_payment_detail_method_line_" + index).text().trim(),*/
                     Method: $("#select_method_" + index).val(),
                     InstallmentAmt: returnstringvalue($("#txt_before_discount_amount").val().trim()),
@@ -3612,8 +3643,8 @@ function cmd_save_payment_shcedule() {
                     OcrCode: $("#txt_ocrcode").val(),
                     OcrCode2: $("#txt_ocrcode2").val(),
                     OcrCode3: $("#txt_ocrcode3").val(),
-                    ARNoInterest: -1,
-                    PaymentNoInterest: -1
+                    ARNoInterest: returnstringvalue($("#tr_payment_detail_arnointerest_line_" + index).text().trim()),
+                    PaymentNoInterest: returnstringvalue($("#tr_payment_detail_paymentnointerest_line_" + index).text().trim())
                 };
                 installmentRow_List.push(detail);
             }
@@ -4070,10 +4101,12 @@ function cmd_save_approval_changeowner(Type) {
             $("#loading").hide();
         },
         success: function (data) {
-            if (data.status == "OK") {
-                ShowAlert("Update Record  was saved", function () {
-                    window.location.assign("/amendments/ChangeOwnerApporovalListing");
-                });
+            if (data.status === "OK") {
+                ShowAlertCus("Update Record was saved", "success");
+
+                setTimeout(function () {
+                    window.location.href = "/amendments/ChangeOwnerApporovalListing";
+                }, 1500); // Wait 1.5 seconds before redirect
             }
             else {
                 ShowAlertCus("Error while saving Payment Shcedule","warning");
