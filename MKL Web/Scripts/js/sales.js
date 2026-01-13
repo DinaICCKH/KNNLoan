@@ -3776,7 +3776,7 @@ function cmd_save_change_schedule() {
                 ARNoInterest: $("#tr_payment_detail_arnointerest_line_" + index).text().trim(),
                 PaymentNoInterest: $("#tr_payment_detail_paymentnointerest_line_" + index).text().trim(),
                 VarianDay: $("#tr_payment_detail_varianday_line_" + index).text().trim(),
-                Interestonshedule: $("#tr_payment_detail_interestonscheduleamt_line_" + index).text().trim()
+                InterestonsheduleVarian: returnstringvalue($("#tr_payment_detail_interestonscheduleamt_line_" + index).text().trim())
             };
             installmentRow_List.push(detail);
    
