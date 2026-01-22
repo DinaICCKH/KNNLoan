@@ -2499,6 +2499,7 @@ function get_special_payment() {
 
         var moduleId = moduleEl ? moduleEl.value : "";
         var cserial = serialEl ? serialEl.value : "";
+        var finalRemark = "";
 
 
         $("#table_pop_special_payment >tbody>tr").each(function () {
@@ -2510,16 +2511,23 @@ function get_special_payment() {
             percent = (index == 0 ? "" : percent + ";") + returnstringvalue($("#txt_pop_special_payment_per_" + id).val());
             anual = (index == 0 ? "" : anual + ";") + returnstringvalue($("#txt_pop_special_payment_rate_" + id).val());
             period = (index == 0 ? "" : period + ";") + returnstringvalue($("#txt_pop_special_payment_period_" + id).val());
-            remark = (index == 0 ? "" : remark + ";") + $("#txt_pop_special_payment_remark_" + id).val();
+            var value = $("#txt_pop_special_payment_remark_" + id).val() || "";
+            remark = (index === 0 ? value : remark + ";" + value);
             index++;
         });
+
+        finalRemark = (cserial != null && cserial !== "")
+            ? cserial
+            : remark;
+
+
         $.ajax({
             url: '/sales/get_special_schedule',
             type: 'POST',
             data: {
                 itemcode: $("#txt_item_code").val(), installment: returnstringvalue($("#txt_installment_amount").val()), LastRowno: $("#table_payment_schedule>tbody>tr").length
                 , BaseLine: -1, method: method, paymentdate: paymentdate, amount: amount, percent: percent, anualrate: anual, period: period
-                , remark: cserial, decimalplace: 0
+                , remark: finalRemark, decimalplace: 0
             },
             datatype: 'json',
             beforeSend: function () {

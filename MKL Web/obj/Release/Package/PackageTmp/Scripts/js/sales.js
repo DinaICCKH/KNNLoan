@@ -673,7 +673,7 @@ function cmd_change_house_choose_item() {
 
 function update_info_payment(paymnet_info, row) {
 
-    console.log($("#txt_module_id").val());
+  
 
     if (!paymnet_info) {
         alert("Payment info is undefined or null.");
@@ -995,7 +995,7 @@ function recalculate_total_remaining() {
 
     var buybackAmt = returnstringvalue($("#txt_buyback_amt").val());
 
-    console.log(beforedis);
+
 
     beforedis = parseFloat(beforedis) - parseFloat(0);
 
@@ -2656,26 +2656,16 @@ function get_special_payment() {
 
 
                 var beforedis = returnstringvalue($("#txt_before_discount_amount").val());
+            /*    var afterdis = returnstringvalue($("#txt_after_discount").val());*/
 
                 var remainingAmt = parseFloat(beforedis) - parseFloat(totalPrinciple);
                 var newremainingAmt = parseFloat(returnstringvalue($("#txt_remaining_amount").val())) - parseFloat(totalPrinciple);
 
+
+
                 if (parseFloat(convert2digit(remainingAmt)) == 0) {
 
-                    $("#txt_installment_rate").attr('readonly', 'readonly');
-                    $("#txt_period").attr('readonly', 'readonly');
-                    $("#txt_fixed_monthly_payment").attr('readonly', 'readonly');
-                    $("#check_manual_payment").prop('checked', false);
-                    $("#check_manual_payment").attr('disabled', 'disabled');
-                    $("#cbo_payment_option").val('');
-                    $("#cbo_payment_option").attr('disabled', 'disabled');
-                    $("#btn_generate_payment_shcedule").text('Generate');
-                    $("#txt_remaining_amount").val('0.00');
-                    $("#txt_installment_amount").val('0.00');
-                }
-
-                // 🔧 FIX 1: move reprocess condition UP
-                else if (parseFloat(convert2digit(newremainingAmt)) <= 0) {
+                    
 
                     $("#txt_installment_rate").attr('readonly', 'readonly');
                     $("#txt_period").attr('readonly', 'readonly');
@@ -2688,6 +2678,21 @@ function get_special_payment() {
                     $("#txt_remaining_amount").val('0.00');
                     $("#txt_installment_amount").val('0.00');
                 }
+
+                //// 🔧 FIX 1: move reprocess condition UP
+                //else if (parseFloat(convert2digit(newremainingAmt)) <= 0) {
+
+                //    $("#txt_installment_rate").attr('readonly', 'readonly');
+                //    $("#txt_period").attr('readonly', 'readonly');
+                //    $("#txt_fixed_monthly_payment").attr('readonly', 'readonly');
+                //    $("#check_manual_payment").prop('checked', false);
+                //    $("#check_manual_payment").attr('disabled', 'disabled');
+                //    $("#cbo_payment_option").val('');
+                //    $("#cbo_payment_option").attr('disabled', 'disabled');
+                //    $("#btn_generate_payment_shcedule").text('Generate');
+                //    $("#txt_remaining_amount").val('0.00');
+                //    $("#txt_installment_amount").val('0.00');
+                //}
 
                 // 🔧 FIX 2: change || → &&
                 else if (parseFloat(convert2digit(remainingAmt)) != 0
@@ -3771,7 +3776,7 @@ function cmd_save_change_schedule() {
                 ARNoInterest: $("#tr_payment_detail_arnointerest_line_" + index).text().trim(),
                 PaymentNoInterest: $("#tr_payment_detail_paymentnointerest_line_" + index).text().trim(),
                 VarianDay: $("#tr_payment_detail_varianday_line_" + index).text().trim(),
-                Interestonshedule: $("#tr_payment_detail_interestonscheduleamt_line_" + index).text().trim()
+                InterestonsheduleVarian: returnstringvalue($("#tr_payment_detail_interestonscheduleamt_line_" + index).text().trim())
             };
             installmentRow_List.push(detail);
    
@@ -4344,7 +4349,7 @@ function cmd_save_penaltyDraf() {
             
         });
 
-/*        console.log(rowsList);*/
+
 
         $.ajax({
             contentType: 'application/json; charset=utf-8',
@@ -4363,7 +4368,7 @@ function cmd_save_penaltyDraf() {
                 $("#loading").hide();
             },
             success: function (data) {
-                console.log(data);
+
                 if (data.status == "OK") {
                     ShowAlertCus("Penalty wizard was saved", "success");
                     location.reload();
