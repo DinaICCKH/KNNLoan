@@ -2780,4 +2780,10 @@
       <Column Name="Result" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
     </ElementType>
   </Function>
+  <Function Name="dbo.ICC_ConnectedBP_Check" Method="ICC_ConnectedBP_Check">
+    <Parameter Name="CardCode" Parameter="cardCode" Type="System.String" DbType="NVarChar(250)" />
+    <ElementType Name="ICC_ConnectedBP_CheckResult">
+      <Column Name="Status" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
 </Database>

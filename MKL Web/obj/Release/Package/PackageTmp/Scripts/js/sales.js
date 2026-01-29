@@ -1477,7 +1477,7 @@ function cmd_pop_choose_payment_schedule_buyBack() {
                     totalMonthlyPay = parseFloat(returnstringvalue(totalMonthlyPay)) + parseFloat(returnstringvalue(x.MonthlyPay));
 
                     if (x.ARNo !== "-1" && x.PaymentNo !== "-1") {
-                        GeneratedAR += parseFloat(returnstringvalue(x.MonthlyPay));
+                        GeneratedAR += parseFloat(returnstringvalue(x.Principle));
                     }
 
                     index++;
@@ -5217,7 +5217,7 @@ function cmd_save_change_item() {
 
 
             OldAR: returnstringvalue($("#txt_oldafter_discount").val()),
-            NewAR: returnstringvalue($("#txt_after_discount").val()),
+            NewAR: returnstringvalue($("#txt_before_discount_amount").val()),
             GeneratedAR: returnstringvalue($("#txt_generated_ar_amt").val()),
             OutstandingAmt: returnstringvalue($("#txt_outstanding_amount").val()),
             InstallmentAmt: returnstringvalue($("#txt_installment_amount").val()),
@@ -5253,7 +5253,7 @@ function cmd_save_change_item() {
                 InstallmentBaseID: $("#tr_payment_detail_baseentry_line_" + index).text().trim(),
                 InstallmentBaseVisorder: $("#tr_payment_detail_baseline_line_" + index).text().trim(),
                 Method: $("#select_method_" + index).val(),
-                InstallmentAmt: returnstringvalue($("#txt_after_discount").val().trim()),
+                InstallmentAmt: returnstringvalue($("#txt_before_discount_amount").val().trim()),
                 DiscountAmt: "0.00",
                 DepositAmt: returnstringvalue($("#tr_payment_detail_depositamt_line_" + index).text().trim()),
                 AnnualRate: returnstringvalue($("#tr_payment_detail_annulrate_line_" + index).text().trim()),
