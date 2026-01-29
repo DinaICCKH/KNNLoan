@@ -1373,7 +1373,11 @@ function cmd_pop_choose_customer_buyBack() {
     $("#txt_item_name").val('');
     $("#txt_buyback_amt").val('0.00');
     $("#table_payment_schedule >tbody >tr").remove();
+    $("#table_payment_schedule_AR >tbody >tr").remove();
     $("#txt_generatedar_amt").val('0.00');
+    $("#txt_remaining_installment").val('0.00');
+    $("#txt_before_discount_amount").val('0.00');
+    $("#txt_doc_num").val('');
 }
 function cmd_pop_choose_payment_schedule_buyBack() {
     var row = $("#txt_payment_schedule_selected_row").val();
@@ -1473,7 +1477,7 @@ function cmd_pop_choose_payment_schedule_buyBack() {
                     totalMonthlyPay = parseFloat(returnstringvalue(totalMonthlyPay)) + parseFloat(returnstringvalue(x.MonthlyPay));
 
                     if (x.ARNo !== "-1" && x.PaymentNo !== "-1") {
-                        GeneratedAR += parseFloat(returnstringvalue(x.MonthlyPay));
+                        GeneratedAR += parseFloat(returnstringvalue(x.Principle));
                     }
 
                     index++;
@@ -1723,12 +1727,11 @@ function cmd_save_buyback() {
                 $("#loading").hide();
             },
             success: function (data) {
-                if (data.status == "OK") {
+                if (data.status === "OK") {
                     ShowAlertCus("Buyback was saved", "success");
                     location.reload();
-                    
                 } else {
-                    ShowAlertCus("Fail to Save Somethings wrong!", "warning");
+                    ShowAlertCus(data.status, "warning"); // 👈 show server message
                 }
             },
             failure: function (response) {
@@ -5214,7 +5217,7 @@ function cmd_save_change_item() {
 
 
             OldAR: returnstringvalue($("#txt_oldafter_discount").val()),
-            NewAR: returnstringvalue($("#txt_after_discount").val()),
+            NewAR: returnstringvalue($("#txt_before_discount_amount").val()),
             GeneratedAR: returnstringvalue($("#txt_generated_ar_amt").val()),
             OutstandingAmt: returnstringvalue($("#txt_outstanding_amount").val()),
             InstallmentAmt: returnstringvalue($("#txt_installment_amount").val()),
@@ -5250,7 +5253,7 @@ function cmd_save_change_item() {
                 InstallmentBaseID: $("#tr_payment_detail_baseentry_line_" + index).text().trim(),
                 InstallmentBaseVisorder: $("#tr_payment_detail_baseline_line_" + index).text().trim(),
                 Method: $("#select_method_" + index).val(),
-                InstallmentAmt: returnstringvalue($("#txt_after_discount").val().trim()),
+                InstallmentAmt: returnstringvalue($("#txt_before_discount_amount").val().trim()),
                 DiscountAmt: "0.00",
                 DepositAmt: returnstringvalue($("#tr_payment_detail_depositamt_line_" + index).text().trim()),
                 AnnualRate: returnstringvalue($("#tr_payment_detail_annulrate_line_" + index).text().trim()),

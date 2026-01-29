@@ -1,0 +1,89 @@
+﻿@using MKL_Web.Models;
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Loan Listing";
+    List<ICC_Get_List_LoanResult> applist = ViewBag.ChangeOwnerApporovalListing;
+}
+
+<head>
+    <title>@ViewBag.Title</title>
+</head>
+
+<div class="row">
+    <section class="content-header content-header-title">
+        <h5>@ViewBag.Title</h5>
+    </section>
+
+    <div class="col-md-12">
+        <div class="box box-primary">
+
+            <!-- 🔍 SEARCH TEXTBOX -->
+            <div class="row" style="padding:10px;">
+                <div class="col-md-4">
+                    <input type="text"
+                           id="txtSearch"
+                           class="form-control"
+                           placeholder="Search DocNo, Card Name, Item, Serial No..." />
+                </div>
+            </div>
+
+            <div class="table-responsive">
+                <table id="table_pr_assignment" class="table table-bordered table-hover dataTable no-footer">
+                    <thead>
+                        <tr class="bg-gray" role="row">
+                            <th style="width: 3%">No</th>
+                            <th style="width: 4%">DocNo</th>
+                            <th style="width: 8%">Doc Date</th>
+                            <th style="width: 10%">Card Code</th>
+                            <th style="width: 16%">Card Name</th>
+                            <th style="width: 10%">Item Code</th>
+                            <th style="width: 12%">Item Name</th>
+                            <th style="width: 10%">Serial No</th>
+                            <th style="width: 5%">Status</th>
+                            <th style="width: 22%">Remark</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{
+                            int rowindex = 1;
+                            foreach (var x in applist)
+                            {
+                                <tr id="tr_@rowindex">
+                                    <td style="text-align:center;">@rowindex</td>
+                                    <td style="cursor:pointer;color:blue;text-decoration:underline;">
+                                        <a href="/sales/PreviewLoan?DocEntry=@x.DocEntry">
+                                            @x.DocEntry
+                                        </a>
+                                    </td>
+                                    <td>@x.DocDate.Value.ToString("dd-MMM-yyyy")</td>
+                                    <td>@x.CardCode</td>
+                                    <td>@x.CardName</td>
+                                    <td>@x.ItemCode</td>
+                                    <td>@x.ItemName</td>
+                                    <td>@x.DistNumber</td>
+                                    <td>@x.DocStatus</td>
+                                    <td>@x.Comment</td>
+                                </tr>
+                                rowindex++;
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 🔍 SEARCH SCRIPT -->
+<script>
+    document.getElementById("txtSearch").addEventListener("keyup", function () {
+        var searchText = this.value.toLowerCase();
+        var rows = document.querySelectorAll("#table_pr_assignment tbody tr");
+
+        rows.forEach(function (row) {
+            row.style.display = row.innerText.toLowerCase().includes(searchText)
+                ? ""
+                : "none";
+        });
+    });
+</script>

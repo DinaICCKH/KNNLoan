@@ -1,0 +1,516 @@
+﻿  @using MKL_Web.Models;
+@{
+    ViewBag.Title = "Change Owner";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    //List<v_CostCenter> project = ViewBag.project;
+    //List<v_CostCenter> block = ViewBag.block;
+    List<v_OCRD> cust = ViewBag.cust;
+    List<v_OCRD> custNew = ViewBag.custNew;
+    //List<v_Item> houselist = ViewBag.houselist;
+    string docdate = DateTime.Now.ToString("dd-MM-yyyy");
+    List<InstallmentList> installment = ViewBag.installment;
+}
+<head>
+    <script src="../../Scripts/js/sales.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("#txt_pop_filter_vendor_name").keyup(function () {
+                $("#table_pop_customer_list >tbody >tr").each(function () {
+                    var id = $(this).attr('id').replace("tr_pop_customer_", "");
+
+                    var text = $("#td_pop_vendor_cust_code_" + id).text().toLowerCase() + $("#td_pop_vendor_cust_name_" + id).text().toLowerCase() + $("#td_pop_vendor_phone_" + id).text().toLowerCase();
+                    if (text.replace(/\s+/g, '').indexOf($("#txt_pop_filter_vendor_name").val().replace(/\s+/g, '').toLowerCase()) == -1)
+                        $(this).hide();
+                    else
+                        $(this).show();
+                });
+            });
+
+            $("#txt_pop_filter_vendor_new_name").keyup(function () {
+                $("#table_pop_customer_new_list >tbody >tr").each(function () {
+                    var id = $(this).attr('id').replace("tr_pop_customer_new_", "");
+
+                    var text = $("#td_pop_vendor_cust_code_new_" + id).text().toLowerCase() + $("#td_pop_vendor_cust_name_new_" + id).text().toLowerCase() + $("#td_pop_vendor_phone_new_" + id).text().toLowerCase();
+                    if (text.replace(/\s+/g, '').indexOf($("#txt_pop_filter_vendor_new_name").val().replace(/\s+/g, '').toLowerCase()) == -1)
+                        $(this).hide();
+                    else
+                        $(this).show();
+                });
+            });
+        });
+
+
+    </script>
+</head>
+<div class="modal fade" id="modal-cust_list">
+    <div class="modal-dialog modal-dialog-popup-filter">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 id="pop_h5">Customer Filter</h5>
+            </div>
+            <div class="modal-body no-padding">
+                <div class="table-responsive" style="height:500px;overflow:auto">
+                    <table id="table_pop_customer_list" class="table">
+                        <thead>
+                            <tr>
+                                <td style="width:10%;">
+                                    <div class="form-group">
+                                        <label for="inputEmail3" class="form-control controlLabel">Find:</label>
+                                    </div>
+                                </td>
+                                <td colspan="2">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control form-control-insde" id="txt_pop_filter_vendor_name" placeholder="Customer Code or Customer Name">
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th style="width:15%">Customer Code</th>
+                                <th style="width:25%">Customer Name</th>
+                                <th style="width:25%">Customer KH</th>
+                                <th style="width:10%">Gender</th>
+                                <th style="width:15%">Phone</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{
+                                int rowindex = 1;
+                                foreach (var x in cust)
+                                {
+                                    <tr id="tr_pop_customer_@rowindex" onclick="tr_pop_customer_selected(@rowindex)">
+                                        <td id="td_pop_vendor_cust_code_@rowindex">@x.CardCode</td>
+                                        <td id="td_pop_vendor_cust_name_@rowindex">@x.CardName</td>
+                                        <td id="td_pop_vendor_cust_fname_@rowindex">@x.CardFName</td>
+                                        <td id="td_pop_vendor_cust_gender_@rowindex">@x.U_Gender</td>
+                                        <td id="td_pop_vendor_phone_@rowindex">@x.Phone1</td>
+                                        <td></td>
+                                    </tr>
+                                    rowindex++;
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer" style="padding:5px;">
+                <button type="button" class="btn btn-success pull-left btn-flat" onclick="cmd_pop_choose_customer_change_owner()">Choose</button>
+                <button type="button" class="btn btn-danger pull-left btn-flat" data-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<div class="modal fade" id="modal-cust_new_list">
+    <div class="modal-dialog modal-dialog-popup-filter">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 id="pop_h5">Customer Filter</h5>
+            </div>
+            <div class="modal-body no-padding">
+                <div class="table-responsive" style="height:500px;overflow:auto">
+                    <table id="table_pop_customer_new_list" class="table">
+                        <thead>
+                            <tr>
+                                <td style="width:10%;">
+                                    <div class="form-group">
+                                        <label for="inputEmail3" class="form-control controlLabel">Find:</label>
+                                    </div>
+                                </td>
+                                <td colspan="2">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control form-control-insde" id="txt_pop_filter_vendor_new_name" placeholder="Customer Code or Customer Name">
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th style="width:15%">Customer Code</th>
+                                <th style="width:25%">Customer Name</th>
+                                <th style="width:25%">Customer KH</th>
+                                <th style="width:10%">Gender</th>
+                                <th style="width:15%">Phone</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{
+                                int rowindex1 = 1;
+                                foreach (var x in custNew)
+                                {
+                                    <tr id="tr_pop_customer_new_@rowindex1" onclick="tr_pop_customer_new_selected(@rowindex1)">
+                                        <td id="td_pop_vendor_cust_code_new_@rowindex1">@x.CardCode</td>
+                                        <td id="td_pop_vendor_cust_name_new_@rowindex1">@x.CardName</td>
+                                        <td id="td_pop_vendor_cust_fname_new_@rowindex1">@x.CardFName</td>
+                                        <td id="td_pop_vendor_cust_gender_new_@rowindex1">@x.U_Gender</td>
+                                        <td id="td_pop_vendor_phone_new_@rowindex1">@x.Phone1</td>
+                                        <td></td>
+                                    </tr>
+                                    rowindex1++;
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer" style="padding:5px;">
+                <button type="button" class="btn btn-success pull-left btn-flat" onclick="cmd_pop_choose_customer_change_owner()">Choose</button>
+                <button type="button" class="btn btn-danger pull-left btn-flat" data-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+
+
+<div class="modal fade" id="modal-schedule-list">
+    <div class="modal-dialog modal-dialog-popup-filter">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 id="pop_h5">Change Owner List Filter</h5>
+            </div>
+            <div class="modal-body no-padding">
+                <div class="table-responsive" style="height:500px;overflow:auto">
+                    <table id="table_pop_schedule_list" class="table">
+                        <thead>
+                            <tr style="display:none">
+                                <td style="width:10%;">
+                                    <div class="form-group">
+                                        <label for="inputEmail3" class="form-control controlLabel">Find:</label>
+                                    </div>
+                                </td>
+                                <td colspan="2">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control form-control-insde" id="txt_pop_filter_vendor_name" placeholder="Item Code">
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th style="width:10%">Ref No</th>
+                                <th style="width:10%">Customer Code</th>
+                                <th style="width:20%">Customer Name</th>
+                                <th style="width:10%">Item Code</th>
+                                <th style="width:20%">Item Name</th>
+                                <th style="width:10%">Serial No.</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer" style="padding:5px;">
+                <button type="button" class="btn btn-success pull-left btn-flat" onclick="cmd_pop_choose_payment_schedule()">Choose</button>
+                <button type="button" class="btn btn-danger pull-left btn-flat" data-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<div class="row">
+    <input type="hidden" id="txt_module_id" value="ChangeOwner" />
+    <input type="hidden" id="txt_bp_selected_row" />
+    <input type="hidden" id="txt_item_selected_row" value="-1" />
+    <input type="hidden" id="txt_payment_schedule_selected_row" value="-1" />
+    <input type="hidden" id="txt_so_entry" value="-1" />
+    <input type="hidden" id="txt_so_line" value="-1" />
+    <input type="hidden" id="txt_ocrcode" value="-1" />
+    <input type="hidden" id="txt_ocrcode2" value="-1" />
+    <input type="hidden" id="txt_ocrcode3" value="-1" />
+    <input type="hidden" id="txt_cardtype" value="-1" />
+    <table id="tbl_Remove_List" style="display:none;">
+        <thead>
+            <tr>
+                <td>HeaderLine</td>
+                <td>DetailLine</td>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+    <div class="col-md-12">
+        <div class="box box-primary">
+            <div class="box-header with-border">
+                <h5 class="box-title">@ViewBag.Title</h5>
+            </div>
+            <div class="box-header with-border">
+                <table class="table" role="none">
+                    <thead>
+                        <tr>
+                            <td colspan="2">
+                                <fieldset class="scheduler-border">
+                                    <legend class="scheduler-border">Old Customer Informatin</legend>
+                                    <div class="row" style="margin:0px;margin-top:10px;margin-left:-10px;">
+                                        <table class="table" style="margin-bottom:0px;">
+                                            <thead>
+                                                <tr>
+                                                    <td style="width:10%;">
+                                                        <div class="form-group">
+                                                            <label for="inputEmail3" class="form-control controlLabel">Customer Code</label>
+                                                        </div>
+                                                    </td>
+                                                    <td style="width:40%;">
+                                                        <div class="input-group">
+                                                            <input type="text" class="form-control form-control-insde" id="txt_card_code" readonly="readonly" placeholder="Customer Code">
+                                                            <div class="input-group-addon">
+                                                                <i class="fa fa-user text-info" onclick="cmd_show_customer_change_house('1')" style="cursor:pointer"></i>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="width:10%;">
+                                                        <div class="form-group">
+                                                            <label for="inputEmail3" class="form-control controlLabel">Customer Name</label>
+                                                        </div>
+                                                    </td>
+                                                    <td style="width:40%;">
+                                                        <div class="form-group">
+                                                            <input type="text" class="form-control form-control-insde" id="txt_card_name" placeholder="Customer Name" onchange="txt_po_vendor_name_change()" onkeydown='txtautocompletepo()'>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="width:10%;">
+                                                        <div class="form-group">
+                                                            <label for="inputEmail3" class="form-control controlLabel">Phone</label>
+                                                        </div>
+                                                    </td>
+                                                    <td style="width:40%;">
+                                                        <div class="form-group">
+                                                            <input type="text" class="form-control form-control-insde" id="txt_phone" placeholder="Phone" onchange="txt_po_vendor_name_change()" onkeydown='txtautocompletepo()'>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr style="visibility:hidden">
+                                                    <td style="width:10%;">
+                                                        <div class="form-group">
+                                                            <label for="inputEmail3" class="form-control controlLabel">Contact</label>
+                                                        </div>
+                                                    </td>
+                                                    <td style="width:40%;">
+                                                        <div class="form-group">
+                                                            <select class="form-control form-control-insde" id="cbo_contact_person"></select>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </thead>
+                                        </table>
+                                    </div>
+                                </fieldset>
+                            </td>
+                            <td colspan="2">
+                                <fieldset class="scheduler-border">
+                                    <legend class="scheduler-border">New Customer Informatin</legend>
+                                    <div class="row" style="margin:0px;margin-top:10px;margin-left:-10px;">
+                                        <table class="table" style="margin-bottom:0px;">
+                                            <thead>
+                                                <tr>
+                                                    <td style="width:10%;">
+                                                        <div class="form-group">
+                                                            <label for="inputEmail3" class="form-control controlLabel">Customer Code</label>
+                                                        </div>
+                                                    </td>
+                                                    <td style="width:40%;">
+                                                        <div class="input-group">
+                                                            <input type="text" class="form-control form-control-insde" id="txt_new_card_code" readonly="readonly" placeholder="Customer Code">
+                                                            <div class="input-group-addon">
+                                                                <i class="fa fa-user text-info" style="cursor:pointer" onclick="cmd_show_customer_change_house('2')"></i>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="width:10%;">
+                                                        <div class="form-group">
+                                                            <label for="inputEmail3" class="form-control controlLabel">Customer Name</label>
+                                                        </div>
+                                                    </td>
+                                                    <td style="width:40%;">
+                                                        <div class="form-group">
+                                                            <input type="text" class="form-control form-control-insde" id="txt_new_card_name" placeholder="Customer Name" onchange="txt_po_vendor_name_change()" onkeydown='txtautocompletepo()'>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="width:10%;">
+                                                        <div class="form-group">
+                                                            <label for="inputEmail3" class="form-control controlLabel">Phone</label>
+                                                        </div>
+                                                    </td>
+                                                    <td style="width:40%;">
+                                                        <div class="form-group">
+                                                            <input type="text" class="form-control form-control-insde" id="txt_new_phone" placeholder="Phone" onchange="txt_po_vendor_name_change()" onkeydown='txtautocompletepo()'>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr style="visibility:hidden">
+                                                    <td style="width:10%;">
+                                                        <div class="form-group">
+                                                            <label for="inputEmail3" class="form-control controlLabel">Contact</label>
+                                                        </div>
+                                                    </td>
+                                                    <td style="width:40%;">
+                                                        <div class="form-group">
+                                                            <select class="form-control form-control-insde" id="cbo_new_contact_person"></select>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </thead>
+                                        </table>
+                                    </div>
+                                </fieldset>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="4">
+                                <fieldset class="scheduler-border">
+                                    <legend class="scheduler-border">Item Information</legend>
+                                    <div class="row" style="margin:0px;margin-top:10px;margin-left:-10px;">
+                                        <table class="table" style="margin-bottom:0px;">
+                                            <thead>
+                                                <tr>
+                                                    <td style="width:10%;">
+                                                        <div class="form-group">
+                                                            <label for="inputEmail3" class="form-control controlLabel">Item Code</label>
+                                                        </div>
+                                                    </td>
+                                                    <td style="width:40%;">
+                                                        <div class="input-group">
+                                                            <input type='text' style="display:none" class='form-control noborder' id="txt_item_code" readonly="readonly" placeholder='Item Code'>
+                                                            <input type='text' class='form-control noborder' id="txt_house_code" readonly="readonly" placeholder='Item Code'>
+                                                            <div class="input-group-addon">
+                                                                <i class="fa fa-industry text-info" style="cursor:not-allowed"></i>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td style="width:10%;">
+                                                        <div class="form-group">
+                                                            <label for="inputEmail3" style="padding-left:2px;" class="form-control controlLabel">Description</label>
+                                                        </div>
+                                                    </td>
+                                                    <td style="width:40%;">
+                                                        <div class="form-group">
+                                                            <input type="text" class="form-control form-control-insde" readonly="readonly" id="txt_item_name" placeholder="Item Description">
+                                                        </div>
+                                                    </td>
+                                                </tr>
+
+                                                <tr>
+                                                    <td style="width:10%;">
+                                                        <div class="form-group">
+                                                            <label for="inputEmail3" class="form-control controlLabel">AR Amt</label>
+                                                        </div>
+                                                    </td>
+                                                    <td style="width:40%;">
+                                                        <div class="form-group">
+                                                            <input type="text" class="form-control form-control-insde" readonly="readonly" id="txt_after_discount" placeholder="AR Amt" value="0.00">
+                                                        </div>
+                                                    </td>
+                                                    <td style="width:10%;">
+                                                        <div class="form-group">
+                                                            <label for="inputEmail3" style="padding-left:2px;" class="form-control controlLabel">Start Payment</label>
+                                                        </div>
+                                                    </td>
+                                                    <td style="width:40%;">
+                                                        <div class="form-group">
+                                                            <table style="width:100%;" id="table_doc_discount">
+                                                                <tr>
+                                                                    <td style="width:40%;">
+                                                                        <div class="input-group date">
+                                                                            <div class="input-group-addon">
+                                                                                <i class="fa fa-calendar"></i>
+                                                                            </div>
+                                                                            <input type="text" class="form-control pull-right datetime form-control-insde" readonly="readonly" id="txt_start_payment" placeholder="Start Payment" value="@docdate">
+                                                                        </div>
+                                                                    </td>
+
+                                                                    <td style="width:10%;">
+                                                                        <div class="form-group">
+                                                                            <label for="inputEmail3" class="form-control controlLabel">Ref No</label>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td style="width:40%;">
+                                                                        <div class="form-group">
+                                                                            <input type="text" class="form-control form-control-insde" readonly="readonly" id="txt_docentry">
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+                                                            </table>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+
+                                                <tr>
+                                                    <td style="width:10%;">
+                                                        <div class="form-group">
+                                                            <label for="inputEmail3" class="form-control controlLabel">Serial Number</label>
+                                                        </div>
+                                                    </td>
+                                                    <td style="width:40%;">
+                                                        <div class="form-group">
+                                                            <input type="text" class="form-control form-control-insde" readonly="readonly" id="txt_after_serial" placeholder="Serial No">
+                                                        </div>
+                                                    </td>
+                                                
+                                                </tr>
+
+                                            </thead>
+                                        </table>
+                                    </div>
+                                </fieldset>
+                            </td>
+                        </tr>
+                        <tr style="display:none">
+                            <td colspan="4">
+                                <table class="table" style="margin-bottom:0px;" id="table_payment_schedule">
+                                    <thead>
+                                        <tr class="bg-gray" role="row">
+                                            <td style="width:2%;text-align:left;"></td>
+                                            <td style="width:2%;text-align:left;">
+                                                <i class='fa fa-circle text-danger' style='cursor:pointer;display:none;' id='tr_payment_detail_check_all' onclick='check_tr_payment_detail()'></i>
+                                                <i class='fa fa-circle text-yellow' id='tr_payment_detail_uncheck_all' style='cursor:pointer; display:none' onclick='uncheck_tr_payment_detail()'></i>
+                                            </td>
+                                            <td style="width:4%;text-align:left;">#</td>
+                                            <td style="width:15%;text-align:right;">Payment Date</td>
+                                            <td style="width:20%;text-align:right;">Principle</td>
+                                            <td style="width:20%;text-align:right;">Interest</td>
+                                            <td style="width:20%;text-align:right;">Monthly Pay</td>
+                                            <td style="width:20%;text-align:right;">Remaining</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody style="pointer-events: none;"></tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <td class="bg-gray" role="row" style="width:2%;text-align:left;"></td>
+                                            <td class="bg-gray" role="row" style="width:2%;text-align:right;"></td>
+                                            <td class="bg-gray" role="row" style="width:4%;text-align:right;"></td>
+                                            <td class="bg-gray" role="row" style="width:12%;text-align:right;">Total</td>
+                                            <td class="bg-gray" role="row" style="width:20%;text-align:right;" id="txt_total_principle">0.00</td>
+                                            <td class="bg-gray" role="row" style="width:20%;text-align:right;" id="txt_total_interest">0.00</td>
+                                            <td class="bg-gray" role="row" style="width:20%;text-align:right;" id="txt_total_monthly">0.00</td>
+                                            <td class="bg-gray" role="row" style="width:20%;text-align:right;"></td>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </td>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+            <div class="box-footer">
+
+                <div class="btn-group">
+                    <button type="button" class="btn btn-warning btn-flat">Copy From</button>
+                    <button type="button" class="btn btn-warning dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                        <span class="caret"></span>
+                        <span class="sr-only">Toggle Dropdown</span>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-btn">
+                        <li><button type="button" style="width:90%;" class="btn btn-warning btn-flat" onclick="cmd_copy_from_payment_schedule(1)">Payment Schedule</button></li>
+                    </ul>
+                </div>
+                <button type="button" class="btn btn-primary btn-flat" onclick="cmd_save_change_owner()">Submit</button>
+            </div>
+        </div>
+    </div>
+</div>
+

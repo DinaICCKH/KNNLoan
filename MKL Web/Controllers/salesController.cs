@@ -2129,8 +2129,17 @@ namespace MKL_Web.Controllers
 
                 var monthlyTotal = detail.Sum(x => x.Monthly);
 
+
+                var rawResultConnectBP = db.ICC_ConnectedBP_Check(header.CardCode);
+
+                if (rawResultConnectBP.Any())
+                {
+                    status = "Error: Please update connect Vendor in SAP first.";
+                    return Json(new { status, LastEntry }, JsonRequestBehavior.AllowGet);
+                }
+
                 // Get Approval Template
-                var rawResult = db.ICC_ApprovalTempate_Check("RE", "A", monthlyTotal);
+                var rawResult = db.ICC_ApprovalTempate_Check("RP", "A", monthlyTotal);
                 var list = rawResult.Select(x => new ApprovalTemplate
                 {
                     AppStageCode = Convert.ToInt32(x.AppStageCode),
@@ -2142,6 +2151,40 @@ namespace MKL_Web.Controllers
                     DocID = x.DocID,
                     NextApprover = x.NextApprover
                 }).ToList();
+
+
+                var result = db.InstallmentRows
+                                .Where(x =>
+                                    (
+                                        (x.ARNo != -1 && x.PaymentNo == -1) ||
+                                        (x.ARNo == -1 && x.PaymentNo != -1)
+                                    )
+                                    && Convert.ToString(x.BaseEntry) == header.DocNum
+                                )
+                                .ToList();
+
+                // Check unpaid interest AR
+                var checkInterest = db.InstallmentRows
+                    .Where(x =>
+                        (
+                            (x.ARNoInterest != -1 && x.PaymentNoInterest == -1) ||
+                            (x.ARNoInterest == -1 && x.PaymentNoInterest != -1)
+                        )
+                        && Convert.ToString(x.BaseEntry) == header.DocNum
+                    )
+                    .ToList();
+
+                if (result.Any())
+                {
+                    status = "Error: Cancel Generated AR Invoice that not yet paid in SAP first before change owner.";
+                    return Json(new { status, LastEntry }, JsonRequestBehavior.AllowGet);
+                }
+                if (checkInterest.Any())
+                {
+                    status = "Error: Cancel Generated AR Invoice that not yet paid interest in SAP first before change owner.";
+                    return Json(new { status, LastEntry }, JsonRequestBehavior.AllowGet);
+                }
+
 
                 if (!list.Any())
                 {
@@ -2236,6 +2279,7 @@ namespace MKL_Web.Controllers
                     if (status == "OK")
                     {
                         trans.Complete();
+                        trans.Dispose();
                     }
                 }
 
@@ -2243,9 +2287,10 @@ namespace MKL_Web.Controllers
             }
             catch (Exception ex)
             {
-                // Log error here if needed
-                return Json(new { status = "Failed", message = ex.Message }, JsonRequestBehavior.AllowGet);
+                status = "Failed";
+                //ErrorDes = ex.Message;
             }
+            return Json(new { status = status, LastEntry = LastEntry }, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult PreviewReprocessing(int DocEntry)

@@ -1224,6 +1224,13 @@ namespace MKL_Web.Models
 			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), appStatus, approver, iD, comment);
 			return ((ISingleResult<ICC_Approval_LoanDraf_Submit_DocResult>)(result.ReturnValue));
 		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.ICC_ConnectedBP_Check")]
+		public ISingleResult<ICC_ConnectedBP_CheckResult> ICC_ConnectedBP_Check([global::System.Data.Linq.Mapping.ParameterAttribute(Name="CardCode", DbType="NVarChar(250)")] string cardCode)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), cardCode);
+			return ((ISingleResult<ICC_ConnectedBP_CheckResult>)(result.ReturnValue));
+		}
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Controller")]
@@ -48079,6 +48086,32 @@ namespace MKL_Web.Models
 				if ((this._Result != value))
 				{
 					this._Result = value;
+				}
+			}
+		}
+	}
+	
+	public partial class ICC_ConnectedBP_CheckResult
+	{
+		
+		private int _Status;
+		
+		public ICC_ConnectedBP_CheckResult()
+		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Status", DbType="Int NOT NULL")]
+		public int Status
+		{
+			get
+			{
+				return this._Status;
+			}
+			set
+			{
+				if ((this._Status != value))
+				{
+					this._Status = value;
 				}
 			}
 		}

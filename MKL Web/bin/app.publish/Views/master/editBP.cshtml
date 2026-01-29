@@ -1,0 +1,628 @@
+﻿
+@using MKL_Web.Models;
+@{
+    ViewBag.Title = "Edit BP";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    List<v_Province> province = ViewBag.province;
+    List<v_InforSource> infosource = ViewBag.infosource;
+    List<v_PaymentTerm> term = ViewBag.term;
+    List<v_PriceList> pricelist = ViewBag.pricelist;
+    List<v_Currency> cur = ViewBag.cur;
+    //List<v_BPGroup> bpgroup = ViewBag.bpgroup;
+    List<v_Relationship> relation = ViewBag.relation;
+    List<v_DepBPGroup> depBpGroup = ViewBag.depBpGroup;
+    USR u = (USR)Session["USR"];
+    int depcode = 0;
+    if (u != null)
+    {
+        depcode = (int)u.DepCode;
+    }
+    v_Vendor vender = ViewBag.vender;
+    List<v_District> district = ViewBag.district;
+    List<v_Commune> commune = ViewBag.commune;
+    List<CRD1> address = ViewBag.address;
+    List<OCPR> contact = ViewBag.contact;
+}
+<head>
+    <script src="../../Scripts/js/Vendor.js"></script>
+</head>
+<div class="row">
+    <select id="cbo_province_list" style="display:none">
+        @{
+            <option value=""></option>
+            foreach (var x in province)
+            {
+                <option value="@x.Code">@x.Name</option>
+            }
+        }
+    </select>
+    <select id="cbo_relationship" style="display:none">
+        @{
+            foreach (var x in relation)
+            {
+                <option value="@x.Code">@x.Name</option>
+            }
+        }
+    </select>
+
+    <div class="col-md-12">
+        <div class="box box-primary">
+            <div class="box-header with-border">
+                <h5 class="box-title">@ViewBag.Title</h5>
+            </div>
+            <div class="box-header with-border">
+                <table class="table" role="none">
+                    <thead>
+                        <tr>
+                            <td style="width:10%;">
+                                <div class="form-group">
+                                    <label for="inputEmail3" class="form-control controlLabel">BP Code(*)</label>
+                                </div>
+                            </td>
+                            <td style="width:40%;">
+                                <div class="form-group">
+                                    <table style="width:100%">
+                                        <tr>
+                                            <td style="width:50%"><input type="text" class="form-control form-control-insde" id="txt_bp_code" readonly="readonly" placeholder="BP Code" value="@vender.CardCode"></td>
+                                            <td style="width:50%">
+                                                @if (vender.CardType == "C")
+                                                {
+                                                    <select class="form-control form-control-insde" disabled id="cbo_bp_type">
+                                                        @if (vender.CardType == "C")
+                                                        {
+                                                            <option value="C" selected="selected">Customer</option>
+                                                            <option value="L">Lead</option>
+                                                        }
+                                                        else
+                                                        {
+                                                            <option value="C">Customer</option>
+                                                            <option value="L" selected="selected">Lead</option>
+                                                        }
+                                                    </select>
+                                                }
+                                                else
+                                                {
+                                                    <select class="form-control form-control-insde" id="cbo_bp_type">
+                                                        @if (vender.CardType == "C")
+                                                        {
+                                                            <option value="C" selected="selected">Customer</option>
+                                                            <option value="L">Lead</option>
+                                                        }
+                                                        else
+                                                        {
+                                                            <option value="C">Customer</option>
+                                                            <option value="L" selected="selected">Lead</option>
+                                                        }
+                                                    </select>
+                                                }
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </td>
+                            <td style="width:10%;">
+                                <div class="form-group">
+                                    <label for="inputEmail3" class="form-control controlLabel">EN Name(*)</label>
+                                </div>
+                            </td>
+                            <td style="width:40%;">
+                                <div class="form-group">
+                                    <input type="text" class="form-control form-control-insde" id="txt_bp_en_name" placeholder="BP Name" value="@vender.CardName">
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width:10%;">
+                                <div class="form-group">
+                                    <label for="inputEmail3" class="form-control controlLabel">Group(*)</label>
+                                </div>
+                            </td>
+                            <td style="width:40%;">
+                                <div class="form-group">
+                                    <select class="form-control form-control-insde" id="cbo_bp_group">
+                                        <option value=""></option>
+                                        @{
+                                            foreach (var x in depBpGroup)
+                                            {
+                                                if (x.GroupCode == vender.GroupCode)
+                                                {
+                                                    <option value="@x.GroupCode" selected="selected">@x.GroupName</option>
+                                                }
+                                                else
+                                                {
+                                                    <option value="@x.GroupCode">@x.GroupName</option>
+                                                }
+                                            }
+                                        }
+                                    </select>
+                                </div>
+                            </td>
+                            <td style="width:12%;">
+                                <div class="form-group">
+                                    <label for="inputEmail3" class="form-control controlLabel">KH Name</label>
+                                </div>
+                            </td>
+                            <td style="width:40%;">
+                                <div class="form-group">
+                                    <input type="text" class="form-control form-control-insde" id="txt_bp_kh_name" placeholder="Foreign Name" value="@vender.FrgnName">
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width:10%;">
+                                <div class="form-group">
+                                    <label for="inputEmail3" class="form-control controlLabel">Currency(*)</label>
+                                </div>
+                            </td>
+                            <td style="width:40%;">
+                                <div class="form-group">
+                                    <select class="form-control form-control-insde" id="cbo_currency">
+                                        @{
+                                            foreach (var x in cur)
+                                            {
+                                                if (x.CurrCode == vender.Currency)
+                                                {
+                                                    <option value="@x.CurrCode" selected="selected">@x.CurrName</option>
+                                                }
+                                                else
+                                                {
+                                                    <option value="@x.CurrCode">@x.CurrName</option>
+                                                }
+                                            }
+                                        }
+                                        <option value="*">All</option>
+                                    </select>
+                                </div>
+                            </td>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+            <div class="nav-tabs-custom">
+                <ul class="nav nav-tabs">
+                    <li class="active"><a href="#tab_1" data-toggle="tab" aria-expanded="true">General</a></li>
+                    <li class=""><a href="#tab_2" data-toggle="tab" aria-expanded="false">Contact</a></li>
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane active" id="tab_1">
+                        <table class="table" role="none">
+                            <thead>
+                                <tr>
+                                    <td style="width:10%;">
+                                        <div class="form-group">
+                                            <label for="inputEmail3" class="form-control controlLabel">Tel 1(*)</label>
+                                        </div>
+                                    </td>
+                                    <td style="width:40%;">
+                                        <div class="form-group">
+                                            <input type="text" class="form-control form-control-insde" placeholder="Tel 1" id="txt_tel1" value="@vender.Tel1">
+                                        </div>
+                                    </td>
+                                    <td style="width:10%;">
+                                        <div class="form-group">
+                                            <label for="inputEmail3" class="form-control controlLabel">Tel 2</label>
+                                        </div>
+                                    </td>
+                                    <td style="width:40%;">
+                                        <div class="form-group">
+                                            <input type="text" class="form-control form-control-insde" placeholder="Tel 2" id="txt_tel2" value="@vender.Tel2">
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="width:10%;">
+                                        <div class="form-group">
+                                            <label for="inputEmail3" class="form-control controlLabel">E-Mail</label>
+                                        </div>
+                                    </td>
+                                    <td style="width:40%;">
+                                        <div class="form-group">
+                                            <input type="text" class="form-control form-control-insde" id="txt_mail" placeholder="E-Mail" value="@vender.Email">
+                                        </div>
+                                    </td>
+                                    <td style="width:12%;">
+                                        <div class="form-group">
+                                            <label for="inputEmail3" class="form-control controlLabel">ID No.</label>
+                                        </div>
+                                    </td>
+                                    <td style="width:40%;">
+                                        <div class="form-group">
+                                            <input type="text" class="form-control form-control-insde" id="txt_id" placeholder="ID No." value="@vender.IDNo">
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="width:10%;">
+                                        <div class="form-group">
+                                            <label for="inputEmail3" class="form-control controlLabel">Gender</label>
+                                        </div>
+                                    </td>
+                                    <td style="width:40%;">
+                                        <div class="form-group">
+                                            <select class="form-control form-control-insde" id="cbo_gender">
+                                                @if (vender.Gender == "Male")
+                                                {
+                                                    <option value="Male" selected="selected">Male</option>
+                                                    <option value="Femal">Femal</option>
+                                                }
+                                                else
+                                                {
+                                                    <option value="Male">Male</option>
+                                                    <option value="Femal" selected="selected">Femal</option>
+                                                }
+                                            </select>
+                                        </div>
+                                    </td>
+                                    <td style="width:12%;">
+                                        <div class="form-group">
+                                            <label for="inputEmail3" class="form-control controlLabel">Date of Birth</label>
+                                        </div>
+                                    </td>
+                                    <td style="width:40%;">
+                                        <div class="form-group">
+                                            <div class="input-group date">
+                                                <div class="input-group-addon">
+                                                    <i class="fa fa-calendar"></i>
+                                                </div>
+                                                @if (vender.DOB == null)
+                                                {
+                                                    <input type="text" class="form-control pull-right datetime form-control-insde" readonly="readonly" placeholder="Date of Birth" id="txt_dbo">
+                                                }
+                                                else
+                                                {
+                                                    <input type="text" class="form-control pull-right datetime form-control-insde" readonly="readonly" placeholder="Date of Birth" id="txt_dbo" value="@vender.DOB.Value.ToString("dd-MMM-yyyy")">
+                                                }
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="width:10%;">
+                                        <div class="form-group">
+                                            <label for="inputEmail3" class="form-control controlLabel">Source</label>
+                                        </div>
+                                    </td>
+                                    <td style="width:40%;">
+                                        <div class="form-group">
+                                            <select class="form-control form-control-insde" id="cbo_source">
+                                                <option value=""></option>
+                                                @{
+                                                    foreach (var x in infosource)
+                                                    {
+                                                        if (x.Code.ToString() == vender.Source)
+                                                        {
+                                                            <option value="@x.Code" selected="selected">@x.Name</option>
+                                                        }
+                                                        else
+                                                        {
+                                                            <option value="@x.Code">@x.Name</option>
+                                                        }
+                                                    }
+                                                }
+                                            </select>
+                                        </div>
+                                    </td>
+                                    <td style="width:10%;">
+                                        <div class="form-group">
+                                            <label for="inputEmail3" class="form-control controlLabel">Price List</label>
+                                        </div>
+                                    </td>
+                                    <td style="width:40%;">
+                                        <div class="form-group">
+                                            <select class="form-control form-control-insde" id="cbo_price_list">
+                                                <option value=""></option>
+                                                @{
+                                                    foreach (var x in pricelist)
+                                                    {
+                                                        if (x.ListNum == vender.Pricelist)
+                                                        {
+                                                            <option value="@x.ListNum" selected="selected">@x.ListName</option>
+                                                        }
+                                                        else
+                                                        {
+                                                            <option value="@x.ListNum">@x.ListName</option>
+                                                        }
+                                                    }
+                                                }
+                                            </select>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="width:10%;">
+                                        <div class="form-group">
+                                            <label for="inputEmail3" class="form-control controlLabel">Payment Terms</label>
+                                        </div>
+                                    </td>
+                                    <td style="width:40%;">
+                                        <div class="form-group">
+                                            <select class="form-control form-control-insde" id="cbo_payment_term">
+                                                <option value=""></option>
+                                                @{
+                                                    foreach (var x in term)
+                                                    {
+                                                        if (x.GroupNum == vender.PaymentTerm)
+                                                        {
+                                                            <option value="@x.GroupNum" selected="selected">@x.PymntGroup</option>
+                                                        }
+                                                        else
+                                                        {
+                                                            <option value="@x.GroupNum">@x.PymntGroup</option>
+                                                        }
+                                                    }
+                                                }
+                                            </select>
+                                        </div>
+                                    </td>
+                                    <td style="width:10%;">
+                                        <div class="form-group">
+                                            <label for="inputEmail3" class="form-control controlLabel">Credit Limit</label>
+                                        </div>
+                                    </td>
+                                    <td style="width:40%;">
+                                        <div class="form-group">
+                                            <input type="text" class="form-control form-control-insde" id="txt_credit_limit" placeholder="Credit Limit" value="@vender.CreditLimit">
+                                        </div>
+                                    </td>
+                                </tr>
+                            </thead>
+                        </table>
+                        <table class="table" role="none" id="table_province">
+                            <thead>
+                                <tr class="bg-gray" role="row">
+                                    <td style="width:1%"></td>
+                                    <td style="width:1%">#</td>
+                                    <td style="width:15%">Type</td>
+                                    <td style="width:10%">Province/City</td>
+                                    <td style="width:10%">Srok/Khan</td>
+                                    <td style="width:10%">Khum/Sangkat</td>
+                                    <td style="width:15%">Address EN</td>
+                                    <td style="width:15%">Address KH</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @{
+                                    int addRow = 1;
+                                    foreach (var x in address)
+                                    {
+                                        <tr tr id="tr_address_@addRow">
+                                            <td><i class='fa fa-fw fa-remove text-danger' style='cursor:pointer' onclick='remove_address_line(@addRow)'></i></td>
+                                            <td id="td_show_line_num_@addRow">@addRow</td>
+                                            <td>
+                                                <select class="form-control form-control-insde" id="cbo_add_type_@addRow">
+                                                    @if (x.AddressType == "B")
+                                                    {
+                                                        <option value="B" selected="selected">Bill To</option>
+                                                        <option value="S">Ship To</option>
+                                                    }
+                                                    else
+                                                    {
+                                                        <option value="B">Bill To</option>
+                                                        <option value="S" selected="selected">Ship To</option>
+                                                    }
+                                                </select>
+                                            </td>
+                                            <td>
+                                                <select class="form-control form-control-insde" id="cbo_province_@addRow" onchange="get_district_by_province_change(@addRow)">
+                                                    <option value=""></option>
+                                                    @{
+                                                        foreach (var y in province)
+                                                        {
+                                                            if (y.Code == x.Province)
+                                                            {
+                                                                <option value="@y.Code" selected="selected">@y.Name</option>
+                                                            }
+                                                            else
+                                                            {
+                                                                <option value="@y.Code">@y.Name</option>
+                                                            }
+                                                        }
+                                                    }
+                                                </select>
+                                            </td>
+                                            <td>
+                                                <select class="form-control form-control-insde" id="cbo_district_@addRow" onchange="get_commune_by_district_change(@addRow)">
+                                                    @{
+                                                        foreach (var y in district.Where(a => a.U_Province == x.Province).ToList())
+                                                        {
+                                                            if (y.Code == x.Khan)
+                                                            {
+                                                                <option value="@y.Code" selected="selected">@y.Name</option>
+                                                            }
+                                                            else
+                                                            {
+                                                                <option value="@y.Code">@y.Name</option>
+                                                            }
+                                                        }
+                                                    }
+                                                </select>
+                                            </td>
+                                            <td>
+                                                <select class="form-control form-control-insde" id="cbo_commune_@addRow" onchange="get_address_change(@addRow)">
+                                                    @{
+                                                        foreach (var y in commune.Where(a => a.U_Province == x.Province && a.U_Khan == x.Khan).ToList())
+                                                        {
+                                                            if (y.Code == x.Sangkat)
+                                                            {
+                                                                <option value="@y.Code" selected="selected">@y.U_Sangkat</option>
+                                                            }
+                                                            else
+                                                            {
+                                                                <option value="@y.Code">@y.U_Sangkat</option>
+                                                            }
+                                                        }
+                                                    }
+                                                </select>
+                                            </td>
+                                            <td><input type='text' class='form-control noborder' id="txt_address_en_@addRow" placeholder='Address EN' value="@x.FullAddressEN"></td>
+                                            <td><input type='text' class='form-control noborder' id="txt_address_kh_@addRow" placeholder='Address KH' value="@x.FullAddressKH"></td>
+                                            <td style="display:none" id="td_postal_@addRow">@x.PostCode</td>
+                                            <td style="display:none" id="td_line_num_@addRow">@x.Linenum</td>
+                                            <td style="display:none" id="td_status_@addRow">Old</td>
+                                        </tr>
+                                        addRow++;
+                                    }
+                                    <tr tr id="tr_address_@addRow">
+                                        <td><i class='fa fa-fw fa-remove text-danger' style='cursor:pointer' onclick='remove_address_line(@addRow)'></i></td>
+                                        <td id="td_show_line_num_@addRow">@addRow</td>
+                                        <td>
+                                            <select class="form-control form-control-insde" id="cbo_add_type_@addRow">
+                                                <option value="B">Bill To</option>
+                                                <option value="S">Ship To</option>
+                                            </select>
+                                        </td>
+                                        <td>
+                                            <select class="form-control form-control-insde" id="cbo_province_@addRow" onchange="get_district_by_province_change(@addRow)">
+                                                <option value=""></option>
+                                                @{
+                                                    foreach (var x in province)
+                                                    {
+                                                        <option value="@x.Code">@x.Name</option>
+                                                    }
+                                                }
+                                            </select>
+                                        </td>
+                                        <td>
+                                            <select class="form-control form-control-insde" id="cbo_district_@addRow" onchange="get_commune_by_district_change(@addRow)"></select>
+                                        </td>
+                                        <td>
+                                            <select class="form-control form-control-insde" id="cbo_commune_@addRow" onchange="get_address_change(@addRow)"></select>
+                                        </td>
+                                        <td><input type='text' class='form-control noborder' id="txt_address_en_@addRow" placeholder='Address EN'></td>
+                                        <td><input type='text' class='form-control noborder' id="txt_address_kh_@addRow" placeholder='Address KH'></td>
+                                        <td style="display:none" id="td_postal_@addRow"></td>
+                                        <td style="display:none" id="td_line_num_@addRow">-1</td>
+                                        <td style="display:none" id="td_status_@addRow">New</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+
+                    </div>
+                    <!-- /.tab-pane -->
+                    <div class="tab-pane" id="tab_2">
+                        <table class="table" role="none" id="table_contact_person">
+                            <thead>
+                                <tr class="bg-gray" role="row">
+                                    <td></td>
+                                    <td style="width:1%">#</td>
+                                    <td style="width:10%">EN Name</td>
+                                    <td style="width:10%">KH Name</td>
+                                    <td style="width:6%">Gender</td>
+                                    <td style="width:6%">ID</td>
+                                    <td style="width:6%">Relationship</td>
+                                    <td style="width:10%">Address</td>
+                                    <td style="width:6%">Tel 1</td>
+                                    <td style="width:8%">Tel 2</td>
+                                    <td style="width:8%">E-Mail</td>
+                                    <td style="width:8%">Telegram</td>
+                                    <td style="width:8%">Facebook</td>
+                                    <td style="width:8%">WhatsApp</td>
+                                    <td style="width:8%">Line</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @{
+                                    int contactRow = 1;
+                                    foreach (var x in contact)
+                                    {
+                                        <tr tr id="tr_contact_@contactRow">
+                                            <td><i class='fa fa-fw fa-remove text-danger' style='cursor:pointer' onclick='remove_contact_line(@contactRow)'></i></td>
+                                            <td id="td_show_line_num_@contactRow">@contactRow</td>
+                                            <td><input type='text' class='form-control noborder' placeholder='EN Name' id="txt_contact_enname_@contactRow" onchange="txt_contact_enname_change(@contactRow)" value="@x.ENName"></td>
+                                            <td><input type='text' class='form-control noborder' placeholder='KH Name' id="txt_contact_khname_@contactRow" value="@x.KHName"></td>
+                                            <td>
+                                                <select class="form-control form-control-insde" id="cbo_contact_gender_@contactRow">
+                                                    @if (x.Gender == "Male")
+                                                    {
+                                                        <option value="Male" selected="selected">Male</option>
+                                                        <option value="Female">Femal</option>
+                                                    }
+                                                    else
+                                                    {
+                                                        <option value="Male">Male</option>
+                                                        <option value="Female">Femal</option>
+                                                    }
+                                                </select>
+                                            </td>
+                                            <td><input type='text' class='form-control noborder' placeholder='ID/Passport' id="txt_contact_id_@contactRow" value="@x.ID"></td>
+                                            <td>
+                                                <select class="form-control form-control-insde" id="cbo_contact_relationship_@contactRow">
+                                                    <option value=""></option>
+                                                    @{
+                                                        foreach (var y in relation)
+                                                        {
+                                                            if (y.Code == x.Relationship)
+                                                            {
+                                                                <option value="@y.Code" selected="selected">@y.Name</option>
+                                                            }
+                                                            else
+                                                            {
+                                                                <option value="@y.Code">@y.Name</option>
+                                                            }
+                                                        }
+                                                    }
+                                                </select>
+                                            </td>
+                                            <td><input type='text' class='form-control noborder' placeholder='Address' id="txt_contact_address_@contactRow" value="@x.Address"></td>
+                                            <td><input type='text' class='form-control noborder' placeholder='Tel 1' id="txt_contact_tel1_@contactRow" value="@x.Tel1"></td>
+                                            <td><input type='text' class='form-control noborder' placeholder='Tel 2' id="txt_contact_tel2_@contactRow" value="@x.Tel2"></td>
+                                            <td><input type='text' class='form-control noborder' placeholder='E-Mail' id="txt_contact_mail_@contactRow" value="@x.Email"></td>
+                                            <td><input type='text' class='form-control noborder' placeholder='Telegram' id="txt_contact_telegram_@contactRow" value="@x.Telegram"></td>
+                                            <td><input type='text' class='form-control noborder' placeholder='Facebook' id="txt_contact_facebook_@contactRow" value="@x.Facebook"></td>
+                                            <td><input type='text' class='form-control noborder' placeholder='WhatsApp' id="txt_contact_whatapp_@contactRow" value="@x.Whatapp"></td>
+                                            <td><input type='text' class='form-control noborder' placeholder='Line' id="txt_contact_line_@contactRow" value="@x.Line"></td>
+                                            <td style="display:none" id="td_contact_code_@contactRow">@x.Cntctcode</td>
+                                            <td style="display:none" id="td_status_@contactRow">Old</td>
+                                        </tr>
+                                        contactRow++;
+                                    }
+                                    <tr tr id="tr_contact_@contactRow">
+                                        <td><i class='fa fa-fw fa-remove text-danger' style='cursor:pointer' onclick='remove_contact_line(@contactRow)'></i></td>
+                                        <td id="td_show_line_num_@contactRow">@contactRow</td>
+                                        <td><input type='text' class='form-control noborder' placeholder='EN Name' id="txt_contact_enname_@contactRow" onchange="txt_contact_enname_change(@contactRow)"></td>
+                                        <td><input type='text' class='form-control noborder' placeholder='KH Name' id="txt_contact_khname_@contactRow"></td>
+                                        <td>
+                                            <select class="form-control form-control-insde" id="cbo_contact_gender_@contactRow">
+                                                <option value="Male">Male</option>
+                                                <option value="Female">Femal</option>
+                                            </select>
+                                        </td>
+                                        <td><input type='text' class='form-control noborder' placeholder='ID/Passport' id="txt_contact_id_@contactRow"></td>
+                                        <td>
+                                            <select class="form-control form-control-insde" id="cbo_contact_relationship_@contactRow">
+                                                <option value=""></option>
+                                                @{
+                                                    foreach (var x in relation)
+                                                    {
+                                                        <option value="@x.Code">@x.Name</option>
+                                                    }
+                                                }
+                                            </select>
+                                        </td>
+                                        <td><input type='text' class='form-control noborder' placeholder='Address' id="txt_contact_address_@contactRow"></td>
+                                        <td><input type='text' class='form-control noborder' placeholder='Tel 1' id="txt_contact_tel1_@contactRow"></td>
+                                        <td><input type='text' class='form-control noborder' placeholder='Tel 2' id="txt_contact_tel2_@contactRow"></td>
+                                        <td><input type='text' class='form-control noborder' placeholder='E-Mail' id="txt_contact_mail_@contactRow"></td>
+                                        <td><input type='text' class='form-control noborder' placeholder='Telegram' id="txt_contact_telegram_@contactRow"></td>
+                                        <td><input type='text' class='form-control noborder' placeholder='Facebook' id="txt_contact_facebook_@contactRow"></td>
+                                        <td><input type='text' class='form-control noborder' placeholder='WhatsApp' id="txt_contact_whatapp_@contactRow"></td>
+                                        <td><input type='text' class='form-control noborder' placeholder='Line' id="txt_contact_line_@contactRow"></td>
+                                        <td style="display:none" id="td_contact_code_@contactRow">-1</td>
+                                        <td style="display:none" id="td_status_@contactRow">New</td>
+                                    </tr>
+                                }
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <!-- /.tab-content -->
+            </div>
+            <div class="box-footer">
+                <button type="button" class="btn btn-primary btn-flat" onclick="cmd_save_bp()">Submit</button>
+                <button type="button" class="btn btn-danger btn-flat" onclick="cmd_remove_bp()">Remove</button>
+            </div>
+        </div>
+    </div>
+</div>

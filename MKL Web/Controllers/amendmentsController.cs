@@ -1460,6 +1460,14 @@ namespace MKL_Web.Controllers
                             // For Get Approval Template 
                             var monthlyTotal = installment_row.Sum(x => x.Monthly);
 
+                            var rawResultConnectBP = db.ICC_ConnectedBP_Check(header.CardCode);
+
+                            if (rawResultConnectBP.Any())
+                            {
+                                status = "Error: Please update connect Vendor in SAP first.";
+                                return Json(new { status, LastEntry }, JsonRequestBehavior.AllowGet);
+                            }
+
                             var rawResult = db.ICC_ApprovalTempate_Check("CP", "A", monthlyTotal);
 
                             var list = rawResult.Select(x => new ApprovalTemplate
