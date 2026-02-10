@@ -2124,7 +2124,7 @@ namespace MKL_Web.Controllers
             {
                 if (header == null || detail == null || cn_inList == null || ar_inList == null)
                 {
-                    return Json(new { status = "blank", LastEntry }, JsonRequestBehavior.AllowGet);
+                    return Json(new { status = "Please Generate Schedule before submit.", LastEntry }, JsonRequestBehavior.AllowGet);
                 }
 
                 var monthlyTotal = detail.Sum(x => x.Monthly);
