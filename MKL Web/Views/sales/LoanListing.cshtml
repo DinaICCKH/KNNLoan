@@ -5,6 +5,17 @@
     List<ICC_Get_List_LoanResult> applist = ViewBag.ChangeOwnerApporovalListing;
 }
 
+<style>
+    .truncate {
+        max-width: 150px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        cursor: pointer;
+    }
+</style>
+
+
 <head>
     <title>@ViewBag.Title</title>
 </head>
@@ -19,7 +30,7 @@
 
             <!-- 🔍 SEARCH TEXTBOX -->
             <div class="row" style="padding:10px;">
-                <div class="col-md-4">
+                <div class="col-md-12">
                     <input type="text"
                            id="txtSearch"
                            class="form-control"
@@ -40,7 +51,8 @@
                             <th style="width: 12%">Item Name</th>
                             <th style="width: 10%">Serial No</th>
                             <th style="width: 5%">Status</th>
-                            <th style="width: 22%">Remark</th>
+                            <th style="width: 10%">Loan Status</th>
+                            <th style="width: 12%">Remark</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -62,7 +74,18 @@
                                     <td>@x.ItemName</td>
                                     <td>@x.DistNumber</td>
                                     <td>@x.DocStatus</td>
-                                    <td>@x.Comment</td>
+                                    <td class="truncate" title="@x.LoanStatus">
+                                        @(x.LoanStatus != null && x.LoanStatus.Length > 20
+                                                        ? x.LoanStatus.Substring(0, 20) + "..."
+                                                        : x.LoanStatus)
+                                    </td>
+
+                                    <td class="truncate" title="@x.Comment">
+                                        @(x.Comment != null && x.Comment.Length > 20
+                                                        ? x.Comment.Substring(0, 20) + "..."
+                                                        : x.Comment)
+                                    </td>
+
                                 </tr>
                                 rowindex++;
                             }
