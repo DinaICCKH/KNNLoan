@@ -1,6 +1,6 @@
 ﻿@using MKL_Web.Models;
 @{
-    ViewBag.Title = "Loan Approved";
+    ViewBag.Title = "Loan Schedule";
     Layout = "~/Views/Shared/_Layout.cshtml";
 
     string docdate = DateTime.Now.ToString("dd-MMM-yyyy");
@@ -48,6 +48,7 @@
         var RestructureOption = H?.RestructureOption ?? "";
 
         var EffectiveDate = H?.EffictiveDate?.ToString("dd-MM-yyyy") ?? "";
+        var AppStatus = H?.ApprovalStatus ?? "";
 
     }
 
@@ -72,8 +73,12 @@
     <div class="col-md-12">
         <div class="box box-primary">
             <div class="box-header with-border">
-                <h5 class="box-title">@ViewBag.Title</h5>
+                <h5 class="box-title">
+                    @ViewBag.Title
+                    <span class="app-status-highlight">@AppStatus</span>
+                </h5>
             </div>
+
             <div class="box-header with-border">
                 <table class="table" role="none">
                     <thead>
@@ -262,7 +267,7 @@
                                                                     </td>
                                                                     <td style="width:30%;text-align:right;padding-right:10px">Period(M)</td>
                                                                     <td style="width:30%;"><input type="text" class="form-control form-control-insde" id="txt_period" placeholder="Period(M)" onchange="txt_period_change()" value="@PeriodM"></td>
-                         
+
                                                                 </tr>
                                                             </table>
                                                         </div>
@@ -308,7 +313,7 @@
                                                                             <input type="text" class="form-control pull-right datetime form-control-insde" readonly="readonly" id="txt_maturity_payment" placeholder="Posting Date" value="@MaturityPayment">
                                                                         </div>
                                                                     </td>
-                                                                    
+
                                                                 </tr>
                                                             </table>
                                                         </div>
@@ -461,24 +466,25 @@
                                                 <tr class="bg-gray" role="row">
 
                                                     <th style="width:1%; text-align:left;">#</th>
-                                                    <th style="width: 10%; text-align: left;">DocDate</th>
-                                                    <th style="width: 7%; text-align: left;">DueDate</th>
-                                                    <th style="width: 6%; text-align: left;">Principle</th>
-                                                    <th style="width: 6%; text-align: left;">Interest</th>
-                                                    <th style="width: 6%; text-align: left;">Monthly</th>
-                                                    <th style="width: 6%; text-align: left;">Remain</th>
-                                                    <th style="width: 6%; text-align: left;">Re+Int</th>
-                                                    <th style="width: 6%; text-align: left;">C.Prin</th>
-                                                    <th style="width: 5%; text-align: left;">C.Int</th>
-                                                    <th style="width: 6%; text-align: left;">C.Prin+Int</th>
-                                                    <th style="width: 6%; text-align: left;">Pay.Type</th>
-                                                    <th style="width: 5%; text-align: left;">ARNo</th>
-                                                    <th style="width: 5%; text-align: left;">PayNo</th>
-                                                    <th style="width: 5%; text-align: left;">Int.ARNo</th>
-                                                    <th style="width: 5%; text-align: left;">Int.PayNo</th>
-                                                    <th style="width: 2%; text-align: left;">V.Day</th>
-                                                    <th style="width: 5%; text-align: left;">Int.Re.Amt</th>
-                                                    <th style="width: 8%; text-align: left;">Remark</th>
+                                                    <th style="width:9%; text-align:left;">DocDate</th>
+                                                    <th style="width:6%; text-align:left;">DueDate</th>
+                                                    <th style="width:5%; text-align:left;">Principle</th>
+                                                    <th style="width:5%; text-align:left;">Interest</th>
+                                                    <th style="width:5%; text-align:left;">Monthly</th>
+                                                    <th style="width:5%; text-align:left;">Remain</th>
+                                                    <th style="width:5%; text-align:left;">Re+Int</th>
+                                                    <th style="width:5%; text-align:left;">C.Prin</th>
+                                                    <th style="width:4%; text-align:left;">C.Int</th>
+                                                    <th style="width:5%; text-align:left;">C.Prin+Int</th>
+                                                    <th style="width:5%; text-align:left;">Pay.Type</th>
+                                                    <th style="width:4%; text-align:left;">ARNo</th>
+                                                    <th style="width:4%; text-align:left;">PayNo</th>
+                                                    <th style="width:4%; text-align:left;">Int.ARNo</th>
+                                                    <th style="width:4%; text-align:left;">Int.PayNo</th>
+                                                    <th style="width:2%; text-align:left;">V.Day</th>
+                                                    <th style="width:4%; text-align:left;">Int.Re.Amt</th>
+                                                    <th style="width:8%; text-align:left;">Remark</th>
+
                                                 </tr>
                                             </thead>
                                             <tbody>

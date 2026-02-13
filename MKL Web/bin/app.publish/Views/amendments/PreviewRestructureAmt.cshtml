@@ -56,6 +56,7 @@
         var RestructureOption = H?.RestructureOption ?? "";
         var PeriodM = H?.PeriodM ?? 0;
         var Rate = H?.Rate ?? 0;
+        var AppStatus = H?.ApprovalStatus ?? "";
 
     }
 
@@ -80,7 +81,10 @@
     <div class="col-md-12">
         <div class="box box-primary">
             <div class="box-header with-border">
-                <h5 class="box-title">@ViewBag.Title</h5>
+                <h5 class="box-title">
+                    @ViewBag.Title
+                    <span class="app-status-highlight">@AppStatus</span>
+                </h5>
             </div>
             <div class="box-header with-border">
                 <table class="table" role="none">

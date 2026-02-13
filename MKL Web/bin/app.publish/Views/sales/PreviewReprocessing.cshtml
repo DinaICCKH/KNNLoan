@@ -1,6 +1,6 @@
 ﻿@using MKL_Web.Models;
 @{
-    ViewBag.Title = "Repocessing Approved";
+    ViewBag.Title = "Repocessing Loan";
     Layout = "~/Views/Shared/_Layout.cshtml";
     List<CNInstallmentRowDraf> installment = ViewBag.installment;
     List<ICC_Get_List_Reprocessing_By_IDResult> header = ViewBag.Header;
@@ -82,13 +82,17 @@
         var TotalAR = H?.TotalAR ?? 0;
         var VarianAmt = H?.VarianAmt ?? 0;
         var BuyBack = H?.BalanceDue ?? 0;
+        var AppStatus = H?.ApprovalStatus ?? "";
 
     }
 
     <div class="col-md-12">
         <div class="box box-primary">
             <div class="box-header with-border">
-                <h5 class="box-title">@ViewBag.Title</h5>
+                <h5 class="box-title">
+                    @ViewBag.Title
+                    <span class="app-status-highlight">@AppStatus</span>
+                </h5>
             </div>
             <div class="box-header with-border">
                 <table class="table" role="none">

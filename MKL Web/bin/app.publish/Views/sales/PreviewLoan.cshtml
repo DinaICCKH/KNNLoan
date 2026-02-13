@@ -35,7 +35,7 @@
         var SerialNo = H?.SerialNo ?? "";
         var Comment = H?.Comment ?? "";
         var PeriodMonths = H?.PeriodMonths ?? 1;
-
+        var LoanStatus = H?.LoanStatus ?? "";
 
     }
 
@@ -60,7 +60,10 @@
     <div class="col-md-12">
         <div class="box box-primary">
             <div class="box-header with-border">
-                <h5 class="box-title">@ViewBag.Title</h5>
+                <h5 class="box-title">
+                    @ViewBag.Title
+                    <span class="app-status-highlight">@LoanStatus</span>
+                </h5>
             </div>
             <div class="box-header with-border">
                 <table class="table" role="none">

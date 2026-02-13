@@ -1,6 +1,6 @@
 ﻿@using MKL_Web.Models;
 @{
-    ViewBag.Title = "Reschedule Approved";
+    ViewBag.Title = "Reschedule Loan";
     Layout = "~/Views/Shared/_Layout.cshtml";
 
     string docdate = DateTime.Now.ToString("dd-MMM-yyyy");
@@ -57,6 +57,7 @@
         var RestructureOption = H?.RestructureOption ?? "";
 
         var EffectiveDate = H?.EffictiveDate?.ToString("dd-MM-yyyy") ?? "";
+        var AppStatus = H?.ApprovalStatus ?? "";
 
     }
 
@@ -81,7 +82,10 @@
     <div class="col-md-12">
         <div class="box box-primary">
             <div class="box-header with-border">
-                <h5 class="box-title">@ViewBag.Title</h5>
+                <h5 class="box-title">
+                    @ViewBag.Title
+                    <span class="app-status-highlight">@AppStatus</span>
+                </h5>
             </div>
             <div class="box-header with-border">
                 <table class="table" role="none">

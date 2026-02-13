@@ -673,10 +673,8 @@ function cmd_change_house_choose_item() {
 
 function update_info_payment(paymnet_info, row) {
 
-  
-
     if (!paymnet_info) {
-        alert("Payment info is undefined or null.");
+        ShowAlertCus("Payment info is undefined or null.");
         return;
     }
     else {
@@ -707,7 +705,6 @@ function update_info_payment(paymnet_info, row) {
         $("#txt_referral").val($("#td_pop_payment_schedule_so_referral_" + row).text().trim());
         $("#txt_con_period").val($("#td_pop_payment_schedule_so_conperiod_" + row).text().trim());
         $("#txt_doc_num").val(paymnet_info.DocNum);
-
         $("#txt_doc_num").val($("#td_pop_payment_schedule_so_entry_" + row).text().trim());
 
         var strDate = null;
@@ -2158,7 +2155,11 @@ function get_selected_payment_schedule_by_so() {
                     data = data + "<td style='display:none;' id='tr_payment_detail_housestatus_line_" + index + "'>" + x.HouseStatus + "</td>";
                     data = data + "<td style='display:none;' id='tr_payment_detail_installmentid_line_" + index + "'>" + x.ID + "</td>";
                     data = data + "</tr>";
-                    $("#table_payment_schedule >tbody").append(data);
+
+                    /// This condition I just add to make it work with Document that no AR Downpayment 
+                    if (parseFloat(x.MonthlyPay) !== 0) {
+                        $("#table_payment_schedule >tbody").append(data);
+                    } 
 
                     totalPrinciple = parseFloat(returnstringvalue(totalPrinciple)) + parseFloat(returnstringvalue(x.Principle));
                     totalInterest = parseFloat(returnstringvalue(totalInterest)) + parseFloat(returnstringvalue(x.Interest));

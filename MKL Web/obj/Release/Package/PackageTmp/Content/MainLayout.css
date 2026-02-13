@@ -1,4 +1,13 @@
 ﻿
+
+.app-status-highlight {
+    color: #fff;
+    background-color: #007bff; /* Change to your preferred color */
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-weight: 600;
+}
+
 /* Dark mode styles for search results */
 body.dark-mode #menuSearchResults {
     background-color: #333;
