@@ -924,6 +924,14 @@ namespace MKL_Web.Models
 			}
 		}
 		
+		public System.Data.Linq.Table<v_OCRD_Penalty> v_OCRD_Penalties
+		{
+			get
+			{
+				return this.GetTable<v_OCRD_Penalty>();
+			}
+		}
+		
 		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.ICC_UpdateSAPDocumentStatus")]
 		public int ICC_UpdateSAPDocumentStatus([global::System.Data.Linq.Mapping.ParameterAttribute(Name="DocType", DbType="NVarChar(50)")] string docType, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="DocEntry", DbType="NVarChar(50)")] string docEntry, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Status", DbType="NVarChar(50)")] string status)
 		{
@@ -36823,6 +36831,213 @@ namespace MKL_Web.Models
 			if ((this.PropertyChanged != null))
 			{
 				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.v_OCRD_Penalty")]
+	public partial class v_OCRD_Penalty
+	{
+		
+		private string _CardCode;
+		
+		private string _CardName;
+		
+		private string _CardFName;
+		
+		private string _Phone1;
+		
+		private string _Phone2;
+		
+		private System.Nullable<char> _CardType;
+		
+		private string _U_Gender;
+		
+		private string _AddID;
+		
+		private string _Currency;
+		
+		private System.Nullable<System.DateTime> _U_IssuedDate;
+		
+		private System.Nullable<System.DateTime> _U_BOD;
+		
+		public v_OCRD_Penalty()
+		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CardCode", DbType="NVarChar(15) NOT NULL", CanBeNull=false)]
+		public string CardCode
+		{
+			get
+			{
+				return this._CardCode;
+			}
+			set
+			{
+				if ((this._CardCode != value))
+				{
+					this._CardCode = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CardName", DbType="NVarChar(100)")]
+		public string CardName
+		{
+			get
+			{
+				return this._CardName;
+			}
+			set
+			{
+				if ((this._CardName != value))
+				{
+					this._CardName = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CardFName", DbType="NVarChar(100)")]
+		public string CardFName
+		{
+			get
+			{
+				return this._CardFName;
+			}
+			set
+			{
+				if ((this._CardFName != value))
+				{
+					this._CardFName = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Phone1", DbType="NVarChar(20)")]
+		public string Phone1
+		{
+			get
+			{
+				return this._Phone1;
+			}
+			set
+			{
+				if ((this._Phone1 != value))
+				{
+					this._Phone1 = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Phone2", DbType="NVarChar(20)")]
+		public string Phone2
+		{
+			get
+			{
+				return this._Phone2;
+			}
+			set
+			{
+				if ((this._Phone2 != value))
+				{
+					this._Phone2 = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CardType", DbType="Char(1)")]
+		public System.Nullable<char> CardType
+		{
+			get
+			{
+				return this._CardType;
+			}
+			set
+			{
+				if ((this._CardType != value))
+				{
+					this._CardType = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_U_Gender", DbType="VarChar(1) NOT NULL", CanBeNull=false)]
+		public string U_Gender
+		{
+			get
+			{
+				return this._U_Gender;
+			}
+			set
+			{
+				if ((this._U_Gender != value))
+				{
+					this._U_Gender = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AddID", DbType="NVarChar(64)")]
+		public string AddID
+		{
+			get
+			{
+				return this._AddID;
+			}
+			set
+			{
+				if ((this._AddID != value))
+				{
+					this._AddID = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Currency", DbType="NVarChar(3)")]
+		public string Currency
+		{
+			get
+			{
+				return this._Currency;
+			}
+			set
+			{
+				if ((this._Currency != value))
+				{
+					this._Currency = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_U_IssuedDate", DbType="DateTime")]
+		public System.Nullable<System.DateTime> U_IssuedDate
+		{
+			get
+			{
+				return this._U_IssuedDate;
+			}
+			set
+			{
+				if ((this._U_IssuedDate != value))
+				{
+					this._U_IssuedDate = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_U_BOD", DbType="DateTime")]
+		public System.Nullable<System.DateTime> U_BOD
+		{
+			get
+			{
+				return this._U_BOD;
+			}
+			set
+			{
+				if ((this._U_BOD != value))
+				{
+					this._U_BOD = value;
+				}
 			}
 		}
 	}
