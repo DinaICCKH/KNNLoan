@@ -2176,12 +2176,12 @@ namespace MKL_Web.Controllers
 
                 if (result.Any())
                 {
-                    status = "Error: Cancel Generated AR Invoice that not yet paid in SAP first before change owner.";
+                    status = "Error: Cancel Generated AR Invoice that not yet paid in SAP first before submit.";
                     return Json(new { status, LastEntry }, JsonRequestBehavior.AllowGet);
                 }
                 if (checkInterest.Any())
                 {
-                    status = "Error: Cancel Generated AR Invoice that not yet paid interest in SAP first before change owner.";
+                    status = "Error: Cancel Generated AR Invoice that not yet paid interest in SAP first before submit.";
                     return Json(new { status, LastEntry }, JsonRequestBehavior.AllowGet);
                 }
 

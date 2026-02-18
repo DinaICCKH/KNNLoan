@@ -231,7 +231,7 @@ namespace MKL_Web.Controllers
                             }
                             if (checkInterest.Any())
                             {
-                                status = "Error: Cancel Generated AR Invoice that not yet paid interest in SAP first before change owner.";
+                                status = "Error: Cancel Generated AR Invoice interest that not yet paid  in SAP first before change owner.";
                                 return Json(new { status, LastEntry }, JsonRequestBehavior.AllowGet);
                             }
 

@@ -3525,6 +3525,7 @@ function check_special_payment_date() {
         }
     });
 
+    console.log(checkDate)
     return checkDate;
 }
 function check_tr_payment_detail() {
