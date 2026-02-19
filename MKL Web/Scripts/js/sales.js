@@ -2531,7 +2531,7 @@ function get_special_payment() {
             data: {
                 itemcode: $("#txt_item_code").val(), installment: returnstringvalue($("#txt_installment_amount").val()), LastRowno: $("#table_payment_schedule>tbody>tr").length
                 , BaseLine: -1, method: method, paymentdate: paymentdate, amount: amount, percent: percent, anualrate: anual, period: period
-                , remark: finalRemark, decimalplace: 0
+                , remark: finalRemark, decimalplace: $("#txtdecimal").val()
             },
             datatype: 'json',
             beforeSend: function () {
@@ -2634,6 +2634,42 @@ function get_special_payment() {
                     data = data + "<td style='text-align:Left; vertical-align: middle; color:red' id='tr_payment_detail_arnointerest_line_" + rowindex + "'>" + x.ARNoInterest + "</td>";
                     data = data + "<td style='text-align:Left; vertical-align: middle; color:red' id='tr_payment_detail_paymentnointerest_line_" + rowindex + "'>" + x.PaymentNoInterest + "</td>";
                     data = data + "<td contenteditable='true' style='text-align:Left; vertical-align: middle; color:blue' id='tr_payment_detail_remarks_line_" + rowindex + "'>" + x.Remarks + "</td>";
+
+                    data = data + "<td contenteditable='true' style='text-align:Left; vertical-align: middle; color:blue' id='tr_chequeno_line_" + rowindex + "'></td>";
+
+                    data = data + "<td contenteditable='true' style='text-align:Left; vertical-align: middle; color:blue' id='tr_nameoncheque_line_" + rowindex + "'></td>";
+
+                    data = data + "<td style='vertical-align: middle;'>" +
+                        "<select class='form-control' id='tr_bank_line_" + rowindex + "'>" +
+                        "<option value=''>-- Select Bank / MFI --</option>" +
+
+                        // Commercial Banks
+                        "<option value='ABA Bank'>ABA Bank</option>" +
+                        "<option value='ACLEDA Bank'>ACLEDA Bank</option>" +
+                        "<option value='Canadia Bank'>Canadia Bank</option>" +
+                        "<option value='Wing Bank'>Wing Bank</option>" +
+                        "<option value='Prince Bank'>Prince Bank</option>" +
+                        "<option value='Phillip Bank'>Phillip Bank</option>" +
+                        "<option value='Maybank Cambodia'>Maybank Cambodia</option>" +
+                        "<option value='Vattanac Bank'>Vattanac Bank</option>" +
+                        "<option value='Sathapana Bank'>Sathapana Bank</option>" +
+                        "<option value='Heng Feng Bank'>Heng Feng Bank</option>" +
+                        "<option value='Public Bank Cambodia'>Public Bank Cambodia</option>" +
+                        "<option value='SHB Cambodia'>SHB Cambodia</option>" +
+
+                        // Microfinance Institutions (MFI)
+                        "<option value='Amret MFI'>Amret MFI</option>" +
+                        "<option value='Prasac MFI'>Prasac MFI</option>" +
+                        "<option value='LOL C MFI'>LOL C MFI</option>" +
+                        "<option value='Hattha Bank'>Hattha Bank</option>" +
+                        "<option value='Kredit MFI'>Kredit MFI</option>" +
+                        "<option value='VisionFund MFI'>VisionFund MFI</option>" +
+
+                        "<option value='Other'>Other</option>" +
+                        "</select>" +
+                        "</td>";
+                    data = data + "<td contenteditable='true' style='text-align:Left; vertical-align: middle; color:blue' id='tr_payee_line_" + rowindex + "'></td>";
+
                     data = data + "<td style='display:none;' id='tr_payment_detail_status_line_" + rowindex + "'>" + x.Status.trim() + "</td>";
                     data = data + "<td style='display:none;' id='tr_payment_detail_itemcode_line_" + rowindex + "'>" + x.ItemCode + "</td>";
                     data = data + "<td style='display:none;' id='tr_payment_detail_itemname_line_" + rowindex + "'>" + x.ItemName + "</td>";
@@ -2777,7 +2813,7 @@ function get_payment_schedule() {
                 , LastRowno: $("#table_payment_schedule>tbody>tr").length
                 , BaseLine: -1
                 , Remarks: newserial
-                , Decimal: 0
+                , Decimal: $("#txtdecimal").val()
             },
             datatype: 'json',
             beforeSend: function () {
@@ -2893,6 +2929,45 @@ function get_payment_schedule() {
                     data = data + "<td style='text-align:Left; vertical-align: middle; color:red' id='tr_payment_detail_arnointerest_line_" + rowindex + "'>" + x.ARNoInterest + "</td>";
                     data = data + "<td style='text-align:Left; vertical-align: middle; color:red' id='tr_payment_detail_paymentnointerest_line_" + rowindex + "'>" + x.PaymentNoInterest + "</td>";
                     data = data + "<td contenteditable='true' style='text-align:Left; vertical-align: middle; color:blue' id='tr_payment_detail_remarks_line_" + rowindex + "'>" + x.Remarks + "</td>";
+
+                    data = data + "<td contenteditable='true' style='text-align:Left; vertical-align: middle; color:blue' id='tr_chequeno_line_" + rowindex + "'></td>";
+
+                    data = data + "<td contenteditable='true' style='text-align:Left; vertical-align: middle; color:blue' id='tr_nameoncheque_line_" + rowindex + "'></td>";
+
+                    data = data + "<td style='vertical-align: middle;'>" +
+                        "<select class='form-control' id='tr_bank_line_" + rowindex + "'>" +
+                        "<option value=''>-- Select Bank / MFI --</option>" +
+
+                        // Commercial Banks
+                        "<option value='ABA Bank'>ABA Bank</option>" +
+                        "<option value='ACLEDA Bank'>ACLEDA Bank</option>" +
+                        "<option value='Canadia Bank'>Canadia Bank</option>" +
+                        "<option value='Wing Bank'>Wing Bank</option>" +
+                        "<option value='Prince Bank'>Prince Bank</option>" +
+                        "<option value='Phillip Bank'>Phillip Bank</option>" +
+                        "<option value='Maybank Cambodia'>Maybank Cambodia</option>" +
+                        "<option value='Vattanac Bank'>Vattanac Bank</option>" +
+                        "<option value='Sathapana Bank'>Sathapana Bank</option>" +
+                        "<option value='Heng Feng Bank'>Heng Feng Bank</option>" +
+                        "<option value='Public Bank Cambodia'>Public Bank Cambodia</option>" +
+                        "<option value='SHB Cambodia'>SHB Cambodia</option>" +
+
+                        // Microfinance Institutions (MFI)
+                        "<option value='Amret MFI'>Amret MFI</option>" +
+                        "<option value='Prasac MFI'>Prasac MFI</option>" +
+                        "<option value='LOL C MFI'>LOL C MFI</option>" +
+                        "<option value='Hattha Bank'>Hattha Bank</option>" +
+                        "<option value='Kredit MFI'>Kredit MFI</option>" +
+                        "<option value='VisionFund MFI'>VisionFund MFI</option>" +
+
+                        "<option value='Other'>Other</option>" +
+                        "</select>" +
+                        "</td>";
+
+
+
+                    data = data + "<td contenteditable='true' style='text-align:Left; vertical-align: middle; color:blue' id='tr_payee_line_" + rowindex + "'></td>";
+
 
                     data = data + "<td style='display:none;' id='tr_payment_detail_status_line_" + rowindex + "'>" + x.Status.trim() + "</td>";
                     data = data + "<td style='display:none;' id='tr_payment_detail_itemcode_line_" + rowindex + "'>" + x.ItemCode + "</td>";
