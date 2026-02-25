@@ -49,6 +49,7 @@ namespace MKL_Web.Controllers
         }
         public ActionResult Index()
         {
+            
             return View();
         }
         public ActionResult welcome(string id)

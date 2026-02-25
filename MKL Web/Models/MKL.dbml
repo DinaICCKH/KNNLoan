@@ -1593,156 +1593,25 @@
       <Association Name="InstallmentRowDrafH_InstallmentRowDraf" Member="InstallmentRowDrafs" ThisKey="DocEntry" OtherKey="DocEntry" Type="InstallmentRowDraf" />
     </Type>
   </Table>
-  <Table Name="dbo.InstallmentRowDraf" Member="InstallmentRowDrafs">
-    <Type Name="InstallmentRowDraf">
-      <Column Name="DocEntry" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
-      <Column Name="VisOrder" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
-      <Column Name="BaseEntry" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="BaseLine" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="InstallmentBaseID" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="InstallmentBaseVisorder" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="ItemCode" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
-      <Column Name="Principle" Type="System.Decimal" DbType="Decimal(19,6)" CanBeNull="true" />
-      <Column Name="Interest" Type="System.Decimal" DbType="Decimal(19,6)" CanBeNull="true" />
-      <Column Name="Monthly" Type="System.Decimal" DbType="Decimal(19,6)" CanBeNull="true" />
-      <Column Name="PaymentDate" Type="System.DateTime" DbType="Date" CanBeNull="true" />
-      <Column Name="DueDate" Type="System.DateTime" DbType="Date" CanBeNull="true" />
-      <Column Name="Remaining" Type="System.Decimal" DbType="Decimal(19,6)" CanBeNull="true" />
-      <Column Name="ReIncloudInter" Type="System.Decimal" DbType="Decimal(19,6)" CanBeNull="true" />
-      <Column Name="RowStatus" Type="System.String" DbType="NChar(10)" CanBeNull="true" />
-      <Column Name="CuInterest" Type="System.Decimal" DbType="Decimal(19,6)" CanBeNull="true" />
-      <Column Name="CuPayment" Type="System.Decimal" DbType="Decimal(19,6)" CanBeNull="true" />
-      <Column Name="FixedPayment" Type="System.Decimal" DbType="Decimal(19,6)" CanBeNull="true" />
-      <Column Name="ARNo" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="PaymentNo" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="Method" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
-      <Column Name="InstallmentAmt" Type="System.Decimal" DbType="Decimal(19,6)" CanBeNull="true" />
-      <Column Name="DiscountAmt" Type="System.Decimal" DbType="Decimal(19,6)" CanBeNull="true" />
-      <Column Name="DepositAmt" Type="System.Decimal" DbType="Decimal(19,6)" CanBeNull="true" />
-      <Column Name="AnnualRate" Type="System.Decimal" DbType="Decimal(19,6)" CanBeNull="true" />
-      <Column Name="PeriodMonths" Type="System.Decimal" DbType="Decimal(19,6)" CanBeNull="true" />
-      <Column Name="HouseStatus" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
-      <Column Name="Remarks" Type="System.String" DbType="NVarChar(254)" CanBeNull="true" />
-      <Column Name="Syn" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="ErrorLog" Type="System.String" DbType="NVarChar(254)" CanBeNull="true" />
-      <Column Name="DiscountAmount" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
-      <Column Name="DiscountPer" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
-      <Column Name="SpecialDisAmount" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
-      <Column Name="SpecialDisPer" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
-      <Column Name="AdditionalDisAmount" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
-      <Column Name="AdditionalDisPer" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
-      <Column Name="ItemName" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
-      <Column Name="OcrCode" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
-      <Column Name="OcrCode2" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
-      <Column Name="OcrCode3" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
-      <Column Name="DrafStatus" Type="System.String" DbType="NVarChar(1)" CanBeNull="true" />
-      <Column Name="NewPaymentDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
-      <Column Name="SpecialAmt" Type="System.Decimal" DbType="Decimal(19,6)" CanBeNull="true" />
-      <Column Name="RemaingOld" Type="System.Decimal" DbType="Decimal(19,6)" CanBeNull="true" />
-      <Column Name="InterestonSchedule" Type="System.Decimal" DbType="Decimal(19,6)" CanBeNull="true" />
-      <Column Name="ARNoInterest" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="PaymentNoInterest" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="VarianDay" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="InterestonsheduleVarian" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
-      <Association Name="InstallmentRowDrafH_InstallmentRowDraf" Member="InstallmentRowDrafH" ThisKey="DocEntry" OtherKey="DocEntry" Type="InstallmentRowDrafH" IsForeignKey="true" />
+  <Table Name="dbo.v_OCRD_Penalty" Member="v_OCRD_Penalties">
+    <Type Name="v_OCRD_Penalty">
+      <Column Name="CardCode" Type="System.String" DbType="NVarChar(15) NOT NULL" CanBeNull="false" />
+      <Column Name="CardName" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="CardFName" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="Phone1" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
+      <Column Name="Phone2" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
+      <Column Name="CardType" Type="System.Char" DbType="Char(1)" CanBeNull="true" />
+      <Column Name="U_Gender" Type="System.String" DbType="VarChar(1) NOT NULL" CanBeNull="false" />
+      <Column Name="AddID" Type="System.String" DbType="NVarChar(64)" CanBeNull="true" />
+      <Column Name="Currency" Type="System.String" DbType="NVarChar(3)" CanBeNull="true" />
+      <Column Name="U_IssuedDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="U_BOD" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
     </Type>
   </Table>
-  <Table Name="dbo.InstallmentRowHistory" Member="InstallmentRowHistories">
-    <Type Name="InstallmentRowHistory">
-      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="BaseEntry" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="BaseLine" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="VisOrder" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="ItemCode" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
-      <Column Name="Principle" Type="System.Decimal" DbType="Decimal(19,6)" CanBeNull="true" />
-      <Column Name="Interest" Type="System.Decimal" DbType="Decimal(19,6)" CanBeNull="true" />
-      <Column Name="Monthly" Type="System.Decimal" DbType="Decimal(19,6)" CanBeNull="true" />
-      <Column Name="PaymentDate" Type="System.DateTime" DbType="Date" CanBeNull="true" />
-      <Column Name="DueDate" Type="System.DateTime" DbType="Date" CanBeNull="true" />
-      <Column Name="Remaining" Type="System.Decimal" DbType="Decimal(19,6)" CanBeNull="true" />
-      <Column Name="ReIncloudInter" Type="System.Decimal" DbType="Decimal(19,6)" CanBeNull="true" />
-      <Column Name="RowStatus" Type="System.String" DbType="NChar(10)" CanBeNull="true" />
-      <Column Name="CuInterest" Type="System.Decimal" DbType="Decimal(19,6)" CanBeNull="true" />
-      <Column Name="CuPayment" Type="System.Decimal" DbType="Decimal(19,6)" CanBeNull="true" />
-      <Column Name="FixedPayment" Type="System.Decimal" DbType="Decimal(19,6)" CanBeNull="true" />
-      <Column Name="ARNo" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="PaymentNo" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="Method" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
-      <Column Name="InstallmentAmt" Type="System.Decimal" DbType="Decimal(19,6)" CanBeNull="true" />
-      <Column Name="DiscountAmt" Type="System.Decimal" DbType="Decimal(19,6)" CanBeNull="true" />
-      <Column Name="DepositAmt" Type="System.Decimal" DbType="Decimal(19,6)" CanBeNull="true" />
-      <Column Name="AnnualRate" Type="System.Decimal" DbType="Decimal(19,6)" CanBeNull="true" />
-      <Column Name="PeriodMonths" Type="System.Decimal" DbType="Decimal(19,6)" CanBeNull="true" />
-      <Column Name="HouseStatus" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
-      <Column Name="Remarks" Type="System.String" DbType="NVarChar(254)" CanBeNull="true" />
-      <Column Name="Syn" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="ErrorLog" Type="System.String" DbType="NVarChar(254)" CanBeNull="true" />
-      <Column Name="DiscountAmount" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
-      <Column Name="DiscountPer" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
-      <Column Name="SpecialDisAmount" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
-      <Column Name="SpecialDisPer" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
-      <Column Name="AdditionalDisAmount" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
-      <Column Name="AdditionalDisPer" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
-      <Column Name="ItemName" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
-      <Column Name="OcrCode" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
-      <Column Name="OcrCode2" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
-      <Column Name="OcrCode3" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
-      <Column Name="logInstanc" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="HistoryDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
-      <Column Name="ARNoInterest" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="PaymentNoInterest" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="VarianDay" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="InterestonsheduleVarian" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
-    </Type>
-  </Table>
-  <Table Name="dbo.InstallmentRow" Member="InstallmentRows">
-    <Type Name="InstallmentRow">
-      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="BaseEntry" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="BaseLine" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="VisOrder" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="ItemCode" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
-      <Column Name="Principle" Type="System.Decimal" DbType="Decimal(19,6)" CanBeNull="true" />
-      <Column Name="Interest" Type="System.Decimal" DbType="Decimal(19,6)" CanBeNull="true" />
-      <Column Name="Monthly" Type="System.Decimal" DbType="Decimal(19,6)" CanBeNull="true" />
-      <Column Name="PaymentDate" Type="System.DateTime" DbType="Date" CanBeNull="true" />
-      <Column Name="DueDate" Type="System.DateTime" DbType="Date" CanBeNull="true" />
-      <Column Name="Remaining" Type="System.Decimal" DbType="Decimal(19,6)" CanBeNull="true" />
-      <Column Name="ReIncloudInter" Type="System.Decimal" DbType="Decimal(19,6)" CanBeNull="true" />
-      <Column Name="RowStatus" Type="System.String" DbType="NChar(10)" CanBeNull="true" />
-      <Column Name="CuInterest" Type="System.Decimal" DbType="Decimal(19,6)" CanBeNull="true" />
-      <Column Name="CuPayment" Type="System.Decimal" DbType="Decimal(19,6)" CanBeNull="true" />
-      <Column Name="FixedPayment" Type="System.Decimal" DbType="Decimal(19,6)" CanBeNull="true" />
-      <Column Name="ARNo" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="PaymentNo" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="Method" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
-      <Column Name="InstallmentAmt" Type="System.Decimal" DbType="Decimal(19,6)" CanBeNull="true" />
-      <Column Name="DiscountAmt" Type="System.Decimal" DbType="Decimal(19,6)" CanBeNull="true" />
-      <Column Name="DepositAmt" Type="System.Decimal" DbType="Decimal(19,6)" CanBeNull="true" />
-      <Column Name="AnnualRate" Type="System.Decimal" DbType="Decimal(19,6)" CanBeNull="true" />
-      <Column Name="PeriodMonths" Type="System.Decimal" DbType="Decimal(19,6)" CanBeNull="true" />
-      <Column Name="HouseStatus" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
-      <Column Name="Remarks" Type="System.String" DbType="NVarChar(254)" CanBeNull="true" />
-      <Column Name="Syn" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="ErrorLog" Type="System.String" DbType="NVarChar(254)" CanBeNull="true" />
-      <Column Name="DiscountAmount" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
-      <Column Name="DiscountPer" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
-      <Column Name="SpecialDisAmount" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
-      <Column Name="SpecialDisPer" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
-      <Column Name="AdditionalDisAmount" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
-      <Column Name="AdditionalDisPer" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
-      <Column Name="ItemName" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
-      <Column Name="OcrCode" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
-      <Column Name="OcrCode2" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
-      <Column Name="OcrCode3" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
-      <Column Name="NewPaymentDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
-      <Column Name="SpecialAmt" Type="System.Decimal" DbType="Decimal(19,6)" CanBeNull="true" />
-      <Column Name="RemaingOld" Type="System.Decimal" DbType="Decimal(19,6)" CanBeNull="true" />
-      <Column Name="InterestonSchedule" Type="System.Decimal" DbType="Decimal(19,6)" CanBeNull="true" />
-      <Column Name="ARNoInterest" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="PaymentNoInterest" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="VarianDay" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="InterestonsheduleVarian" Type="System.Decimal" DbType="Decimal(19,6)" CanBeNull="true" />
+  <Table Name="dbo.ICC_BankList" Member="ICC_BankLists">
+    <Type Name="ICC_BankList">
+      <Column Name="Code" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
     </Type>
   </Table>
   <Table Name="dbo.CNInstallmentRow" Member="CNInstallmentRows">
@@ -1794,6 +1663,12 @@
       <Column Name="PaymentNoInterest" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="VarianDay" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="InterestonsheduleVarian" Type="System.Decimal" DbType="Decimal(19,6)" CanBeNull="true" />
+      <Column Name="ChequeNo" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="ChequeName" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
+      <Column Name="ChequeBankName" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="PayeeName" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
+      <Column Name="ApplyInterest" Type="System.Decimal" DbType="Decimal(19,6)" CanBeNull="true" />
+      <Column Name="ApplyInterestStatus" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
     </Type>
   </Table>
   <Table Name="dbo.CNInstallmentRowDraf" Member="CNInstallmentRowDrafs">
@@ -1845,21 +1720,182 @@
       <Column Name="PaymentNoInterest" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="VarianDay" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="InterestonsheduleVarian" Type="System.Decimal" DbType="Decimal(19,6)" CanBeNull="true" />
+      <Column Name="ChequeNo" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="ChequeName" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
+      <Column Name="ChequeBankName" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="PayeeName" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
+      <Column Name="ApplyInterest" Type="System.Decimal" DbType="Decimal(19,6)" CanBeNull="true" />
+      <Column Name="ApplyInterestStatus" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
     </Type>
   </Table>
-  <Table Name="dbo.v_OCRD_Penalty" Member="v_OCRD_Penalties">
-    <Type Name="v_OCRD_Penalty">
-      <Column Name="CardCode" Type="System.String" DbType="NVarChar(15) NOT NULL" CanBeNull="false" />
-      <Column Name="CardName" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
-      <Column Name="CardFName" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
-      <Column Name="Phone1" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
-      <Column Name="Phone2" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
-      <Column Name="CardType" Type="System.Char" DbType="Char(1)" CanBeNull="true" />
-      <Column Name="U_Gender" Type="System.String" DbType="VarChar(1) NOT NULL" CanBeNull="false" />
-      <Column Name="AddID" Type="System.String" DbType="NVarChar(64)" CanBeNull="true" />
-      <Column Name="Currency" Type="System.String" DbType="NVarChar(3)" CanBeNull="true" />
-      <Column Name="U_IssuedDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
-      <Column Name="U_BOD" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+  <Table Name="dbo.InstallmentRow" Member="InstallmentRows">
+    <Type Name="InstallmentRow">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="BaseEntry" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="BaseLine" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="VisOrder" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ItemCode" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="Principle" Type="System.Decimal" DbType="Decimal(19,6)" CanBeNull="true" />
+      <Column Name="Interest" Type="System.Decimal" DbType="Decimal(19,6)" CanBeNull="true" />
+      <Column Name="Monthly" Type="System.Decimal" DbType="Decimal(19,6)" CanBeNull="true" />
+      <Column Name="PaymentDate" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="DueDate" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="Remaining" Type="System.Decimal" DbType="Decimal(19,6)" CanBeNull="true" />
+      <Column Name="ReIncloudInter" Type="System.Decimal" DbType="Decimal(19,6)" CanBeNull="true" />
+      <Column Name="RowStatus" Type="System.String" DbType="NChar(10)" CanBeNull="true" />
+      <Column Name="CuInterest" Type="System.Decimal" DbType="Decimal(19,6)" CanBeNull="true" />
+      <Column Name="CuPayment" Type="System.Decimal" DbType="Decimal(19,6)" CanBeNull="true" />
+      <Column Name="FixedPayment" Type="System.Decimal" DbType="Decimal(19,6)" CanBeNull="true" />
+      <Column Name="ARNo" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="PaymentNo" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Method" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="InstallmentAmt" Type="System.Decimal" DbType="Decimal(19,6)" CanBeNull="true" />
+      <Column Name="DiscountAmt" Type="System.Decimal" DbType="Decimal(19,6)" CanBeNull="true" />
+      <Column Name="DepositAmt" Type="System.Decimal" DbType="Decimal(19,6)" CanBeNull="true" />
+      <Column Name="AnnualRate" Type="System.Decimal" DbType="Decimal(19,6)" CanBeNull="true" />
+      <Column Name="PeriodMonths" Type="System.Decimal" DbType="Decimal(19,6)" CanBeNull="true" />
+      <Column Name="HouseStatus" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="Remarks" Type="System.String" DbType="NVarChar(254)" CanBeNull="true" />
+      <Column Name="Syn" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ErrorLog" Type="System.String" DbType="NVarChar(254)" CanBeNull="true" />
+      <Column Name="DiscountAmount" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="DiscountPer" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="SpecialDisAmount" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="SpecialDisPer" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="AdditionalDisAmount" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="AdditionalDisPer" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="ItemName" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
+      <Column Name="OcrCode" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="OcrCode2" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="OcrCode3" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="NewPaymentDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="SpecialAmt" Type="System.Decimal" DbType="Decimal(19,6)" CanBeNull="true" />
+      <Column Name="RemaingOld" Type="System.Decimal" DbType="Decimal(19,6)" CanBeNull="true" />
+      <Column Name="InterestonSchedule" Type="System.Decimal" DbType="Decimal(19,6)" CanBeNull="true" />
+      <Column Name="ARNoInterest" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="PaymentNoInterest" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="VarianDay" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="InterestonsheduleVarian" Type="System.Decimal" DbType="Decimal(19,6)" CanBeNull="true" />
+      <Column Name="ChequeNo" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="ChequeName" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
+      <Column Name="ChequeBankName" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="PayeeName" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
+      <Column Name="ApplyInterest" Type="System.Decimal" DbType="Decimal(19,6)" CanBeNull="true" />
+      <Column Name="ApplyInterestStatus" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.InstallmentRowDraf" Member="InstallmentRowDrafs">
+    <Type Name="InstallmentRowDraf">
+      <Column Name="DocEntry" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="VisOrder" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="BaseEntry" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="BaseLine" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="InstallmentBaseID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="InstallmentBaseVisorder" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ItemCode" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="Principle" Type="System.Decimal" DbType="Decimal(19,6)" CanBeNull="true" />
+      <Column Name="Interest" Type="System.Decimal" DbType="Decimal(19,6)" CanBeNull="true" />
+      <Column Name="Monthly" Type="System.Decimal" DbType="Decimal(19,6)" CanBeNull="true" />
+      <Column Name="PaymentDate" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="DueDate" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="Remaining" Type="System.Decimal" DbType="Decimal(19,6)" CanBeNull="true" />
+      <Column Name="ReIncloudInter" Type="System.Decimal" DbType="Decimal(19,6)" CanBeNull="true" />
+      <Column Name="RowStatus" Type="System.String" DbType="NChar(10)" CanBeNull="true" />
+      <Column Name="CuInterest" Type="System.Decimal" DbType="Decimal(19,6)" CanBeNull="true" />
+      <Column Name="CuPayment" Type="System.Decimal" DbType="Decimal(19,6)" CanBeNull="true" />
+      <Column Name="FixedPayment" Type="System.Decimal" DbType="Decimal(19,6)" CanBeNull="true" />
+      <Column Name="ARNo" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="PaymentNo" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Method" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="InstallmentAmt" Type="System.Decimal" DbType="Decimal(19,6)" CanBeNull="true" />
+      <Column Name="DiscountAmt" Type="System.Decimal" DbType="Decimal(19,6)" CanBeNull="true" />
+      <Column Name="DepositAmt" Type="System.Decimal" DbType="Decimal(19,6)" CanBeNull="true" />
+      <Column Name="AnnualRate" Type="System.Decimal" DbType="Decimal(19,6)" CanBeNull="true" />
+      <Column Name="PeriodMonths" Type="System.Decimal" DbType="Decimal(19,6)" CanBeNull="true" />
+      <Column Name="HouseStatus" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="Remarks" Type="System.String" DbType="NVarChar(254)" CanBeNull="true" />
+      <Column Name="Syn" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ErrorLog" Type="System.String" DbType="NVarChar(254)" CanBeNull="true" />
+      <Column Name="DiscountAmount" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="DiscountPer" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="SpecialDisAmount" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="SpecialDisPer" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="AdditionalDisAmount" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="AdditionalDisPer" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="ItemName" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
+      <Column Name="OcrCode" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="OcrCode2" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="OcrCode3" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="DrafStatus" Type="System.String" DbType="NVarChar(1)" CanBeNull="true" />
+      <Column Name="NewPaymentDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="SpecialAmt" Type="System.Decimal" DbType="Decimal(19,6)" CanBeNull="true" />
+      <Column Name="RemaingOld" Type="System.Decimal" DbType="Decimal(19,6)" CanBeNull="true" />
+      <Column Name="InterestonSchedule" Type="System.Decimal" DbType="Decimal(19,6)" CanBeNull="true" />
+      <Column Name="ARNoInterest" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="PaymentNoInterest" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="VarianDay" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="InterestonsheduleVarian" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="ChequeNo" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="ChequeName" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
+      <Column Name="ChequeBankName" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="PayeeName" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
+      <Column Name="ApplyInterest" Type="System.Decimal" DbType="Decimal(19,6)" CanBeNull="true" />
+      <Column Name="ApplyInterestStatus" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
+      <Association Name="InstallmentRowDrafH_InstallmentRowDraf" Member="InstallmentRowDrafH" ThisKey="DocEntry" OtherKey="DocEntry" Type="InstallmentRowDrafH" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.InstallmentRowHistory" Member="InstallmentRowHistories">
+    <Type Name="InstallmentRowHistory">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="BaseEntry" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="BaseLine" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="VisOrder" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ItemCode" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="Principle" Type="System.Decimal" DbType="Decimal(19,6)" CanBeNull="true" />
+      <Column Name="Interest" Type="System.Decimal" DbType="Decimal(19,6)" CanBeNull="true" />
+      <Column Name="Monthly" Type="System.Decimal" DbType="Decimal(19,6)" CanBeNull="true" />
+      <Column Name="PaymentDate" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="DueDate" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="Remaining" Type="System.Decimal" DbType="Decimal(19,6)" CanBeNull="true" />
+      <Column Name="ReIncloudInter" Type="System.Decimal" DbType="Decimal(19,6)" CanBeNull="true" />
+      <Column Name="RowStatus" Type="System.String" DbType="NChar(10)" CanBeNull="true" />
+      <Column Name="CuInterest" Type="System.Decimal" DbType="Decimal(19,6)" CanBeNull="true" />
+      <Column Name="CuPayment" Type="System.Decimal" DbType="Decimal(19,6)" CanBeNull="true" />
+      <Column Name="FixedPayment" Type="System.Decimal" DbType="Decimal(19,6)" CanBeNull="true" />
+      <Column Name="ARNo" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="PaymentNo" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Method" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="InstallmentAmt" Type="System.Decimal" DbType="Decimal(19,6)" CanBeNull="true" />
+      <Column Name="DiscountAmt" Type="System.Decimal" DbType="Decimal(19,6)" CanBeNull="true" />
+      <Column Name="DepositAmt" Type="System.Decimal" DbType="Decimal(19,6)" CanBeNull="true" />
+      <Column Name="AnnualRate" Type="System.Decimal" DbType="Decimal(19,6)" CanBeNull="true" />
+      <Column Name="PeriodMonths" Type="System.Decimal" DbType="Decimal(19,6)" CanBeNull="true" />
+      <Column Name="HouseStatus" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="Remarks" Type="System.String" DbType="NVarChar(254)" CanBeNull="true" />
+      <Column Name="Syn" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ErrorLog" Type="System.String" DbType="NVarChar(254)" CanBeNull="true" />
+      <Column Name="DiscountAmount" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="DiscountPer" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="SpecialDisAmount" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="SpecialDisPer" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="AdditionalDisAmount" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="AdditionalDisPer" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="ItemName" Type="System.String" DbType="NVarChar(250)" CanBeNull="true" />
+      <Column Name="OcrCode" Type="System.String" DbType="NVarChar(250)" CanBeNull="true" />
+      <Column Name="OcrCode2" Type="System.String" DbType="NVarChar(250)" CanBeNull="true" />
+      <Column Name="OcrCode3" Type="System.String" DbType="NVarChar(250)" CanBeNull="true" />
+      <Column Name="logInstanc" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="HistoryDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="ARNoInterest" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="PaymentNoInterest" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="VarianDay" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="InterestonsheduleVarian" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="ChequeNo" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="ChequeName" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
+      <Column Name="ChequeBankName" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="PayeeName" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
+      <Column Name="ApplyInterest" Type="System.Decimal" DbType="Decimal(19,6)" CanBeNull="true" />
+      <Column Name="ApplyInterestStatus" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
     </Type>
   </Table>
   <Function Name="dbo.ICC_UpdateSAPDocumentStatus" Method="ICC_UpdateSAPDocumentStatus">

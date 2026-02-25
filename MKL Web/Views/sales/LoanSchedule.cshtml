@@ -471,7 +471,8 @@
                                                                             <div class="input-group-addon">
                                                                                 <i class="fa fa-calendar"></i>
                                                                             </div>
-                                                                            <input type="text" class="form-control pull-right datetime form-control-insde" readonly="readonly" id="txt_start_payment" placeholder="Start Payment" value="@docdate">
+                                                                            @*<input type="text" class="form-control pull-right datetime form-control-insde" readonly="readonly" id="txt_start_payment" placeholder="Start Payment" value="@docdate">*@
+                                                                            <input type="text" class="form-control pull-right datetime form-control-insde" readonly="readonly" id="txt_start_payment" placeholder="Start Payment">
                                                                         </div>
                                                                     </td>
 
@@ -556,7 +557,7 @@
                                                                             <div class="input-group-addon">
                                                                                 <i class="fa fa-calendar"></i>
                                                                             </div>
-                                                                            <input type="text" class="form-control pull-right datetime form-control-insde" readonly="readonly" id="txt_maturity_payment" placeholder="Posting Date" value="@docdate">
+                                                                            <input type="text" class="form-control pull-right datetime form-control-insde" readonly="readonly" id="txt_maturity_payment" value="@docdate" disabled>
                                                                         </div>
                                                                     </td>
                                                                     <td style="text-align:right;width:30%;">
@@ -617,39 +618,40 @@
                                                 <thead style="position:sticky; top:0; z-index:1000; background:#f4f4f4;">
                                                     <tr class="bg-gray" role="row">
 
-                                                        <td style="width:2%; text-align:left;"></td>
+                                                        <td style="width:0.8%; text-align:left;"></td>
 
-                                                        <td style="width:2%; text-align:left;">
+                                                        <td style="width:0.8%; text-align:left;">
                                                             <i class='fa fa-circle text-danger' style='cursor:pointer;display:none;'
                                                                id='tr_payment_detail_check_all' onclick='check_tr_payment_detail()'></i>
                                                             <i class='fa fa-circle text-yellow' style='cursor:pointer;display:none;'
                                                                id='tr_payment_detail_uncheck_all' onclick='uncheck_tr_payment_detail()'></i>
                                                         </td>
 
-                                                        <td style="width:3%; text-align:left;">#</td>
-                                                        <td style="width:6%; text-align:left;">DocDate</td>
-                                                        <td style="width:6%; text-align:left;">DueDate</td>
+                                                        <td style="width:0.8%; text-align:left;">#</td>
 
-                                                        <td style="width:6%; text-align:right;">Principle</td>
-                                                        <td style="width:6%; text-align:right;">Interest</td>
-                                                        <td style="width:6%; text-align:right;">Monthly</td>
-                                                        <td style="width:6%; text-align:right;">Remain</td>
-                                                        <td style="width:6%; text-align:right;">Remain+Int</td>
-                                                        <td style="width:6%; text-align:right;">C.Principle</td>
-                                                        <td style="width:6%; text-align:right;">C.Interest</td>
-                                                        <td style="width:6%; text-align:right;">C.Principle+Int</td>
+                                                        <td style="width:4.7%; text-align:left;">DocDate</td>
+                                                        <td style="width:4.7%; text-align:left;">DueDate</td>
 
-                                                        <td style="width:5%; text-align:left;">Pay.Type</td>
-                                                        <td style="width:5%; text-align:left;">ARNo</td>
-                                                        <td style="width:5%; text-align:left;">PayNo</td>
-                                                        <td style="width:5%; text-align:left;">Int.ARNo</td>
-                                                        <td style="width:5%; text-align:left;">Int.PayNo</td>
+                                                        <td style="width: 4.7%; text-align: left;">Principle</td>
+                                                        <td style="width: 4.7%; text-align: left;">Interest</td>
+                                                        <td style="width: 4.7%; text-align: left;">Monthly</td>
+                                                        <td style="width: 4.7%; text-align: left;">Remain</td>
+                                                        <td style="width: 4.7%; text-align: left;">Remain+Int</td>
+                                                        <td style="width: 4.7%; text-align: left;">C.Principle</td>
+                                                        <td style="width: 4.7%; text-align: left;">C.Interest</td>
+                                                        <td style="width: 4.7%; text-align: left;">C.Principle+Int</td>
 
-                                                        <td style="width:10%; text-align:left;">Remark</td>
-                                                        <td style="width:6%; text-align:left;">Cheque No.#</td>
-                                                        <td style="width:6%; text-align:left;">Name on Cheque</td>
-                                                        <td style="width:8%; text-align:left;">Bank Name</td>
-                                                        <td style="width:5%; text-align:left;">Payee Name</td>
+                                                        <td style="width:4%; text-align:left;">Pay.Type</td>
+                                                        <td style="width:4%; text-align:left;">ARNo</td>
+                                                        <td style="width:4%; text-align:left;">PayNo</td>
+                                                        <td style="width:4%; text-align:left;">Int.ARNo</td>
+                                                        <td style="width:4%; text-align:left;">Int.PayNo</td>
+
+                                                        <td style="width:8.3%; text-align:left;">Remark</td>
+                                                        <td style="width:5.6%; text-align:left;">Cheque No.#</td>
+                                                        <td style="width:5.6%; text-align:left;">Name on Cheque</td>
+                                                        <td style="width:6.4%; text-align:left;">Bank Name</td>
+                                                        <td style="width:4.7%; text-align:left;">Payee Name</td>
 
                                                     </tr>
                                                 </thead>
@@ -743,6 +745,10 @@
 
 <div id="alert-container" style="position: fixed; top: 20px; right: 20px; z-index: 9999;"></div>
 
+<script>
+    // Make bank list available to JS
+    window.bankList = @Html.Raw(Json.Encode(ViewBag.BankList));
+</script>
 
 
 

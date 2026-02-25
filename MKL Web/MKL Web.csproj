@@ -7490,6 +7490,7 @@
     <Content Include="Views\sales\PreviewReprocessingAdd.cshtml" />
     <Content Include="Views\sales\LoanInstallmentApprovalListing.cshtml" />
     <Content Include="Views\sales\PreviewLoanDraf.cshtml" />
+    <Content Include="Views\sales\InterestWizard.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

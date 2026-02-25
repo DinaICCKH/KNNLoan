@@ -91,6 +91,7 @@ namespace MKL_Web.Controllers
             ViewBag.cust = db.V_Customers.Where(x => x.CardType.ToString() == "C" && armemoList.Select(a => a.CardCode).Contains(x.CardCode)).ToList();
             ViewBag.houselist = db.v_Item_Houses.ToList();
             ViewBag.installment = db.InstallmentLists.Where(x=>x.InsCode!="B").ToList();
+            ViewBag.BankList = db.ICC_BankLists.ToList();   // change table name if different
             return View();
         }
         public ActionResult PaymentScheduleEdit(int key)
@@ -355,6 +356,7 @@ namespace MKL_Web.Controllers
 
                         ARNoInterest = x["ARNoInterest"].ToString(),
                         PaymentNoInterest = x["PaymentNoInterest"].ToString()
+
                     }).ToList();
             var data = list.Select(x => new {
                 x.ID,
@@ -1732,6 +1734,12 @@ namespace MKL_Web.Controllers
             ViewBag.installment = db.InstallmentRows.Where(x => x.BaseEntry == DocEntry).ToList();
             ViewBag.HeaderLoan = db.ICC_Loan_List_By_ID (DocEntry).ToList();
 
+            return View();
+        }
+
+
+        public ActionResult InterestWizard()
+        {
             return View();
         }
 

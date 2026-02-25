@@ -171,21 +171,21 @@ namespace MKL_Web.Models
     partial void InsertInstallmentRowDrafH(InstallmentRowDrafH instance);
     partial void UpdateInstallmentRowDrafH(InstallmentRowDrafH instance);
     partial void DeleteInstallmentRowDrafH(InstallmentRowDrafH instance);
-    partial void InsertInstallmentRowDraf(InstallmentRowDraf instance);
-    partial void UpdateInstallmentRowDraf(InstallmentRowDraf instance);
-    partial void DeleteInstallmentRowDraf(InstallmentRowDraf instance);
-    partial void InsertInstallmentRowHistory(InstallmentRowHistory instance);
-    partial void UpdateInstallmentRowHistory(InstallmentRowHistory instance);
-    partial void DeleteInstallmentRowHistory(InstallmentRowHistory instance);
-    partial void InsertInstallmentRow(InstallmentRow instance);
-    partial void UpdateInstallmentRow(InstallmentRow instance);
-    partial void DeleteInstallmentRow(InstallmentRow instance);
     partial void InsertCNInstallmentRow(CNInstallmentRow instance);
     partial void UpdateCNInstallmentRow(CNInstallmentRow instance);
     partial void DeleteCNInstallmentRow(CNInstallmentRow instance);
     partial void InsertCNInstallmentRowDraf(CNInstallmentRowDraf instance);
     partial void UpdateCNInstallmentRowDraf(CNInstallmentRowDraf instance);
     partial void DeleteCNInstallmentRowDraf(CNInstallmentRowDraf instance);
+    partial void InsertInstallmentRow(InstallmentRow instance);
+    partial void UpdateInstallmentRow(InstallmentRow instance);
+    partial void DeleteInstallmentRow(InstallmentRow instance);
+    partial void InsertInstallmentRowDraf(InstallmentRowDraf instance);
+    partial void UpdateInstallmentRowDraf(InstallmentRowDraf instance);
+    partial void DeleteInstallmentRowDraf(InstallmentRowDraf instance);
+    partial void InsertInstallmentRowHistory(InstallmentRowHistory instance);
+    partial void UpdateInstallmentRowHistory(InstallmentRowHistory instance);
+    partial void DeleteInstallmentRowHistory(InstallmentRowHistory instance);
     #endregion
 		
 		public MKLDataContext(string connection) : 
@@ -884,27 +884,19 @@ namespace MKL_Web.Models
 			}
 		}
 		
-		public System.Data.Linq.Table<InstallmentRowDraf> InstallmentRowDrafs
+		public System.Data.Linq.Table<v_OCRD_Penalty> v_OCRD_Penalties
 		{
 			get
 			{
-				return this.GetTable<InstallmentRowDraf>();
+				return this.GetTable<v_OCRD_Penalty>();
 			}
 		}
 		
-		public System.Data.Linq.Table<InstallmentRowHistory> InstallmentRowHistories
+		public System.Data.Linq.Table<ICC_BankList> ICC_BankLists
 		{
 			get
 			{
-				return this.GetTable<InstallmentRowHistory>();
-			}
-		}
-		
-		public System.Data.Linq.Table<InstallmentRow> InstallmentRows
-		{
-			get
-			{
-				return this.GetTable<InstallmentRow>();
+				return this.GetTable<ICC_BankList>();
 			}
 		}
 		
@@ -924,11 +916,27 @@ namespace MKL_Web.Models
 			}
 		}
 		
-		public System.Data.Linq.Table<v_OCRD_Penalty> v_OCRD_Penalties
+		public System.Data.Linq.Table<InstallmentRow> InstallmentRows
 		{
 			get
 			{
-				return this.GetTable<v_OCRD_Penalty>();
+				return this.GetTable<InstallmentRow>();
+			}
+		}
+		
+		public System.Data.Linq.Table<InstallmentRowDraf> InstallmentRowDrafs
+		{
+			get
+			{
+				return this.GetTable<InstallmentRowDraf>();
+			}
+		}
+		
+		public System.Data.Linq.Table<InstallmentRowHistory> InstallmentRowHistories
+		{
+			get
+			{
+				return this.GetTable<InstallmentRowHistory>();
 			}
 		}
 		
@@ -31012,6 +31020,4164 @@ namespace MKL_Web.Models
 		}
 	}
 	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.v_OCRD_Penalty")]
+	public partial class v_OCRD_Penalty
+	{
+		
+		private string _CardCode;
+		
+		private string _CardName;
+		
+		private string _CardFName;
+		
+		private string _Phone1;
+		
+		private string _Phone2;
+		
+		private System.Nullable<char> _CardType;
+		
+		private string _U_Gender;
+		
+		private string _AddID;
+		
+		private string _Currency;
+		
+		private System.Nullable<System.DateTime> _U_IssuedDate;
+		
+		private System.Nullable<System.DateTime> _U_BOD;
+		
+		public v_OCRD_Penalty()
+		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CardCode", DbType="NVarChar(15) NOT NULL", CanBeNull=false)]
+		public string CardCode
+		{
+			get
+			{
+				return this._CardCode;
+			}
+			set
+			{
+				if ((this._CardCode != value))
+				{
+					this._CardCode = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CardName", DbType="NVarChar(100)")]
+		public string CardName
+		{
+			get
+			{
+				return this._CardName;
+			}
+			set
+			{
+				if ((this._CardName != value))
+				{
+					this._CardName = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CardFName", DbType="NVarChar(100)")]
+		public string CardFName
+		{
+			get
+			{
+				return this._CardFName;
+			}
+			set
+			{
+				if ((this._CardFName != value))
+				{
+					this._CardFName = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Phone1", DbType="NVarChar(20)")]
+		public string Phone1
+		{
+			get
+			{
+				return this._Phone1;
+			}
+			set
+			{
+				if ((this._Phone1 != value))
+				{
+					this._Phone1 = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Phone2", DbType="NVarChar(20)")]
+		public string Phone2
+		{
+			get
+			{
+				return this._Phone2;
+			}
+			set
+			{
+				if ((this._Phone2 != value))
+				{
+					this._Phone2 = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CardType", DbType="Char(1)")]
+		public System.Nullable<char> CardType
+		{
+			get
+			{
+				return this._CardType;
+			}
+			set
+			{
+				if ((this._CardType != value))
+				{
+					this._CardType = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_U_Gender", DbType="VarChar(1) NOT NULL", CanBeNull=false)]
+		public string U_Gender
+		{
+			get
+			{
+				return this._U_Gender;
+			}
+			set
+			{
+				if ((this._U_Gender != value))
+				{
+					this._U_Gender = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AddID", DbType="NVarChar(64)")]
+		public string AddID
+		{
+			get
+			{
+				return this._AddID;
+			}
+			set
+			{
+				if ((this._AddID != value))
+				{
+					this._AddID = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Currency", DbType="NVarChar(3)")]
+		public string Currency
+		{
+			get
+			{
+				return this._Currency;
+			}
+			set
+			{
+				if ((this._Currency != value))
+				{
+					this._Currency = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_U_IssuedDate", DbType="DateTime")]
+		public System.Nullable<System.DateTime> U_IssuedDate
+		{
+			get
+			{
+				return this._U_IssuedDate;
+			}
+			set
+			{
+				if ((this._U_IssuedDate != value))
+				{
+					this._U_IssuedDate = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_U_BOD", DbType="DateTime")]
+		public System.Nullable<System.DateTime> U_BOD
+		{
+			get
+			{
+				return this._U_BOD;
+			}
+			set
+			{
+				if ((this._U_BOD != value))
+				{
+					this._U_BOD = value;
+				}
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.ICC_BankList")]
+	public partial class ICC_BankList
+	{
+		
+		private string _Code;
+		
+		private string _Name;
+		
+		public ICC_BankList()
+		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Code", DbType="NVarChar(50) NOT NULL", CanBeNull=false)]
+		public string Code
+		{
+			get
+			{
+				return this._Code;
+			}
+			set
+			{
+				if ((this._Code != value))
+				{
+					this._Code = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Name", DbType="NVarChar(100) NOT NULL", CanBeNull=false)]
+		public string Name
+		{
+			get
+			{
+				return this._Name;
+			}
+			set
+			{
+				if ((this._Name != value))
+				{
+					this._Name = value;
+				}
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.CNInstallmentRow")]
+	public partial class CNInstallmentRow : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _ID;
+		
+		private int _BaseEntry;
+		
+		private int _BaseLine;
+		
+		private System.Nullable<int> _VisOrder;
+		
+		private string _ItemCode;
+		
+		private System.Nullable<decimal> _Principle;
+		
+		private System.Nullable<decimal> _Interest;
+		
+		private System.Nullable<decimal> _Monthly;
+		
+		private System.Nullable<System.DateTime> _PaymentDate;
+		
+		private System.Nullable<System.DateTime> _DueDate;
+		
+		private System.Nullable<decimal> _Remaining;
+		
+		private System.Nullable<decimal> _ReIncloudInter;
+		
+		private string _RowStatus;
+		
+		private System.Nullable<decimal> _CuInterest;
+		
+		private System.Nullable<decimal> _CuPayment;
+		
+		private System.Nullable<decimal> _FixedPayment;
+		
+		private System.Nullable<int> _ARNo;
+		
+		private System.Nullable<int> _PaymentNo;
+		
+		private string _Method;
+		
+		private System.Nullable<decimal> _InstallmentAmt;
+		
+		private System.Nullable<decimal> _DiscountAmt;
+		
+		private System.Nullable<decimal> _DepositAmt;
+		
+		private System.Nullable<decimal> _AnnualRate;
+		
+		private System.Nullable<decimal> _PeriodMonths;
+		
+		private string _HouseStatus;
+		
+		private string _Remarks;
+		
+		private System.Nullable<int> _Syn;
+		
+		private string _ErrorLog;
+		
+		private System.Nullable<decimal> _DiscountAmount;
+		
+		private System.Nullable<decimal> _DiscountPer;
+		
+		private System.Nullable<decimal> _SpecialDisAmount;
+		
+		private System.Nullable<decimal> _SpecialDisPer;
+		
+		private System.Nullable<decimal> _AdditionalDisAmount;
+		
+		private System.Nullable<decimal> _AdditionalDisPer;
+		
+		private string _ItemName;
+		
+		private string _OcrCode;
+		
+		private string _OcrCode2;
+		
+		private string _OcrCode3;
+		
+		private System.Nullable<System.DateTime> _NewPaymentDate;
+		
+		private System.Nullable<decimal> _SpecialAmt;
+		
+		private System.Nullable<decimal> _RemaingOld;
+		
+		private System.Nullable<decimal> _InterestonSchedule;
+		
+		private string _RowType;
+		
+		private System.Nullable<int> _ARNoInterest;
+		
+		private System.Nullable<int> _PaymentNoInterest;
+		
+		private System.Nullable<int> _VarianDay;
+		
+		private System.Nullable<decimal> _InterestonsheduleVarian;
+		
+		private string _ChequeNo;
+		
+		private string _ChequeName;
+		
+		private string _ChequeBankName;
+		
+		private string _PayeeName;
+		
+		private System.Nullable<decimal> _ApplyInterest;
+		
+		private string _ApplyInterestStatus;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIDChanging(int value);
+    partial void OnIDChanged();
+    partial void OnBaseEntryChanging(int value);
+    partial void OnBaseEntryChanged();
+    partial void OnBaseLineChanging(int value);
+    partial void OnBaseLineChanged();
+    partial void OnVisOrderChanging(System.Nullable<int> value);
+    partial void OnVisOrderChanged();
+    partial void OnItemCodeChanging(string value);
+    partial void OnItemCodeChanged();
+    partial void OnPrincipleChanging(System.Nullable<decimal> value);
+    partial void OnPrincipleChanged();
+    partial void OnInterestChanging(System.Nullable<decimal> value);
+    partial void OnInterestChanged();
+    partial void OnMonthlyChanging(System.Nullable<decimal> value);
+    partial void OnMonthlyChanged();
+    partial void OnPaymentDateChanging(System.Nullable<System.DateTime> value);
+    partial void OnPaymentDateChanged();
+    partial void OnDueDateChanging(System.Nullable<System.DateTime> value);
+    partial void OnDueDateChanged();
+    partial void OnRemainingChanging(System.Nullable<decimal> value);
+    partial void OnRemainingChanged();
+    partial void OnReIncloudInterChanging(System.Nullable<decimal> value);
+    partial void OnReIncloudInterChanged();
+    partial void OnRowStatusChanging(string value);
+    partial void OnRowStatusChanged();
+    partial void OnCuInterestChanging(System.Nullable<decimal> value);
+    partial void OnCuInterestChanged();
+    partial void OnCuPaymentChanging(System.Nullable<decimal> value);
+    partial void OnCuPaymentChanged();
+    partial void OnFixedPaymentChanging(System.Nullable<decimal> value);
+    partial void OnFixedPaymentChanged();
+    partial void OnARNoChanging(System.Nullable<int> value);
+    partial void OnARNoChanged();
+    partial void OnPaymentNoChanging(System.Nullable<int> value);
+    partial void OnPaymentNoChanged();
+    partial void OnMethodChanging(string value);
+    partial void OnMethodChanged();
+    partial void OnInstallmentAmtChanging(System.Nullable<decimal> value);
+    partial void OnInstallmentAmtChanged();
+    partial void OnDiscountAmtChanging(System.Nullable<decimal> value);
+    partial void OnDiscountAmtChanged();
+    partial void OnDepositAmtChanging(System.Nullable<decimal> value);
+    partial void OnDepositAmtChanged();
+    partial void OnAnnualRateChanging(System.Nullable<decimal> value);
+    partial void OnAnnualRateChanged();
+    partial void OnPeriodMonthsChanging(System.Nullable<decimal> value);
+    partial void OnPeriodMonthsChanged();
+    partial void OnHouseStatusChanging(string value);
+    partial void OnHouseStatusChanged();
+    partial void OnRemarksChanging(string value);
+    partial void OnRemarksChanged();
+    partial void OnSynChanging(System.Nullable<int> value);
+    partial void OnSynChanged();
+    partial void OnErrorLogChanging(string value);
+    partial void OnErrorLogChanged();
+    partial void OnDiscountAmountChanging(System.Nullable<decimal> value);
+    partial void OnDiscountAmountChanged();
+    partial void OnDiscountPerChanging(System.Nullable<decimal> value);
+    partial void OnDiscountPerChanged();
+    partial void OnSpecialDisAmountChanging(System.Nullable<decimal> value);
+    partial void OnSpecialDisAmountChanged();
+    partial void OnSpecialDisPerChanging(System.Nullable<decimal> value);
+    partial void OnSpecialDisPerChanged();
+    partial void OnAdditionalDisAmountChanging(System.Nullable<decimal> value);
+    partial void OnAdditionalDisAmountChanged();
+    partial void OnAdditionalDisPerChanging(System.Nullable<decimal> value);
+    partial void OnAdditionalDisPerChanged();
+    partial void OnItemNameChanging(string value);
+    partial void OnItemNameChanged();
+    partial void OnOcrCodeChanging(string value);
+    partial void OnOcrCodeChanged();
+    partial void OnOcrCode2Changing(string value);
+    partial void OnOcrCode2Changed();
+    partial void OnOcrCode3Changing(string value);
+    partial void OnOcrCode3Changed();
+    partial void OnNewPaymentDateChanging(System.Nullable<System.DateTime> value);
+    partial void OnNewPaymentDateChanged();
+    partial void OnSpecialAmtChanging(System.Nullable<decimal> value);
+    partial void OnSpecialAmtChanged();
+    partial void OnRemaingOldChanging(System.Nullable<decimal> value);
+    partial void OnRemaingOldChanged();
+    partial void OnInterestonScheduleChanging(System.Nullable<decimal> value);
+    partial void OnInterestonScheduleChanged();
+    partial void OnRowTypeChanging(string value);
+    partial void OnRowTypeChanged();
+    partial void OnARNoInterestChanging(System.Nullable<int> value);
+    partial void OnARNoInterestChanged();
+    partial void OnPaymentNoInterestChanging(System.Nullable<int> value);
+    partial void OnPaymentNoInterestChanged();
+    partial void OnVarianDayChanging(System.Nullable<int> value);
+    partial void OnVarianDayChanged();
+    partial void OnInterestonsheduleVarianChanging(System.Nullable<decimal> value);
+    partial void OnInterestonsheduleVarianChanged();
+    partial void OnChequeNoChanging(string value);
+    partial void OnChequeNoChanged();
+    partial void OnChequeNameChanging(string value);
+    partial void OnChequeNameChanged();
+    partial void OnChequeBankNameChanging(string value);
+    partial void OnChequeBankNameChanged();
+    partial void OnPayeeNameChanging(string value);
+    partial void OnPayeeNameChanged();
+    partial void OnApplyInterestChanging(System.Nullable<decimal> value);
+    partial void OnApplyInterestChanged();
+    partial void OnApplyInterestStatusChanging(string value);
+    partial void OnApplyInterestStatusChanged();
+    #endregion
+		
+		public CNInstallmentRow()
+		{
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", DbType="Int NOT NULL", IsPrimaryKey=true)]
+		public int ID
+		{
+			get
+			{
+				return this._ID;
+			}
+			set
+			{
+				if ((this._ID != value))
+				{
+					this.OnIDChanging(value);
+					this.SendPropertyChanging();
+					this._ID = value;
+					this.SendPropertyChanged("ID");
+					this.OnIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_BaseEntry", DbType="Int NOT NULL")]
+		public int BaseEntry
+		{
+			get
+			{
+				return this._BaseEntry;
+			}
+			set
+			{
+				if ((this._BaseEntry != value))
+				{
+					this.OnBaseEntryChanging(value);
+					this.SendPropertyChanging();
+					this._BaseEntry = value;
+					this.SendPropertyChanged("BaseEntry");
+					this.OnBaseEntryChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_BaseLine", DbType="Int NOT NULL")]
+		public int BaseLine
+		{
+			get
+			{
+				return this._BaseLine;
+			}
+			set
+			{
+				if ((this._BaseLine != value))
+				{
+					this.OnBaseLineChanging(value);
+					this.SendPropertyChanging();
+					this._BaseLine = value;
+					this.SendPropertyChanged("BaseLine");
+					this.OnBaseLineChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_VisOrder", DbType="Int")]
+		public System.Nullable<int> VisOrder
+		{
+			get
+			{
+				return this._VisOrder;
+			}
+			set
+			{
+				if ((this._VisOrder != value))
+				{
+					this.OnVisOrderChanging(value);
+					this.SendPropertyChanging();
+					this._VisOrder = value;
+					this.SendPropertyChanged("VisOrder");
+					this.OnVisOrderChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ItemCode", DbType="NVarChar(25)")]
+		public string ItemCode
+		{
+			get
+			{
+				return this._ItemCode;
+			}
+			set
+			{
+				if ((this._ItemCode != value))
+				{
+					this.OnItemCodeChanging(value);
+					this.SendPropertyChanging();
+					this._ItemCode = value;
+					this.SendPropertyChanged("ItemCode");
+					this.OnItemCodeChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Principle", DbType="Decimal(19,6)")]
+		public System.Nullable<decimal> Principle
+		{
+			get
+			{
+				return this._Principle;
+			}
+			set
+			{
+				if ((this._Principle != value))
+				{
+					this.OnPrincipleChanging(value);
+					this.SendPropertyChanging();
+					this._Principle = value;
+					this.SendPropertyChanged("Principle");
+					this.OnPrincipleChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Interest", DbType="Decimal(19,6)")]
+		public System.Nullable<decimal> Interest
+		{
+			get
+			{
+				return this._Interest;
+			}
+			set
+			{
+				if ((this._Interest != value))
+				{
+					this.OnInterestChanging(value);
+					this.SendPropertyChanging();
+					this._Interest = value;
+					this.SendPropertyChanged("Interest");
+					this.OnInterestChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Monthly", DbType="Decimal(19,6)")]
+		public System.Nullable<decimal> Monthly
+		{
+			get
+			{
+				return this._Monthly;
+			}
+			set
+			{
+				if ((this._Monthly != value))
+				{
+					this.OnMonthlyChanging(value);
+					this.SendPropertyChanging();
+					this._Monthly = value;
+					this.SendPropertyChanged("Monthly");
+					this.OnMonthlyChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PaymentDate", DbType="Date")]
+		public System.Nullable<System.DateTime> PaymentDate
+		{
+			get
+			{
+				return this._PaymentDate;
+			}
+			set
+			{
+				if ((this._PaymentDate != value))
+				{
+					this.OnPaymentDateChanging(value);
+					this.SendPropertyChanging();
+					this._PaymentDate = value;
+					this.SendPropertyChanged("PaymentDate");
+					this.OnPaymentDateChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DueDate", DbType="Date")]
+		public System.Nullable<System.DateTime> DueDate
+		{
+			get
+			{
+				return this._DueDate;
+			}
+			set
+			{
+				if ((this._DueDate != value))
+				{
+					this.OnDueDateChanging(value);
+					this.SendPropertyChanging();
+					this._DueDate = value;
+					this.SendPropertyChanged("DueDate");
+					this.OnDueDateChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Remaining", DbType="Decimal(19,6)")]
+		public System.Nullable<decimal> Remaining
+		{
+			get
+			{
+				return this._Remaining;
+			}
+			set
+			{
+				if ((this._Remaining != value))
+				{
+					this.OnRemainingChanging(value);
+					this.SendPropertyChanging();
+					this._Remaining = value;
+					this.SendPropertyChanged("Remaining");
+					this.OnRemainingChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ReIncloudInter", DbType="Decimal(19,6)")]
+		public System.Nullable<decimal> ReIncloudInter
+		{
+			get
+			{
+				return this._ReIncloudInter;
+			}
+			set
+			{
+				if ((this._ReIncloudInter != value))
+				{
+					this.OnReIncloudInterChanging(value);
+					this.SendPropertyChanging();
+					this._ReIncloudInter = value;
+					this.SendPropertyChanged("ReIncloudInter");
+					this.OnReIncloudInterChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_RowStatus", DbType="NChar(10)")]
+		public string RowStatus
+		{
+			get
+			{
+				return this._RowStatus;
+			}
+			set
+			{
+				if ((this._RowStatus != value))
+				{
+					this.OnRowStatusChanging(value);
+					this.SendPropertyChanging();
+					this._RowStatus = value;
+					this.SendPropertyChanged("RowStatus");
+					this.OnRowStatusChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CuInterest", DbType="Decimal(19,6)")]
+		public System.Nullable<decimal> CuInterest
+		{
+			get
+			{
+				return this._CuInterest;
+			}
+			set
+			{
+				if ((this._CuInterest != value))
+				{
+					this.OnCuInterestChanging(value);
+					this.SendPropertyChanging();
+					this._CuInterest = value;
+					this.SendPropertyChanged("CuInterest");
+					this.OnCuInterestChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CuPayment", DbType="Decimal(19,6)")]
+		public System.Nullable<decimal> CuPayment
+		{
+			get
+			{
+				return this._CuPayment;
+			}
+			set
+			{
+				if ((this._CuPayment != value))
+				{
+					this.OnCuPaymentChanging(value);
+					this.SendPropertyChanging();
+					this._CuPayment = value;
+					this.SendPropertyChanged("CuPayment");
+					this.OnCuPaymentChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FixedPayment", DbType="Decimal(19,6)")]
+		public System.Nullable<decimal> FixedPayment
+		{
+			get
+			{
+				return this._FixedPayment;
+			}
+			set
+			{
+				if ((this._FixedPayment != value))
+				{
+					this.OnFixedPaymentChanging(value);
+					this.SendPropertyChanging();
+					this._FixedPayment = value;
+					this.SendPropertyChanged("FixedPayment");
+					this.OnFixedPaymentChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ARNo", DbType="Int")]
+		public System.Nullable<int> ARNo
+		{
+			get
+			{
+				return this._ARNo;
+			}
+			set
+			{
+				if ((this._ARNo != value))
+				{
+					this.OnARNoChanging(value);
+					this.SendPropertyChanging();
+					this._ARNo = value;
+					this.SendPropertyChanged("ARNo");
+					this.OnARNoChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PaymentNo", DbType="Int")]
+		public System.Nullable<int> PaymentNo
+		{
+			get
+			{
+				return this._PaymentNo;
+			}
+			set
+			{
+				if ((this._PaymentNo != value))
+				{
+					this.OnPaymentNoChanging(value);
+					this.SendPropertyChanging();
+					this._PaymentNo = value;
+					this.SendPropertyChanged("PaymentNo");
+					this.OnPaymentNoChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Method", DbType="NVarChar(100)")]
+		public string Method
+		{
+			get
+			{
+				return this._Method;
+			}
+			set
+			{
+				if ((this._Method != value))
+				{
+					this.OnMethodChanging(value);
+					this.SendPropertyChanging();
+					this._Method = value;
+					this.SendPropertyChanged("Method");
+					this.OnMethodChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_InstallmentAmt", DbType="Decimal(19,6)")]
+		public System.Nullable<decimal> InstallmentAmt
+		{
+			get
+			{
+				return this._InstallmentAmt;
+			}
+			set
+			{
+				if ((this._InstallmentAmt != value))
+				{
+					this.OnInstallmentAmtChanging(value);
+					this.SendPropertyChanging();
+					this._InstallmentAmt = value;
+					this.SendPropertyChanged("InstallmentAmt");
+					this.OnInstallmentAmtChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DiscountAmt", DbType="Decimal(19,6)")]
+		public System.Nullable<decimal> DiscountAmt
+		{
+			get
+			{
+				return this._DiscountAmt;
+			}
+			set
+			{
+				if ((this._DiscountAmt != value))
+				{
+					this.OnDiscountAmtChanging(value);
+					this.SendPropertyChanging();
+					this._DiscountAmt = value;
+					this.SendPropertyChanged("DiscountAmt");
+					this.OnDiscountAmtChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DepositAmt", DbType="Decimal(19,6)")]
+		public System.Nullable<decimal> DepositAmt
+		{
+			get
+			{
+				return this._DepositAmt;
+			}
+			set
+			{
+				if ((this._DepositAmt != value))
+				{
+					this.OnDepositAmtChanging(value);
+					this.SendPropertyChanging();
+					this._DepositAmt = value;
+					this.SendPropertyChanged("DepositAmt");
+					this.OnDepositAmtChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AnnualRate", DbType="Decimal(19,6)")]
+		public System.Nullable<decimal> AnnualRate
+		{
+			get
+			{
+				return this._AnnualRate;
+			}
+			set
+			{
+				if ((this._AnnualRate != value))
+				{
+					this.OnAnnualRateChanging(value);
+					this.SendPropertyChanging();
+					this._AnnualRate = value;
+					this.SendPropertyChanged("AnnualRate");
+					this.OnAnnualRateChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PeriodMonths", DbType="Decimal(19,6)")]
+		public System.Nullable<decimal> PeriodMonths
+		{
+			get
+			{
+				return this._PeriodMonths;
+			}
+			set
+			{
+				if ((this._PeriodMonths != value))
+				{
+					this.OnPeriodMonthsChanging(value);
+					this.SendPropertyChanging();
+					this._PeriodMonths = value;
+					this.SendPropertyChanged("PeriodMonths");
+					this.OnPeriodMonthsChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_HouseStatus", DbType="NVarChar(100)")]
+		public string HouseStatus
+		{
+			get
+			{
+				return this._HouseStatus;
+			}
+			set
+			{
+				if ((this._HouseStatus != value))
+				{
+					this.OnHouseStatusChanging(value);
+					this.SendPropertyChanging();
+					this._HouseStatus = value;
+					this.SendPropertyChanged("HouseStatus");
+					this.OnHouseStatusChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Remarks", DbType="NVarChar(254)")]
+		public string Remarks
+		{
+			get
+			{
+				return this._Remarks;
+			}
+			set
+			{
+				if ((this._Remarks != value))
+				{
+					this.OnRemarksChanging(value);
+					this.SendPropertyChanging();
+					this._Remarks = value;
+					this.SendPropertyChanged("Remarks");
+					this.OnRemarksChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Syn", DbType="Int")]
+		public System.Nullable<int> Syn
+		{
+			get
+			{
+				return this._Syn;
+			}
+			set
+			{
+				if ((this._Syn != value))
+				{
+					this.OnSynChanging(value);
+					this.SendPropertyChanging();
+					this._Syn = value;
+					this.SendPropertyChanged("Syn");
+					this.OnSynChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ErrorLog", DbType="NVarChar(254)")]
+		public string ErrorLog
+		{
+			get
+			{
+				return this._ErrorLog;
+			}
+			set
+			{
+				if ((this._ErrorLog != value))
+				{
+					this.OnErrorLogChanging(value);
+					this.SendPropertyChanging();
+					this._ErrorLog = value;
+					this.SendPropertyChanged("ErrorLog");
+					this.OnErrorLogChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DiscountAmount", DbType="Decimal(18,2)")]
+		public System.Nullable<decimal> DiscountAmount
+		{
+			get
+			{
+				return this._DiscountAmount;
+			}
+			set
+			{
+				if ((this._DiscountAmount != value))
+				{
+					this.OnDiscountAmountChanging(value);
+					this.SendPropertyChanging();
+					this._DiscountAmount = value;
+					this.SendPropertyChanged("DiscountAmount");
+					this.OnDiscountAmountChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DiscountPer", DbType="Decimal(18,2)")]
+		public System.Nullable<decimal> DiscountPer
+		{
+			get
+			{
+				return this._DiscountPer;
+			}
+			set
+			{
+				if ((this._DiscountPer != value))
+				{
+					this.OnDiscountPerChanging(value);
+					this.SendPropertyChanging();
+					this._DiscountPer = value;
+					this.SendPropertyChanged("DiscountPer");
+					this.OnDiscountPerChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SpecialDisAmount", DbType="Decimal(18,2)")]
+		public System.Nullable<decimal> SpecialDisAmount
+		{
+			get
+			{
+				return this._SpecialDisAmount;
+			}
+			set
+			{
+				if ((this._SpecialDisAmount != value))
+				{
+					this.OnSpecialDisAmountChanging(value);
+					this.SendPropertyChanging();
+					this._SpecialDisAmount = value;
+					this.SendPropertyChanged("SpecialDisAmount");
+					this.OnSpecialDisAmountChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SpecialDisPer", DbType="Decimal(18,2)")]
+		public System.Nullable<decimal> SpecialDisPer
+		{
+			get
+			{
+				return this._SpecialDisPer;
+			}
+			set
+			{
+				if ((this._SpecialDisPer != value))
+				{
+					this.OnSpecialDisPerChanging(value);
+					this.SendPropertyChanging();
+					this._SpecialDisPer = value;
+					this.SendPropertyChanged("SpecialDisPer");
+					this.OnSpecialDisPerChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AdditionalDisAmount", DbType="Decimal(18,2)")]
+		public System.Nullable<decimal> AdditionalDisAmount
+		{
+			get
+			{
+				return this._AdditionalDisAmount;
+			}
+			set
+			{
+				if ((this._AdditionalDisAmount != value))
+				{
+					this.OnAdditionalDisAmountChanging(value);
+					this.SendPropertyChanging();
+					this._AdditionalDisAmount = value;
+					this.SendPropertyChanged("AdditionalDisAmount");
+					this.OnAdditionalDisAmountChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AdditionalDisPer", DbType="Decimal(18,2)")]
+		public System.Nullable<decimal> AdditionalDisPer
+		{
+			get
+			{
+				return this._AdditionalDisPer;
+			}
+			set
+			{
+				if ((this._AdditionalDisPer != value))
+				{
+					this.OnAdditionalDisPerChanging(value);
+					this.SendPropertyChanging();
+					this._AdditionalDisPer = value;
+					this.SendPropertyChanged("AdditionalDisPer");
+					this.OnAdditionalDisPerChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ItemName", DbType="NVarChar(200)")]
+		public string ItemName
+		{
+			get
+			{
+				return this._ItemName;
+			}
+			set
+			{
+				if ((this._ItemName != value))
+				{
+					this.OnItemNameChanging(value);
+					this.SendPropertyChanging();
+					this._ItemName = value;
+					this.SendPropertyChanged("ItemName");
+					this.OnItemNameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_OcrCode", DbType="NVarChar(200)")]
+		public string OcrCode
+		{
+			get
+			{
+				return this._OcrCode;
+			}
+			set
+			{
+				if ((this._OcrCode != value))
+				{
+					this.OnOcrCodeChanging(value);
+					this.SendPropertyChanging();
+					this._OcrCode = value;
+					this.SendPropertyChanged("OcrCode");
+					this.OnOcrCodeChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_OcrCode2", DbType="NVarChar(200)")]
+		public string OcrCode2
+		{
+			get
+			{
+				return this._OcrCode2;
+			}
+			set
+			{
+				if ((this._OcrCode2 != value))
+				{
+					this.OnOcrCode2Changing(value);
+					this.SendPropertyChanging();
+					this._OcrCode2 = value;
+					this.SendPropertyChanged("OcrCode2");
+					this.OnOcrCode2Changed();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_OcrCode3", DbType="NVarChar(200)")]
+		public string OcrCode3
+		{
+			get
+			{
+				return this._OcrCode3;
+			}
+			set
+			{
+				if ((this._OcrCode3 != value))
+				{
+					this.OnOcrCode3Changing(value);
+					this.SendPropertyChanging();
+					this._OcrCode3 = value;
+					this.SendPropertyChanged("OcrCode3");
+					this.OnOcrCode3Changed();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_NewPaymentDate", DbType="DateTime")]
+		public System.Nullable<System.DateTime> NewPaymentDate
+		{
+			get
+			{
+				return this._NewPaymentDate;
+			}
+			set
+			{
+				if ((this._NewPaymentDate != value))
+				{
+					this.OnNewPaymentDateChanging(value);
+					this.SendPropertyChanging();
+					this._NewPaymentDate = value;
+					this.SendPropertyChanged("NewPaymentDate");
+					this.OnNewPaymentDateChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SpecialAmt", DbType="Decimal(19,6)")]
+		public System.Nullable<decimal> SpecialAmt
+		{
+			get
+			{
+				return this._SpecialAmt;
+			}
+			set
+			{
+				if ((this._SpecialAmt != value))
+				{
+					this.OnSpecialAmtChanging(value);
+					this.SendPropertyChanging();
+					this._SpecialAmt = value;
+					this.SendPropertyChanged("SpecialAmt");
+					this.OnSpecialAmtChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_RemaingOld", DbType="Decimal(19,6)")]
+		public System.Nullable<decimal> RemaingOld
+		{
+			get
+			{
+				return this._RemaingOld;
+			}
+			set
+			{
+				if ((this._RemaingOld != value))
+				{
+					this.OnRemaingOldChanging(value);
+					this.SendPropertyChanging();
+					this._RemaingOld = value;
+					this.SendPropertyChanged("RemaingOld");
+					this.OnRemaingOldChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_InterestonSchedule", DbType="Decimal(19,6)")]
+		public System.Nullable<decimal> InterestonSchedule
+		{
+			get
+			{
+				return this._InterestonSchedule;
+			}
+			set
+			{
+				if ((this._InterestonSchedule != value))
+				{
+					this.OnInterestonScheduleChanging(value);
+					this.SendPropertyChanging();
+					this._InterestonSchedule = value;
+					this.SendPropertyChanged("InterestonSchedule");
+					this.OnInterestonScheduleChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_RowType", DbType="NVarChar(50)")]
+		public string RowType
+		{
+			get
+			{
+				return this._RowType;
+			}
+			set
+			{
+				if ((this._RowType != value))
+				{
+					this.OnRowTypeChanging(value);
+					this.SendPropertyChanging();
+					this._RowType = value;
+					this.SendPropertyChanged("RowType");
+					this.OnRowTypeChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ARNoInterest", DbType="Int")]
+		public System.Nullable<int> ARNoInterest
+		{
+			get
+			{
+				return this._ARNoInterest;
+			}
+			set
+			{
+				if ((this._ARNoInterest != value))
+				{
+					this.OnARNoInterestChanging(value);
+					this.SendPropertyChanging();
+					this._ARNoInterest = value;
+					this.SendPropertyChanged("ARNoInterest");
+					this.OnARNoInterestChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PaymentNoInterest", DbType="Int")]
+		public System.Nullable<int> PaymentNoInterest
+		{
+			get
+			{
+				return this._PaymentNoInterest;
+			}
+			set
+			{
+				if ((this._PaymentNoInterest != value))
+				{
+					this.OnPaymentNoInterestChanging(value);
+					this.SendPropertyChanging();
+					this._PaymentNoInterest = value;
+					this.SendPropertyChanged("PaymentNoInterest");
+					this.OnPaymentNoInterestChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_VarianDay", DbType="Int")]
+		public System.Nullable<int> VarianDay
+		{
+			get
+			{
+				return this._VarianDay;
+			}
+			set
+			{
+				if ((this._VarianDay != value))
+				{
+					this.OnVarianDayChanging(value);
+					this.SendPropertyChanging();
+					this._VarianDay = value;
+					this.SendPropertyChanged("VarianDay");
+					this.OnVarianDayChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_InterestonsheduleVarian", DbType="Decimal(19,6)")]
+		public System.Nullable<decimal> InterestonsheduleVarian
+		{
+			get
+			{
+				return this._InterestonsheduleVarian;
+			}
+			set
+			{
+				if ((this._InterestonsheduleVarian != value))
+				{
+					this.OnInterestonsheduleVarianChanging(value);
+					this.SendPropertyChanging();
+					this._InterestonsheduleVarian = value;
+					this.SendPropertyChanged("InterestonsheduleVarian");
+					this.OnInterestonsheduleVarianChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ChequeNo", DbType="NVarChar(100)")]
+		public string ChequeNo
+		{
+			get
+			{
+				return this._ChequeNo;
+			}
+			set
+			{
+				if ((this._ChequeNo != value))
+				{
+					this.OnChequeNoChanging(value);
+					this.SendPropertyChanging();
+					this._ChequeNo = value;
+					this.SendPropertyChanged("ChequeNo");
+					this.OnChequeNoChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ChequeName", DbType="NVarChar(200)")]
+		public string ChequeName
+		{
+			get
+			{
+				return this._ChequeName;
+			}
+			set
+			{
+				if ((this._ChequeName != value))
+				{
+					this.OnChequeNameChanging(value);
+					this.SendPropertyChanging();
+					this._ChequeName = value;
+					this.SendPropertyChanged("ChequeName");
+					this.OnChequeNameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ChequeBankName", DbType="NVarChar(100)")]
+		public string ChequeBankName
+		{
+			get
+			{
+				return this._ChequeBankName;
+			}
+			set
+			{
+				if ((this._ChequeBankName != value))
+				{
+					this.OnChequeBankNameChanging(value);
+					this.SendPropertyChanging();
+					this._ChequeBankName = value;
+					this.SendPropertyChanged("ChequeBankName");
+					this.OnChequeBankNameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PayeeName", DbType="NVarChar(200)")]
+		public string PayeeName
+		{
+			get
+			{
+				return this._PayeeName;
+			}
+			set
+			{
+				if ((this._PayeeName != value))
+				{
+					this.OnPayeeNameChanging(value);
+					this.SendPropertyChanging();
+					this._PayeeName = value;
+					this.SendPropertyChanged("PayeeName");
+					this.OnPayeeNameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ApplyInterest", DbType="Decimal(19,6)")]
+		public System.Nullable<decimal> ApplyInterest
+		{
+			get
+			{
+				return this._ApplyInterest;
+			}
+			set
+			{
+				if ((this._ApplyInterest != value))
+				{
+					this.OnApplyInterestChanging(value);
+					this.SendPropertyChanging();
+					this._ApplyInterest = value;
+					this.SendPropertyChanged("ApplyInterest");
+					this.OnApplyInterestChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ApplyInterestStatus", DbType="NVarChar(10)")]
+		public string ApplyInterestStatus
+		{
+			get
+			{
+				return this._ApplyInterestStatus;
+			}
+			set
+			{
+				if ((this._ApplyInterestStatus != value))
+				{
+					this.OnApplyInterestStatusChanging(value);
+					this.SendPropertyChanging();
+					this._ApplyInterestStatus = value;
+					this.SendPropertyChanged("ApplyInterestStatus");
+					this.OnApplyInterestStatusChanged();
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.CNInstallmentRowDraf")]
+	public partial class CNInstallmentRowDraf : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _ID;
+		
+		private int _BaseEntry;
+		
+		private int _BaseLine;
+		
+		private System.Nullable<int> _VisOrder;
+		
+		private string _ItemCode;
+		
+		private System.Nullable<decimal> _Principle;
+		
+		private System.Nullable<decimal> _Interest;
+		
+		private System.Nullable<decimal> _Monthly;
+		
+		private System.Nullable<System.DateTime> _PaymentDate;
+		
+		private System.Nullable<System.DateTime> _DueDate;
+		
+		private System.Nullable<decimal> _Remaining;
+		
+		private System.Nullable<decimal> _ReIncloudInter;
+		
+		private string _RowStatus;
+		
+		private System.Nullable<decimal> _CuInterest;
+		
+		private System.Nullable<decimal> _CuPayment;
+		
+		private System.Nullable<decimal> _FixedPayment;
+		
+		private System.Nullable<int> _ARNo;
+		
+		private System.Nullable<int> _PaymentNo;
+		
+		private string _Method;
+		
+		private System.Nullable<decimal> _InstallmentAmt;
+		
+		private System.Nullable<decimal> _DiscountAmt;
+		
+		private System.Nullable<decimal> _DepositAmt;
+		
+		private System.Nullable<decimal> _AnnualRate;
+		
+		private System.Nullable<decimal> _PeriodMonths;
+		
+		private string _HouseStatus;
+		
+		private string _Remarks;
+		
+		private System.Nullable<int> _Syn;
+		
+		private string _ErrorLog;
+		
+		private System.Nullable<decimal> _DiscountAmount;
+		
+		private System.Nullable<decimal> _DiscountPer;
+		
+		private System.Nullable<decimal> _SpecialDisAmount;
+		
+		private System.Nullable<decimal> _SpecialDisPer;
+		
+		private System.Nullable<decimal> _AdditionalDisAmount;
+		
+		private System.Nullable<decimal> _AdditionalDisPer;
+		
+		private string _ItemName;
+		
+		private string _OcrCode;
+		
+		private string _OcrCode2;
+		
+		private string _OcrCode3;
+		
+		private System.Nullable<System.DateTime> _NewPaymentDate;
+		
+		private System.Nullable<decimal> _SpecialAmt;
+		
+		private System.Nullable<decimal> _RemaingOld;
+		
+		private System.Nullable<decimal> _InterestonSchedule;
+		
+		private string _RowType;
+		
+		private System.Nullable<int> _ARNoInterest;
+		
+		private System.Nullable<int> _PaymentNoInterest;
+		
+		private System.Nullable<int> _VarianDay;
+		
+		private System.Nullable<decimal> _InterestonsheduleVarian;
+		
+		private string _ChequeNo;
+		
+		private string _ChequeName;
+		
+		private string _ChequeBankName;
+		
+		private string _PayeeName;
+		
+		private System.Nullable<decimal> _ApplyInterest;
+		
+		private string _ApplyInterestStatus;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIDChanging(int value);
+    partial void OnIDChanged();
+    partial void OnBaseEntryChanging(int value);
+    partial void OnBaseEntryChanged();
+    partial void OnBaseLineChanging(int value);
+    partial void OnBaseLineChanged();
+    partial void OnVisOrderChanging(System.Nullable<int> value);
+    partial void OnVisOrderChanged();
+    partial void OnItemCodeChanging(string value);
+    partial void OnItemCodeChanged();
+    partial void OnPrincipleChanging(System.Nullable<decimal> value);
+    partial void OnPrincipleChanged();
+    partial void OnInterestChanging(System.Nullable<decimal> value);
+    partial void OnInterestChanged();
+    partial void OnMonthlyChanging(System.Nullable<decimal> value);
+    partial void OnMonthlyChanged();
+    partial void OnPaymentDateChanging(System.Nullable<System.DateTime> value);
+    partial void OnPaymentDateChanged();
+    partial void OnDueDateChanging(System.Nullable<System.DateTime> value);
+    partial void OnDueDateChanged();
+    partial void OnRemainingChanging(System.Nullable<decimal> value);
+    partial void OnRemainingChanged();
+    partial void OnReIncloudInterChanging(System.Nullable<decimal> value);
+    partial void OnReIncloudInterChanged();
+    partial void OnRowStatusChanging(string value);
+    partial void OnRowStatusChanged();
+    partial void OnCuInterestChanging(System.Nullable<decimal> value);
+    partial void OnCuInterestChanged();
+    partial void OnCuPaymentChanging(System.Nullable<decimal> value);
+    partial void OnCuPaymentChanged();
+    partial void OnFixedPaymentChanging(System.Nullable<decimal> value);
+    partial void OnFixedPaymentChanged();
+    partial void OnARNoChanging(System.Nullable<int> value);
+    partial void OnARNoChanged();
+    partial void OnPaymentNoChanging(System.Nullable<int> value);
+    partial void OnPaymentNoChanged();
+    partial void OnMethodChanging(string value);
+    partial void OnMethodChanged();
+    partial void OnInstallmentAmtChanging(System.Nullable<decimal> value);
+    partial void OnInstallmentAmtChanged();
+    partial void OnDiscountAmtChanging(System.Nullable<decimal> value);
+    partial void OnDiscountAmtChanged();
+    partial void OnDepositAmtChanging(System.Nullable<decimal> value);
+    partial void OnDepositAmtChanged();
+    partial void OnAnnualRateChanging(System.Nullable<decimal> value);
+    partial void OnAnnualRateChanged();
+    partial void OnPeriodMonthsChanging(System.Nullable<decimal> value);
+    partial void OnPeriodMonthsChanged();
+    partial void OnHouseStatusChanging(string value);
+    partial void OnHouseStatusChanged();
+    partial void OnRemarksChanging(string value);
+    partial void OnRemarksChanged();
+    partial void OnSynChanging(System.Nullable<int> value);
+    partial void OnSynChanged();
+    partial void OnErrorLogChanging(string value);
+    partial void OnErrorLogChanged();
+    partial void OnDiscountAmountChanging(System.Nullable<decimal> value);
+    partial void OnDiscountAmountChanged();
+    partial void OnDiscountPerChanging(System.Nullable<decimal> value);
+    partial void OnDiscountPerChanged();
+    partial void OnSpecialDisAmountChanging(System.Nullable<decimal> value);
+    partial void OnSpecialDisAmountChanged();
+    partial void OnSpecialDisPerChanging(System.Nullable<decimal> value);
+    partial void OnSpecialDisPerChanged();
+    partial void OnAdditionalDisAmountChanging(System.Nullable<decimal> value);
+    partial void OnAdditionalDisAmountChanged();
+    partial void OnAdditionalDisPerChanging(System.Nullable<decimal> value);
+    partial void OnAdditionalDisPerChanged();
+    partial void OnItemNameChanging(string value);
+    partial void OnItemNameChanged();
+    partial void OnOcrCodeChanging(string value);
+    partial void OnOcrCodeChanged();
+    partial void OnOcrCode2Changing(string value);
+    partial void OnOcrCode2Changed();
+    partial void OnOcrCode3Changing(string value);
+    partial void OnOcrCode3Changed();
+    partial void OnNewPaymentDateChanging(System.Nullable<System.DateTime> value);
+    partial void OnNewPaymentDateChanged();
+    partial void OnSpecialAmtChanging(System.Nullable<decimal> value);
+    partial void OnSpecialAmtChanged();
+    partial void OnRemaingOldChanging(System.Nullable<decimal> value);
+    partial void OnRemaingOldChanged();
+    partial void OnInterestonScheduleChanging(System.Nullable<decimal> value);
+    partial void OnInterestonScheduleChanged();
+    partial void OnRowTypeChanging(string value);
+    partial void OnRowTypeChanged();
+    partial void OnARNoInterestChanging(System.Nullable<int> value);
+    partial void OnARNoInterestChanged();
+    partial void OnPaymentNoInterestChanging(System.Nullable<int> value);
+    partial void OnPaymentNoInterestChanged();
+    partial void OnVarianDayChanging(System.Nullable<int> value);
+    partial void OnVarianDayChanged();
+    partial void OnInterestonsheduleVarianChanging(System.Nullable<decimal> value);
+    partial void OnInterestonsheduleVarianChanged();
+    partial void OnChequeNoChanging(string value);
+    partial void OnChequeNoChanged();
+    partial void OnChequeNameChanging(string value);
+    partial void OnChequeNameChanged();
+    partial void OnChequeBankNameChanging(string value);
+    partial void OnChequeBankNameChanged();
+    partial void OnPayeeNameChanging(string value);
+    partial void OnPayeeNameChanged();
+    partial void OnApplyInterestChanging(System.Nullable<decimal> value);
+    partial void OnApplyInterestChanged();
+    partial void OnApplyInterestStatusChanging(string value);
+    partial void OnApplyInterestStatusChanged();
+    #endregion
+		
+		public CNInstallmentRowDraf()
+		{
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int ID
+		{
+			get
+			{
+				return this._ID;
+			}
+			set
+			{
+				if ((this._ID != value))
+				{
+					this.OnIDChanging(value);
+					this.SendPropertyChanging();
+					this._ID = value;
+					this.SendPropertyChanged("ID");
+					this.OnIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_BaseEntry", DbType="Int NOT NULL")]
+		public int BaseEntry
+		{
+			get
+			{
+				return this._BaseEntry;
+			}
+			set
+			{
+				if ((this._BaseEntry != value))
+				{
+					this.OnBaseEntryChanging(value);
+					this.SendPropertyChanging();
+					this._BaseEntry = value;
+					this.SendPropertyChanged("BaseEntry");
+					this.OnBaseEntryChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_BaseLine", DbType="Int NOT NULL")]
+		public int BaseLine
+		{
+			get
+			{
+				return this._BaseLine;
+			}
+			set
+			{
+				if ((this._BaseLine != value))
+				{
+					this.OnBaseLineChanging(value);
+					this.SendPropertyChanging();
+					this._BaseLine = value;
+					this.SendPropertyChanged("BaseLine");
+					this.OnBaseLineChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_VisOrder", DbType="Int")]
+		public System.Nullable<int> VisOrder
+		{
+			get
+			{
+				return this._VisOrder;
+			}
+			set
+			{
+				if ((this._VisOrder != value))
+				{
+					this.OnVisOrderChanging(value);
+					this.SendPropertyChanging();
+					this._VisOrder = value;
+					this.SendPropertyChanged("VisOrder");
+					this.OnVisOrderChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ItemCode", DbType="NVarChar(25)")]
+		public string ItemCode
+		{
+			get
+			{
+				return this._ItemCode;
+			}
+			set
+			{
+				if ((this._ItemCode != value))
+				{
+					this.OnItemCodeChanging(value);
+					this.SendPropertyChanging();
+					this._ItemCode = value;
+					this.SendPropertyChanged("ItemCode");
+					this.OnItemCodeChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Principle", DbType="Decimal(19,6)")]
+		public System.Nullable<decimal> Principle
+		{
+			get
+			{
+				return this._Principle;
+			}
+			set
+			{
+				if ((this._Principle != value))
+				{
+					this.OnPrincipleChanging(value);
+					this.SendPropertyChanging();
+					this._Principle = value;
+					this.SendPropertyChanged("Principle");
+					this.OnPrincipleChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Interest", DbType="Decimal(19,6)")]
+		public System.Nullable<decimal> Interest
+		{
+			get
+			{
+				return this._Interest;
+			}
+			set
+			{
+				if ((this._Interest != value))
+				{
+					this.OnInterestChanging(value);
+					this.SendPropertyChanging();
+					this._Interest = value;
+					this.SendPropertyChanged("Interest");
+					this.OnInterestChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Monthly", DbType="Decimal(19,6)")]
+		public System.Nullable<decimal> Monthly
+		{
+			get
+			{
+				return this._Monthly;
+			}
+			set
+			{
+				if ((this._Monthly != value))
+				{
+					this.OnMonthlyChanging(value);
+					this.SendPropertyChanging();
+					this._Monthly = value;
+					this.SendPropertyChanged("Monthly");
+					this.OnMonthlyChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PaymentDate", DbType="Date")]
+		public System.Nullable<System.DateTime> PaymentDate
+		{
+			get
+			{
+				return this._PaymentDate;
+			}
+			set
+			{
+				if ((this._PaymentDate != value))
+				{
+					this.OnPaymentDateChanging(value);
+					this.SendPropertyChanging();
+					this._PaymentDate = value;
+					this.SendPropertyChanged("PaymentDate");
+					this.OnPaymentDateChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DueDate", DbType="Date")]
+		public System.Nullable<System.DateTime> DueDate
+		{
+			get
+			{
+				return this._DueDate;
+			}
+			set
+			{
+				if ((this._DueDate != value))
+				{
+					this.OnDueDateChanging(value);
+					this.SendPropertyChanging();
+					this._DueDate = value;
+					this.SendPropertyChanged("DueDate");
+					this.OnDueDateChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Remaining", DbType="Decimal(19,6)")]
+		public System.Nullable<decimal> Remaining
+		{
+			get
+			{
+				return this._Remaining;
+			}
+			set
+			{
+				if ((this._Remaining != value))
+				{
+					this.OnRemainingChanging(value);
+					this.SendPropertyChanging();
+					this._Remaining = value;
+					this.SendPropertyChanged("Remaining");
+					this.OnRemainingChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ReIncloudInter", DbType="Decimal(19,6)")]
+		public System.Nullable<decimal> ReIncloudInter
+		{
+			get
+			{
+				return this._ReIncloudInter;
+			}
+			set
+			{
+				if ((this._ReIncloudInter != value))
+				{
+					this.OnReIncloudInterChanging(value);
+					this.SendPropertyChanging();
+					this._ReIncloudInter = value;
+					this.SendPropertyChanged("ReIncloudInter");
+					this.OnReIncloudInterChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_RowStatus", DbType="NChar(10)")]
+		public string RowStatus
+		{
+			get
+			{
+				return this._RowStatus;
+			}
+			set
+			{
+				if ((this._RowStatus != value))
+				{
+					this.OnRowStatusChanging(value);
+					this.SendPropertyChanging();
+					this._RowStatus = value;
+					this.SendPropertyChanged("RowStatus");
+					this.OnRowStatusChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CuInterest", DbType="Decimal(19,6)")]
+		public System.Nullable<decimal> CuInterest
+		{
+			get
+			{
+				return this._CuInterest;
+			}
+			set
+			{
+				if ((this._CuInterest != value))
+				{
+					this.OnCuInterestChanging(value);
+					this.SendPropertyChanging();
+					this._CuInterest = value;
+					this.SendPropertyChanged("CuInterest");
+					this.OnCuInterestChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CuPayment", DbType="Decimal(19,6)")]
+		public System.Nullable<decimal> CuPayment
+		{
+			get
+			{
+				return this._CuPayment;
+			}
+			set
+			{
+				if ((this._CuPayment != value))
+				{
+					this.OnCuPaymentChanging(value);
+					this.SendPropertyChanging();
+					this._CuPayment = value;
+					this.SendPropertyChanged("CuPayment");
+					this.OnCuPaymentChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FixedPayment", DbType="Decimal(19,6)")]
+		public System.Nullable<decimal> FixedPayment
+		{
+			get
+			{
+				return this._FixedPayment;
+			}
+			set
+			{
+				if ((this._FixedPayment != value))
+				{
+					this.OnFixedPaymentChanging(value);
+					this.SendPropertyChanging();
+					this._FixedPayment = value;
+					this.SendPropertyChanged("FixedPayment");
+					this.OnFixedPaymentChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ARNo", DbType="Int")]
+		public System.Nullable<int> ARNo
+		{
+			get
+			{
+				return this._ARNo;
+			}
+			set
+			{
+				if ((this._ARNo != value))
+				{
+					this.OnARNoChanging(value);
+					this.SendPropertyChanging();
+					this._ARNo = value;
+					this.SendPropertyChanged("ARNo");
+					this.OnARNoChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PaymentNo", DbType="Int")]
+		public System.Nullable<int> PaymentNo
+		{
+			get
+			{
+				return this._PaymentNo;
+			}
+			set
+			{
+				if ((this._PaymentNo != value))
+				{
+					this.OnPaymentNoChanging(value);
+					this.SendPropertyChanging();
+					this._PaymentNo = value;
+					this.SendPropertyChanged("PaymentNo");
+					this.OnPaymentNoChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Method", DbType="NVarChar(100)")]
+		public string Method
+		{
+			get
+			{
+				return this._Method;
+			}
+			set
+			{
+				if ((this._Method != value))
+				{
+					this.OnMethodChanging(value);
+					this.SendPropertyChanging();
+					this._Method = value;
+					this.SendPropertyChanged("Method");
+					this.OnMethodChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_InstallmentAmt", DbType="Decimal(19,6)")]
+		public System.Nullable<decimal> InstallmentAmt
+		{
+			get
+			{
+				return this._InstallmentAmt;
+			}
+			set
+			{
+				if ((this._InstallmentAmt != value))
+				{
+					this.OnInstallmentAmtChanging(value);
+					this.SendPropertyChanging();
+					this._InstallmentAmt = value;
+					this.SendPropertyChanged("InstallmentAmt");
+					this.OnInstallmentAmtChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DiscountAmt", DbType="Decimal(19,6)")]
+		public System.Nullable<decimal> DiscountAmt
+		{
+			get
+			{
+				return this._DiscountAmt;
+			}
+			set
+			{
+				if ((this._DiscountAmt != value))
+				{
+					this.OnDiscountAmtChanging(value);
+					this.SendPropertyChanging();
+					this._DiscountAmt = value;
+					this.SendPropertyChanged("DiscountAmt");
+					this.OnDiscountAmtChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DepositAmt", DbType="Decimal(19,6)")]
+		public System.Nullable<decimal> DepositAmt
+		{
+			get
+			{
+				return this._DepositAmt;
+			}
+			set
+			{
+				if ((this._DepositAmt != value))
+				{
+					this.OnDepositAmtChanging(value);
+					this.SendPropertyChanging();
+					this._DepositAmt = value;
+					this.SendPropertyChanged("DepositAmt");
+					this.OnDepositAmtChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AnnualRate", DbType="Decimal(19,6)")]
+		public System.Nullable<decimal> AnnualRate
+		{
+			get
+			{
+				return this._AnnualRate;
+			}
+			set
+			{
+				if ((this._AnnualRate != value))
+				{
+					this.OnAnnualRateChanging(value);
+					this.SendPropertyChanging();
+					this._AnnualRate = value;
+					this.SendPropertyChanged("AnnualRate");
+					this.OnAnnualRateChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PeriodMonths", DbType="Decimal(19,6)")]
+		public System.Nullable<decimal> PeriodMonths
+		{
+			get
+			{
+				return this._PeriodMonths;
+			}
+			set
+			{
+				if ((this._PeriodMonths != value))
+				{
+					this.OnPeriodMonthsChanging(value);
+					this.SendPropertyChanging();
+					this._PeriodMonths = value;
+					this.SendPropertyChanged("PeriodMonths");
+					this.OnPeriodMonthsChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_HouseStatus", DbType="NVarChar(100)")]
+		public string HouseStatus
+		{
+			get
+			{
+				return this._HouseStatus;
+			}
+			set
+			{
+				if ((this._HouseStatus != value))
+				{
+					this.OnHouseStatusChanging(value);
+					this.SendPropertyChanging();
+					this._HouseStatus = value;
+					this.SendPropertyChanged("HouseStatus");
+					this.OnHouseStatusChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Remarks", DbType="NVarChar(254)")]
+		public string Remarks
+		{
+			get
+			{
+				return this._Remarks;
+			}
+			set
+			{
+				if ((this._Remarks != value))
+				{
+					this.OnRemarksChanging(value);
+					this.SendPropertyChanging();
+					this._Remarks = value;
+					this.SendPropertyChanged("Remarks");
+					this.OnRemarksChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Syn", DbType="Int")]
+		public System.Nullable<int> Syn
+		{
+			get
+			{
+				return this._Syn;
+			}
+			set
+			{
+				if ((this._Syn != value))
+				{
+					this.OnSynChanging(value);
+					this.SendPropertyChanging();
+					this._Syn = value;
+					this.SendPropertyChanged("Syn");
+					this.OnSynChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ErrorLog", DbType="NVarChar(254)")]
+		public string ErrorLog
+		{
+			get
+			{
+				return this._ErrorLog;
+			}
+			set
+			{
+				if ((this._ErrorLog != value))
+				{
+					this.OnErrorLogChanging(value);
+					this.SendPropertyChanging();
+					this._ErrorLog = value;
+					this.SendPropertyChanged("ErrorLog");
+					this.OnErrorLogChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DiscountAmount", DbType="Decimal(18,2)")]
+		public System.Nullable<decimal> DiscountAmount
+		{
+			get
+			{
+				return this._DiscountAmount;
+			}
+			set
+			{
+				if ((this._DiscountAmount != value))
+				{
+					this.OnDiscountAmountChanging(value);
+					this.SendPropertyChanging();
+					this._DiscountAmount = value;
+					this.SendPropertyChanged("DiscountAmount");
+					this.OnDiscountAmountChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DiscountPer", DbType="Decimal(18,2)")]
+		public System.Nullable<decimal> DiscountPer
+		{
+			get
+			{
+				return this._DiscountPer;
+			}
+			set
+			{
+				if ((this._DiscountPer != value))
+				{
+					this.OnDiscountPerChanging(value);
+					this.SendPropertyChanging();
+					this._DiscountPer = value;
+					this.SendPropertyChanged("DiscountPer");
+					this.OnDiscountPerChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SpecialDisAmount", DbType="Decimal(18,2)")]
+		public System.Nullable<decimal> SpecialDisAmount
+		{
+			get
+			{
+				return this._SpecialDisAmount;
+			}
+			set
+			{
+				if ((this._SpecialDisAmount != value))
+				{
+					this.OnSpecialDisAmountChanging(value);
+					this.SendPropertyChanging();
+					this._SpecialDisAmount = value;
+					this.SendPropertyChanged("SpecialDisAmount");
+					this.OnSpecialDisAmountChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SpecialDisPer", DbType="Decimal(18,2)")]
+		public System.Nullable<decimal> SpecialDisPer
+		{
+			get
+			{
+				return this._SpecialDisPer;
+			}
+			set
+			{
+				if ((this._SpecialDisPer != value))
+				{
+					this.OnSpecialDisPerChanging(value);
+					this.SendPropertyChanging();
+					this._SpecialDisPer = value;
+					this.SendPropertyChanged("SpecialDisPer");
+					this.OnSpecialDisPerChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AdditionalDisAmount", DbType="Decimal(18,2)")]
+		public System.Nullable<decimal> AdditionalDisAmount
+		{
+			get
+			{
+				return this._AdditionalDisAmount;
+			}
+			set
+			{
+				if ((this._AdditionalDisAmount != value))
+				{
+					this.OnAdditionalDisAmountChanging(value);
+					this.SendPropertyChanging();
+					this._AdditionalDisAmount = value;
+					this.SendPropertyChanged("AdditionalDisAmount");
+					this.OnAdditionalDisAmountChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AdditionalDisPer", DbType="Decimal(18,2)")]
+		public System.Nullable<decimal> AdditionalDisPer
+		{
+			get
+			{
+				return this._AdditionalDisPer;
+			}
+			set
+			{
+				if ((this._AdditionalDisPer != value))
+				{
+					this.OnAdditionalDisPerChanging(value);
+					this.SendPropertyChanging();
+					this._AdditionalDisPer = value;
+					this.SendPropertyChanged("AdditionalDisPer");
+					this.OnAdditionalDisPerChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ItemName", DbType="NVarChar(200)")]
+		public string ItemName
+		{
+			get
+			{
+				return this._ItemName;
+			}
+			set
+			{
+				if ((this._ItemName != value))
+				{
+					this.OnItemNameChanging(value);
+					this.SendPropertyChanging();
+					this._ItemName = value;
+					this.SendPropertyChanged("ItemName");
+					this.OnItemNameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_OcrCode", DbType="NVarChar(200)")]
+		public string OcrCode
+		{
+			get
+			{
+				return this._OcrCode;
+			}
+			set
+			{
+				if ((this._OcrCode != value))
+				{
+					this.OnOcrCodeChanging(value);
+					this.SendPropertyChanging();
+					this._OcrCode = value;
+					this.SendPropertyChanged("OcrCode");
+					this.OnOcrCodeChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_OcrCode2", DbType="NVarChar(200)")]
+		public string OcrCode2
+		{
+			get
+			{
+				return this._OcrCode2;
+			}
+			set
+			{
+				if ((this._OcrCode2 != value))
+				{
+					this.OnOcrCode2Changing(value);
+					this.SendPropertyChanging();
+					this._OcrCode2 = value;
+					this.SendPropertyChanged("OcrCode2");
+					this.OnOcrCode2Changed();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_OcrCode3", DbType="NVarChar(200)")]
+		public string OcrCode3
+		{
+			get
+			{
+				return this._OcrCode3;
+			}
+			set
+			{
+				if ((this._OcrCode3 != value))
+				{
+					this.OnOcrCode3Changing(value);
+					this.SendPropertyChanging();
+					this._OcrCode3 = value;
+					this.SendPropertyChanged("OcrCode3");
+					this.OnOcrCode3Changed();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_NewPaymentDate", DbType="DateTime")]
+		public System.Nullable<System.DateTime> NewPaymentDate
+		{
+			get
+			{
+				return this._NewPaymentDate;
+			}
+			set
+			{
+				if ((this._NewPaymentDate != value))
+				{
+					this.OnNewPaymentDateChanging(value);
+					this.SendPropertyChanging();
+					this._NewPaymentDate = value;
+					this.SendPropertyChanged("NewPaymentDate");
+					this.OnNewPaymentDateChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SpecialAmt", DbType="Decimal(19,6)")]
+		public System.Nullable<decimal> SpecialAmt
+		{
+			get
+			{
+				return this._SpecialAmt;
+			}
+			set
+			{
+				if ((this._SpecialAmt != value))
+				{
+					this.OnSpecialAmtChanging(value);
+					this.SendPropertyChanging();
+					this._SpecialAmt = value;
+					this.SendPropertyChanged("SpecialAmt");
+					this.OnSpecialAmtChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_RemaingOld", DbType="Decimal(19,6)")]
+		public System.Nullable<decimal> RemaingOld
+		{
+			get
+			{
+				return this._RemaingOld;
+			}
+			set
+			{
+				if ((this._RemaingOld != value))
+				{
+					this.OnRemaingOldChanging(value);
+					this.SendPropertyChanging();
+					this._RemaingOld = value;
+					this.SendPropertyChanged("RemaingOld");
+					this.OnRemaingOldChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_InterestonSchedule", DbType="Decimal(19,6)")]
+		public System.Nullable<decimal> InterestonSchedule
+		{
+			get
+			{
+				return this._InterestonSchedule;
+			}
+			set
+			{
+				if ((this._InterestonSchedule != value))
+				{
+					this.OnInterestonScheduleChanging(value);
+					this.SendPropertyChanging();
+					this._InterestonSchedule = value;
+					this.SendPropertyChanged("InterestonSchedule");
+					this.OnInterestonScheduleChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_RowType", DbType="NVarChar(50)")]
+		public string RowType
+		{
+			get
+			{
+				return this._RowType;
+			}
+			set
+			{
+				if ((this._RowType != value))
+				{
+					this.OnRowTypeChanging(value);
+					this.SendPropertyChanging();
+					this._RowType = value;
+					this.SendPropertyChanged("RowType");
+					this.OnRowTypeChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ARNoInterest", DbType="Int")]
+		public System.Nullable<int> ARNoInterest
+		{
+			get
+			{
+				return this._ARNoInterest;
+			}
+			set
+			{
+				if ((this._ARNoInterest != value))
+				{
+					this.OnARNoInterestChanging(value);
+					this.SendPropertyChanging();
+					this._ARNoInterest = value;
+					this.SendPropertyChanged("ARNoInterest");
+					this.OnARNoInterestChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PaymentNoInterest", DbType="Int")]
+		public System.Nullable<int> PaymentNoInterest
+		{
+			get
+			{
+				return this._PaymentNoInterest;
+			}
+			set
+			{
+				if ((this._PaymentNoInterest != value))
+				{
+					this.OnPaymentNoInterestChanging(value);
+					this.SendPropertyChanging();
+					this._PaymentNoInterest = value;
+					this.SendPropertyChanged("PaymentNoInterest");
+					this.OnPaymentNoInterestChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_VarianDay", DbType="Int")]
+		public System.Nullable<int> VarianDay
+		{
+			get
+			{
+				return this._VarianDay;
+			}
+			set
+			{
+				if ((this._VarianDay != value))
+				{
+					this.OnVarianDayChanging(value);
+					this.SendPropertyChanging();
+					this._VarianDay = value;
+					this.SendPropertyChanged("VarianDay");
+					this.OnVarianDayChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_InterestonsheduleVarian", DbType="Decimal(19,6)")]
+		public System.Nullable<decimal> InterestonsheduleVarian
+		{
+			get
+			{
+				return this._InterestonsheduleVarian;
+			}
+			set
+			{
+				if ((this._InterestonsheduleVarian != value))
+				{
+					this.OnInterestonsheduleVarianChanging(value);
+					this.SendPropertyChanging();
+					this._InterestonsheduleVarian = value;
+					this.SendPropertyChanged("InterestonsheduleVarian");
+					this.OnInterestonsheduleVarianChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ChequeNo", DbType="NVarChar(100)")]
+		public string ChequeNo
+		{
+			get
+			{
+				return this._ChequeNo;
+			}
+			set
+			{
+				if ((this._ChequeNo != value))
+				{
+					this.OnChequeNoChanging(value);
+					this.SendPropertyChanging();
+					this._ChequeNo = value;
+					this.SendPropertyChanged("ChequeNo");
+					this.OnChequeNoChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ChequeName", DbType="NVarChar(200)")]
+		public string ChequeName
+		{
+			get
+			{
+				return this._ChequeName;
+			}
+			set
+			{
+				if ((this._ChequeName != value))
+				{
+					this.OnChequeNameChanging(value);
+					this.SendPropertyChanging();
+					this._ChequeName = value;
+					this.SendPropertyChanged("ChequeName");
+					this.OnChequeNameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ChequeBankName", DbType="NVarChar(100)")]
+		public string ChequeBankName
+		{
+			get
+			{
+				return this._ChequeBankName;
+			}
+			set
+			{
+				if ((this._ChequeBankName != value))
+				{
+					this.OnChequeBankNameChanging(value);
+					this.SendPropertyChanging();
+					this._ChequeBankName = value;
+					this.SendPropertyChanged("ChequeBankName");
+					this.OnChequeBankNameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PayeeName", DbType="NVarChar(200)")]
+		public string PayeeName
+		{
+			get
+			{
+				return this._PayeeName;
+			}
+			set
+			{
+				if ((this._PayeeName != value))
+				{
+					this.OnPayeeNameChanging(value);
+					this.SendPropertyChanging();
+					this._PayeeName = value;
+					this.SendPropertyChanged("PayeeName");
+					this.OnPayeeNameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ApplyInterest", DbType="Decimal(19,6)")]
+		public System.Nullable<decimal> ApplyInterest
+		{
+			get
+			{
+				return this._ApplyInterest;
+			}
+			set
+			{
+				if ((this._ApplyInterest != value))
+				{
+					this.OnApplyInterestChanging(value);
+					this.SendPropertyChanging();
+					this._ApplyInterest = value;
+					this.SendPropertyChanged("ApplyInterest");
+					this.OnApplyInterestChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ApplyInterestStatus", DbType="NVarChar(10)")]
+		public string ApplyInterestStatus
+		{
+			get
+			{
+				return this._ApplyInterestStatus;
+			}
+			set
+			{
+				if ((this._ApplyInterestStatus != value))
+				{
+					this.OnApplyInterestStatusChanging(value);
+					this.SendPropertyChanging();
+					this._ApplyInterestStatus = value;
+					this.SendPropertyChanged("ApplyInterestStatus");
+					this.OnApplyInterestStatusChanged();
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.InstallmentRow")]
+	public partial class InstallmentRow : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _ID;
+		
+		private int _BaseEntry;
+		
+		private int _BaseLine;
+		
+		private System.Nullable<int> _VisOrder;
+		
+		private string _ItemCode;
+		
+		private System.Nullable<decimal> _Principle;
+		
+		private System.Nullable<decimal> _Interest;
+		
+		private System.Nullable<decimal> _Monthly;
+		
+		private System.Nullable<System.DateTime> _PaymentDate;
+		
+		private System.Nullable<System.DateTime> _DueDate;
+		
+		private System.Nullable<decimal> _Remaining;
+		
+		private System.Nullable<decimal> _ReIncloudInter;
+		
+		private string _RowStatus;
+		
+		private System.Nullable<decimal> _CuInterest;
+		
+		private System.Nullable<decimal> _CuPayment;
+		
+		private System.Nullable<decimal> _FixedPayment;
+		
+		private System.Nullable<int> _ARNo;
+		
+		private System.Nullable<int> _PaymentNo;
+		
+		private string _Method;
+		
+		private System.Nullable<decimal> _InstallmentAmt;
+		
+		private System.Nullable<decimal> _DiscountAmt;
+		
+		private System.Nullable<decimal> _DepositAmt;
+		
+		private System.Nullable<decimal> _AnnualRate;
+		
+		private System.Nullable<decimal> _PeriodMonths;
+		
+		private string _HouseStatus;
+		
+		private string _Remarks;
+		
+		private System.Nullable<int> _Syn;
+		
+		private string _ErrorLog;
+		
+		private System.Nullable<decimal> _DiscountAmount;
+		
+		private System.Nullable<decimal> _DiscountPer;
+		
+		private System.Nullable<decimal> _SpecialDisAmount;
+		
+		private System.Nullable<decimal> _SpecialDisPer;
+		
+		private System.Nullable<decimal> _AdditionalDisAmount;
+		
+		private System.Nullable<decimal> _AdditionalDisPer;
+		
+		private string _ItemName;
+		
+		private string _OcrCode;
+		
+		private string _OcrCode2;
+		
+		private string _OcrCode3;
+		
+		private System.Nullable<System.DateTime> _NewPaymentDate;
+		
+		private System.Nullable<decimal> _SpecialAmt;
+		
+		private System.Nullable<decimal> _RemaingOld;
+		
+		private System.Nullable<decimal> _InterestonSchedule;
+		
+		private System.Nullable<int> _ARNoInterest;
+		
+		private System.Nullable<int> _PaymentNoInterest;
+		
+		private System.Nullable<int> _VarianDay;
+		
+		private System.Nullable<decimal> _InterestonsheduleVarian;
+		
+		private string _ChequeNo;
+		
+		private string _ChequeName;
+		
+		private string _ChequeBankName;
+		
+		private string _PayeeName;
+		
+		private System.Nullable<decimal> _ApplyInterest;
+		
+		private string _ApplyInterestStatus;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIDChanging(int value);
+    partial void OnIDChanged();
+    partial void OnBaseEntryChanging(int value);
+    partial void OnBaseEntryChanged();
+    partial void OnBaseLineChanging(int value);
+    partial void OnBaseLineChanged();
+    partial void OnVisOrderChanging(System.Nullable<int> value);
+    partial void OnVisOrderChanged();
+    partial void OnItemCodeChanging(string value);
+    partial void OnItemCodeChanged();
+    partial void OnPrincipleChanging(System.Nullable<decimal> value);
+    partial void OnPrincipleChanged();
+    partial void OnInterestChanging(System.Nullable<decimal> value);
+    partial void OnInterestChanged();
+    partial void OnMonthlyChanging(System.Nullable<decimal> value);
+    partial void OnMonthlyChanged();
+    partial void OnPaymentDateChanging(System.Nullable<System.DateTime> value);
+    partial void OnPaymentDateChanged();
+    partial void OnDueDateChanging(System.Nullable<System.DateTime> value);
+    partial void OnDueDateChanged();
+    partial void OnRemainingChanging(System.Nullable<decimal> value);
+    partial void OnRemainingChanged();
+    partial void OnReIncloudInterChanging(System.Nullable<decimal> value);
+    partial void OnReIncloudInterChanged();
+    partial void OnRowStatusChanging(string value);
+    partial void OnRowStatusChanged();
+    partial void OnCuInterestChanging(System.Nullable<decimal> value);
+    partial void OnCuInterestChanged();
+    partial void OnCuPaymentChanging(System.Nullable<decimal> value);
+    partial void OnCuPaymentChanged();
+    partial void OnFixedPaymentChanging(System.Nullable<decimal> value);
+    partial void OnFixedPaymentChanged();
+    partial void OnARNoChanging(System.Nullable<int> value);
+    partial void OnARNoChanged();
+    partial void OnPaymentNoChanging(System.Nullable<int> value);
+    partial void OnPaymentNoChanged();
+    partial void OnMethodChanging(string value);
+    partial void OnMethodChanged();
+    partial void OnInstallmentAmtChanging(System.Nullable<decimal> value);
+    partial void OnInstallmentAmtChanged();
+    partial void OnDiscountAmtChanging(System.Nullable<decimal> value);
+    partial void OnDiscountAmtChanged();
+    partial void OnDepositAmtChanging(System.Nullable<decimal> value);
+    partial void OnDepositAmtChanged();
+    partial void OnAnnualRateChanging(System.Nullable<decimal> value);
+    partial void OnAnnualRateChanged();
+    partial void OnPeriodMonthsChanging(System.Nullable<decimal> value);
+    partial void OnPeriodMonthsChanged();
+    partial void OnHouseStatusChanging(string value);
+    partial void OnHouseStatusChanged();
+    partial void OnRemarksChanging(string value);
+    partial void OnRemarksChanged();
+    partial void OnSynChanging(System.Nullable<int> value);
+    partial void OnSynChanged();
+    partial void OnErrorLogChanging(string value);
+    partial void OnErrorLogChanged();
+    partial void OnDiscountAmountChanging(System.Nullable<decimal> value);
+    partial void OnDiscountAmountChanged();
+    partial void OnDiscountPerChanging(System.Nullable<decimal> value);
+    partial void OnDiscountPerChanged();
+    partial void OnSpecialDisAmountChanging(System.Nullable<decimal> value);
+    partial void OnSpecialDisAmountChanged();
+    partial void OnSpecialDisPerChanging(System.Nullable<decimal> value);
+    partial void OnSpecialDisPerChanged();
+    partial void OnAdditionalDisAmountChanging(System.Nullable<decimal> value);
+    partial void OnAdditionalDisAmountChanged();
+    partial void OnAdditionalDisPerChanging(System.Nullable<decimal> value);
+    partial void OnAdditionalDisPerChanged();
+    partial void OnItemNameChanging(string value);
+    partial void OnItemNameChanged();
+    partial void OnOcrCodeChanging(string value);
+    partial void OnOcrCodeChanged();
+    partial void OnOcrCode2Changing(string value);
+    partial void OnOcrCode2Changed();
+    partial void OnOcrCode3Changing(string value);
+    partial void OnOcrCode3Changed();
+    partial void OnNewPaymentDateChanging(System.Nullable<System.DateTime> value);
+    partial void OnNewPaymentDateChanged();
+    partial void OnSpecialAmtChanging(System.Nullable<decimal> value);
+    partial void OnSpecialAmtChanged();
+    partial void OnRemaingOldChanging(System.Nullable<decimal> value);
+    partial void OnRemaingOldChanged();
+    partial void OnInterestonScheduleChanging(System.Nullable<decimal> value);
+    partial void OnInterestonScheduleChanged();
+    partial void OnARNoInterestChanging(System.Nullable<int> value);
+    partial void OnARNoInterestChanged();
+    partial void OnPaymentNoInterestChanging(System.Nullable<int> value);
+    partial void OnPaymentNoInterestChanged();
+    partial void OnVarianDayChanging(System.Nullable<int> value);
+    partial void OnVarianDayChanged();
+    partial void OnInterestonsheduleVarianChanging(System.Nullable<decimal> value);
+    partial void OnInterestonsheduleVarianChanged();
+    partial void OnChequeNoChanging(string value);
+    partial void OnChequeNoChanged();
+    partial void OnChequeNameChanging(string value);
+    partial void OnChequeNameChanged();
+    partial void OnChequeBankNameChanging(string value);
+    partial void OnChequeBankNameChanged();
+    partial void OnPayeeNameChanging(string value);
+    partial void OnPayeeNameChanged();
+    partial void OnApplyInterestChanging(System.Nullable<decimal> value);
+    partial void OnApplyInterestChanged();
+    partial void OnApplyInterestStatusChanging(string value);
+    partial void OnApplyInterestStatusChanged();
+    #endregion
+		
+		public InstallmentRow()
+		{
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int ID
+		{
+			get
+			{
+				return this._ID;
+			}
+			set
+			{
+				if ((this._ID != value))
+				{
+					this.OnIDChanging(value);
+					this.SendPropertyChanging();
+					this._ID = value;
+					this.SendPropertyChanged("ID");
+					this.OnIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_BaseEntry", DbType="Int NOT NULL")]
+		public int BaseEntry
+		{
+			get
+			{
+				return this._BaseEntry;
+			}
+			set
+			{
+				if ((this._BaseEntry != value))
+				{
+					this.OnBaseEntryChanging(value);
+					this.SendPropertyChanging();
+					this._BaseEntry = value;
+					this.SendPropertyChanged("BaseEntry");
+					this.OnBaseEntryChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_BaseLine", DbType="Int NOT NULL")]
+		public int BaseLine
+		{
+			get
+			{
+				return this._BaseLine;
+			}
+			set
+			{
+				if ((this._BaseLine != value))
+				{
+					this.OnBaseLineChanging(value);
+					this.SendPropertyChanging();
+					this._BaseLine = value;
+					this.SendPropertyChanged("BaseLine");
+					this.OnBaseLineChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_VisOrder", DbType="Int")]
+		public System.Nullable<int> VisOrder
+		{
+			get
+			{
+				return this._VisOrder;
+			}
+			set
+			{
+				if ((this._VisOrder != value))
+				{
+					this.OnVisOrderChanging(value);
+					this.SendPropertyChanging();
+					this._VisOrder = value;
+					this.SendPropertyChanged("VisOrder");
+					this.OnVisOrderChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ItemCode", DbType="NVarChar(100)")]
+		public string ItemCode
+		{
+			get
+			{
+				return this._ItemCode;
+			}
+			set
+			{
+				if ((this._ItemCode != value))
+				{
+					this.OnItemCodeChanging(value);
+					this.SendPropertyChanging();
+					this._ItemCode = value;
+					this.SendPropertyChanged("ItemCode");
+					this.OnItemCodeChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Principle", DbType="Decimal(19,6)")]
+		public System.Nullable<decimal> Principle
+		{
+			get
+			{
+				return this._Principle;
+			}
+			set
+			{
+				if ((this._Principle != value))
+				{
+					this.OnPrincipleChanging(value);
+					this.SendPropertyChanging();
+					this._Principle = value;
+					this.SendPropertyChanged("Principle");
+					this.OnPrincipleChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Interest", DbType="Decimal(19,6)")]
+		public System.Nullable<decimal> Interest
+		{
+			get
+			{
+				return this._Interest;
+			}
+			set
+			{
+				if ((this._Interest != value))
+				{
+					this.OnInterestChanging(value);
+					this.SendPropertyChanging();
+					this._Interest = value;
+					this.SendPropertyChanged("Interest");
+					this.OnInterestChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Monthly", DbType="Decimal(19,6)")]
+		public System.Nullable<decimal> Monthly
+		{
+			get
+			{
+				return this._Monthly;
+			}
+			set
+			{
+				if ((this._Monthly != value))
+				{
+					this.OnMonthlyChanging(value);
+					this.SendPropertyChanging();
+					this._Monthly = value;
+					this.SendPropertyChanged("Monthly");
+					this.OnMonthlyChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PaymentDate", DbType="Date")]
+		public System.Nullable<System.DateTime> PaymentDate
+		{
+			get
+			{
+				return this._PaymentDate;
+			}
+			set
+			{
+				if ((this._PaymentDate != value))
+				{
+					this.OnPaymentDateChanging(value);
+					this.SendPropertyChanging();
+					this._PaymentDate = value;
+					this.SendPropertyChanged("PaymentDate");
+					this.OnPaymentDateChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DueDate", DbType="Date")]
+		public System.Nullable<System.DateTime> DueDate
+		{
+			get
+			{
+				return this._DueDate;
+			}
+			set
+			{
+				if ((this._DueDate != value))
+				{
+					this.OnDueDateChanging(value);
+					this.SendPropertyChanging();
+					this._DueDate = value;
+					this.SendPropertyChanged("DueDate");
+					this.OnDueDateChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Remaining", DbType="Decimal(19,6)")]
+		public System.Nullable<decimal> Remaining
+		{
+			get
+			{
+				return this._Remaining;
+			}
+			set
+			{
+				if ((this._Remaining != value))
+				{
+					this.OnRemainingChanging(value);
+					this.SendPropertyChanging();
+					this._Remaining = value;
+					this.SendPropertyChanged("Remaining");
+					this.OnRemainingChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ReIncloudInter", DbType="Decimal(19,6)")]
+		public System.Nullable<decimal> ReIncloudInter
+		{
+			get
+			{
+				return this._ReIncloudInter;
+			}
+			set
+			{
+				if ((this._ReIncloudInter != value))
+				{
+					this.OnReIncloudInterChanging(value);
+					this.SendPropertyChanging();
+					this._ReIncloudInter = value;
+					this.SendPropertyChanged("ReIncloudInter");
+					this.OnReIncloudInterChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_RowStatus", DbType="NChar(10)")]
+		public string RowStatus
+		{
+			get
+			{
+				return this._RowStatus;
+			}
+			set
+			{
+				if ((this._RowStatus != value))
+				{
+					this.OnRowStatusChanging(value);
+					this.SendPropertyChanging();
+					this._RowStatus = value;
+					this.SendPropertyChanged("RowStatus");
+					this.OnRowStatusChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CuInterest", DbType="Decimal(19,6)")]
+		public System.Nullable<decimal> CuInterest
+		{
+			get
+			{
+				return this._CuInterest;
+			}
+			set
+			{
+				if ((this._CuInterest != value))
+				{
+					this.OnCuInterestChanging(value);
+					this.SendPropertyChanging();
+					this._CuInterest = value;
+					this.SendPropertyChanged("CuInterest");
+					this.OnCuInterestChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CuPayment", DbType="Decimal(19,6)")]
+		public System.Nullable<decimal> CuPayment
+		{
+			get
+			{
+				return this._CuPayment;
+			}
+			set
+			{
+				if ((this._CuPayment != value))
+				{
+					this.OnCuPaymentChanging(value);
+					this.SendPropertyChanging();
+					this._CuPayment = value;
+					this.SendPropertyChanged("CuPayment");
+					this.OnCuPaymentChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FixedPayment", DbType="Decimal(19,6)")]
+		public System.Nullable<decimal> FixedPayment
+		{
+			get
+			{
+				return this._FixedPayment;
+			}
+			set
+			{
+				if ((this._FixedPayment != value))
+				{
+					this.OnFixedPaymentChanging(value);
+					this.SendPropertyChanging();
+					this._FixedPayment = value;
+					this.SendPropertyChanged("FixedPayment");
+					this.OnFixedPaymentChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ARNo", DbType="Int")]
+		public System.Nullable<int> ARNo
+		{
+			get
+			{
+				return this._ARNo;
+			}
+			set
+			{
+				if ((this._ARNo != value))
+				{
+					this.OnARNoChanging(value);
+					this.SendPropertyChanging();
+					this._ARNo = value;
+					this.SendPropertyChanged("ARNo");
+					this.OnARNoChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PaymentNo", DbType="Int")]
+		public System.Nullable<int> PaymentNo
+		{
+			get
+			{
+				return this._PaymentNo;
+			}
+			set
+			{
+				if ((this._PaymentNo != value))
+				{
+					this.OnPaymentNoChanging(value);
+					this.SendPropertyChanging();
+					this._PaymentNo = value;
+					this.SendPropertyChanged("PaymentNo");
+					this.OnPaymentNoChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Method", DbType="NVarChar(100)")]
+		public string Method
+		{
+			get
+			{
+				return this._Method;
+			}
+			set
+			{
+				if ((this._Method != value))
+				{
+					this.OnMethodChanging(value);
+					this.SendPropertyChanging();
+					this._Method = value;
+					this.SendPropertyChanged("Method");
+					this.OnMethodChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_InstallmentAmt", DbType="Decimal(19,6)")]
+		public System.Nullable<decimal> InstallmentAmt
+		{
+			get
+			{
+				return this._InstallmentAmt;
+			}
+			set
+			{
+				if ((this._InstallmentAmt != value))
+				{
+					this.OnInstallmentAmtChanging(value);
+					this.SendPropertyChanging();
+					this._InstallmentAmt = value;
+					this.SendPropertyChanged("InstallmentAmt");
+					this.OnInstallmentAmtChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DiscountAmt", DbType="Decimal(19,6)")]
+		public System.Nullable<decimal> DiscountAmt
+		{
+			get
+			{
+				return this._DiscountAmt;
+			}
+			set
+			{
+				if ((this._DiscountAmt != value))
+				{
+					this.OnDiscountAmtChanging(value);
+					this.SendPropertyChanging();
+					this._DiscountAmt = value;
+					this.SendPropertyChanged("DiscountAmt");
+					this.OnDiscountAmtChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DepositAmt", DbType="Decimal(19,6)")]
+		public System.Nullable<decimal> DepositAmt
+		{
+			get
+			{
+				return this._DepositAmt;
+			}
+			set
+			{
+				if ((this._DepositAmt != value))
+				{
+					this.OnDepositAmtChanging(value);
+					this.SendPropertyChanging();
+					this._DepositAmt = value;
+					this.SendPropertyChanged("DepositAmt");
+					this.OnDepositAmtChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AnnualRate", DbType="Decimal(19,6)")]
+		public System.Nullable<decimal> AnnualRate
+		{
+			get
+			{
+				return this._AnnualRate;
+			}
+			set
+			{
+				if ((this._AnnualRate != value))
+				{
+					this.OnAnnualRateChanging(value);
+					this.SendPropertyChanging();
+					this._AnnualRate = value;
+					this.SendPropertyChanged("AnnualRate");
+					this.OnAnnualRateChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PeriodMonths", DbType="Decimal(19,6)")]
+		public System.Nullable<decimal> PeriodMonths
+		{
+			get
+			{
+				return this._PeriodMonths;
+			}
+			set
+			{
+				if ((this._PeriodMonths != value))
+				{
+					this.OnPeriodMonthsChanging(value);
+					this.SendPropertyChanging();
+					this._PeriodMonths = value;
+					this.SendPropertyChanged("PeriodMonths");
+					this.OnPeriodMonthsChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_HouseStatus", DbType="NVarChar(100)")]
+		public string HouseStatus
+		{
+			get
+			{
+				return this._HouseStatus;
+			}
+			set
+			{
+				if ((this._HouseStatus != value))
+				{
+					this.OnHouseStatusChanging(value);
+					this.SendPropertyChanging();
+					this._HouseStatus = value;
+					this.SendPropertyChanged("HouseStatus");
+					this.OnHouseStatusChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Remarks", DbType="NVarChar(254)")]
+		public string Remarks
+		{
+			get
+			{
+				return this._Remarks;
+			}
+			set
+			{
+				if ((this._Remarks != value))
+				{
+					this.OnRemarksChanging(value);
+					this.SendPropertyChanging();
+					this._Remarks = value;
+					this.SendPropertyChanged("Remarks");
+					this.OnRemarksChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Syn", DbType="Int")]
+		public System.Nullable<int> Syn
+		{
+			get
+			{
+				return this._Syn;
+			}
+			set
+			{
+				if ((this._Syn != value))
+				{
+					this.OnSynChanging(value);
+					this.SendPropertyChanging();
+					this._Syn = value;
+					this.SendPropertyChanged("Syn");
+					this.OnSynChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ErrorLog", DbType="NVarChar(254)")]
+		public string ErrorLog
+		{
+			get
+			{
+				return this._ErrorLog;
+			}
+			set
+			{
+				if ((this._ErrorLog != value))
+				{
+					this.OnErrorLogChanging(value);
+					this.SendPropertyChanging();
+					this._ErrorLog = value;
+					this.SendPropertyChanged("ErrorLog");
+					this.OnErrorLogChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DiscountAmount", DbType="Decimal(18,2)")]
+		public System.Nullable<decimal> DiscountAmount
+		{
+			get
+			{
+				return this._DiscountAmount;
+			}
+			set
+			{
+				if ((this._DiscountAmount != value))
+				{
+					this.OnDiscountAmountChanging(value);
+					this.SendPropertyChanging();
+					this._DiscountAmount = value;
+					this.SendPropertyChanged("DiscountAmount");
+					this.OnDiscountAmountChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DiscountPer", DbType="Decimal(18,2)")]
+		public System.Nullable<decimal> DiscountPer
+		{
+			get
+			{
+				return this._DiscountPer;
+			}
+			set
+			{
+				if ((this._DiscountPer != value))
+				{
+					this.OnDiscountPerChanging(value);
+					this.SendPropertyChanging();
+					this._DiscountPer = value;
+					this.SendPropertyChanged("DiscountPer");
+					this.OnDiscountPerChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SpecialDisAmount", DbType="Decimal(18,2)")]
+		public System.Nullable<decimal> SpecialDisAmount
+		{
+			get
+			{
+				return this._SpecialDisAmount;
+			}
+			set
+			{
+				if ((this._SpecialDisAmount != value))
+				{
+					this.OnSpecialDisAmountChanging(value);
+					this.SendPropertyChanging();
+					this._SpecialDisAmount = value;
+					this.SendPropertyChanged("SpecialDisAmount");
+					this.OnSpecialDisAmountChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SpecialDisPer", DbType="Decimal(18,2)")]
+		public System.Nullable<decimal> SpecialDisPer
+		{
+			get
+			{
+				return this._SpecialDisPer;
+			}
+			set
+			{
+				if ((this._SpecialDisPer != value))
+				{
+					this.OnSpecialDisPerChanging(value);
+					this.SendPropertyChanging();
+					this._SpecialDisPer = value;
+					this.SendPropertyChanged("SpecialDisPer");
+					this.OnSpecialDisPerChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AdditionalDisAmount", DbType="Decimal(18,2)")]
+		public System.Nullable<decimal> AdditionalDisAmount
+		{
+			get
+			{
+				return this._AdditionalDisAmount;
+			}
+			set
+			{
+				if ((this._AdditionalDisAmount != value))
+				{
+					this.OnAdditionalDisAmountChanging(value);
+					this.SendPropertyChanging();
+					this._AdditionalDisAmount = value;
+					this.SendPropertyChanged("AdditionalDisAmount");
+					this.OnAdditionalDisAmountChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AdditionalDisPer", DbType="Decimal(18,2)")]
+		public System.Nullable<decimal> AdditionalDisPer
+		{
+			get
+			{
+				return this._AdditionalDisPer;
+			}
+			set
+			{
+				if ((this._AdditionalDisPer != value))
+				{
+					this.OnAdditionalDisPerChanging(value);
+					this.SendPropertyChanging();
+					this._AdditionalDisPer = value;
+					this.SendPropertyChanged("AdditionalDisPer");
+					this.OnAdditionalDisPerChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ItemName", DbType="NVarChar(200)")]
+		public string ItemName
+		{
+			get
+			{
+				return this._ItemName;
+			}
+			set
+			{
+				if ((this._ItemName != value))
+				{
+					this.OnItemNameChanging(value);
+					this.SendPropertyChanging();
+					this._ItemName = value;
+					this.SendPropertyChanged("ItemName");
+					this.OnItemNameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_OcrCode", DbType="NVarChar(100)")]
+		public string OcrCode
+		{
+			get
+			{
+				return this._OcrCode;
+			}
+			set
+			{
+				if ((this._OcrCode != value))
+				{
+					this.OnOcrCodeChanging(value);
+					this.SendPropertyChanging();
+					this._OcrCode = value;
+					this.SendPropertyChanged("OcrCode");
+					this.OnOcrCodeChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_OcrCode2", DbType="NVarChar(100)")]
+		public string OcrCode2
+		{
+			get
+			{
+				return this._OcrCode2;
+			}
+			set
+			{
+				if ((this._OcrCode2 != value))
+				{
+					this.OnOcrCode2Changing(value);
+					this.SendPropertyChanging();
+					this._OcrCode2 = value;
+					this.SendPropertyChanged("OcrCode2");
+					this.OnOcrCode2Changed();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_OcrCode3", DbType="NVarChar(100)")]
+		public string OcrCode3
+		{
+			get
+			{
+				return this._OcrCode3;
+			}
+			set
+			{
+				if ((this._OcrCode3 != value))
+				{
+					this.OnOcrCode3Changing(value);
+					this.SendPropertyChanging();
+					this._OcrCode3 = value;
+					this.SendPropertyChanged("OcrCode3");
+					this.OnOcrCode3Changed();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_NewPaymentDate", DbType="DateTime")]
+		public System.Nullable<System.DateTime> NewPaymentDate
+		{
+			get
+			{
+				return this._NewPaymentDate;
+			}
+			set
+			{
+				if ((this._NewPaymentDate != value))
+				{
+					this.OnNewPaymentDateChanging(value);
+					this.SendPropertyChanging();
+					this._NewPaymentDate = value;
+					this.SendPropertyChanged("NewPaymentDate");
+					this.OnNewPaymentDateChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SpecialAmt", DbType="Decimal(19,6)")]
+		public System.Nullable<decimal> SpecialAmt
+		{
+			get
+			{
+				return this._SpecialAmt;
+			}
+			set
+			{
+				if ((this._SpecialAmt != value))
+				{
+					this.OnSpecialAmtChanging(value);
+					this.SendPropertyChanging();
+					this._SpecialAmt = value;
+					this.SendPropertyChanged("SpecialAmt");
+					this.OnSpecialAmtChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_RemaingOld", DbType="Decimal(19,6)")]
+		public System.Nullable<decimal> RemaingOld
+		{
+			get
+			{
+				return this._RemaingOld;
+			}
+			set
+			{
+				if ((this._RemaingOld != value))
+				{
+					this.OnRemaingOldChanging(value);
+					this.SendPropertyChanging();
+					this._RemaingOld = value;
+					this.SendPropertyChanged("RemaingOld");
+					this.OnRemaingOldChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_InterestonSchedule", DbType="Decimal(19,6)")]
+		public System.Nullable<decimal> InterestonSchedule
+		{
+			get
+			{
+				return this._InterestonSchedule;
+			}
+			set
+			{
+				if ((this._InterestonSchedule != value))
+				{
+					this.OnInterestonScheduleChanging(value);
+					this.SendPropertyChanging();
+					this._InterestonSchedule = value;
+					this.SendPropertyChanged("InterestonSchedule");
+					this.OnInterestonScheduleChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ARNoInterest", DbType="Int")]
+		public System.Nullable<int> ARNoInterest
+		{
+			get
+			{
+				return this._ARNoInterest;
+			}
+			set
+			{
+				if ((this._ARNoInterest != value))
+				{
+					this.OnARNoInterestChanging(value);
+					this.SendPropertyChanging();
+					this._ARNoInterest = value;
+					this.SendPropertyChanged("ARNoInterest");
+					this.OnARNoInterestChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PaymentNoInterest", DbType="Int")]
+		public System.Nullable<int> PaymentNoInterest
+		{
+			get
+			{
+				return this._PaymentNoInterest;
+			}
+			set
+			{
+				if ((this._PaymentNoInterest != value))
+				{
+					this.OnPaymentNoInterestChanging(value);
+					this.SendPropertyChanging();
+					this._PaymentNoInterest = value;
+					this.SendPropertyChanged("PaymentNoInterest");
+					this.OnPaymentNoInterestChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_VarianDay", DbType="Int")]
+		public System.Nullable<int> VarianDay
+		{
+			get
+			{
+				return this._VarianDay;
+			}
+			set
+			{
+				if ((this._VarianDay != value))
+				{
+					this.OnVarianDayChanging(value);
+					this.SendPropertyChanging();
+					this._VarianDay = value;
+					this.SendPropertyChanged("VarianDay");
+					this.OnVarianDayChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_InterestonsheduleVarian", DbType="Decimal(19,6)")]
+		public System.Nullable<decimal> InterestonsheduleVarian
+		{
+			get
+			{
+				return this._InterestonsheduleVarian;
+			}
+			set
+			{
+				if ((this._InterestonsheduleVarian != value))
+				{
+					this.OnInterestonsheduleVarianChanging(value);
+					this.SendPropertyChanging();
+					this._InterestonsheduleVarian = value;
+					this.SendPropertyChanged("InterestonsheduleVarian");
+					this.OnInterestonsheduleVarianChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ChequeNo", DbType="NVarChar(100)")]
+		public string ChequeNo
+		{
+			get
+			{
+				return this._ChequeNo;
+			}
+			set
+			{
+				if ((this._ChequeNo != value))
+				{
+					this.OnChequeNoChanging(value);
+					this.SendPropertyChanging();
+					this._ChequeNo = value;
+					this.SendPropertyChanged("ChequeNo");
+					this.OnChequeNoChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ChequeName", DbType="NVarChar(200)")]
+		public string ChequeName
+		{
+			get
+			{
+				return this._ChequeName;
+			}
+			set
+			{
+				if ((this._ChequeName != value))
+				{
+					this.OnChequeNameChanging(value);
+					this.SendPropertyChanging();
+					this._ChequeName = value;
+					this.SendPropertyChanged("ChequeName");
+					this.OnChequeNameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ChequeBankName", DbType="NVarChar(100)")]
+		public string ChequeBankName
+		{
+			get
+			{
+				return this._ChequeBankName;
+			}
+			set
+			{
+				if ((this._ChequeBankName != value))
+				{
+					this.OnChequeBankNameChanging(value);
+					this.SendPropertyChanging();
+					this._ChequeBankName = value;
+					this.SendPropertyChanged("ChequeBankName");
+					this.OnChequeBankNameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PayeeName", DbType="NVarChar(200)")]
+		public string PayeeName
+		{
+			get
+			{
+				return this._PayeeName;
+			}
+			set
+			{
+				if ((this._PayeeName != value))
+				{
+					this.OnPayeeNameChanging(value);
+					this.SendPropertyChanging();
+					this._PayeeName = value;
+					this.SendPropertyChanged("PayeeName");
+					this.OnPayeeNameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ApplyInterest", DbType="Decimal(19,6)")]
+		public System.Nullable<decimal> ApplyInterest
+		{
+			get
+			{
+				return this._ApplyInterest;
+			}
+			set
+			{
+				if ((this._ApplyInterest != value))
+				{
+					this.OnApplyInterestChanging(value);
+					this.SendPropertyChanging();
+					this._ApplyInterest = value;
+					this.SendPropertyChanged("ApplyInterest");
+					this.OnApplyInterestChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ApplyInterestStatus", DbType="NVarChar(10)")]
+		public string ApplyInterestStatus
+		{
+			get
+			{
+				return this._ApplyInterestStatus;
+			}
+			set
+			{
+				if ((this._ApplyInterestStatus != value))
+				{
+					this.OnApplyInterestStatusChanging(value);
+					this.SendPropertyChanging();
+					this._ApplyInterestStatus = value;
+					this.SendPropertyChanged("ApplyInterestStatus");
+					this.OnApplyInterestStatusChanged();
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.InstallmentRowDraf")]
 	public partial class InstallmentRowDraf : INotifyPropertyChanging, INotifyPropertyChanged
 	{
@@ -31115,6 +35281,18 @@ namespace MKL_Web.Models
 		private System.Nullable<int> _VarianDay;
 		
 		private System.Nullable<decimal> _InterestonsheduleVarian;
+		
+		private string _ChequeNo;
+		
+		private string _ChequeName;
+		
+		private string _ChequeBankName;
+		
+		private string _PayeeName;
+		
+		private System.Nullable<decimal> _ApplyInterest;
+		
+		private string _ApplyInterestStatus;
 		
 		private EntityRef<InstallmentRowDrafH> _InstallmentRowDrafH;
 		
@@ -31220,6 +35398,18 @@ namespace MKL_Web.Models
     partial void OnVarianDayChanged();
     partial void OnInterestonsheduleVarianChanging(System.Nullable<decimal> value);
     partial void OnInterestonsheduleVarianChanged();
+    partial void OnChequeNoChanging(string value);
+    partial void OnChequeNoChanged();
+    partial void OnChequeNameChanging(string value);
+    partial void OnChequeNameChanged();
+    partial void OnChequeBankNameChanging(string value);
+    partial void OnChequeBankNameChanged();
+    partial void OnPayeeNameChanging(string value);
+    partial void OnPayeeNameChanged();
+    partial void OnApplyInterestChanging(System.Nullable<decimal> value);
+    partial void OnApplyInterestChanged();
+    partial void OnApplyInterestStatusChanging(string value);
+    partial void OnApplyInterestStatusChanged();
     #endregion
 		
 		public InstallmentRowDraf()
@@ -32212,6 +36402,126 @@ namespace MKL_Web.Models
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ChequeNo", DbType="NVarChar(100)")]
+		public string ChequeNo
+		{
+			get
+			{
+				return this._ChequeNo;
+			}
+			set
+			{
+				if ((this._ChequeNo != value))
+				{
+					this.OnChequeNoChanging(value);
+					this.SendPropertyChanging();
+					this._ChequeNo = value;
+					this.SendPropertyChanged("ChequeNo");
+					this.OnChequeNoChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ChequeName", DbType="NVarChar(200)")]
+		public string ChequeName
+		{
+			get
+			{
+				return this._ChequeName;
+			}
+			set
+			{
+				if ((this._ChequeName != value))
+				{
+					this.OnChequeNameChanging(value);
+					this.SendPropertyChanging();
+					this._ChequeName = value;
+					this.SendPropertyChanged("ChequeName");
+					this.OnChequeNameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ChequeBankName", DbType="NVarChar(100)")]
+		public string ChequeBankName
+		{
+			get
+			{
+				return this._ChequeBankName;
+			}
+			set
+			{
+				if ((this._ChequeBankName != value))
+				{
+					this.OnChequeBankNameChanging(value);
+					this.SendPropertyChanging();
+					this._ChequeBankName = value;
+					this.SendPropertyChanged("ChequeBankName");
+					this.OnChequeBankNameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PayeeName", DbType="NVarChar(200)")]
+		public string PayeeName
+		{
+			get
+			{
+				return this._PayeeName;
+			}
+			set
+			{
+				if ((this._PayeeName != value))
+				{
+					this.OnPayeeNameChanging(value);
+					this.SendPropertyChanging();
+					this._PayeeName = value;
+					this.SendPropertyChanged("PayeeName");
+					this.OnPayeeNameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ApplyInterest", DbType="Decimal(19,6)")]
+		public System.Nullable<decimal> ApplyInterest
+		{
+			get
+			{
+				return this._ApplyInterest;
+			}
+			set
+			{
+				if ((this._ApplyInterest != value))
+				{
+					this.OnApplyInterestChanging(value);
+					this.SendPropertyChanging();
+					this._ApplyInterest = value;
+					this.SendPropertyChanged("ApplyInterest");
+					this.OnApplyInterestChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ApplyInterestStatus", DbType="NVarChar(10)")]
+		public string ApplyInterestStatus
+		{
+			get
+			{
+				return this._ApplyInterestStatus;
+			}
+			set
+			{
+				if ((this._ApplyInterestStatus != value))
+				{
+					this.OnApplyInterestStatusChanging(value);
+					this.SendPropertyChanging();
+					this._ApplyInterestStatus = value;
+					this.SendPropertyChanged("ApplyInterestStatus");
+					this.OnApplyInterestStatusChanged();
+				}
+			}
+		}
+		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="InstallmentRowDrafH_InstallmentRowDraf", Storage="_InstallmentRowDrafH", ThisKey="DocEntry", OtherKey="DocEntry", IsForeignKey=true)]
 		public InstallmentRowDrafH InstallmentRowDrafH
 		{
@@ -32361,6 +36671,18 @@ namespace MKL_Web.Models
 		
 		private System.Nullable<decimal> _InterestonsheduleVarian;
 		
+		private string _ChequeNo;
+		
+		private string _ChequeName;
+		
+		private string _ChequeBankName;
+		
+		private string _PayeeName;
+		
+		private System.Nullable<decimal> _ApplyInterest;
+		
+		private string _ApplyInterestStatus;
+		
     #region Extensibility Method Definitions
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
@@ -32453,6 +36775,18 @@ namespace MKL_Web.Models
     partial void OnVarianDayChanged();
     partial void OnInterestonsheduleVarianChanging(System.Nullable<decimal> value);
     partial void OnInterestonsheduleVarianChanged();
+    partial void OnChequeNoChanging(string value);
+    partial void OnChequeNoChanged();
+    partial void OnChequeNameChanging(string value);
+    partial void OnChequeNameChanged();
+    partial void OnChequeBankNameChanging(string value);
+    partial void OnChequeBankNameChanged();
+    partial void OnPayeeNameChanging(string value);
+    partial void OnPayeeNameChanged();
+    partial void OnApplyInterestChanging(System.Nullable<decimal> value);
+    partial void OnApplyInterestChanged();
+    partial void OnApplyInterestStatusChanging(string value);
+    partial void OnApplyInterestStatusChanged();
     #endregion
 		
 		public InstallmentRowHistory()
@@ -33140,7 +37474,7 @@ namespace MKL_Web.Models
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ItemName", DbType="NVarChar(200)")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ItemName", DbType="NVarChar(250)")]
 		public string ItemName
 		{
 			get
@@ -33160,7 +37494,7 @@ namespace MKL_Web.Models
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_OcrCode", DbType="NVarChar(100)")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_OcrCode", DbType="NVarChar(250)")]
 		public string OcrCode
 		{
 			get
@@ -33180,7 +37514,7 @@ namespace MKL_Web.Models
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_OcrCode2", DbType="NVarChar(100)")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_OcrCode2", DbType="NVarChar(250)")]
 		public string OcrCode2
 		{
 			get
@@ -33200,7 +37534,7 @@ namespace MKL_Web.Models
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_OcrCode3", DbType="NVarChar(100)")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_OcrCode3", DbType="NVarChar(250)")]
 		public string OcrCode3
 		{
 			get
@@ -33340,1144 +37674,122 @@ namespace MKL_Web.Models
 			}
 		}
 		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.InstallmentRow")]
-	public partial class InstallmentRow : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _ID;
-		
-		private int _BaseEntry;
-		
-		private int _BaseLine;
-		
-		private System.Nullable<int> _VisOrder;
-		
-		private string _ItemCode;
-		
-		private System.Nullable<decimal> _Principle;
-		
-		private System.Nullable<decimal> _Interest;
-		
-		private System.Nullable<decimal> _Monthly;
-		
-		private System.Nullable<System.DateTime> _PaymentDate;
-		
-		private System.Nullable<System.DateTime> _DueDate;
-		
-		private System.Nullable<decimal> _Remaining;
-		
-		private System.Nullable<decimal> _ReIncloudInter;
-		
-		private string _RowStatus;
-		
-		private System.Nullable<decimal> _CuInterest;
-		
-		private System.Nullable<decimal> _CuPayment;
-		
-		private System.Nullable<decimal> _FixedPayment;
-		
-		private System.Nullable<int> _ARNo;
-		
-		private System.Nullable<int> _PaymentNo;
-		
-		private string _Method;
-		
-		private System.Nullable<decimal> _InstallmentAmt;
-		
-		private System.Nullable<decimal> _DiscountAmt;
-		
-		private System.Nullable<decimal> _DepositAmt;
-		
-		private System.Nullable<decimal> _AnnualRate;
-		
-		private System.Nullable<decimal> _PeriodMonths;
-		
-		private string _HouseStatus;
-		
-		private string _Remarks;
-		
-		private System.Nullable<int> _Syn;
-		
-		private string _ErrorLog;
-		
-		private System.Nullable<decimal> _DiscountAmount;
-		
-		private System.Nullable<decimal> _DiscountPer;
-		
-		private System.Nullable<decimal> _SpecialDisAmount;
-		
-		private System.Nullable<decimal> _SpecialDisPer;
-		
-		private System.Nullable<decimal> _AdditionalDisAmount;
-		
-		private System.Nullable<decimal> _AdditionalDisPer;
-		
-		private string _ItemName;
-		
-		private string _OcrCode;
-		
-		private string _OcrCode2;
-		
-		private string _OcrCode3;
-		
-		private System.Nullable<System.DateTime> _NewPaymentDate;
-		
-		private System.Nullable<decimal> _SpecialAmt;
-		
-		private System.Nullable<decimal> _RemaingOld;
-		
-		private System.Nullable<decimal> _InterestonSchedule;
-		
-		private System.Nullable<int> _ARNoInterest;
-		
-		private System.Nullable<int> _PaymentNoInterest;
-		
-		private System.Nullable<int> _VarianDay;
-		
-		private System.Nullable<decimal> _InterestonsheduleVarian;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnIDChanging(int value);
-    partial void OnIDChanged();
-    partial void OnBaseEntryChanging(int value);
-    partial void OnBaseEntryChanged();
-    partial void OnBaseLineChanging(int value);
-    partial void OnBaseLineChanged();
-    partial void OnVisOrderChanging(System.Nullable<int> value);
-    partial void OnVisOrderChanged();
-    partial void OnItemCodeChanging(string value);
-    partial void OnItemCodeChanged();
-    partial void OnPrincipleChanging(System.Nullable<decimal> value);
-    partial void OnPrincipleChanged();
-    partial void OnInterestChanging(System.Nullable<decimal> value);
-    partial void OnInterestChanged();
-    partial void OnMonthlyChanging(System.Nullable<decimal> value);
-    partial void OnMonthlyChanged();
-    partial void OnPaymentDateChanging(System.Nullable<System.DateTime> value);
-    partial void OnPaymentDateChanged();
-    partial void OnDueDateChanging(System.Nullable<System.DateTime> value);
-    partial void OnDueDateChanged();
-    partial void OnRemainingChanging(System.Nullable<decimal> value);
-    partial void OnRemainingChanged();
-    partial void OnReIncloudInterChanging(System.Nullable<decimal> value);
-    partial void OnReIncloudInterChanged();
-    partial void OnRowStatusChanging(string value);
-    partial void OnRowStatusChanged();
-    partial void OnCuInterestChanging(System.Nullable<decimal> value);
-    partial void OnCuInterestChanged();
-    partial void OnCuPaymentChanging(System.Nullable<decimal> value);
-    partial void OnCuPaymentChanged();
-    partial void OnFixedPaymentChanging(System.Nullable<decimal> value);
-    partial void OnFixedPaymentChanged();
-    partial void OnARNoChanging(System.Nullable<int> value);
-    partial void OnARNoChanged();
-    partial void OnPaymentNoChanging(System.Nullable<int> value);
-    partial void OnPaymentNoChanged();
-    partial void OnMethodChanging(string value);
-    partial void OnMethodChanged();
-    partial void OnInstallmentAmtChanging(System.Nullable<decimal> value);
-    partial void OnInstallmentAmtChanged();
-    partial void OnDiscountAmtChanging(System.Nullable<decimal> value);
-    partial void OnDiscountAmtChanged();
-    partial void OnDepositAmtChanging(System.Nullable<decimal> value);
-    partial void OnDepositAmtChanged();
-    partial void OnAnnualRateChanging(System.Nullable<decimal> value);
-    partial void OnAnnualRateChanged();
-    partial void OnPeriodMonthsChanging(System.Nullable<decimal> value);
-    partial void OnPeriodMonthsChanged();
-    partial void OnHouseStatusChanging(string value);
-    partial void OnHouseStatusChanged();
-    partial void OnRemarksChanging(string value);
-    partial void OnRemarksChanged();
-    partial void OnSynChanging(System.Nullable<int> value);
-    partial void OnSynChanged();
-    partial void OnErrorLogChanging(string value);
-    partial void OnErrorLogChanged();
-    partial void OnDiscountAmountChanging(System.Nullable<decimal> value);
-    partial void OnDiscountAmountChanged();
-    partial void OnDiscountPerChanging(System.Nullable<decimal> value);
-    partial void OnDiscountPerChanged();
-    partial void OnSpecialDisAmountChanging(System.Nullable<decimal> value);
-    partial void OnSpecialDisAmountChanged();
-    partial void OnSpecialDisPerChanging(System.Nullable<decimal> value);
-    partial void OnSpecialDisPerChanged();
-    partial void OnAdditionalDisAmountChanging(System.Nullable<decimal> value);
-    partial void OnAdditionalDisAmountChanged();
-    partial void OnAdditionalDisPerChanging(System.Nullable<decimal> value);
-    partial void OnAdditionalDisPerChanged();
-    partial void OnItemNameChanging(string value);
-    partial void OnItemNameChanged();
-    partial void OnOcrCodeChanging(string value);
-    partial void OnOcrCodeChanged();
-    partial void OnOcrCode2Changing(string value);
-    partial void OnOcrCode2Changed();
-    partial void OnOcrCode3Changing(string value);
-    partial void OnOcrCode3Changed();
-    partial void OnNewPaymentDateChanging(System.Nullable<System.DateTime> value);
-    partial void OnNewPaymentDateChanged();
-    partial void OnSpecialAmtChanging(System.Nullable<decimal> value);
-    partial void OnSpecialAmtChanged();
-    partial void OnRemaingOldChanging(System.Nullable<decimal> value);
-    partial void OnRemaingOldChanged();
-    partial void OnInterestonScheduleChanging(System.Nullable<decimal> value);
-    partial void OnInterestonScheduleChanged();
-    partial void OnARNoInterestChanging(System.Nullable<int> value);
-    partial void OnARNoInterestChanged();
-    partial void OnPaymentNoInterestChanging(System.Nullable<int> value);
-    partial void OnPaymentNoInterestChanged();
-    partial void OnVarianDayChanging(System.Nullable<int> value);
-    partial void OnVarianDayChanged();
-    partial void OnInterestonsheduleVarianChanging(System.Nullable<decimal> value);
-    partial void OnInterestonsheduleVarianChanged();
-    #endregion
-		
-		public InstallmentRow()
-		{
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public int ID
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ChequeNo", DbType="NVarChar(100)")]
+		public string ChequeNo
 		{
 			get
 			{
-				return this._ID;
+				return this._ChequeNo;
 			}
 			set
 			{
-				if ((this._ID != value))
+				if ((this._ChequeNo != value))
 				{
-					this.OnIDChanging(value);
+					this.OnChequeNoChanging(value);
 					this.SendPropertyChanging();
-					this._ID = value;
-					this.SendPropertyChanged("ID");
-					this.OnIDChanged();
+					this._ChequeNo = value;
+					this.SendPropertyChanged("ChequeNo");
+					this.OnChequeNoChanged();
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_BaseEntry", DbType="Int NOT NULL")]
-		public int BaseEntry
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ChequeName", DbType="NVarChar(200)")]
+		public string ChequeName
 		{
 			get
 			{
-				return this._BaseEntry;
+				return this._ChequeName;
 			}
 			set
 			{
-				if ((this._BaseEntry != value))
+				if ((this._ChequeName != value))
 				{
-					this.OnBaseEntryChanging(value);
+					this.OnChequeNameChanging(value);
 					this.SendPropertyChanging();
-					this._BaseEntry = value;
-					this.SendPropertyChanged("BaseEntry");
-					this.OnBaseEntryChanged();
+					this._ChequeName = value;
+					this.SendPropertyChanged("ChequeName");
+					this.OnChequeNameChanged();
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_BaseLine", DbType="Int NOT NULL")]
-		public int BaseLine
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ChequeBankName", DbType="NVarChar(100)")]
+		public string ChequeBankName
 		{
 			get
 			{
-				return this._BaseLine;
+				return this._ChequeBankName;
 			}
 			set
 			{
-				if ((this._BaseLine != value))
+				if ((this._ChequeBankName != value))
 				{
-					this.OnBaseLineChanging(value);
+					this.OnChequeBankNameChanging(value);
 					this.SendPropertyChanging();
-					this._BaseLine = value;
-					this.SendPropertyChanged("BaseLine");
-					this.OnBaseLineChanged();
+					this._ChequeBankName = value;
+					this.SendPropertyChanged("ChequeBankName");
+					this.OnChequeBankNameChanged();
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_VisOrder", DbType="Int")]
-		public System.Nullable<int> VisOrder
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PayeeName", DbType="NVarChar(200)")]
+		public string PayeeName
 		{
 			get
 			{
-				return this._VisOrder;
+				return this._PayeeName;
 			}
 			set
 			{
-				if ((this._VisOrder != value))
+				if ((this._PayeeName != value))
 				{
-					this.OnVisOrderChanging(value);
+					this.OnPayeeNameChanging(value);
 					this.SendPropertyChanging();
-					this._VisOrder = value;
-					this.SendPropertyChanged("VisOrder");
-					this.OnVisOrderChanged();
+					this._PayeeName = value;
+					this.SendPropertyChanged("PayeeName");
+					this.OnPayeeNameChanged();
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ItemCode", DbType="NVarChar(100)")]
-		public string ItemCode
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ApplyInterest", DbType="Decimal(19,6)")]
+		public System.Nullable<decimal> ApplyInterest
 		{
 			get
 			{
-				return this._ItemCode;
+				return this._ApplyInterest;
 			}
 			set
 			{
-				if ((this._ItemCode != value))
+				if ((this._ApplyInterest != value))
 				{
-					this.OnItemCodeChanging(value);
+					this.OnApplyInterestChanging(value);
 					this.SendPropertyChanging();
-					this._ItemCode = value;
-					this.SendPropertyChanged("ItemCode");
-					this.OnItemCodeChanged();
+					this._ApplyInterest = value;
+					this.SendPropertyChanged("ApplyInterest");
+					this.OnApplyInterestChanged();
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Principle", DbType="Decimal(19,6)")]
-		public System.Nullable<decimal> Principle
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ApplyInterestStatus", DbType="NVarChar(10)")]
+		public string ApplyInterestStatus
 		{
 			get
 			{
-				return this._Principle;
+				return this._ApplyInterestStatus;
 			}
 			set
 			{
-				if ((this._Principle != value))
+				if ((this._ApplyInterestStatus != value))
 				{
-					this.OnPrincipleChanging(value);
+					this.OnApplyInterestStatusChanging(value);
 					this.SendPropertyChanging();
-					this._Principle = value;
-					this.SendPropertyChanged("Principle");
-					this.OnPrincipleChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Interest", DbType="Decimal(19,6)")]
-		public System.Nullable<decimal> Interest
-		{
-			get
-			{
-				return this._Interest;
-			}
-			set
-			{
-				if ((this._Interest != value))
-				{
-					this.OnInterestChanging(value);
-					this.SendPropertyChanging();
-					this._Interest = value;
-					this.SendPropertyChanged("Interest");
-					this.OnInterestChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Monthly", DbType="Decimal(19,6)")]
-		public System.Nullable<decimal> Monthly
-		{
-			get
-			{
-				return this._Monthly;
-			}
-			set
-			{
-				if ((this._Monthly != value))
-				{
-					this.OnMonthlyChanging(value);
-					this.SendPropertyChanging();
-					this._Monthly = value;
-					this.SendPropertyChanged("Monthly");
-					this.OnMonthlyChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PaymentDate", DbType="Date")]
-		public System.Nullable<System.DateTime> PaymentDate
-		{
-			get
-			{
-				return this._PaymentDate;
-			}
-			set
-			{
-				if ((this._PaymentDate != value))
-				{
-					this.OnPaymentDateChanging(value);
-					this.SendPropertyChanging();
-					this._PaymentDate = value;
-					this.SendPropertyChanged("PaymentDate");
-					this.OnPaymentDateChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DueDate", DbType="Date")]
-		public System.Nullable<System.DateTime> DueDate
-		{
-			get
-			{
-				return this._DueDate;
-			}
-			set
-			{
-				if ((this._DueDate != value))
-				{
-					this.OnDueDateChanging(value);
-					this.SendPropertyChanging();
-					this._DueDate = value;
-					this.SendPropertyChanged("DueDate");
-					this.OnDueDateChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Remaining", DbType="Decimal(19,6)")]
-		public System.Nullable<decimal> Remaining
-		{
-			get
-			{
-				return this._Remaining;
-			}
-			set
-			{
-				if ((this._Remaining != value))
-				{
-					this.OnRemainingChanging(value);
-					this.SendPropertyChanging();
-					this._Remaining = value;
-					this.SendPropertyChanged("Remaining");
-					this.OnRemainingChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ReIncloudInter", DbType="Decimal(19,6)")]
-		public System.Nullable<decimal> ReIncloudInter
-		{
-			get
-			{
-				return this._ReIncloudInter;
-			}
-			set
-			{
-				if ((this._ReIncloudInter != value))
-				{
-					this.OnReIncloudInterChanging(value);
-					this.SendPropertyChanging();
-					this._ReIncloudInter = value;
-					this.SendPropertyChanged("ReIncloudInter");
-					this.OnReIncloudInterChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_RowStatus", DbType="NChar(10)")]
-		public string RowStatus
-		{
-			get
-			{
-				return this._RowStatus;
-			}
-			set
-			{
-				if ((this._RowStatus != value))
-				{
-					this.OnRowStatusChanging(value);
-					this.SendPropertyChanging();
-					this._RowStatus = value;
-					this.SendPropertyChanged("RowStatus");
-					this.OnRowStatusChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CuInterest", DbType="Decimal(19,6)")]
-		public System.Nullable<decimal> CuInterest
-		{
-			get
-			{
-				return this._CuInterest;
-			}
-			set
-			{
-				if ((this._CuInterest != value))
-				{
-					this.OnCuInterestChanging(value);
-					this.SendPropertyChanging();
-					this._CuInterest = value;
-					this.SendPropertyChanged("CuInterest");
-					this.OnCuInterestChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CuPayment", DbType="Decimal(19,6)")]
-		public System.Nullable<decimal> CuPayment
-		{
-			get
-			{
-				return this._CuPayment;
-			}
-			set
-			{
-				if ((this._CuPayment != value))
-				{
-					this.OnCuPaymentChanging(value);
-					this.SendPropertyChanging();
-					this._CuPayment = value;
-					this.SendPropertyChanged("CuPayment");
-					this.OnCuPaymentChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FixedPayment", DbType="Decimal(19,6)")]
-		public System.Nullable<decimal> FixedPayment
-		{
-			get
-			{
-				return this._FixedPayment;
-			}
-			set
-			{
-				if ((this._FixedPayment != value))
-				{
-					this.OnFixedPaymentChanging(value);
-					this.SendPropertyChanging();
-					this._FixedPayment = value;
-					this.SendPropertyChanged("FixedPayment");
-					this.OnFixedPaymentChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ARNo", DbType="Int")]
-		public System.Nullable<int> ARNo
-		{
-			get
-			{
-				return this._ARNo;
-			}
-			set
-			{
-				if ((this._ARNo != value))
-				{
-					this.OnARNoChanging(value);
-					this.SendPropertyChanging();
-					this._ARNo = value;
-					this.SendPropertyChanged("ARNo");
-					this.OnARNoChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PaymentNo", DbType="Int")]
-		public System.Nullable<int> PaymentNo
-		{
-			get
-			{
-				return this._PaymentNo;
-			}
-			set
-			{
-				if ((this._PaymentNo != value))
-				{
-					this.OnPaymentNoChanging(value);
-					this.SendPropertyChanging();
-					this._PaymentNo = value;
-					this.SendPropertyChanged("PaymentNo");
-					this.OnPaymentNoChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Method", DbType="NVarChar(100)")]
-		public string Method
-		{
-			get
-			{
-				return this._Method;
-			}
-			set
-			{
-				if ((this._Method != value))
-				{
-					this.OnMethodChanging(value);
-					this.SendPropertyChanging();
-					this._Method = value;
-					this.SendPropertyChanged("Method");
-					this.OnMethodChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_InstallmentAmt", DbType="Decimal(19,6)")]
-		public System.Nullable<decimal> InstallmentAmt
-		{
-			get
-			{
-				return this._InstallmentAmt;
-			}
-			set
-			{
-				if ((this._InstallmentAmt != value))
-				{
-					this.OnInstallmentAmtChanging(value);
-					this.SendPropertyChanging();
-					this._InstallmentAmt = value;
-					this.SendPropertyChanged("InstallmentAmt");
-					this.OnInstallmentAmtChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DiscountAmt", DbType="Decimal(19,6)")]
-		public System.Nullable<decimal> DiscountAmt
-		{
-			get
-			{
-				return this._DiscountAmt;
-			}
-			set
-			{
-				if ((this._DiscountAmt != value))
-				{
-					this.OnDiscountAmtChanging(value);
-					this.SendPropertyChanging();
-					this._DiscountAmt = value;
-					this.SendPropertyChanged("DiscountAmt");
-					this.OnDiscountAmtChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DepositAmt", DbType="Decimal(19,6)")]
-		public System.Nullable<decimal> DepositAmt
-		{
-			get
-			{
-				return this._DepositAmt;
-			}
-			set
-			{
-				if ((this._DepositAmt != value))
-				{
-					this.OnDepositAmtChanging(value);
-					this.SendPropertyChanging();
-					this._DepositAmt = value;
-					this.SendPropertyChanged("DepositAmt");
-					this.OnDepositAmtChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AnnualRate", DbType="Decimal(19,6)")]
-		public System.Nullable<decimal> AnnualRate
-		{
-			get
-			{
-				return this._AnnualRate;
-			}
-			set
-			{
-				if ((this._AnnualRate != value))
-				{
-					this.OnAnnualRateChanging(value);
-					this.SendPropertyChanging();
-					this._AnnualRate = value;
-					this.SendPropertyChanged("AnnualRate");
-					this.OnAnnualRateChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PeriodMonths", DbType="Decimal(19,6)")]
-		public System.Nullable<decimal> PeriodMonths
-		{
-			get
-			{
-				return this._PeriodMonths;
-			}
-			set
-			{
-				if ((this._PeriodMonths != value))
-				{
-					this.OnPeriodMonthsChanging(value);
-					this.SendPropertyChanging();
-					this._PeriodMonths = value;
-					this.SendPropertyChanged("PeriodMonths");
-					this.OnPeriodMonthsChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_HouseStatus", DbType="NVarChar(100)")]
-		public string HouseStatus
-		{
-			get
-			{
-				return this._HouseStatus;
-			}
-			set
-			{
-				if ((this._HouseStatus != value))
-				{
-					this.OnHouseStatusChanging(value);
-					this.SendPropertyChanging();
-					this._HouseStatus = value;
-					this.SendPropertyChanged("HouseStatus");
-					this.OnHouseStatusChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Remarks", DbType="NVarChar(254)")]
-		public string Remarks
-		{
-			get
-			{
-				return this._Remarks;
-			}
-			set
-			{
-				if ((this._Remarks != value))
-				{
-					this.OnRemarksChanging(value);
-					this.SendPropertyChanging();
-					this._Remarks = value;
-					this.SendPropertyChanged("Remarks");
-					this.OnRemarksChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Syn", DbType="Int")]
-		public System.Nullable<int> Syn
-		{
-			get
-			{
-				return this._Syn;
-			}
-			set
-			{
-				if ((this._Syn != value))
-				{
-					this.OnSynChanging(value);
-					this.SendPropertyChanging();
-					this._Syn = value;
-					this.SendPropertyChanged("Syn");
-					this.OnSynChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ErrorLog", DbType="NVarChar(254)")]
-		public string ErrorLog
-		{
-			get
-			{
-				return this._ErrorLog;
-			}
-			set
-			{
-				if ((this._ErrorLog != value))
-				{
-					this.OnErrorLogChanging(value);
-					this.SendPropertyChanging();
-					this._ErrorLog = value;
-					this.SendPropertyChanged("ErrorLog");
-					this.OnErrorLogChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DiscountAmount", DbType="Decimal(18,2)")]
-		public System.Nullable<decimal> DiscountAmount
-		{
-			get
-			{
-				return this._DiscountAmount;
-			}
-			set
-			{
-				if ((this._DiscountAmount != value))
-				{
-					this.OnDiscountAmountChanging(value);
-					this.SendPropertyChanging();
-					this._DiscountAmount = value;
-					this.SendPropertyChanged("DiscountAmount");
-					this.OnDiscountAmountChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DiscountPer", DbType="Decimal(18,2)")]
-		public System.Nullable<decimal> DiscountPer
-		{
-			get
-			{
-				return this._DiscountPer;
-			}
-			set
-			{
-				if ((this._DiscountPer != value))
-				{
-					this.OnDiscountPerChanging(value);
-					this.SendPropertyChanging();
-					this._DiscountPer = value;
-					this.SendPropertyChanged("DiscountPer");
-					this.OnDiscountPerChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SpecialDisAmount", DbType="Decimal(18,2)")]
-		public System.Nullable<decimal> SpecialDisAmount
-		{
-			get
-			{
-				return this._SpecialDisAmount;
-			}
-			set
-			{
-				if ((this._SpecialDisAmount != value))
-				{
-					this.OnSpecialDisAmountChanging(value);
-					this.SendPropertyChanging();
-					this._SpecialDisAmount = value;
-					this.SendPropertyChanged("SpecialDisAmount");
-					this.OnSpecialDisAmountChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SpecialDisPer", DbType="Decimal(18,2)")]
-		public System.Nullable<decimal> SpecialDisPer
-		{
-			get
-			{
-				return this._SpecialDisPer;
-			}
-			set
-			{
-				if ((this._SpecialDisPer != value))
-				{
-					this.OnSpecialDisPerChanging(value);
-					this.SendPropertyChanging();
-					this._SpecialDisPer = value;
-					this.SendPropertyChanged("SpecialDisPer");
-					this.OnSpecialDisPerChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AdditionalDisAmount", DbType="Decimal(18,2)")]
-		public System.Nullable<decimal> AdditionalDisAmount
-		{
-			get
-			{
-				return this._AdditionalDisAmount;
-			}
-			set
-			{
-				if ((this._AdditionalDisAmount != value))
-				{
-					this.OnAdditionalDisAmountChanging(value);
-					this.SendPropertyChanging();
-					this._AdditionalDisAmount = value;
-					this.SendPropertyChanged("AdditionalDisAmount");
-					this.OnAdditionalDisAmountChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AdditionalDisPer", DbType="Decimal(18,2)")]
-		public System.Nullable<decimal> AdditionalDisPer
-		{
-			get
-			{
-				return this._AdditionalDisPer;
-			}
-			set
-			{
-				if ((this._AdditionalDisPer != value))
-				{
-					this.OnAdditionalDisPerChanging(value);
-					this.SendPropertyChanging();
-					this._AdditionalDisPer = value;
-					this.SendPropertyChanged("AdditionalDisPer");
-					this.OnAdditionalDisPerChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ItemName", DbType="NVarChar(200)")]
-		public string ItemName
-		{
-			get
-			{
-				return this._ItemName;
-			}
-			set
-			{
-				if ((this._ItemName != value))
-				{
-					this.OnItemNameChanging(value);
-					this.SendPropertyChanging();
-					this._ItemName = value;
-					this.SendPropertyChanged("ItemName");
-					this.OnItemNameChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_OcrCode", DbType="NVarChar(100)")]
-		public string OcrCode
-		{
-			get
-			{
-				return this._OcrCode;
-			}
-			set
-			{
-				if ((this._OcrCode != value))
-				{
-					this.OnOcrCodeChanging(value);
-					this.SendPropertyChanging();
-					this._OcrCode = value;
-					this.SendPropertyChanged("OcrCode");
-					this.OnOcrCodeChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_OcrCode2", DbType="NVarChar(100)")]
-		public string OcrCode2
-		{
-			get
-			{
-				return this._OcrCode2;
-			}
-			set
-			{
-				if ((this._OcrCode2 != value))
-				{
-					this.OnOcrCode2Changing(value);
-					this.SendPropertyChanging();
-					this._OcrCode2 = value;
-					this.SendPropertyChanged("OcrCode2");
-					this.OnOcrCode2Changed();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_OcrCode3", DbType="NVarChar(100)")]
-		public string OcrCode3
-		{
-			get
-			{
-				return this._OcrCode3;
-			}
-			set
-			{
-				if ((this._OcrCode3 != value))
-				{
-					this.OnOcrCode3Changing(value);
-					this.SendPropertyChanging();
-					this._OcrCode3 = value;
-					this.SendPropertyChanged("OcrCode3");
-					this.OnOcrCode3Changed();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_NewPaymentDate", DbType="DateTime")]
-		public System.Nullable<System.DateTime> NewPaymentDate
-		{
-			get
-			{
-				return this._NewPaymentDate;
-			}
-			set
-			{
-				if ((this._NewPaymentDate != value))
-				{
-					this.OnNewPaymentDateChanging(value);
-					this.SendPropertyChanging();
-					this._NewPaymentDate = value;
-					this.SendPropertyChanged("NewPaymentDate");
-					this.OnNewPaymentDateChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SpecialAmt", DbType="Decimal(19,6)")]
-		public System.Nullable<decimal> SpecialAmt
-		{
-			get
-			{
-				return this._SpecialAmt;
-			}
-			set
-			{
-				if ((this._SpecialAmt != value))
-				{
-					this.OnSpecialAmtChanging(value);
-					this.SendPropertyChanging();
-					this._SpecialAmt = value;
-					this.SendPropertyChanged("SpecialAmt");
-					this.OnSpecialAmtChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_RemaingOld", DbType="Decimal(19,6)")]
-		public System.Nullable<decimal> RemaingOld
-		{
-			get
-			{
-				return this._RemaingOld;
-			}
-			set
-			{
-				if ((this._RemaingOld != value))
-				{
-					this.OnRemaingOldChanging(value);
-					this.SendPropertyChanging();
-					this._RemaingOld = value;
-					this.SendPropertyChanged("RemaingOld");
-					this.OnRemaingOldChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_InterestonSchedule", DbType="Decimal(19,6)")]
-		public System.Nullable<decimal> InterestonSchedule
-		{
-			get
-			{
-				return this._InterestonSchedule;
-			}
-			set
-			{
-				if ((this._InterestonSchedule != value))
-				{
-					this.OnInterestonScheduleChanging(value);
-					this.SendPropertyChanging();
-					this._InterestonSchedule = value;
-					this.SendPropertyChanged("InterestonSchedule");
-					this.OnInterestonScheduleChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ARNoInterest", DbType="Int")]
-		public System.Nullable<int> ARNoInterest
-		{
-			get
-			{
-				return this._ARNoInterest;
-			}
-			set
-			{
-				if ((this._ARNoInterest != value))
-				{
-					this.OnARNoInterestChanging(value);
-					this.SendPropertyChanging();
-					this._ARNoInterest = value;
-					this.SendPropertyChanged("ARNoInterest");
-					this.OnARNoInterestChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PaymentNoInterest", DbType="Int")]
-		public System.Nullable<int> PaymentNoInterest
-		{
-			get
-			{
-				return this._PaymentNoInterest;
-			}
-			set
-			{
-				if ((this._PaymentNoInterest != value))
-				{
-					this.OnPaymentNoInterestChanging(value);
-					this.SendPropertyChanging();
-					this._PaymentNoInterest = value;
-					this.SendPropertyChanged("PaymentNoInterest");
-					this.OnPaymentNoInterestChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_VarianDay", DbType="Int")]
-		public System.Nullable<int> VarianDay
-		{
-			get
-			{
-				return this._VarianDay;
-			}
-			set
-			{
-				if ((this._VarianDay != value))
-				{
-					this.OnVarianDayChanging(value);
-					this.SendPropertyChanging();
-					this._VarianDay = value;
-					this.SendPropertyChanged("VarianDay");
-					this.OnVarianDayChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_InterestonsheduleVarian", DbType="Decimal(19,6)")]
-		public System.Nullable<decimal> InterestonsheduleVarian
-		{
-			get
-			{
-				return this._InterestonsheduleVarian;
-			}
-			set
-			{
-				if ((this._InterestonsheduleVarian != value))
-				{
-					this.OnInterestonsheduleVarianChanging(value);
-					this.SendPropertyChanging();
-					this._InterestonsheduleVarian = value;
-					this.SendPropertyChanged("InterestonsheduleVarian");
-					this.OnInterestonsheduleVarianChanged();
+					this._ApplyInterestStatus = value;
+					this.SendPropertyChanged("ApplyInterestStatus");
+					this.OnApplyInterestStatusChanged();
 				}
 			}
 		}
@@ -34499,2545 +37811,6 @@ namespace MKL_Web.Models
 			if ((this.PropertyChanged != null))
 			{
 				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.CNInstallmentRow")]
-	public partial class CNInstallmentRow : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _ID;
-		
-		private int _BaseEntry;
-		
-		private int _BaseLine;
-		
-		private System.Nullable<int> _VisOrder;
-		
-		private string _ItemCode;
-		
-		private System.Nullable<decimal> _Principle;
-		
-		private System.Nullable<decimal> _Interest;
-		
-		private System.Nullable<decimal> _Monthly;
-		
-		private System.Nullable<System.DateTime> _PaymentDate;
-		
-		private System.Nullable<System.DateTime> _DueDate;
-		
-		private System.Nullable<decimal> _Remaining;
-		
-		private System.Nullable<decimal> _ReIncloudInter;
-		
-		private string _RowStatus;
-		
-		private System.Nullable<decimal> _CuInterest;
-		
-		private System.Nullable<decimal> _CuPayment;
-		
-		private System.Nullable<decimal> _FixedPayment;
-		
-		private System.Nullable<int> _ARNo;
-		
-		private System.Nullable<int> _PaymentNo;
-		
-		private string _Method;
-		
-		private System.Nullable<decimal> _InstallmentAmt;
-		
-		private System.Nullable<decimal> _DiscountAmt;
-		
-		private System.Nullable<decimal> _DepositAmt;
-		
-		private System.Nullable<decimal> _AnnualRate;
-		
-		private System.Nullable<decimal> _PeriodMonths;
-		
-		private string _HouseStatus;
-		
-		private string _Remarks;
-		
-		private System.Nullable<int> _Syn;
-		
-		private string _ErrorLog;
-		
-		private System.Nullable<decimal> _DiscountAmount;
-		
-		private System.Nullable<decimal> _DiscountPer;
-		
-		private System.Nullable<decimal> _SpecialDisAmount;
-		
-		private System.Nullable<decimal> _SpecialDisPer;
-		
-		private System.Nullable<decimal> _AdditionalDisAmount;
-		
-		private System.Nullable<decimal> _AdditionalDisPer;
-		
-		private string _ItemName;
-		
-		private string _OcrCode;
-		
-		private string _OcrCode2;
-		
-		private string _OcrCode3;
-		
-		private System.Nullable<System.DateTime> _NewPaymentDate;
-		
-		private System.Nullable<decimal> _SpecialAmt;
-		
-		private System.Nullable<decimal> _RemaingOld;
-		
-		private System.Nullable<decimal> _InterestonSchedule;
-		
-		private string _RowType;
-		
-		private System.Nullable<int> _ARNoInterest;
-		
-		private System.Nullable<int> _PaymentNoInterest;
-		
-		private System.Nullable<int> _VarianDay;
-		
-		private System.Nullable<decimal> _InterestonsheduleVarian;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnIDChanging(int value);
-    partial void OnIDChanged();
-    partial void OnBaseEntryChanging(int value);
-    partial void OnBaseEntryChanged();
-    partial void OnBaseLineChanging(int value);
-    partial void OnBaseLineChanged();
-    partial void OnVisOrderChanging(System.Nullable<int> value);
-    partial void OnVisOrderChanged();
-    partial void OnItemCodeChanging(string value);
-    partial void OnItemCodeChanged();
-    partial void OnPrincipleChanging(System.Nullable<decimal> value);
-    partial void OnPrincipleChanged();
-    partial void OnInterestChanging(System.Nullable<decimal> value);
-    partial void OnInterestChanged();
-    partial void OnMonthlyChanging(System.Nullable<decimal> value);
-    partial void OnMonthlyChanged();
-    partial void OnPaymentDateChanging(System.Nullable<System.DateTime> value);
-    partial void OnPaymentDateChanged();
-    partial void OnDueDateChanging(System.Nullable<System.DateTime> value);
-    partial void OnDueDateChanged();
-    partial void OnRemainingChanging(System.Nullable<decimal> value);
-    partial void OnRemainingChanged();
-    partial void OnReIncloudInterChanging(System.Nullable<decimal> value);
-    partial void OnReIncloudInterChanged();
-    partial void OnRowStatusChanging(string value);
-    partial void OnRowStatusChanged();
-    partial void OnCuInterestChanging(System.Nullable<decimal> value);
-    partial void OnCuInterestChanged();
-    partial void OnCuPaymentChanging(System.Nullable<decimal> value);
-    partial void OnCuPaymentChanged();
-    partial void OnFixedPaymentChanging(System.Nullable<decimal> value);
-    partial void OnFixedPaymentChanged();
-    partial void OnARNoChanging(System.Nullable<int> value);
-    partial void OnARNoChanged();
-    partial void OnPaymentNoChanging(System.Nullable<int> value);
-    partial void OnPaymentNoChanged();
-    partial void OnMethodChanging(string value);
-    partial void OnMethodChanged();
-    partial void OnInstallmentAmtChanging(System.Nullable<decimal> value);
-    partial void OnInstallmentAmtChanged();
-    partial void OnDiscountAmtChanging(System.Nullable<decimal> value);
-    partial void OnDiscountAmtChanged();
-    partial void OnDepositAmtChanging(System.Nullable<decimal> value);
-    partial void OnDepositAmtChanged();
-    partial void OnAnnualRateChanging(System.Nullable<decimal> value);
-    partial void OnAnnualRateChanged();
-    partial void OnPeriodMonthsChanging(System.Nullable<decimal> value);
-    partial void OnPeriodMonthsChanged();
-    partial void OnHouseStatusChanging(string value);
-    partial void OnHouseStatusChanged();
-    partial void OnRemarksChanging(string value);
-    partial void OnRemarksChanged();
-    partial void OnSynChanging(System.Nullable<int> value);
-    partial void OnSynChanged();
-    partial void OnErrorLogChanging(string value);
-    partial void OnErrorLogChanged();
-    partial void OnDiscountAmountChanging(System.Nullable<decimal> value);
-    partial void OnDiscountAmountChanged();
-    partial void OnDiscountPerChanging(System.Nullable<decimal> value);
-    partial void OnDiscountPerChanged();
-    partial void OnSpecialDisAmountChanging(System.Nullable<decimal> value);
-    partial void OnSpecialDisAmountChanged();
-    partial void OnSpecialDisPerChanging(System.Nullable<decimal> value);
-    partial void OnSpecialDisPerChanged();
-    partial void OnAdditionalDisAmountChanging(System.Nullable<decimal> value);
-    partial void OnAdditionalDisAmountChanged();
-    partial void OnAdditionalDisPerChanging(System.Nullable<decimal> value);
-    partial void OnAdditionalDisPerChanged();
-    partial void OnItemNameChanging(string value);
-    partial void OnItemNameChanged();
-    partial void OnOcrCodeChanging(string value);
-    partial void OnOcrCodeChanged();
-    partial void OnOcrCode2Changing(string value);
-    partial void OnOcrCode2Changed();
-    partial void OnOcrCode3Changing(string value);
-    partial void OnOcrCode3Changed();
-    partial void OnNewPaymentDateChanging(System.Nullable<System.DateTime> value);
-    partial void OnNewPaymentDateChanged();
-    partial void OnSpecialAmtChanging(System.Nullable<decimal> value);
-    partial void OnSpecialAmtChanged();
-    partial void OnRemaingOldChanging(System.Nullable<decimal> value);
-    partial void OnRemaingOldChanged();
-    partial void OnInterestonScheduleChanging(System.Nullable<decimal> value);
-    partial void OnInterestonScheduleChanged();
-    partial void OnRowTypeChanging(string value);
-    partial void OnRowTypeChanged();
-    partial void OnARNoInterestChanging(System.Nullable<int> value);
-    partial void OnARNoInterestChanged();
-    partial void OnPaymentNoInterestChanging(System.Nullable<int> value);
-    partial void OnPaymentNoInterestChanged();
-    partial void OnVarianDayChanging(System.Nullable<int> value);
-    partial void OnVarianDayChanged();
-    partial void OnInterestonsheduleVarianChanging(System.Nullable<decimal> value);
-    partial void OnInterestonsheduleVarianChanged();
-    #endregion
-		
-		public CNInstallmentRow()
-		{
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", DbType="Int NOT NULL", IsPrimaryKey=true)]
-		public int ID
-		{
-			get
-			{
-				return this._ID;
-			}
-			set
-			{
-				if ((this._ID != value))
-				{
-					this.OnIDChanging(value);
-					this.SendPropertyChanging();
-					this._ID = value;
-					this.SendPropertyChanged("ID");
-					this.OnIDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_BaseEntry", DbType="Int NOT NULL")]
-		public int BaseEntry
-		{
-			get
-			{
-				return this._BaseEntry;
-			}
-			set
-			{
-				if ((this._BaseEntry != value))
-				{
-					this.OnBaseEntryChanging(value);
-					this.SendPropertyChanging();
-					this._BaseEntry = value;
-					this.SendPropertyChanged("BaseEntry");
-					this.OnBaseEntryChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_BaseLine", DbType="Int NOT NULL")]
-		public int BaseLine
-		{
-			get
-			{
-				return this._BaseLine;
-			}
-			set
-			{
-				if ((this._BaseLine != value))
-				{
-					this.OnBaseLineChanging(value);
-					this.SendPropertyChanging();
-					this._BaseLine = value;
-					this.SendPropertyChanged("BaseLine");
-					this.OnBaseLineChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_VisOrder", DbType="Int")]
-		public System.Nullable<int> VisOrder
-		{
-			get
-			{
-				return this._VisOrder;
-			}
-			set
-			{
-				if ((this._VisOrder != value))
-				{
-					this.OnVisOrderChanging(value);
-					this.SendPropertyChanging();
-					this._VisOrder = value;
-					this.SendPropertyChanged("VisOrder");
-					this.OnVisOrderChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ItemCode", DbType="NVarChar(25)")]
-		public string ItemCode
-		{
-			get
-			{
-				return this._ItemCode;
-			}
-			set
-			{
-				if ((this._ItemCode != value))
-				{
-					this.OnItemCodeChanging(value);
-					this.SendPropertyChanging();
-					this._ItemCode = value;
-					this.SendPropertyChanged("ItemCode");
-					this.OnItemCodeChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Principle", DbType="Decimal(19,6)")]
-		public System.Nullable<decimal> Principle
-		{
-			get
-			{
-				return this._Principle;
-			}
-			set
-			{
-				if ((this._Principle != value))
-				{
-					this.OnPrincipleChanging(value);
-					this.SendPropertyChanging();
-					this._Principle = value;
-					this.SendPropertyChanged("Principle");
-					this.OnPrincipleChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Interest", DbType="Decimal(19,6)")]
-		public System.Nullable<decimal> Interest
-		{
-			get
-			{
-				return this._Interest;
-			}
-			set
-			{
-				if ((this._Interest != value))
-				{
-					this.OnInterestChanging(value);
-					this.SendPropertyChanging();
-					this._Interest = value;
-					this.SendPropertyChanged("Interest");
-					this.OnInterestChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Monthly", DbType="Decimal(19,6)")]
-		public System.Nullable<decimal> Monthly
-		{
-			get
-			{
-				return this._Monthly;
-			}
-			set
-			{
-				if ((this._Monthly != value))
-				{
-					this.OnMonthlyChanging(value);
-					this.SendPropertyChanging();
-					this._Monthly = value;
-					this.SendPropertyChanged("Monthly");
-					this.OnMonthlyChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PaymentDate", DbType="Date")]
-		public System.Nullable<System.DateTime> PaymentDate
-		{
-			get
-			{
-				return this._PaymentDate;
-			}
-			set
-			{
-				if ((this._PaymentDate != value))
-				{
-					this.OnPaymentDateChanging(value);
-					this.SendPropertyChanging();
-					this._PaymentDate = value;
-					this.SendPropertyChanged("PaymentDate");
-					this.OnPaymentDateChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DueDate", DbType="Date")]
-		public System.Nullable<System.DateTime> DueDate
-		{
-			get
-			{
-				return this._DueDate;
-			}
-			set
-			{
-				if ((this._DueDate != value))
-				{
-					this.OnDueDateChanging(value);
-					this.SendPropertyChanging();
-					this._DueDate = value;
-					this.SendPropertyChanged("DueDate");
-					this.OnDueDateChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Remaining", DbType="Decimal(19,6)")]
-		public System.Nullable<decimal> Remaining
-		{
-			get
-			{
-				return this._Remaining;
-			}
-			set
-			{
-				if ((this._Remaining != value))
-				{
-					this.OnRemainingChanging(value);
-					this.SendPropertyChanging();
-					this._Remaining = value;
-					this.SendPropertyChanged("Remaining");
-					this.OnRemainingChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ReIncloudInter", DbType="Decimal(19,6)")]
-		public System.Nullable<decimal> ReIncloudInter
-		{
-			get
-			{
-				return this._ReIncloudInter;
-			}
-			set
-			{
-				if ((this._ReIncloudInter != value))
-				{
-					this.OnReIncloudInterChanging(value);
-					this.SendPropertyChanging();
-					this._ReIncloudInter = value;
-					this.SendPropertyChanged("ReIncloudInter");
-					this.OnReIncloudInterChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_RowStatus", DbType="NChar(10)")]
-		public string RowStatus
-		{
-			get
-			{
-				return this._RowStatus;
-			}
-			set
-			{
-				if ((this._RowStatus != value))
-				{
-					this.OnRowStatusChanging(value);
-					this.SendPropertyChanging();
-					this._RowStatus = value;
-					this.SendPropertyChanged("RowStatus");
-					this.OnRowStatusChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CuInterest", DbType="Decimal(19,6)")]
-		public System.Nullable<decimal> CuInterest
-		{
-			get
-			{
-				return this._CuInterest;
-			}
-			set
-			{
-				if ((this._CuInterest != value))
-				{
-					this.OnCuInterestChanging(value);
-					this.SendPropertyChanging();
-					this._CuInterest = value;
-					this.SendPropertyChanged("CuInterest");
-					this.OnCuInterestChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CuPayment", DbType="Decimal(19,6)")]
-		public System.Nullable<decimal> CuPayment
-		{
-			get
-			{
-				return this._CuPayment;
-			}
-			set
-			{
-				if ((this._CuPayment != value))
-				{
-					this.OnCuPaymentChanging(value);
-					this.SendPropertyChanging();
-					this._CuPayment = value;
-					this.SendPropertyChanged("CuPayment");
-					this.OnCuPaymentChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FixedPayment", DbType="Decimal(19,6)")]
-		public System.Nullable<decimal> FixedPayment
-		{
-			get
-			{
-				return this._FixedPayment;
-			}
-			set
-			{
-				if ((this._FixedPayment != value))
-				{
-					this.OnFixedPaymentChanging(value);
-					this.SendPropertyChanging();
-					this._FixedPayment = value;
-					this.SendPropertyChanged("FixedPayment");
-					this.OnFixedPaymentChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ARNo", DbType="Int")]
-		public System.Nullable<int> ARNo
-		{
-			get
-			{
-				return this._ARNo;
-			}
-			set
-			{
-				if ((this._ARNo != value))
-				{
-					this.OnARNoChanging(value);
-					this.SendPropertyChanging();
-					this._ARNo = value;
-					this.SendPropertyChanged("ARNo");
-					this.OnARNoChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PaymentNo", DbType="Int")]
-		public System.Nullable<int> PaymentNo
-		{
-			get
-			{
-				return this._PaymentNo;
-			}
-			set
-			{
-				if ((this._PaymentNo != value))
-				{
-					this.OnPaymentNoChanging(value);
-					this.SendPropertyChanging();
-					this._PaymentNo = value;
-					this.SendPropertyChanged("PaymentNo");
-					this.OnPaymentNoChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Method", DbType="NVarChar(100)")]
-		public string Method
-		{
-			get
-			{
-				return this._Method;
-			}
-			set
-			{
-				if ((this._Method != value))
-				{
-					this.OnMethodChanging(value);
-					this.SendPropertyChanging();
-					this._Method = value;
-					this.SendPropertyChanged("Method");
-					this.OnMethodChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_InstallmentAmt", DbType="Decimal(19,6)")]
-		public System.Nullable<decimal> InstallmentAmt
-		{
-			get
-			{
-				return this._InstallmentAmt;
-			}
-			set
-			{
-				if ((this._InstallmentAmt != value))
-				{
-					this.OnInstallmentAmtChanging(value);
-					this.SendPropertyChanging();
-					this._InstallmentAmt = value;
-					this.SendPropertyChanged("InstallmentAmt");
-					this.OnInstallmentAmtChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DiscountAmt", DbType="Decimal(19,6)")]
-		public System.Nullable<decimal> DiscountAmt
-		{
-			get
-			{
-				return this._DiscountAmt;
-			}
-			set
-			{
-				if ((this._DiscountAmt != value))
-				{
-					this.OnDiscountAmtChanging(value);
-					this.SendPropertyChanging();
-					this._DiscountAmt = value;
-					this.SendPropertyChanged("DiscountAmt");
-					this.OnDiscountAmtChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DepositAmt", DbType="Decimal(19,6)")]
-		public System.Nullable<decimal> DepositAmt
-		{
-			get
-			{
-				return this._DepositAmt;
-			}
-			set
-			{
-				if ((this._DepositAmt != value))
-				{
-					this.OnDepositAmtChanging(value);
-					this.SendPropertyChanging();
-					this._DepositAmt = value;
-					this.SendPropertyChanged("DepositAmt");
-					this.OnDepositAmtChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AnnualRate", DbType="Decimal(19,6)")]
-		public System.Nullable<decimal> AnnualRate
-		{
-			get
-			{
-				return this._AnnualRate;
-			}
-			set
-			{
-				if ((this._AnnualRate != value))
-				{
-					this.OnAnnualRateChanging(value);
-					this.SendPropertyChanging();
-					this._AnnualRate = value;
-					this.SendPropertyChanged("AnnualRate");
-					this.OnAnnualRateChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PeriodMonths", DbType="Decimal(19,6)")]
-		public System.Nullable<decimal> PeriodMonths
-		{
-			get
-			{
-				return this._PeriodMonths;
-			}
-			set
-			{
-				if ((this._PeriodMonths != value))
-				{
-					this.OnPeriodMonthsChanging(value);
-					this.SendPropertyChanging();
-					this._PeriodMonths = value;
-					this.SendPropertyChanged("PeriodMonths");
-					this.OnPeriodMonthsChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_HouseStatus", DbType="NVarChar(100)")]
-		public string HouseStatus
-		{
-			get
-			{
-				return this._HouseStatus;
-			}
-			set
-			{
-				if ((this._HouseStatus != value))
-				{
-					this.OnHouseStatusChanging(value);
-					this.SendPropertyChanging();
-					this._HouseStatus = value;
-					this.SendPropertyChanged("HouseStatus");
-					this.OnHouseStatusChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Remarks", DbType="NVarChar(254)")]
-		public string Remarks
-		{
-			get
-			{
-				return this._Remarks;
-			}
-			set
-			{
-				if ((this._Remarks != value))
-				{
-					this.OnRemarksChanging(value);
-					this.SendPropertyChanging();
-					this._Remarks = value;
-					this.SendPropertyChanged("Remarks");
-					this.OnRemarksChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Syn", DbType="Int")]
-		public System.Nullable<int> Syn
-		{
-			get
-			{
-				return this._Syn;
-			}
-			set
-			{
-				if ((this._Syn != value))
-				{
-					this.OnSynChanging(value);
-					this.SendPropertyChanging();
-					this._Syn = value;
-					this.SendPropertyChanged("Syn");
-					this.OnSynChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ErrorLog", DbType="NVarChar(254)")]
-		public string ErrorLog
-		{
-			get
-			{
-				return this._ErrorLog;
-			}
-			set
-			{
-				if ((this._ErrorLog != value))
-				{
-					this.OnErrorLogChanging(value);
-					this.SendPropertyChanging();
-					this._ErrorLog = value;
-					this.SendPropertyChanged("ErrorLog");
-					this.OnErrorLogChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DiscountAmount", DbType="Decimal(18,2)")]
-		public System.Nullable<decimal> DiscountAmount
-		{
-			get
-			{
-				return this._DiscountAmount;
-			}
-			set
-			{
-				if ((this._DiscountAmount != value))
-				{
-					this.OnDiscountAmountChanging(value);
-					this.SendPropertyChanging();
-					this._DiscountAmount = value;
-					this.SendPropertyChanged("DiscountAmount");
-					this.OnDiscountAmountChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DiscountPer", DbType="Decimal(18,2)")]
-		public System.Nullable<decimal> DiscountPer
-		{
-			get
-			{
-				return this._DiscountPer;
-			}
-			set
-			{
-				if ((this._DiscountPer != value))
-				{
-					this.OnDiscountPerChanging(value);
-					this.SendPropertyChanging();
-					this._DiscountPer = value;
-					this.SendPropertyChanged("DiscountPer");
-					this.OnDiscountPerChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SpecialDisAmount", DbType="Decimal(18,2)")]
-		public System.Nullable<decimal> SpecialDisAmount
-		{
-			get
-			{
-				return this._SpecialDisAmount;
-			}
-			set
-			{
-				if ((this._SpecialDisAmount != value))
-				{
-					this.OnSpecialDisAmountChanging(value);
-					this.SendPropertyChanging();
-					this._SpecialDisAmount = value;
-					this.SendPropertyChanged("SpecialDisAmount");
-					this.OnSpecialDisAmountChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SpecialDisPer", DbType="Decimal(18,2)")]
-		public System.Nullable<decimal> SpecialDisPer
-		{
-			get
-			{
-				return this._SpecialDisPer;
-			}
-			set
-			{
-				if ((this._SpecialDisPer != value))
-				{
-					this.OnSpecialDisPerChanging(value);
-					this.SendPropertyChanging();
-					this._SpecialDisPer = value;
-					this.SendPropertyChanged("SpecialDisPer");
-					this.OnSpecialDisPerChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AdditionalDisAmount", DbType="Decimal(18,2)")]
-		public System.Nullable<decimal> AdditionalDisAmount
-		{
-			get
-			{
-				return this._AdditionalDisAmount;
-			}
-			set
-			{
-				if ((this._AdditionalDisAmount != value))
-				{
-					this.OnAdditionalDisAmountChanging(value);
-					this.SendPropertyChanging();
-					this._AdditionalDisAmount = value;
-					this.SendPropertyChanged("AdditionalDisAmount");
-					this.OnAdditionalDisAmountChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AdditionalDisPer", DbType="Decimal(18,2)")]
-		public System.Nullable<decimal> AdditionalDisPer
-		{
-			get
-			{
-				return this._AdditionalDisPer;
-			}
-			set
-			{
-				if ((this._AdditionalDisPer != value))
-				{
-					this.OnAdditionalDisPerChanging(value);
-					this.SendPropertyChanging();
-					this._AdditionalDisPer = value;
-					this.SendPropertyChanged("AdditionalDisPer");
-					this.OnAdditionalDisPerChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ItemName", DbType="NVarChar(200)")]
-		public string ItemName
-		{
-			get
-			{
-				return this._ItemName;
-			}
-			set
-			{
-				if ((this._ItemName != value))
-				{
-					this.OnItemNameChanging(value);
-					this.SendPropertyChanging();
-					this._ItemName = value;
-					this.SendPropertyChanged("ItemName");
-					this.OnItemNameChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_OcrCode", DbType="NVarChar(200)")]
-		public string OcrCode
-		{
-			get
-			{
-				return this._OcrCode;
-			}
-			set
-			{
-				if ((this._OcrCode != value))
-				{
-					this.OnOcrCodeChanging(value);
-					this.SendPropertyChanging();
-					this._OcrCode = value;
-					this.SendPropertyChanged("OcrCode");
-					this.OnOcrCodeChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_OcrCode2", DbType="NVarChar(200)")]
-		public string OcrCode2
-		{
-			get
-			{
-				return this._OcrCode2;
-			}
-			set
-			{
-				if ((this._OcrCode2 != value))
-				{
-					this.OnOcrCode2Changing(value);
-					this.SendPropertyChanging();
-					this._OcrCode2 = value;
-					this.SendPropertyChanged("OcrCode2");
-					this.OnOcrCode2Changed();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_OcrCode3", DbType="NVarChar(200)")]
-		public string OcrCode3
-		{
-			get
-			{
-				return this._OcrCode3;
-			}
-			set
-			{
-				if ((this._OcrCode3 != value))
-				{
-					this.OnOcrCode3Changing(value);
-					this.SendPropertyChanging();
-					this._OcrCode3 = value;
-					this.SendPropertyChanged("OcrCode3");
-					this.OnOcrCode3Changed();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_NewPaymentDate", DbType="DateTime")]
-		public System.Nullable<System.DateTime> NewPaymentDate
-		{
-			get
-			{
-				return this._NewPaymentDate;
-			}
-			set
-			{
-				if ((this._NewPaymentDate != value))
-				{
-					this.OnNewPaymentDateChanging(value);
-					this.SendPropertyChanging();
-					this._NewPaymentDate = value;
-					this.SendPropertyChanged("NewPaymentDate");
-					this.OnNewPaymentDateChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SpecialAmt", DbType="Decimal(19,6)")]
-		public System.Nullable<decimal> SpecialAmt
-		{
-			get
-			{
-				return this._SpecialAmt;
-			}
-			set
-			{
-				if ((this._SpecialAmt != value))
-				{
-					this.OnSpecialAmtChanging(value);
-					this.SendPropertyChanging();
-					this._SpecialAmt = value;
-					this.SendPropertyChanged("SpecialAmt");
-					this.OnSpecialAmtChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_RemaingOld", DbType="Decimal(19,6)")]
-		public System.Nullable<decimal> RemaingOld
-		{
-			get
-			{
-				return this._RemaingOld;
-			}
-			set
-			{
-				if ((this._RemaingOld != value))
-				{
-					this.OnRemaingOldChanging(value);
-					this.SendPropertyChanging();
-					this._RemaingOld = value;
-					this.SendPropertyChanged("RemaingOld");
-					this.OnRemaingOldChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_InterestonSchedule", DbType="Decimal(19,6)")]
-		public System.Nullable<decimal> InterestonSchedule
-		{
-			get
-			{
-				return this._InterestonSchedule;
-			}
-			set
-			{
-				if ((this._InterestonSchedule != value))
-				{
-					this.OnInterestonScheduleChanging(value);
-					this.SendPropertyChanging();
-					this._InterestonSchedule = value;
-					this.SendPropertyChanged("InterestonSchedule");
-					this.OnInterestonScheduleChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_RowType", DbType="NVarChar(50)")]
-		public string RowType
-		{
-			get
-			{
-				return this._RowType;
-			}
-			set
-			{
-				if ((this._RowType != value))
-				{
-					this.OnRowTypeChanging(value);
-					this.SendPropertyChanging();
-					this._RowType = value;
-					this.SendPropertyChanged("RowType");
-					this.OnRowTypeChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ARNoInterest", DbType="Int")]
-		public System.Nullable<int> ARNoInterest
-		{
-			get
-			{
-				return this._ARNoInterest;
-			}
-			set
-			{
-				if ((this._ARNoInterest != value))
-				{
-					this.OnARNoInterestChanging(value);
-					this.SendPropertyChanging();
-					this._ARNoInterest = value;
-					this.SendPropertyChanged("ARNoInterest");
-					this.OnARNoInterestChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PaymentNoInterest", DbType="Int")]
-		public System.Nullable<int> PaymentNoInterest
-		{
-			get
-			{
-				return this._PaymentNoInterest;
-			}
-			set
-			{
-				if ((this._PaymentNoInterest != value))
-				{
-					this.OnPaymentNoInterestChanging(value);
-					this.SendPropertyChanging();
-					this._PaymentNoInterest = value;
-					this.SendPropertyChanged("PaymentNoInterest");
-					this.OnPaymentNoInterestChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_VarianDay", DbType="Int")]
-		public System.Nullable<int> VarianDay
-		{
-			get
-			{
-				return this._VarianDay;
-			}
-			set
-			{
-				if ((this._VarianDay != value))
-				{
-					this.OnVarianDayChanging(value);
-					this.SendPropertyChanging();
-					this._VarianDay = value;
-					this.SendPropertyChanged("VarianDay");
-					this.OnVarianDayChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_InterestonsheduleVarian", DbType="Decimal(19,6)")]
-		public System.Nullable<decimal> InterestonsheduleVarian
-		{
-			get
-			{
-				return this._InterestonsheduleVarian;
-			}
-			set
-			{
-				if ((this._InterestonsheduleVarian != value))
-				{
-					this.OnInterestonsheduleVarianChanging(value);
-					this.SendPropertyChanging();
-					this._InterestonsheduleVarian = value;
-					this.SendPropertyChanged("InterestonsheduleVarian");
-					this.OnInterestonsheduleVarianChanged();
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.CNInstallmentRowDraf")]
-	public partial class CNInstallmentRowDraf : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _ID;
-		
-		private int _BaseEntry;
-		
-		private int _BaseLine;
-		
-		private System.Nullable<int> _VisOrder;
-		
-		private string _ItemCode;
-		
-		private System.Nullable<decimal> _Principle;
-		
-		private System.Nullable<decimal> _Interest;
-		
-		private System.Nullable<decimal> _Monthly;
-		
-		private System.Nullable<System.DateTime> _PaymentDate;
-		
-		private System.Nullable<System.DateTime> _DueDate;
-		
-		private System.Nullable<decimal> _Remaining;
-		
-		private System.Nullable<decimal> _ReIncloudInter;
-		
-		private string _RowStatus;
-		
-		private System.Nullable<decimal> _CuInterest;
-		
-		private System.Nullable<decimal> _CuPayment;
-		
-		private System.Nullable<decimal> _FixedPayment;
-		
-		private System.Nullable<int> _ARNo;
-		
-		private System.Nullable<int> _PaymentNo;
-		
-		private string _Method;
-		
-		private System.Nullable<decimal> _InstallmentAmt;
-		
-		private System.Nullable<decimal> _DiscountAmt;
-		
-		private System.Nullable<decimal> _DepositAmt;
-		
-		private System.Nullable<decimal> _AnnualRate;
-		
-		private System.Nullable<decimal> _PeriodMonths;
-		
-		private string _HouseStatus;
-		
-		private string _Remarks;
-		
-		private System.Nullable<int> _Syn;
-		
-		private string _ErrorLog;
-		
-		private System.Nullable<decimal> _DiscountAmount;
-		
-		private System.Nullable<decimal> _DiscountPer;
-		
-		private System.Nullable<decimal> _SpecialDisAmount;
-		
-		private System.Nullable<decimal> _SpecialDisPer;
-		
-		private System.Nullable<decimal> _AdditionalDisAmount;
-		
-		private System.Nullable<decimal> _AdditionalDisPer;
-		
-		private string _ItemName;
-		
-		private string _OcrCode;
-		
-		private string _OcrCode2;
-		
-		private string _OcrCode3;
-		
-		private System.Nullable<System.DateTime> _NewPaymentDate;
-		
-		private System.Nullable<decimal> _SpecialAmt;
-		
-		private System.Nullable<decimal> _RemaingOld;
-		
-		private System.Nullable<decimal> _InterestonSchedule;
-		
-		private string _RowType;
-		
-		private System.Nullable<int> _ARNoInterest;
-		
-		private System.Nullable<int> _PaymentNoInterest;
-		
-		private System.Nullable<int> _VarianDay;
-		
-		private System.Nullable<decimal> _InterestonsheduleVarian;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnIDChanging(int value);
-    partial void OnIDChanged();
-    partial void OnBaseEntryChanging(int value);
-    partial void OnBaseEntryChanged();
-    partial void OnBaseLineChanging(int value);
-    partial void OnBaseLineChanged();
-    partial void OnVisOrderChanging(System.Nullable<int> value);
-    partial void OnVisOrderChanged();
-    partial void OnItemCodeChanging(string value);
-    partial void OnItemCodeChanged();
-    partial void OnPrincipleChanging(System.Nullable<decimal> value);
-    partial void OnPrincipleChanged();
-    partial void OnInterestChanging(System.Nullable<decimal> value);
-    partial void OnInterestChanged();
-    partial void OnMonthlyChanging(System.Nullable<decimal> value);
-    partial void OnMonthlyChanged();
-    partial void OnPaymentDateChanging(System.Nullable<System.DateTime> value);
-    partial void OnPaymentDateChanged();
-    partial void OnDueDateChanging(System.Nullable<System.DateTime> value);
-    partial void OnDueDateChanged();
-    partial void OnRemainingChanging(System.Nullable<decimal> value);
-    partial void OnRemainingChanged();
-    partial void OnReIncloudInterChanging(System.Nullable<decimal> value);
-    partial void OnReIncloudInterChanged();
-    partial void OnRowStatusChanging(string value);
-    partial void OnRowStatusChanged();
-    partial void OnCuInterestChanging(System.Nullable<decimal> value);
-    partial void OnCuInterestChanged();
-    partial void OnCuPaymentChanging(System.Nullable<decimal> value);
-    partial void OnCuPaymentChanged();
-    partial void OnFixedPaymentChanging(System.Nullable<decimal> value);
-    partial void OnFixedPaymentChanged();
-    partial void OnARNoChanging(System.Nullable<int> value);
-    partial void OnARNoChanged();
-    partial void OnPaymentNoChanging(System.Nullable<int> value);
-    partial void OnPaymentNoChanged();
-    partial void OnMethodChanging(string value);
-    partial void OnMethodChanged();
-    partial void OnInstallmentAmtChanging(System.Nullable<decimal> value);
-    partial void OnInstallmentAmtChanged();
-    partial void OnDiscountAmtChanging(System.Nullable<decimal> value);
-    partial void OnDiscountAmtChanged();
-    partial void OnDepositAmtChanging(System.Nullable<decimal> value);
-    partial void OnDepositAmtChanged();
-    partial void OnAnnualRateChanging(System.Nullable<decimal> value);
-    partial void OnAnnualRateChanged();
-    partial void OnPeriodMonthsChanging(System.Nullable<decimal> value);
-    partial void OnPeriodMonthsChanged();
-    partial void OnHouseStatusChanging(string value);
-    partial void OnHouseStatusChanged();
-    partial void OnRemarksChanging(string value);
-    partial void OnRemarksChanged();
-    partial void OnSynChanging(System.Nullable<int> value);
-    partial void OnSynChanged();
-    partial void OnErrorLogChanging(string value);
-    partial void OnErrorLogChanged();
-    partial void OnDiscountAmountChanging(System.Nullable<decimal> value);
-    partial void OnDiscountAmountChanged();
-    partial void OnDiscountPerChanging(System.Nullable<decimal> value);
-    partial void OnDiscountPerChanged();
-    partial void OnSpecialDisAmountChanging(System.Nullable<decimal> value);
-    partial void OnSpecialDisAmountChanged();
-    partial void OnSpecialDisPerChanging(System.Nullable<decimal> value);
-    partial void OnSpecialDisPerChanged();
-    partial void OnAdditionalDisAmountChanging(System.Nullable<decimal> value);
-    partial void OnAdditionalDisAmountChanged();
-    partial void OnAdditionalDisPerChanging(System.Nullable<decimal> value);
-    partial void OnAdditionalDisPerChanged();
-    partial void OnItemNameChanging(string value);
-    partial void OnItemNameChanged();
-    partial void OnOcrCodeChanging(string value);
-    partial void OnOcrCodeChanged();
-    partial void OnOcrCode2Changing(string value);
-    partial void OnOcrCode2Changed();
-    partial void OnOcrCode3Changing(string value);
-    partial void OnOcrCode3Changed();
-    partial void OnNewPaymentDateChanging(System.Nullable<System.DateTime> value);
-    partial void OnNewPaymentDateChanged();
-    partial void OnSpecialAmtChanging(System.Nullable<decimal> value);
-    partial void OnSpecialAmtChanged();
-    partial void OnRemaingOldChanging(System.Nullable<decimal> value);
-    partial void OnRemaingOldChanged();
-    partial void OnInterestonScheduleChanging(System.Nullable<decimal> value);
-    partial void OnInterestonScheduleChanged();
-    partial void OnRowTypeChanging(string value);
-    partial void OnRowTypeChanged();
-    partial void OnARNoInterestChanging(System.Nullable<int> value);
-    partial void OnARNoInterestChanged();
-    partial void OnPaymentNoInterestChanging(System.Nullable<int> value);
-    partial void OnPaymentNoInterestChanged();
-    partial void OnVarianDayChanging(System.Nullable<int> value);
-    partial void OnVarianDayChanged();
-    partial void OnInterestonsheduleVarianChanging(System.Nullable<decimal> value);
-    partial void OnInterestonsheduleVarianChanged();
-    #endregion
-		
-		public CNInstallmentRowDraf()
-		{
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public int ID
-		{
-			get
-			{
-				return this._ID;
-			}
-			set
-			{
-				if ((this._ID != value))
-				{
-					this.OnIDChanging(value);
-					this.SendPropertyChanging();
-					this._ID = value;
-					this.SendPropertyChanged("ID");
-					this.OnIDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_BaseEntry", DbType="Int NOT NULL")]
-		public int BaseEntry
-		{
-			get
-			{
-				return this._BaseEntry;
-			}
-			set
-			{
-				if ((this._BaseEntry != value))
-				{
-					this.OnBaseEntryChanging(value);
-					this.SendPropertyChanging();
-					this._BaseEntry = value;
-					this.SendPropertyChanged("BaseEntry");
-					this.OnBaseEntryChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_BaseLine", DbType="Int NOT NULL")]
-		public int BaseLine
-		{
-			get
-			{
-				return this._BaseLine;
-			}
-			set
-			{
-				if ((this._BaseLine != value))
-				{
-					this.OnBaseLineChanging(value);
-					this.SendPropertyChanging();
-					this._BaseLine = value;
-					this.SendPropertyChanged("BaseLine");
-					this.OnBaseLineChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_VisOrder", DbType="Int")]
-		public System.Nullable<int> VisOrder
-		{
-			get
-			{
-				return this._VisOrder;
-			}
-			set
-			{
-				if ((this._VisOrder != value))
-				{
-					this.OnVisOrderChanging(value);
-					this.SendPropertyChanging();
-					this._VisOrder = value;
-					this.SendPropertyChanged("VisOrder");
-					this.OnVisOrderChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ItemCode", DbType="NVarChar(25)")]
-		public string ItemCode
-		{
-			get
-			{
-				return this._ItemCode;
-			}
-			set
-			{
-				if ((this._ItemCode != value))
-				{
-					this.OnItemCodeChanging(value);
-					this.SendPropertyChanging();
-					this._ItemCode = value;
-					this.SendPropertyChanged("ItemCode");
-					this.OnItemCodeChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Principle", DbType="Decimal(19,6)")]
-		public System.Nullable<decimal> Principle
-		{
-			get
-			{
-				return this._Principle;
-			}
-			set
-			{
-				if ((this._Principle != value))
-				{
-					this.OnPrincipleChanging(value);
-					this.SendPropertyChanging();
-					this._Principle = value;
-					this.SendPropertyChanged("Principle");
-					this.OnPrincipleChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Interest", DbType="Decimal(19,6)")]
-		public System.Nullable<decimal> Interest
-		{
-			get
-			{
-				return this._Interest;
-			}
-			set
-			{
-				if ((this._Interest != value))
-				{
-					this.OnInterestChanging(value);
-					this.SendPropertyChanging();
-					this._Interest = value;
-					this.SendPropertyChanged("Interest");
-					this.OnInterestChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Monthly", DbType="Decimal(19,6)")]
-		public System.Nullable<decimal> Monthly
-		{
-			get
-			{
-				return this._Monthly;
-			}
-			set
-			{
-				if ((this._Monthly != value))
-				{
-					this.OnMonthlyChanging(value);
-					this.SendPropertyChanging();
-					this._Monthly = value;
-					this.SendPropertyChanged("Monthly");
-					this.OnMonthlyChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PaymentDate", DbType="Date")]
-		public System.Nullable<System.DateTime> PaymentDate
-		{
-			get
-			{
-				return this._PaymentDate;
-			}
-			set
-			{
-				if ((this._PaymentDate != value))
-				{
-					this.OnPaymentDateChanging(value);
-					this.SendPropertyChanging();
-					this._PaymentDate = value;
-					this.SendPropertyChanged("PaymentDate");
-					this.OnPaymentDateChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DueDate", DbType="Date")]
-		public System.Nullable<System.DateTime> DueDate
-		{
-			get
-			{
-				return this._DueDate;
-			}
-			set
-			{
-				if ((this._DueDate != value))
-				{
-					this.OnDueDateChanging(value);
-					this.SendPropertyChanging();
-					this._DueDate = value;
-					this.SendPropertyChanged("DueDate");
-					this.OnDueDateChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Remaining", DbType="Decimal(19,6)")]
-		public System.Nullable<decimal> Remaining
-		{
-			get
-			{
-				return this._Remaining;
-			}
-			set
-			{
-				if ((this._Remaining != value))
-				{
-					this.OnRemainingChanging(value);
-					this.SendPropertyChanging();
-					this._Remaining = value;
-					this.SendPropertyChanged("Remaining");
-					this.OnRemainingChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ReIncloudInter", DbType="Decimal(19,6)")]
-		public System.Nullable<decimal> ReIncloudInter
-		{
-			get
-			{
-				return this._ReIncloudInter;
-			}
-			set
-			{
-				if ((this._ReIncloudInter != value))
-				{
-					this.OnReIncloudInterChanging(value);
-					this.SendPropertyChanging();
-					this._ReIncloudInter = value;
-					this.SendPropertyChanged("ReIncloudInter");
-					this.OnReIncloudInterChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_RowStatus", DbType="NChar(10)")]
-		public string RowStatus
-		{
-			get
-			{
-				return this._RowStatus;
-			}
-			set
-			{
-				if ((this._RowStatus != value))
-				{
-					this.OnRowStatusChanging(value);
-					this.SendPropertyChanging();
-					this._RowStatus = value;
-					this.SendPropertyChanged("RowStatus");
-					this.OnRowStatusChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CuInterest", DbType="Decimal(19,6)")]
-		public System.Nullable<decimal> CuInterest
-		{
-			get
-			{
-				return this._CuInterest;
-			}
-			set
-			{
-				if ((this._CuInterest != value))
-				{
-					this.OnCuInterestChanging(value);
-					this.SendPropertyChanging();
-					this._CuInterest = value;
-					this.SendPropertyChanged("CuInterest");
-					this.OnCuInterestChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CuPayment", DbType="Decimal(19,6)")]
-		public System.Nullable<decimal> CuPayment
-		{
-			get
-			{
-				return this._CuPayment;
-			}
-			set
-			{
-				if ((this._CuPayment != value))
-				{
-					this.OnCuPaymentChanging(value);
-					this.SendPropertyChanging();
-					this._CuPayment = value;
-					this.SendPropertyChanged("CuPayment");
-					this.OnCuPaymentChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FixedPayment", DbType="Decimal(19,6)")]
-		public System.Nullable<decimal> FixedPayment
-		{
-			get
-			{
-				return this._FixedPayment;
-			}
-			set
-			{
-				if ((this._FixedPayment != value))
-				{
-					this.OnFixedPaymentChanging(value);
-					this.SendPropertyChanging();
-					this._FixedPayment = value;
-					this.SendPropertyChanged("FixedPayment");
-					this.OnFixedPaymentChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ARNo", DbType="Int")]
-		public System.Nullable<int> ARNo
-		{
-			get
-			{
-				return this._ARNo;
-			}
-			set
-			{
-				if ((this._ARNo != value))
-				{
-					this.OnARNoChanging(value);
-					this.SendPropertyChanging();
-					this._ARNo = value;
-					this.SendPropertyChanged("ARNo");
-					this.OnARNoChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PaymentNo", DbType="Int")]
-		public System.Nullable<int> PaymentNo
-		{
-			get
-			{
-				return this._PaymentNo;
-			}
-			set
-			{
-				if ((this._PaymentNo != value))
-				{
-					this.OnPaymentNoChanging(value);
-					this.SendPropertyChanging();
-					this._PaymentNo = value;
-					this.SendPropertyChanged("PaymentNo");
-					this.OnPaymentNoChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Method", DbType="NVarChar(100)")]
-		public string Method
-		{
-			get
-			{
-				return this._Method;
-			}
-			set
-			{
-				if ((this._Method != value))
-				{
-					this.OnMethodChanging(value);
-					this.SendPropertyChanging();
-					this._Method = value;
-					this.SendPropertyChanged("Method");
-					this.OnMethodChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_InstallmentAmt", DbType="Decimal(19,6)")]
-		public System.Nullable<decimal> InstallmentAmt
-		{
-			get
-			{
-				return this._InstallmentAmt;
-			}
-			set
-			{
-				if ((this._InstallmentAmt != value))
-				{
-					this.OnInstallmentAmtChanging(value);
-					this.SendPropertyChanging();
-					this._InstallmentAmt = value;
-					this.SendPropertyChanged("InstallmentAmt");
-					this.OnInstallmentAmtChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DiscountAmt", DbType="Decimal(19,6)")]
-		public System.Nullable<decimal> DiscountAmt
-		{
-			get
-			{
-				return this._DiscountAmt;
-			}
-			set
-			{
-				if ((this._DiscountAmt != value))
-				{
-					this.OnDiscountAmtChanging(value);
-					this.SendPropertyChanging();
-					this._DiscountAmt = value;
-					this.SendPropertyChanged("DiscountAmt");
-					this.OnDiscountAmtChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DepositAmt", DbType="Decimal(19,6)")]
-		public System.Nullable<decimal> DepositAmt
-		{
-			get
-			{
-				return this._DepositAmt;
-			}
-			set
-			{
-				if ((this._DepositAmt != value))
-				{
-					this.OnDepositAmtChanging(value);
-					this.SendPropertyChanging();
-					this._DepositAmt = value;
-					this.SendPropertyChanged("DepositAmt");
-					this.OnDepositAmtChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AnnualRate", DbType="Decimal(19,6)")]
-		public System.Nullable<decimal> AnnualRate
-		{
-			get
-			{
-				return this._AnnualRate;
-			}
-			set
-			{
-				if ((this._AnnualRate != value))
-				{
-					this.OnAnnualRateChanging(value);
-					this.SendPropertyChanging();
-					this._AnnualRate = value;
-					this.SendPropertyChanged("AnnualRate");
-					this.OnAnnualRateChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PeriodMonths", DbType="Decimal(19,6)")]
-		public System.Nullable<decimal> PeriodMonths
-		{
-			get
-			{
-				return this._PeriodMonths;
-			}
-			set
-			{
-				if ((this._PeriodMonths != value))
-				{
-					this.OnPeriodMonthsChanging(value);
-					this.SendPropertyChanging();
-					this._PeriodMonths = value;
-					this.SendPropertyChanged("PeriodMonths");
-					this.OnPeriodMonthsChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_HouseStatus", DbType="NVarChar(100)")]
-		public string HouseStatus
-		{
-			get
-			{
-				return this._HouseStatus;
-			}
-			set
-			{
-				if ((this._HouseStatus != value))
-				{
-					this.OnHouseStatusChanging(value);
-					this.SendPropertyChanging();
-					this._HouseStatus = value;
-					this.SendPropertyChanged("HouseStatus");
-					this.OnHouseStatusChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Remarks", DbType="NVarChar(254)")]
-		public string Remarks
-		{
-			get
-			{
-				return this._Remarks;
-			}
-			set
-			{
-				if ((this._Remarks != value))
-				{
-					this.OnRemarksChanging(value);
-					this.SendPropertyChanging();
-					this._Remarks = value;
-					this.SendPropertyChanged("Remarks");
-					this.OnRemarksChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Syn", DbType="Int")]
-		public System.Nullable<int> Syn
-		{
-			get
-			{
-				return this._Syn;
-			}
-			set
-			{
-				if ((this._Syn != value))
-				{
-					this.OnSynChanging(value);
-					this.SendPropertyChanging();
-					this._Syn = value;
-					this.SendPropertyChanged("Syn");
-					this.OnSynChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ErrorLog", DbType="NVarChar(254)")]
-		public string ErrorLog
-		{
-			get
-			{
-				return this._ErrorLog;
-			}
-			set
-			{
-				if ((this._ErrorLog != value))
-				{
-					this.OnErrorLogChanging(value);
-					this.SendPropertyChanging();
-					this._ErrorLog = value;
-					this.SendPropertyChanged("ErrorLog");
-					this.OnErrorLogChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DiscountAmount", DbType="Decimal(18,2)")]
-		public System.Nullable<decimal> DiscountAmount
-		{
-			get
-			{
-				return this._DiscountAmount;
-			}
-			set
-			{
-				if ((this._DiscountAmount != value))
-				{
-					this.OnDiscountAmountChanging(value);
-					this.SendPropertyChanging();
-					this._DiscountAmount = value;
-					this.SendPropertyChanged("DiscountAmount");
-					this.OnDiscountAmountChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DiscountPer", DbType="Decimal(18,2)")]
-		public System.Nullable<decimal> DiscountPer
-		{
-			get
-			{
-				return this._DiscountPer;
-			}
-			set
-			{
-				if ((this._DiscountPer != value))
-				{
-					this.OnDiscountPerChanging(value);
-					this.SendPropertyChanging();
-					this._DiscountPer = value;
-					this.SendPropertyChanged("DiscountPer");
-					this.OnDiscountPerChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SpecialDisAmount", DbType="Decimal(18,2)")]
-		public System.Nullable<decimal> SpecialDisAmount
-		{
-			get
-			{
-				return this._SpecialDisAmount;
-			}
-			set
-			{
-				if ((this._SpecialDisAmount != value))
-				{
-					this.OnSpecialDisAmountChanging(value);
-					this.SendPropertyChanging();
-					this._SpecialDisAmount = value;
-					this.SendPropertyChanged("SpecialDisAmount");
-					this.OnSpecialDisAmountChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SpecialDisPer", DbType="Decimal(18,2)")]
-		public System.Nullable<decimal> SpecialDisPer
-		{
-			get
-			{
-				return this._SpecialDisPer;
-			}
-			set
-			{
-				if ((this._SpecialDisPer != value))
-				{
-					this.OnSpecialDisPerChanging(value);
-					this.SendPropertyChanging();
-					this._SpecialDisPer = value;
-					this.SendPropertyChanged("SpecialDisPer");
-					this.OnSpecialDisPerChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AdditionalDisAmount", DbType="Decimal(18,2)")]
-		public System.Nullable<decimal> AdditionalDisAmount
-		{
-			get
-			{
-				return this._AdditionalDisAmount;
-			}
-			set
-			{
-				if ((this._AdditionalDisAmount != value))
-				{
-					this.OnAdditionalDisAmountChanging(value);
-					this.SendPropertyChanging();
-					this._AdditionalDisAmount = value;
-					this.SendPropertyChanged("AdditionalDisAmount");
-					this.OnAdditionalDisAmountChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AdditionalDisPer", DbType="Decimal(18,2)")]
-		public System.Nullable<decimal> AdditionalDisPer
-		{
-			get
-			{
-				return this._AdditionalDisPer;
-			}
-			set
-			{
-				if ((this._AdditionalDisPer != value))
-				{
-					this.OnAdditionalDisPerChanging(value);
-					this.SendPropertyChanging();
-					this._AdditionalDisPer = value;
-					this.SendPropertyChanged("AdditionalDisPer");
-					this.OnAdditionalDisPerChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ItemName", DbType="NVarChar(200)")]
-		public string ItemName
-		{
-			get
-			{
-				return this._ItemName;
-			}
-			set
-			{
-				if ((this._ItemName != value))
-				{
-					this.OnItemNameChanging(value);
-					this.SendPropertyChanging();
-					this._ItemName = value;
-					this.SendPropertyChanged("ItemName");
-					this.OnItemNameChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_OcrCode", DbType="NVarChar(200)")]
-		public string OcrCode
-		{
-			get
-			{
-				return this._OcrCode;
-			}
-			set
-			{
-				if ((this._OcrCode != value))
-				{
-					this.OnOcrCodeChanging(value);
-					this.SendPropertyChanging();
-					this._OcrCode = value;
-					this.SendPropertyChanged("OcrCode");
-					this.OnOcrCodeChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_OcrCode2", DbType="NVarChar(200)")]
-		public string OcrCode2
-		{
-			get
-			{
-				return this._OcrCode2;
-			}
-			set
-			{
-				if ((this._OcrCode2 != value))
-				{
-					this.OnOcrCode2Changing(value);
-					this.SendPropertyChanging();
-					this._OcrCode2 = value;
-					this.SendPropertyChanged("OcrCode2");
-					this.OnOcrCode2Changed();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_OcrCode3", DbType="NVarChar(200)")]
-		public string OcrCode3
-		{
-			get
-			{
-				return this._OcrCode3;
-			}
-			set
-			{
-				if ((this._OcrCode3 != value))
-				{
-					this.OnOcrCode3Changing(value);
-					this.SendPropertyChanging();
-					this._OcrCode3 = value;
-					this.SendPropertyChanged("OcrCode3");
-					this.OnOcrCode3Changed();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_NewPaymentDate", DbType="DateTime")]
-		public System.Nullable<System.DateTime> NewPaymentDate
-		{
-			get
-			{
-				return this._NewPaymentDate;
-			}
-			set
-			{
-				if ((this._NewPaymentDate != value))
-				{
-					this.OnNewPaymentDateChanging(value);
-					this.SendPropertyChanging();
-					this._NewPaymentDate = value;
-					this.SendPropertyChanged("NewPaymentDate");
-					this.OnNewPaymentDateChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SpecialAmt", DbType="Decimal(19,6)")]
-		public System.Nullable<decimal> SpecialAmt
-		{
-			get
-			{
-				return this._SpecialAmt;
-			}
-			set
-			{
-				if ((this._SpecialAmt != value))
-				{
-					this.OnSpecialAmtChanging(value);
-					this.SendPropertyChanging();
-					this._SpecialAmt = value;
-					this.SendPropertyChanged("SpecialAmt");
-					this.OnSpecialAmtChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_RemaingOld", DbType="Decimal(19,6)")]
-		public System.Nullable<decimal> RemaingOld
-		{
-			get
-			{
-				return this._RemaingOld;
-			}
-			set
-			{
-				if ((this._RemaingOld != value))
-				{
-					this.OnRemaingOldChanging(value);
-					this.SendPropertyChanging();
-					this._RemaingOld = value;
-					this.SendPropertyChanged("RemaingOld");
-					this.OnRemaingOldChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_InterestonSchedule", DbType="Decimal(19,6)")]
-		public System.Nullable<decimal> InterestonSchedule
-		{
-			get
-			{
-				return this._InterestonSchedule;
-			}
-			set
-			{
-				if ((this._InterestonSchedule != value))
-				{
-					this.OnInterestonScheduleChanging(value);
-					this.SendPropertyChanging();
-					this._InterestonSchedule = value;
-					this.SendPropertyChanged("InterestonSchedule");
-					this.OnInterestonScheduleChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_RowType", DbType="NVarChar(50)")]
-		public string RowType
-		{
-			get
-			{
-				return this._RowType;
-			}
-			set
-			{
-				if ((this._RowType != value))
-				{
-					this.OnRowTypeChanging(value);
-					this.SendPropertyChanging();
-					this._RowType = value;
-					this.SendPropertyChanged("RowType");
-					this.OnRowTypeChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ARNoInterest", DbType="Int")]
-		public System.Nullable<int> ARNoInterest
-		{
-			get
-			{
-				return this._ARNoInterest;
-			}
-			set
-			{
-				if ((this._ARNoInterest != value))
-				{
-					this.OnARNoInterestChanging(value);
-					this.SendPropertyChanging();
-					this._ARNoInterest = value;
-					this.SendPropertyChanged("ARNoInterest");
-					this.OnARNoInterestChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PaymentNoInterest", DbType="Int")]
-		public System.Nullable<int> PaymentNoInterest
-		{
-			get
-			{
-				return this._PaymentNoInterest;
-			}
-			set
-			{
-				if ((this._PaymentNoInterest != value))
-				{
-					this.OnPaymentNoInterestChanging(value);
-					this.SendPropertyChanging();
-					this._PaymentNoInterest = value;
-					this.SendPropertyChanged("PaymentNoInterest");
-					this.OnPaymentNoInterestChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_VarianDay", DbType="Int")]
-		public System.Nullable<int> VarianDay
-		{
-			get
-			{
-				return this._VarianDay;
-			}
-			set
-			{
-				if ((this._VarianDay != value))
-				{
-					this.OnVarianDayChanging(value);
-					this.SendPropertyChanging();
-					this._VarianDay = value;
-					this.SendPropertyChanged("VarianDay");
-					this.OnVarianDayChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_InterestonsheduleVarian", DbType="Decimal(19,6)")]
-		public System.Nullable<decimal> InterestonsheduleVarian
-		{
-			get
-			{
-				return this._InterestonsheduleVarian;
-			}
-			set
-			{
-				if ((this._InterestonsheduleVarian != value))
-				{
-					this.OnInterestonsheduleVarianChanging(value);
-					this.SendPropertyChanging();
-					this._InterestonsheduleVarian = value;
-					this.SendPropertyChanged("InterestonsheduleVarian");
-					this.OnInterestonsheduleVarianChanged();
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.v_OCRD_Penalty")]
-	public partial class v_OCRD_Penalty
-	{
-		
-		private string _CardCode;
-		
-		private string _CardName;
-		
-		private string _CardFName;
-		
-		private string _Phone1;
-		
-		private string _Phone2;
-		
-		private System.Nullable<char> _CardType;
-		
-		private string _U_Gender;
-		
-		private string _AddID;
-		
-		private string _Currency;
-		
-		private System.Nullable<System.DateTime> _U_IssuedDate;
-		
-		private System.Nullable<System.DateTime> _U_BOD;
-		
-		public v_OCRD_Penalty()
-		{
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CardCode", DbType="NVarChar(15) NOT NULL", CanBeNull=false)]
-		public string CardCode
-		{
-			get
-			{
-				return this._CardCode;
-			}
-			set
-			{
-				if ((this._CardCode != value))
-				{
-					this._CardCode = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CardName", DbType="NVarChar(100)")]
-		public string CardName
-		{
-			get
-			{
-				return this._CardName;
-			}
-			set
-			{
-				if ((this._CardName != value))
-				{
-					this._CardName = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CardFName", DbType="NVarChar(100)")]
-		public string CardFName
-		{
-			get
-			{
-				return this._CardFName;
-			}
-			set
-			{
-				if ((this._CardFName != value))
-				{
-					this._CardFName = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Phone1", DbType="NVarChar(20)")]
-		public string Phone1
-		{
-			get
-			{
-				return this._Phone1;
-			}
-			set
-			{
-				if ((this._Phone1 != value))
-				{
-					this._Phone1 = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Phone2", DbType="NVarChar(20)")]
-		public string Phone2
-		{
-			get
-			{
-				return this._Phone2;
-			}
-			set
-			{
-				if ((this._Phone2 != value))
-				{
-					this._Phone2 = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CardType", DbType="Char(1)")]
-		public System.Nullable<char> CardType
-		{
-			get
-			{
-				return this._CardType;
-			}
-			set
-			{
-				if ((this._CardType != value))
-				{
-					this._CardType = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_U_Gender", DbType="VarChar(1) NOT NULL", CanBeNull=false)]
-		public string U_Gender
-		{
-			get
-			{
-				return this._U_Gender;
-			}
-			set
-			{
-				if ((this._U_Gender != value))
-				{
-					this._U_Gender = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AddID", DbType="NVarChar(64)")]
-		public string AddID
-		{
-			get
-			{
-				return this._AddID;
-			}
-			set
-			{
-				if ((this._AddID != value))
-				{
-					this._AddID = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Currency", DbType="NVarChar(3)")]
-		public string Currency
-		{
-			get
-			{
-				return this._Currency;
-			}
-			set
-			{
-				if ((this._Currency != value))
-				{
-					this._Currency = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_U_IssuedDate", DbType="DateTime")]
-		public System.Nullable<System.DateTime> U_IssuedDate
-		{
-			get
-			{
-				return this._U_IssuedDate;
-			}
-			set
-			{
-				if ((this._U_IssuedDate != value))
-				{
-					this._U_IssuedDate = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_U_BOD", DbType="DateTime")]
-		public System.Nullable<System.DateTime> U_BOD
-		{
-			get
-			{
-				return this._U_BOD;
-			}
-			set
-			{
-				if ((this._U_BOD != value))
-				{
-					this._U_BOD = value;
-				}
 			}
 		}
 	}
