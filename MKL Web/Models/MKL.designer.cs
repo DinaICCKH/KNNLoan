@@ -940,6 +940,14 @@ namespace MKL_Web.Models
 			}
 		}
 		
+		public System.Data.Linq.Table<v_OCRD_Interest> v_OCRD_Interests
+		{
+			get
+			{
+				return this.GetTable<v_OCRD_Interest>();
+			}
+		}
+		
 		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.ICC_UpdateSAPDocumentStatus")]
 		public int ICC_UpdateSAPDocumentStatus([global::System.Data.Linq.Mapping.ParameterAttribute(Name="DocType", DbType="NVarChar(50)")] string docType, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="DocEntry", DbType="NVarChar(50)")] string docEntry, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Status", DbType="NVarChar(50)")] string status)
 		{
@@ -1246,6 +1254,13 @@ namespace MKL_Web.Models
 		{
 			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), status, fdate, tdate, item, serial, customer);
 			return ((ISingleResult<ICC_Get_List_LoanResult>)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.ICC_GET_InterestWizardList")]
+		public ISingleResult<ICC_GET_InterestWizardListResult> ICC_GET_InterestWizardList([global::System.Data.Linq.Mapping.ParameterAttribute(Name="CardCode", DbType="NVarChar(50)")] string cardCode)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), cardCode);
+			return ((ISingleResult<ICC_GET_InterestWizardListResult>)(result.ReturnValue));
 		}
 	}
 	
@@ -37815,6 +37830,213 @@ namespace MKL_Web.Models
 		}
 	}
 	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.v_OCRD_Interest")]
+	public partial class v_OCRD_Interest
+	{
+		
+		private string _CardCode;
+		
+		private string _CardName;
+		
+		private string _CardFName;
+		
+		private string _Phone1;
+		
+		private string _Phone2;
+		
+		private System.Nullable<char> _CardType;
+		
+		private string _U_Gender;
+		
+		private string _AddID;
+		
+		private string _Currency;
+		
+		private System.Nullable<System.DateTime> _U_IssuedDate;
+		
+		private System.Nullable<System.DateTime> _U_BOD;
+		
+		public v_OCRD_Interest()
+		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CardCode", DbType="NVarChar(15) NOT NULL", CanBeNull=false)]
+		public string CardCode
+		{
+			get
+			{
+				return this._CardCode;
+			}
+			set
+			{
+				if ((this._CardCode != value))
+				{
+					this._CardCode = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CardName", DbType="NVarChar(100)")]
+		public string CardName
+		{
+			get
+			{
+				return this._CardName;
+			}
+			set
+			{
+				if ((this._CardName != value))
+				{
+					this._CardName = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CardFName", DbType="NVarChar(100)")]
+		public string CardFName
+		{
+			get
+			{
+				return this._CardFName;
+			}
+			set
+			{
+				if ((this._CardFName != value))
+				{
+					this._CardFName = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Phone1", DbType="NVarChar(20)")]
+		public string Phone1
+		{
+			get
+			{
+				return this._Phone1;
+			}
+			set
+			{
+				if ((this._Phone1 != value))
+				{
+					this._Phone1 = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Phone2", DbType="NVarChar(20)")]
+		public string Phone2
+		{
+			get
+			{
+				return this._Phone2;
+			}
+			set
+			{
+				if ((this._Phone2 != value))
+				{
+					this._Phone2 = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CardType", DbType="Char(1)")]
+		public System.Nullable<char> CardType
+		{
+			get
+			{
+				return this._CardType;
+			}
+			set
+			{
+				if ((this._CardType != value))
+				{
+					this._CardType = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_U_Gender", DbType="VarChar(1) NOT NULL", CanBeNull=false)]
+		public string U_Gender
+		{
+			get
+			{
+				return this._U_Gender;
+			}
+			set
+			{
+				if ((this._U_Gender != value))
+				{
+					this._U_Gender = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AddID", DbType="NVarChar(64)")]
+		public string AddID
+		{
+			get
+			{
+				return this._AddID;
+			}
+			set
+			{
+				if ((this._AddID != value))
+				{
+					this._AddID = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Currency", DbType="NVarChar(3)")]
+		public string Currency
+		{
+			get
+			{
+				return this._Currency;
+			}
+			set
+			{
+				if ((this._Currency != value))
+				{
+					this._Currency = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_U_IssuedDate", DbType="DateTime")]
+		public System.Nullable<System.DateTime> U_IssuedDate
+		{
+			get
+			{
+				return this._U_IssuedDate;
+			}
+			set
+			{
+				if ((this._U_IssuedDate != value))
+				{
+					this._U_IssuedDate = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_U_BOD", DbType="DateTime")]
+		public System.Nullable<System.DateTime> U_BOD
+		{
+			get
+			{
+				return this._U_BOD;
+			}
+			set
+			{
+				if ((this._U_BOD != value))
+				{
+					this._U_BOD = value;
+				}
+			}
+		}
+	}
+	
 	public partial class ICC_AddOn_Installment_CalculateInstallmentAOResult
 	{
 		
@@ -49172,6 +49394,266 @@ namespace MKL_Web.Models
 				if ((this._LoanStatus != value))
 				{
 					this._LoanStatus = value;
+				}
+			}
+		}
+	}
+	
+	public partial class ICC_GET_InterestWizardListResult
+	{
+		
+		private int _ID;
+		
+		private System.Nullable<System.DateTime> _PaymentDate;
+		
+		private System.Nullable<System.DateTime> _DueDate;
+		
+		private int _BaseEntry;
+		
+		private string _ItemCode;
+		
+		private string _ItemName;
+		
+		private string _DistNumber;
+		
+		private System.Nullable<decimal> _OriginalInterest;
+		
+		private decimal _ApplyInterest;
+		
+		private System.Nullable<decimal> _Remaining;
+		
+		private string _Method;
+		
+		private string _Remarks;
+		
+		private string _CardCode;
+		
+		private string _CardName;
+		
+		public ICC_GET_InterestWizardListResult()
+		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", DbType="Int NOT NULL")]
+		public int ID
+		{
+			get
+			{
+				return this._ID;
+			}
+			set
+			{
+				if ((this._ID != value))
+				{
+					this._ID = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PaymentDate", DbType="Date")]
+		public System.Nullable<System.DateTime> PaymentDate
+		{
+			get
+			{
+				return this._PaymentDate;
+			}
+			set
+			{
+				if ((this._PaymentDate != value))
+				{
+					this._PaymentDate = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DueDate", DbType="Date")]
+		public System.Nullable<System.DateTime> DueDate
+		{
+			get
+			{
+				return this._DueDate;
+			}
+			set
+			{
+				if ((this._DueDate != value))
+				{
+					this._DueDate = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_BaseEntry", DbType="Int NOT NULL")]
+		public int BaseEntry
+		{
+			get
+			{
+				return this._BaseEntry;
+			}
+			set
+			{
+				if ((this._BaseEntry != value))
+				{
+					this._BaseEntry = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ItemCode", DbType="NVarChar(100)")]
+		public string ItemCode
+		{
+			get
+			{
+				return this._ItemCode;
+			}
+			set
+			{
+				if ((this._ItemCode != value))
+				{
+					this._ItemCode = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ItemName", DbType="NVarChar(200)")]
+		public string ItemName
+		{
+			get
+			{
+				return this._ItemName;
+			}
+			set
+			{
+				if ((this._ItemName != value))
+				{
+					this._ItemName = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DistNumber", DbType="NVarChar(100)")]
+		public string DistNumber
+		{
+			get
+			{
+				return this._DistNumber;
+			}
+			set
+			{
+				if ((this._DistNumber != value))
+				{
+					this._DistNumber = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_OriginalInterest", DbType="Decimal(19,6)")]
+		public System.Nullable<decimal> OriginalInterest
+		{
+			get
+			{
+				return this._OriginalInterest;
+			}
+			set
+			{
+				if ((this._OriginalInterest != value))
+				{
+					this._OriginalInterest = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ApplyInterest", DbType="Decimal(19,6) NOT NULL")]
+		public decimal ApplyInterest
+		{
+			get
+			{
+				return this._ApplyInterest;
+			}
+			set
+			{
+				if ((this._ApplyInterest != value))
+				{
+					this._ApplyInterest = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Remaining", DbType="Decimal(20,6)")]
+		public System.Nullable<decimal> Remaining
+		{
+			get
+			{
+				return this._Remaining;
+			}
+			set
+			{
+				if ((this._Remaining != value))
+				{
+					this._Remaining = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Method", DbType="NVarChar(100)")]
+		public string Method
+		{
+			get
+			{
+				return this._Method;
+			}
+			set
+			{
+				if ((this._Method != value))
+				{
+					this._Method = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Remarks", DbType="NVarChar(254)")]
+		public string Remarks
+		{
+			get
+			{
+				return this._Remarks;
+			}
+			set
+			{
+				if ((this._Remarks != value))
+				{
+					this._Remarks = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CardCode", DbType="NVarChar(20)")]
+		public string CardCode
+		{
+			get
+			{
+				return this._CardCode;
+			}
+			set
+			{
+				if ((this._CardCode != value))
+				{
+					this._CardCode = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CardName", DbType="NVarChar(100)")]
+		public string CardName
+		{
+			get
+			{
+				return this._CardName;
+			}
+			set
+			{
+				if ((this._CardName != value))
+				{
+					this._CardName = value;
 				}
 			}
 		}

@@ -70,4 +70,23 @@ namespace MKL_Web.Models
         public decimal NetAmt { get; set; }
     }
 
+
+    public class InterestWizardItem
+    {
+        public int ID { get; set; }
+        public string PaymentDate { get; set; }
+        public string DueDate { get; set; }
+        public string BaseEntry { get; set; } = string.Empty;
+        public string ItemCode { get; set; } = string.Empty;
+        public string ItemName { get; set; } = string.Empty;
+        public string DistNumber { get; set; } = string.Empty; // Serial number
+        public decimal OriginalInterest { get; set; } = 0;
+        public decimal ApplyInterest { get; set; } = 0;
+        public decimal Remaining { get; set; } = 0;
+        public string Method { get; set; } = string.Empty;
+        public string Remarks { get; set; } = string.Empty;
+        public string CardCode { get; set; } = string.Empty;
+        public string CardName { get; set; } = string.Empty;
+    }
+
 }

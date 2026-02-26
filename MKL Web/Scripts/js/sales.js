@@ -1126,10 +1126,10 @@ function cmd_pop_choose_customer_change_owner() {
 
         if (range == "2") {
             $("#txt_tcard_code").val(cardcode);
-            
-           
+
+
         }
-        else{
+        else {
             $("#txt_card_code").val(cardcode);
         }
 
@@ -1154,7 +1154,7 @@ function cmd_pop_choose_customer_change_owner() {
         //clear_form_data();
 
         tr_pop_customer_selected('-1');
-       
+
     } else if (cartType == '2') {
         var id = $("#txt_bp_selected_row").val();
         var cardcode = $("#td_pop_vendor_cust_code_new_" + id).text();
@@ -1168,6 +1168,8 @@ function cmd_pop_choose_customer_change_owner() {
         tr_pop_customer_new_selected('-1');
     }
 }
+
+
 
 function cmd_show_customer_change_house(type, r) {
 
@@ -1184,6 +1186,9 @@ function cmd_show_customer_change_house(type, r) {
 }
 
 
+function cmd_show_customer_penaltywizard() {
+    $("#modal-cust_list").modal('show');
+}
 
 ////invoice 
 function get_invoice_listing() {
@@ -1746,6 +1751,17 @@ function cmd_pop_choose_customer_PaymentOption() {
     $("#txt_total_principle").text('0.00');
     $("#txt_total_interest").text('0.00');
     $("#txt_total_monthly").text('0.00');
+}
+
+
+function cmd_pop_choose_customer_interest() {
+    var id = $("#txt_bp_selected_row").val();
+    var cardcode = $("#td_pop_vendor_cust_code_" + id).text();
+    var cardname = $("#td_pop_vendor_cust_name_" + id).text();
+    $("#txt_card_code").val(cardcode);
+    $("#txt_card_name").val(cardname);
+    $("#modal-cust_list").modal('hide');
+    $("#txt_bp_selected_row").val("-1");
 }
 
 
@@ -4247,6 +4263,151 @@ function cmd_penaltydraf_waive_generate() {
     else {
         get_penaltydraf_waive();
     }
+}
+
+
+function cmd_interestwizard_generate() {
+    if ($("#txt_card_code").val() == "") {
+        ShowAlertCus("Please choose customer", "warning");
+    }
+    else {
+        get_interestwizard();
+    }
+}
+
+
+function get_interestwizard() {
+
+    var CardCode = $("#txt_card_code").val();
+
+    $.ajax({
+        url: '/sales/get_interest_List',
+        type: 'POST',
+        data: { CardCode: CardCode },
+        datatype: 'json',
+        beforeSend: function () { $("#loading").show(); },
+        complete: function () { $("#loading").hide(); },
+        success: function (data) {
+
+            var rowindex = $("#table_interestwizard_list >tbody >tr").length;
+            var mydata = data.data;
+
+            if (rowindex > 0) {
+                var lasttr = $("#table_interestwizard_list >tbody >tr:last");
+                rowindex = parseInt(lasttr.attr('id').replace("tr_payment_", "")) + 1;
+            } else {
+                rowindex = 1;
+            }
+
+            for (var i = 0; i < mydata.length; i++) {
+                var x = mydata[i];
+
+                var row = "<tr id='tr_payment_" + rowindex + "'>";
+
+                // 1. Row index #
+                row += "<td style='text-align:center; vertical-align: middle;'>" + rowindex + "</td>";
+
+                // 2. Checkbox for selection
+                row += "<td style='text-align:center; vertical-align: middle;'>" +
+                    "<input type='checkbox' id='chk_" + rowindex + "' onclick='checkbox_tr_payment_detail(" + rowindex + ")' />" +
+                    "</td>";
+
+                // 3. BaseEntry
+                row += "<td style='text-align:left; vertical-align: middle;'>" + (x.BaseEntry || "") + "</td>";
+
+                // 4. LoanID (ID)
+                row += "<td style='text-align:left; vertical-align: middle;'>" + (x.ID || "") + "</td>";
+
+                // 5. Posting Date
+                row += "<td style='text-align:left; vertical-align: middle;'>" + (x.PaymentDate || "") + "</td>";
+
+                // 6. Due Date
+                row += "<td style='text-align:left; vertical-align: middle;'>" + (x.DueDate || "") + "</td>";
+
+                // 7. Item Code
+                row += "<td style='text-align:left; vertical-align: middle;'>" + (x.ItemCode || "") + "</td>";
+
+                // 8. Item Name
+                row += "<td style='text-align:left; vertical-align: middle;'>" + (x.ItemName || "") + "</td>";
+
+                // 9. Serial (DistNumber)
+                row += "<td style='text-align:left; vertical-align: middle;'>" + (x.DistNumber || "") + "</td>";
+
+                // 10. Reason (Method)
+                row += "<td style='text-align:left; vertical-align: middle;'>" + (x.Method || "") + "</td>";
+
+                // 11. Interest Amt (OriginalInterest)
+                row += "<td style='text-align:right; vertical-align: middle;'>" + convert2digit(x.OriginalInterest) + "</td>";
+
+                // 12. Generated Amt (ApplyInterest)
+                row += "<td style='text-align:right; vertical-align: middle;'>" + convert2digit(x.ApplyInterest) + "</td>";
+
+                // 14. Remaining
+                row += "<td style='text-align:right; vertical-align: middle;' id='remaining_" + rowindex + "'>" +
+                    convert2digit(x.Remaining) +
+                    "</td>";
+
+                // 13. Apply Amt (editable numeric input)
+                row += "<td style='text-align:right; vertical-align: middle;'>" +
+                    "<input type='number' class='form-control apply-amt-input' " +
+                    "id='applyamt_" + rowindex + "' " +
+                    "data-remaining='" + convert2digit(x.Remaining) + "' " +
+                    "value='" + convert2digit(x.ApplyInterest) + "' " +
+                    "oninput='validateApplyAmt(" + rowindex + ")' " +
+                    "style='text-align:right; color:blue;' />" +
+                    "</td>";
+
+               
+
+                // 15. New Remaining (calculated)
+                row += "<td style='text-align:right; vertical-align: middle;' id='newremaining_" + rowindex + "'>" +
+                    convert2digit(x.Remaining - x.ApplyInterest) +
+                    "</td>";
+
+                // 16. Remark (textarea)
+                row += "<td style='text-align:left; vertical-align: middle;'>" +
+                    "<textarea id='remark_" + rowindex + "' name='remark_" + rowindex + "' rows='1' class='form-control'>" + (x.Remarks || "") + "</textarea>" +
+                    "</td>";
+
+                row += "</tr>";
+
+                $("#table_interestwizard_list >tbody").append(row);
+                rowindex++;
+            }
+
+            disable_enable_remove_by_line();
+        },
+        error: function (error) {
+            alert('Error while reading data => ' + error);
+        }
+    });
+}
+
+function validateApplyAmt(rowindex) {
+    var input = $("#applyamt_" + rowindex);
+    var remaining = parseFloat(input.data("remaining"));
+    var val = parseFloat(input.val());
+
+    // Default to 0 if invalid
+    if (isNaN(val) || val < 0) {
+        input.val("0.00");
+        val = 0;
+    }
+
+    // If user enters more than Remaining
+    if (val > remaining) {
+        ShowAlertCus("Apply Amount cannot be greater than Remaining (" + remaining.toFixed(2) + ")");
+        input.val(remaining.toFixed(2)); // Reset to Remaining
+        val = remaining;
+    }
+
+    // Update New Remaining column dynamically
+    $("#newremaining_" + rowindex).text((remaining - val).toFixed(2));
+}
+
+// Helper to format numbers to 2 decimals
+function convert2digit(val) {
+    return val != null ? parseFloat(val).toFixed(2) : "0.00";
 }
 
 function get_penaltydraf_waive() {

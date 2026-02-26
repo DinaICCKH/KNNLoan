@@ -1740,7 +1740,46 @@ namespace MKL_Web.Controllers
 
         public ActionResult InterestWizard()
         {
+            ViewBag.cust = db.v_OCRD_Interests.ToList();
             return View();
+        }
+
+        public JsonResult get_interest_List(string CardCode)
+        {
+            if (string.IsNullOrEmpty(CardCode))
+                return Json(new { status = "error", message = "CardCode is required" }, JsonRequestBehavior.AllowGet);
+
+            try
+            {
+                // Execute the stored procedure
+                var dt = view.getTable($"EXEC ICC_GET_InterestWizardList '{CardCode}'",
+                                       ConfigurationManager.AppSettings["sql"].ToString());
+
+                // Map DataTable to strongly-typed list
+                var list = dt.AsEnumerable().Select(x => new InterestWizardItem
+                {
+                    ID = x["ID"] != DBNull.Value ? Convert.ToInt32(x["ID"]) : 0,
+                    PaymentDate = Convert.ToDateTime(x["PaymentDate"].ToString()).ToString("dd-MMM-yyyy"),
+                    DueDate = Convert.ToDateTime(x["DueDate"].ToString()).ToString("dd-MMM-yyyy"),
+                    BaseEntry = x["BaseEntry"]?.ToString() ?? "",
+                    ItemCode = x["ItemCode"]?.ToString() ?? "",
+                    ItemName = x["ItemName"]?.ToString() ?? "",
+                    DistNumber = x["DistNumber"]?.ToString() ?? "",
+                    OriginalInterest = x["OriginalInterest"] != DBNull.Value ? Convert.ToDecimal(x["OriginalInterest"]) : 0,
+                    ApplyInterest = x["ApplyInterest"] != DBNull.Value ? Convert.ToDecimal(x["ApplyInterest"]) : 0,
+                    Remaining = x["Remaining"] != DBNull.Value ? Convert.ToDecimal(x["Remaining"]) : 0,
+                    Method = x["Method"]?.ToString() ?? "",
+                    Remarks = x["Remarks"]?.ToString() ?? "",
+                    CardCode = x["CardCode"]?.ToString() ?? "",
+                    CardName = x["CardName"]?.ToString() ?? ""
+                }).ToList();
+
+                return Json(new { status = "success", data = list }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                return Json(new { status = "error", message = ex.Message }, JsonRequestBehavior.AllowGet);
+            }
         }
 
 

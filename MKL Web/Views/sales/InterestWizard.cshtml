@@ -3,8 +3,7 @@
     ViewBag.Title = "Interest Wizard";
     Layout = "~/Views/Shared/_Layout.cshtml";
 
-    List<v_OCRD_Penalty> cust = ViewBag.cust;
-    List<v_OCRD_Penalty> custNew = ViewBag.custNew;
+    List<v_OCRD_Interest> cust = ViewBag.cust;
     List<InstallmentList> installment = ViewBag.installment;
 
     string docdate = DateTime.Now.ToString("dd-MMM-yyyy");
@@ -83,22 +82,23 @@
                         </thead>
 
                         <tbody>
-                            @*
+
+                            @{
                                 int rowindex = 1;
                                 foreach (var x in cust)
                                 {
-                                    <tr id="tr_pop_customer_@rowindex"
-                                        onclick="tr_pop_customer_selected(@rowindex)">
-
+                                    <tr id="tr_pop_customer_@rowindex" onclick="tr_pop_customer_selected(@rowindex)">
                                         <td id="td_pop_vendor_cust_code_@rowindex">@x.CardCode</td>
                                         <td id="td_pop_vendor_cust_name_@rowindex">@x.CardName</td>
                                         <td id="td_pop_vendor_cust_fname_@rowindex">@x.CardFName</td>
                                         <td id="td_pop_vendor_cust_gender_@rowindex">@x.U_Gender</td>
                                         <td id="td_pop_vendor_phone_@rowindex">@x.Phone1</td>
+                                        <td></td>
                                     </tr>
                                     rowindex++;
                                 }
-                            *@
+                            }
+
                         </tbody>
 
                     </table>
@@ -108,7 +108,7 @@
             <div class="modal-footer" style="padding:5px;">
                 <button type="button"
                         class="btn btn-success btn-flat"
-                        onclick="cmd_pop_choose_customer_change_owner()">
+                        onclick="cmd_pop_choose_customer_interest()">
                     Choose
                 </button>
 
@@ -232,7 +232,7 @@
 
                                                             <div class="input-group-addon">
                                                                 <i class="fa fa-user text-info"
-                                                                   onclick="cmd_show_customer_change_house('1','1')"
+                                                                   onclick="cmd_show_customer_penaltywizard()"
                                                                    style="cursor:pointer"></i>
                                                             </div>
                                                         </div>
@@ -240,12 +240,12 @@
 
                                                 </tr>
 
-                                                <!-- Remark + Ref -->
+                                                <!-- Customer Name + Ref -->
                                                 <tr>
                                                     <td>
                                                         <div class="form-group">
                                                             <label class="form-control controlLabel">
-                                                                Remark
+                                                                Customer Name
                                                             </label>
                                                         </div>
                                                     </td>
@@ -253,8 +253,8 @@
                                                     <td>
                                                         <input type="text"
                                                                class="form-control form-control-insde"
-                                                               id="txt_remark"
-                                                               placeholder="Remark">
+                                                               id="txt_card_name"
+                                                               placeholder="Customer Name" disabled>
                                                     </td>
 
                                                     <td>
@@ -270,6 +270,24 @@
                                                                class="form-control form-control-insde"
                                                                id="txt_ref"
                                                                placeholder="Ref">
+                                                    </td>
+                                                </tr>
+
+                                                <tr>
+                                                    <td style="width:10%;">
+                                                        <div class="form-group">
+                                                            <label class="form-control controlLabel">
+                                                                Remark
+                                                            </label>
+                                                        </div>
+                                                    </td>
+
+                                                    <td colspan="3" style="width:90%;">
+                                                        <input type="text"
+                                                               class="form-control form-control-insde"
+                                                               id="txt_remark"
+                                                               placeholder="Remark"
+                                                               style="width:100%;">
                                                     </td>
                                                 </tr>
 
@@ -299,31 +317,36 @@
 
                                     <div id="penalty_table_wrapper"
                                          class="row"
-                                         style="margin:0px; margin-top:10px; position:relative; min-height:30vh; height:100%; overflow:auto">
+                                         style="margin:0px; margin-top:10px; position:relative; min-height:60vh; height:100%; overflow:auto">
 
                                         <table class="table"
-                                               id="table_penalty_list"
+                                               id="table_interestwizard_list"
                                                style="margin-bottom:0px; position:absolute; min-width:2000px; width:100%;">
 
                                             <thead style="position:sticky; top:0; z-index:1000;">
                                                 <tr class="bg-gray">
-                                                    <td style="width:2%;">#</td>
-                                                    <td style="width:7%;">Posting Date</td>
-                                                    <td style="width:7%;">Accrual Date</td>
-                                                    <td style="width:5%;">Cus.Code</td>
-                                                    <td style="width:8%;">Cus.Name</td>
-                                                    <td style="width:6%;">Principle</td>
-                                                    <td style="width:5%;">Interest</td>
-                                                    <td style="width:4%;">Penalty%</td>
-                                                    <td style="width:6%;">Penalty$</td>
-                                                    <td style="width:5%;">Waive%</td>
-                                                    <td style="width:5%;">Waive$</td>
-                                                    <td style="width:5%;">Inv Amt</td>
-                                                    <td style="width:11%;">Remark</td>
+                                                    <td style="width:2%; text-align:center;">#</td>
+                                                    <td style="width:1%; text-align:center;"></td> <!-- Checkbox column -->
+                                                    <td style="width:4%;">BaseEntry</td>
+                                                    <td style="width:2%;">LoanID</td>
+                                                    <td style="width:4%;">Posting Date</td>
+                                                    <td style="width:4%;">Due Date</td>
+                                                    <td style="width:5%;">Item Code</td>
+                                                    <td style="width:10%;">Item Name</td>
+                                                    <td style="width:6%;">Serial</td>
+                                                    <td style="width:2%;">Reason</td>
+                                                    <td style="width:4%; text-align:right;">Interest Amt</td>
+                                                    <td style="width:4%; text-align:right;">Generated Amt</td>
+                                                    <td style="width:4%; text-align:right;">Remaining</td>
+                                                    <td style="width:4%; text-align:right;">Apply Amt</td>
+                                                    <td style="width:4%; text-align:right;">New Remaining</td>
+                                                    <td style="width:34%;">Remark</td>
                                                 </tr>
                                             </thead>
 
-                                            <tbody></tbody>
+                                            <tbody>
+
+                                            </tbody>
 
                                         </table>
 
@@ -349,7 +372,7 @@
                         style="background-color:green"
                         class="btn btn-info btn-flat"
                         id="btn_generate_penalty_List"
-                        onclick="cmd_penaltydraf_waive_generate()">
+                        onclick="cmd_interestwizard_generate()">
                     Load Interest
                 </button>
 
