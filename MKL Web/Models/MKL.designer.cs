@@ -186,6 +186,12 @@ namespace MKL_Web.Models
     partial void InsertInstallmentRowHistory(InstallmentRowHistory instance);
     partial void UpdateInstallmentRowHistory(InstallmentRowHistory instance);
     partial void DeleteInstallmentRowHistory(InstallmentRowHistory instance);
+    partial void InsertInterestWizard(InterestWizard instance);
+    partial void UpdateInterestWizard(InterestWizard instance);
+    partial void DeleteInterestWizard(InterestWizard instance);
+    partial void InsertInterestWizard1(InterestWizard1 instance);
+    partial void UpdateInterestWizard1(InterestWizard1 instance);
+    partial void DeleteInterestWizard1(InterestWizard1 instance);
     #endregion
 		
 		public MKLDataContext(string connection) : 
@@ -948,6 +954,22 @@ namespace MKL_Web.Models
 			}
 		}
 		
+		public System.Data.Linq.Table<InterestWizard> InterestWizards
+		{
+			get
+			{
+				return this.GetTable<InterestWizard>();
+			}
+		}
+		
+		public System.Data.Linq.Table<InterestWizard1> InterestWizard1s
+		{
+			get
+			{
+				return this.GetTable<InterestWizard1>();
+			}
+		}
+		
 		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.ICC_UpdateSAPDocumentStatus")]
 		public int ICC_UpdateSAPDocumentStatus([global::System.Data.Linq.Mapping.ParameterAttribute(Name="DocType", DbType="NVarChar(50)")] string docType, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="DocEntry", DbType="NVarChar(50)")] string docEntry, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Status", DbType="NVarChar(50)")] string status)
 		{
@@ -1261,6 +1283,20 @@ namespace MKL_Web.Models
 		{
 			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), cardCode);
 			return ((ISingleResult<ICC_GET_InterestWizardListResult>)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.ICC_Get_List_Approval_interestWizard")]
+		public ISingleResult<ICC_Get_List_Approval_interestWizardResult> ICC_Get_List_Approval_interestWizard([global::System.Data.Linq.Mapping.ParameterAttribute(Name="Status", DbType="NVarChar(50)")] string status, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Date")] System.Nullable<System.DateTime> fdate, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Date")] System.Nullable<System.DateTime> tdate, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="CreateBy", DbType="NVarChar(250)")] string createBy)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), status, fdate, tdate, createBy);
+			return ((ISingleResult<ICC_Get_List_Approval_interestWizardResult>)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.ICC_Get_List_InterestWizard_By_ID")]
+		public ISingleResult<ICC_Get_List_InterestWizard_By_IDResult> ICC_Get_List_InterestWizard_By_ID([global::System.Data.Linq.Mapping.ParameterAttribute(Name="DocEntry", DbType="Int")] System.Nullable<int> docEntry)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), docEntry);
+			return ((ISingleResult<ICC_Get_List_InterestWizard_By_IDResult>)(result.ReturnValue));
 		}
 	}
 	
@@ -37856,6 +37892,10 @@ namespace MKL_Web.Models
 		
 		private System.Nullable<System.DateTime> _U_BOD;
 		
+		private int _BaseEntry;
+		
+		private string _DistNumber;
+		
 		public v_OCRD_Interest()
 		{
 		}
@@ -38033,6 +38073,1239 @@ namespace MKL_Web.Models
 				{
 					this._U_BOD = value;
 				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_BaseEntry", DbType="Int NOT NULL")]
+		public int BaseEntry
+		{
+			get
+			{
+				return this._BaseEntry;
+			}
+			set
+			{
+				if ((this._BaseEntry != value))
+				{
+					this._BaseEntry = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DistNumber", DbType="NVarChar(100)")]
+		public string DistNumber
+		{
+			get
+			{
+				return this._DistNumber;
+			}
+			set
+			{
+				if ((this._DistNumber != value))
+				{
+					this._DistNumber = value;
+				}
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.InterestWizard")]
+	public partial class InterestWizard : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _ID;
+		
+		private System.DateTime _PostingDate;
+		
+		private System.DateTime _DueDate;
+		
+		private string _CardCode;
+		
+		private string _CardName;
+		
+		private string _Ref;
+		
+		private string _Serial;
+		
+		private string _Remark;
+		
+		private string _DocStatus;
+		
+		private string _ApprovalTemplate;
+		
+		private string _ApprovalTemplateName;
+		
+		private string _CreatedBy;
+		
+		private string _UpdatedBy;
+		
+		private System.Nullable<System.DateTime> _CreatedDate;
+		
+		private System.Nullable<System.DateTime> _UpdatedDate;
+		
+		private System.Nullable<decimal> _TotalInterestAmt;
+		
+		private System.Nullable<decimal> _TotalGeneratedAmt;
+		
+		private System.Nullable<decimal> _TotalRemainingAmt;
+		
+		private System.Nullable<decimal> _TotalApplyAmt;
+		
+		private System.Nullable<decimal> _TotalNewremainingAmt;
+		
+		private string _ApprovalStage;
+		
+		private string _NextApprover;
+		
+		private EntitySet<InterestWizard1> _InterestWizard1s;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIDChanging(int value);
+    partial void OnIDChanged();
+    partial void OnPostingDateChanging(System.DateTime value);
+    partial void OnPostingDateChanged();
+    partial void OnDueDateChanging(System.DateTime value);
+    partial void OnDueDateChanged();
+    partial void OnCardCodeChanging(string value);
+    partial void OnCardCodeChanged();
+    partial void OnCardNameChanging(string value);
+    partial void OnCardNameChanged();
+    partial void OnRefChanging(string value);
+    partial void OnRefChanged();
+    partial void OnSerialChanging(string value);
+    partial void OnSerialChanged();
+    partial void OnRemarkChanging(string value);
+    partial void OnRemarkChanged();
+    partial void OnDocStatusChanging(string value);
+    partial void OnDocStatusChanged();
+    partial void OnApprovalTemplateChanging(string value);
+    partial void OnApprovalTemplateChanged();
+    partial void OnApprovalTemplateNameChanging(string value);
+    partial void OnApprovalTemplateNameChanged();
+    partial void OnCreatedByChanging(string value);
+    partial void OnCreatedByChanged();
+    partial void OnUpdatedByChanging(string value);
+    partial void OnUpdatedByChanged();
+    partial void OnCreatedDateChanging(System.Nullable<System.DateTime> value);
+    partial void OnCreatedDateChanged();
+    partial void OnUpdatedDateChanging(System.Nullable<System.DateTime> value);
+    partial void OnUpdatedDateChanged();
+    partial void OnTotalInterestAmtChanging(System.Nullable<decimal> value);
+    partial void OnTotalInterestAmtChanged();
+    partial void OnTotalGeneratedAmtChanging(System.Nullable<decimal> value);
+    partial void OnTotalGeneratedAmtChanged();
+    partial void OnTotalRemainingAmtChanging(System.Nullable<decimal> value);
+    partial void OnTotalRemainingAmtChanged();
+    partial void OnTotalApplyAmtChanging(System.Nullable<decimal> value);
+    partial void OnTotalApplyAmtChanged();
+    partial void OnTotalNewremainingAmtChanging(System.Nullable<decimal> value);
+    partial void OnTotalNewremainingAmtChanged();
+    partial void OnApprovalStageChanging(string value);
+    partial void OnApprovalStageChanged();
+    partial void OnNextApproverChanging(string value);
+    partial void OnNextApproverChanged();
+    #endregion
+		
+		public InterestWizard()
+		{
+			this._InterestWizard1s = new EntitySet<InterestWizard1>(new Action<InterestWizard1>(this.attach_InterestWizard1s), new Action<InterestWizard1>(this.detach_InterestWizard1s));
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int ID
+		{
+			get
+			{
+				return this._ID;
+			}
+			set
+			{
+				if ((this._ID != value))
+				{
+					this.OnIDChanging(value);
+					this.SendPropertyChanging();
+					this._ID = value;
+					this.SendPropertyChanged("ID");
+					this.OnIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PostingDate", DbType="Date NOT NULL")]
+		public System.DateTime PostingDate
+		{
+			get
+			{
+				return this._PostingDate;
+			}
+			set
+			{
+				if ((this._PostingDate != value))
+				{
+					this.OnPostingDateChanging(value);
+					this.SendPropertyChanging();
+					this._PostingDate = value;
+					this.SendPropertyChanged("PostingDate");
+					this.OnPostingDateChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DueDate", DbType="Date NOT NULL")]
+		public System.DateTime DueDate
+		{
+			get
+			{
+				return this._DueDate;
+			}
+			set
+			{
+				if ((this._DueDate != value))
+				{
+					this.OnDueDateChanging(value);
+					this.SendPropertyChanging();
+					this._DueDate = value;
+					this.SendPropertyChanged("DueDate");
+					this.OnDueDateChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CardCode", DbType="NVarChar(50) NOT NULL", CanBeNull=false)]
+		public string CardCode
+		{
+			get
+			{
+				return this._CardCode;
+			}
+			set
+			{
+				if ((this._CardCode != value))
+				{
+					this.OnCardCodeChanging(value);
+					this.SendPropertyChanging();
+					this._CardCode = value;
+					this.SendPropertyChanged("CardCode");
+					this.OnCardCodeChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CardName", DbType="NVarChar(250)")]
+		public string CardName
+		{
+			get
+			{
+				return this._CardName;
+			}
+			set
+			{
+				if ((this._CardName != value))
+				{
+					this.OnCardNameChanging(value);
+					this.SendPropertyChanging();
+					this._CardName = value;
+					this.SendPropertyChanged("CardName");
+					this.OnCardNameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Ref", DbType="NVarChar(250)")]
+		public string Ref
+		{
+			get
+			{
+				return this._Ref;
+			}
+			set
+			{
+				if ((this._Ref != value))
+				{
+					this.OnRefChanging(value);
+					this.SendPropertyChanging();
+					this._Ref = value;
+					this.SendPropertyChanged("Ref");
+					this.OnRefChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Serial", DbType="NVarChar(250)")]
+		public string Serial
+		{
+			get
+			{
+				return this._Serial;
+			}
+			set
+			{
+				if ((this._Serial != value))
+				{
+					this.OnSerialChanging(value);
+					this.SendPropertyChanging();
+					this._Serial = value;
+					this.SendPropertyChanged("Serial");
+					this.OnSerialChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Remark", DbType="NVarChar(500)")]
+		public string Remark
+		{
+			get
+			{
+				return this._Remark;
+			}
+			set
+			{
+				if ((this._Remark != value))
+				{
+					this.OnRemarkChanging(value);
+					this.SendPropertyChanging();
+					this._Remark = value;
+					this.SendPropertyChanged("Remark");
+					this.OnRemarkChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DocStatus", DbType="NVarChar(50)")]
+		public string DocStatus
+		{
+			get
+			{
+				return this._DocStatus;
+			}
+			set
+			{
+				if ((this._DocStatus != value))
+				{
+					this.OnDocStatusChanging(value);
+					this.SendPropertyChanging();
+					this._DocStatus = value;
+					this.SendPropertyChanged("DocStatus");
+					this.OnDocStatusChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ApprovalTemplate", DbType="NVarChar(50)")]
+		public string ApprovalTemplate
+		{
+			get
+			{
+				return this._ApprovalTemplate;
+			}
+			set
+			{
+				if ((this._ApprovalTemplate != value))
+				{
+					this.OnApprovalTemplateChanging(value);
+					this.SendPropertyChanging();
+					this._ApprovalTemplate = value;
+					this.SendPropertyChanged("ApprovalTemplate");
+					this.OnApprovalTemplateChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ApprovalTemplateName", DbType="NVarChar(500)")]
+		public string ApprovalTemplateName
+		{
+			get
+			{
+				return this._ApprovalTemplateName;
+			}
+			set
+			{
+				if ((this._ApprovalTemplateName != value))
+				{
+					this.OnApprovalTemplateNameChanging(value);
+					this.SendPropertyChanging();
+					this._ApprovalTemplateName = value;
+					this.SendPropertyChanged("ApprovalTemplateName");
+					this.OnApprovalTemplateNameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CreatedBy", DbType="NVarChar(50)")]
+		public string CreatedBy
+		{
+			get
+			{
+				return this._CreatedBy;
+			}
+			set
+			{
+				if ((this._CreatedBy != value))
+				{
+					this.OnCreatedByChanging(value);
+					this.SendPropertyChanging();
+					this._CreatedBy = value;
+					this.SendPropertyChanged("CreatedBy");
+					this.OnCreatedByChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UpdatedBy", DbType="NVarChar(50)")]
+		public string UpdatedBy
+		{
+			get
+			{
+				return this._UpdatedBy;
+			}
+			set
+			{
+				if ((this._UpdatedBy != value))
+				{
+					this.OnUpdatedByChanging(value);
+					this.SendPropertyChanging();
+					this._UpdatedBy = value;
+					this.SendPropertyChanged("UpdatedBy");
+					this.OnUpdatedByChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CreatedDate", DbType="Date")]
+		public System.Nullable<System.DateTime> CreatedDate
+		{
+			get
+			{
+				return this._CreatedDate;
+			}
+			set
+			{
+				if ((this._CreatedDate != value))
+				{
+					this.OnCreatedDateChanging(value);
+					this.SendPropertyChanging();
+					this._CreatedDate = value;
+					this.SendPropertyChanged("CreatedDate");
+					this.OnCreatedDateChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UpdatedDate", DbType="Date")]
+		public System.Nullable<System.DateTime> UpdatedDate
+		{
+			get
+			{
+				return this._UpdatedDate;
+			}
+			set
+			{
+				if ((this._UpdatedDate != value))
+				{
+					this.OnUpdatedDateChanging(value);
+					this.SendPropertyChanging();
+					this._UpdatedDate = value;
+					this.SendPropertyChanged("UpdatedDate");
+					this.OnUpdatedDateChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TotalInterestAmt", DbType="Decimal(19,6)")]
+		public System.Nullable<decimal> TotalInterestAmt
+		{
+			get
+			{
+				return this._TotalInterestAmt;
+			}
+			set
+			{
+				if ((this._TotalInterestAmt != value))
+				{
+					this.OnTotalInterestAmtChanging(value);
+					this.SendPropertyChanging();
+					this._TotalInterestAmt = value;
+					this.SendPropertyChanged("TotalInterestAmt");
+					this.OnTotalInterestAmtChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TotalGeneratedAmt", DbType="Decimal(19,6)")]
+		public System.Nullable<decimal> TotalGeneratedAmt
+		{
+			get
+			{
+				return this._TotalGeneratedAmt;
+			}
+			set
+			{
+				if ((this._TotalGeneratedAmt != value))
+				{
+					this.OnTotalGeneratedAmtChanging(value);
+					this.SendPropertyChanging();
+					this._TotalGeneratedAmt = value;
+					this.SendPropertyChanged("TotalGeneratedAmt");
+					this.OnTotalGeneratedAmtChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TotalRemainingAmt", DbType="Decimal(19,6)")]
+		public System.Nullable<decimal> TotalRemainingAmt
+		{
+			get
+			{
+				return this._TotalRemainingAmt;
+			}
+			set
+			{
+				if ((this._TotalRemainingAmt != value))
+				{
+					this.OnTotalRemainingAmtChanging(value);
+					this.SendPropertyChanging();
+					this._TotalRemainingAmt = value;
+					this.SendPropertyChanged("TotalRemainingAmt");
+					this.OnTotalRemainingAmtChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TotalApplyAmt", DbType="Decimal(19,6)")]
+		public System.Nullable<decimal> TotalApplyAmt
+		{
+			get
+			{
+				return this._TotalApplyAmt;
+			}
+			set
+			{
+				if ((this._TotalApplyAmt != value))
+				{
+					this.OnTotalApplyAmtChanging(value);
+					this.SendPropertyChanging();
+					this._TotalApplyAmt = value;
+					this.SendPropertyChanged("TotalApplyAmt");
+					this.OnTotalApplyAmtChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TotalNewremainingAmt", DbType="Decimal(19,6)")]
+		public System.Nullable<decimal> TotalNewremainingAmt
+		{
+			get
+			{
+				return this._TotalNewremainingAmt;
+			}
+			set
+			{
+				if ((this._TotalNewremainingAmt != value))
+				{
+					this.OnTotalNewremainingAmtChanging(value);
+					this.SendPropertyChanging();
+					this._TotalNewremainingAmt = value;
+					this.SendPropertyChanged("TotalNewremainingAmt");
+					this.OnTotalNewremainingAmtChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ApprovalStage", DbType="NVarChar(50)")]
+		public string ApprovalStage
+		{
+			get
+			{
+				return this._ApprovalStage;
+			}
+			set
+			{
+				if ((this._ApprovalStage != value))
+				{
+					this.OnApprovalStageChanging(value);
+					this.SendPropertyChanging();
+					this._ApprovalStage = value;
+					this.SendPropertyChanged("ApprovalStage");
+					this.OnApprovalStageChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_NextApprover", DbType="NVarChar(250)")]
+		public string NextApprover
+		{
+			get
+			{
+				return this._NextApprover;
+			}
+			set
+			{
+				if ((this._NextApprover != value))
+				{
+					this.OnNextApproverChanging(value);
+					this.SendPropertyChanging();
+					this._NextApprover = value;
+					this.SendPropertyChanged("NextApprover");
+					this.OnNextApproverChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="InterestWizard_InterestWizard1", Storage="_InterestWizard1s", ThisKey="ID", OtherKey="ID")]
+		public EntitySet<InterestWizard1> InterestWizard1s
+		{
+			get
+			{
+				return this._InterestWizard1s;
+			}
+			set
+			{
+				this._InterestWizard1s.Assign(value);
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_InterestWizard1s(InterestWizard1 entity)
+		{
+			this.SendPropertyChanging();
+			entity.InterestWizard = this;
+		}
+		
+		private void detach_InterestWizard1s(InterestWizard1 entity)
+		{
+			this.SendPropertyChanging();
+			entity.InterestWizard = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.InterestWizard1")]
+	public partial class InterestWizard1 : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _ID;
+		
+		private int _LineNum;
+		
+		private string _BaseEntry;
+		
+		private string _LoanID;
+		
+		private System.Nullable<System.DateTime> _OldPostingDate;
+		
+		private System.Nullable<System.DateTime> _OldDueDate;
+		
+		private System.Nullable<System.DateTime> _NewPostingDate;
+		
+		private System.Nullable<System.DateTime> _NewDueDate;
+		
+		private string _ItemCode;
+		
+		private string _ItemName;
+		
+		private string _Serial;
+		
+		private string _Reason;
+		
+		private System.Nullable<decimal> _InterestAmt;
+		
+		private System.Nullable<decimal> _GeneratedAmt;
+		
+		private System.Nullable<decimal> _RemainingAmt;
+		
+		private System.Nullable<decimal> _ApplyAmt;
+		
+		private System.Nullable<decimal> _NewremainingAmt;
+		
+		private string _Remark;
+		
+		private string _ARNo;
+		
+		private string _PaymentNo;
+		
+		private string _LastErrorARNo;
+		
+		private string _LastErrorPayNo;
+		
+		private EntityRef<InterestWizard> _InterestWizard;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIDChanging(int value);
+    partial void OnIDChanged();
+    partial void OnLineNumChanging(int value);
+    partial void OnLineNumChanged();
+    partial void OnBaseEntryChanging(string value);
+    partial void OnBaseEntryChanged();
+    partial void OnLoanIDChanging(string value);
+    partial void OnLoanIDChanged();
+    partial void OnOldPostingDateChanging(System.Nullable<System.DateTime> value);
+    partial void OnOldPostingDateChanged();
+    partial void OnOldDueDateChanging(System.Nullable<System.DateTime> value);
+    partial void OnOldDueDateChanged();
+    partial void OnNewPostingDateChanging(System.Nullable<System.DateTime> value);
+    partial void OnNewPostingDateChanged();
+    partial void OnNewDueDateChanging(System.Nullable<System.DateTime> value);
+    partial void OnNewDueDateChanged();
+    partial void OnItemCodeChanging(string value);
+    partial void OnItemCodeChanged();
+    partial void OnItemNameChanging(string value);
+    partial void OnItemNameChanged();
+    partial void OnSerialChanging(string value);
+    partial void OnSerialChanged();
+    partial void OnReasonChanging(string value);
+    partial void OnReasonChanged();
+    partial void OnInterestAmtChanging(System.Nullable<decimal> value);
+    partial void OnInterestAmtChanged();
+    partial void OnGeneratedAmtChanging(System.Nullable<decimal> value);
+    partial void OnGeneratedAmtChanged();
+    partial void OnRemainingAmtChanging(System.Nullable<decimal> value);
+    partial void OnRemainingAmtChanged();
+    partial void OnApplyAmtChanging(System.Nullable<decimal> value);
+    partial void OnApplyAmtChanged();
+    partial void OnNewremainingAmtChanging(System.Nullable<decimal> value);
+    partial void OnNewremainingAmtChanged();
+    partial void OnRemarkChanging(string value);
+    partial void OnRemarkChanged();
+    partial void OnARNoChanging(string value);
+    partial void OnARNoChanged();
+    partial void OnPaymentNoChanging(string value);
+    partial void OnPaymentNoChanged();
+    partial void OnLastErrorARNoChanging(string value);
+    partial void OnLastErrorARNoChanged();
+    partial void OnLastErrorPayNoChanging(string value);
+    partial void OnLastErrorPayNoChanged();
+    #endregion
+		
+		public InterestWizard1()
+		{
+			this._InterestWizard = default(EntityRef<InterestWizard>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", DbType="Int NOT NULL", IsPrimaryKey=true)]
+		public int ID
+		{
+			get
+			{
+				return this._ID;
+			}
+			set
+			{
+				if ((this._ID != value))
+				{
+					if (this._InterestWizard.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnIDChanging(value);
+					this.SendPropertyChanging();
+					this._ID = value;
+					this.SendPropertyChanged("ID");
+					this.OnIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_LineNum", DbType="Int NOT NULL", IsPrimaryKey=true)]
+		public int LineNum
+		{
+			get
+			{
+				return this._LineNum;
+			}
+			set
+			{
+				if ((this._LineNum != value))
+				{
+					this.OnLineNumChanging(value);
+					this.SendPropertyChanging();
+					this._LineNum = value;
+					this.SendPropertyChanged("LineNum");
+					this.OnLineNumChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_BaseEntry", DbType="NVarChar(50) NOT NULL", CanBeNull=false)]
+		public string BaseEntry
+		{
+			get
+			{
+				return this._BaseEntry;
+			}
+			set
+			{
+				if ((this._BaseEntry != value))
+				{
+					this.OnBaseEntryChanging(value);
+					this.SendPropertyChanging();
+					this._BaseEntry = value;
+					this.SendPropertyChanged("BaseEntry");
+					this.OnBaseEntryChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_LoanID", DbType="NVarChar(50) NOT NULL", CanBeNull=false)]
+		public string LoanID
+		{
+			get
+			{
+				return this._LoanID;
+			}
+			set
+			{
+				if ((this._LoanID != value))
+				{
+					this.OnLoanIDChanging(value);
+					this.SendPropertyChanging();
+					this._LoanID = value;
+					this.SendPropertyChanged("LoanID");
+					this.OnLoanIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_OldPostingDate", DbType="Date")]
+		public System.Nullable<System.DateTime> OldPostingDate
+		{
+			get
+			{
+				return this._OldPostingDate;
+			}
+			set
+			{
+				if ((this._OldPostingDate != value))
+				{
+					this.OnOldPostingDateChanging(value);
+					this.SendPropertyChanging();
+					this._OldPostingDate = value;
+					this.SendPropertyChanged("OldPostingDate");
+					this.OnOldPostingDateChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_OldDueDate", DbType="Date")]
+		public System.Nullable<System.DateTime> OldDueDate
+		{
+			get
+			{
+				return this._OldDueDate;
+			}
+			set
+			{
+				if ((this._OldDueDate != value))
+				{
+					this.OnOldDueDateChanging(value);
+					this.SendPropertyChanging();
+					this._OldDueDate = value;
+					this.SendPropertyChanged("OldDueDate");
+					this.OnOldDueDateChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_NewPostingDate", DbType="Date")]
+		public System.Nullable<System.DateTime> NewPostingDate
+		{
+			get
+			{
+				return this._NewPostingDate;
+			}
+			set
+			{
+				if ((this._NewPostingDate != value))
+				{
+					this.OnNewPostingDateChanging(value);
+					this.SendPropertyChanging();
+					this._NewPostingDate = value;
+					this.SendPropertyChanged("NewPostingDate");
+					this.OnNewPostingDateChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_NewDueDate", DbType="Date")]
+		public System.Nullable<System.DateTime> NewDueDate
+		{
+			get
+			{
+				return this._NewDueDate;
+			}
+			set
+			{
+				if ((this._NewDueDate != value))
+				{
+					this.OnNewDueDateChanging(value);
+					this.SendPropertyChanging();
+					this._NewDueDate = value;
+					this.SendPropertyChanged("NewDueDate");
+					this.OnNewDueDateChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ItemCode", DbType="NVarChar(50)")]
+		public string ItemCode
+		{
+			get
+			{
+				return this._ItemCode;
+			}
+			set
+			{
+				if ((this._ItemCode != value))
+				{
+					this.OnItemCodeChanging(value);
+					this.SendPropertyChanging();
+					this._ItemCode = value;
+					this.SendPropertyChanged("ItemCode");
+					this.OnItemCodeChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ItemName", DbType="NVarChar(500)")]
+		public string ItemName
+		{
+			get
+			{
+				return this._ItemName;
+			}
+			set
+			{
+				if ((this._ItemName != value))
+				{
+					this.OnItemNameChanging(value);
+					this.SendPropertyChanging();
+					this._ItemName = value;
+					this.SendPropertyChanged("ItemName");
+					this.OnItemNameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Serial", DbType="NVarChar(100)")]
+		public string Serial
+		{
+			get
+			{
+				return this._Serial;
+			}
+			set
+			{
+				if ((this._Serial != value))
+				{
+					this.OnSerialChanging(value);
+					this.SendPropertyChanging();
+					this._Serial = value;
+					this.SendPropertyChanged("Serial");
+					this.OnSerialChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Reason", DbType="NVarChar(50)")]
+		public string Reason
+		{
+			get
+			{
+				return this._Reason;
+			}
+			set
+			{
+				if ((this._Reason != value))
+				{
+					this.OnReasonChanging(value);
+					this.SendPropertyChanging();
+					this._Reason = value;
+					this.SendPropertyChanged("Reason");
+					this.OnReasonChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_InterestAmt", DbType="Decimal(19,6)")]
+		public System.Nullable<decimal> InterestAmt
+		{
+			get
+			{
+				return this._InterestAmt;
+			}
+			set
+			{
+				if ((this._InterestAmt != value))
+				{
+					this.OnInterestAmtChanging(value);
+					this.SendPropertyChanging();
+					this._InterestAmt = value;
+					this.SendPropertyChanged("InterestAmt");
+					this.OnInterestAmtChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_GeneratedAmt", DbType="Decimal(19,6)")]
+		public System.Nullable<decimal> GeneratedAmt
+		{
+			get
+			{
+				return this._GeneratedAmt;
+			}
+			set
+			{
+				if ((this._GeneratedAmt != value))
+				{
+					this.OnGeneratedAmtChanging(value);
+					this.SendPropertyChanging();
+					this._GeneratedAmt = value;
+					this.SendPropertyChanged("GeneratedAmt");
+					this.OnGeneratedAmtChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_RemainingAmt", DbType="Decimal(19,6)")]
+		public System.Nullable<decimal> RemainingAmt
+		{
+			get
+			{
+				return this._RemainingAmt;
+			}
+			set
+			{
+				if ((this._RemainingAmt != value))
+				{
+					this.OnRemainingAmtChanging(value);
+					this.SendPropertyChanging();
+					this._RemainingAmt = value;
+					this.SendPropertyChanged("RemainingAmt");
+					this.OnRemainingAmtChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ApplyAmt", DbType="Decimal(19,6)")]
+		public System.Nullable<decimal> ApplyAmt
+		{
+			get
+			{
+				return this._ApplyAmt;
+			}
+			set
+			{
+				if ((this._ApplyAmt != value))
+				{
+					this.OnApplyAmtChanging(value);
+					this.SendPropertyChanging();
+					this._ApplyAmt = value;
+					this.SendPropertyChanged("ApplyAmt");
+					this.OnApplyAmtChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_NewremainingAmt", DbType="Decimal(19,6)")]
+		public System.Nullable<decimal> NewremainingAmt
+		{
+			get
+			{
+				return this._NewremainingAmt;
+			}
+			set
+			{
+				if ((this._NewremainingAmt != value))
+				{
+					this.OnNewremainingAmtChanging(value);
+					this.SendPropertyChanging();
+					this._NewremainingAmt = value;
+					this.SendPropertyChanged("NewremainingAmt");
+					this.OnNewremainingAmtChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Remark", DbType="NVarChar(500)")]
+		public string Remark
+		{
+			get
+			{
+				return this._Remark;
+			}
+			set
+			{
+				if ((this._Remark != value))
+				{
+					this.OnRemarkChanging(value);
+					this.SendPropertyChanging();
+					this._Remark = value;
+					this.SendPropertyChanged("Remark");
+					this.OnRemarkChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ARNo", DbType="NVarChar(50)")]
+		public string ARNo
+		{
+			get
+			{
+				return this._ARNo;
+			}
+			set
+			{
+				if ((this._ARNo != value))
+				{
+					this.OnARNoChanging(value);
+					this.SendPropertyChanging();
+					this._ARNo = value;
+					this.SendPropertyChanged("ARNo");
+					this.OnARNoChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PaymentNo", DbType="NVarChar(50)")]
+		public string PaymentNo
+		{
+			get
+			{
+				return this._PaymentNo;
+			}
+			set
+			{
+				if ((this._PaymentNo != value))
+				{
+					this.OnPaymentNoChanging(value);
+					this.SendPropertyChanging();
+					this._PaymentNo = value;
+					this.SendPropertyChanged("PaymentNo");
+					this.OnPaymentNoChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_LastErrorARNo", DbType="NVarChar(500)")]
+		public string LastErrorARNo
+		{
+			get
+			{
+				return this._LastErrorARNo;
+			}
+			set
+			{
+				if ((this._LastErrorARNo != value))
+				{
+					this.OnLastErrorARNoChanging(value);
+					this.SendPropertyChanging();
+					this._LastErrorARNo = value;
+					this.SendPropertyChanged("LastErrorARNo");
+					this.OnLastErrorARNoChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_LastErrorPayNo", DbType="NVarChar(500)")]
+		public string LastErrorPayNo
+		{
+			get
+			{
+				return this._LastErrorPayNo;
+			}
+			set
+			{
+				if ((this._LastErrorPayNo != value))
+				{
+					this.OnLastErrorPayNoChanging(value);
+					this.SendPropertyChanging();
+					this._LastErrorPayNo = value;
+					this.SendPropertyChanged("LastErrorPayNo");
+					this.OnLastErrorPayNoChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="InterestWizard_InterestWizard1", Storage="_InterestWizard", ThisKey="ID", OtherKey="ID", IsForeignKey=true)]
+		public InterestWizard InterestWizard
+		{
+			get
+			{
+				return this._InterestWizard.Entity;
+			}
+			set
+			{
+				InterestWizard previousValue = this._InterestWizard.Entity;
+				if (((previousValue != value) 
+							|| (this._InterestWizard.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._InterestWizard.Entity = null;
+						previousValue.InterestWizard1s.Remove(this);
+					}
+					this._InterestWizard.Entity = value;
+					if ((value != null))
+					{
+						value.InterestWizard1s.Add(this);
+						this._ID = value.ID;
+					}
+					else
+					{
+						this._ID = default(int);
+					}
+					this.SendPropertyChanged("InterestWizard");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
 		}
 	}
@@ -49654,6 +50927,598 @@ namespace MKL_Web.Models
 				if ((this._CardName != value))
 				{
 					this._CardName = value;
+				}
+			}
+		}
+	}
+	
+	public partial class ICC_Get_List_Approval_interestWizardResult
+	{
+		
+		private int _DocEntry;
+		
+		private System.DateTime _PostingDate;
+		
+		private string _DocNumRef;
+		
+		private string _ApprovalStage;
+		
+		private string _TemplateDesc;
+		
+		private string _NextApprover;
+		
+		private System.Nullable<System.DateTime> _CreateDate;
+		
+		private string _CreateBy;
+		
+		private string _Status;
+		
+		private string _Remark;
+		
+		public ICC_Get_List_Approval_interestWizardResult()
+		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DocEntry", DbType="Int NOT NULL")]
+		public int DocEntry
+		{
+			get
+			{
+				return this._DocEntry;
+			}
+			set
+			{
+				if ((this._DocEntry != value))
+				{
+					this._DocEntry = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PostingDate", DbType="Date NOT NULL")]
+		public System.DateTime PostingDate
+		{
+			get
+			{
+				return this._PostingDate;
+			}
+			set
+			{
+				if ((this._PostingDate != value))
+				{
+					this._PostingDate = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DocNumRef", DbType="NVarChar(250)")]
+		public string DocNumRef
+		{
+			get
+			{
+				return this._DocNumRef;
+			}
+			set
+			{
+				if ((this._DocNumRef != value))
+				{
+					this._DocNumRef = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ApprovalStage", DbType="NVarChar(50)")]
+		public string ApprovalStage
+		{
+			get
+			{
+				return this._ApprovalStage;
+			}
+			set
+			{
+				if ((this._ApprovalStage != value))
+				{
+					this._ApprovalStage = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TemplateDesc", DbType="NVarChar(200)")]
+		public string TemplateDesc
+		{
+			get
+			{
+				return this._TemplateDesc;
+			}
+			set
+			{
+				if ((this._TemplateDesc != value))
+				{
+					this._TemplateDesc = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_NextApprover", DbType="NVarChar(250)")]
+		public string NextApprover
+		{
+			get
+			{
+				return this._NextApprover;
+			}
+			set
+			{
+				if ((this._NextApprover != value))
+				{
+					this._NextApprover = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CreateDate", DbType="Date")]
+		public System.Nullable<System.DateTime> CreateDate
+		{
+			get
+			{
+				return this._CreateDate;
+			}
+			set
+			{
+				if ((this._CreateDate != value))
+				{
+					this._CreateDate = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CreateBy", DbType="NVarChar(50)")]
+		public string CreateBy
+		{
+			get
+			{
+				return this._CreateBy;
+			}
+			set
+			{
+				if ((this._CreateBy != value))
+				{
+					this._CreateBy = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Status", DbType="NVarChar(50)")]
+		public string Status
+		{
+			get
+			{
+				return this._Status;
+			}
+			set
+			{
+				if ((this._Status != value))
+				{
+					this._Status = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Remark", DbType="NVarChar(500)")]
+		public string Remark
+		{
+			get
+			{
+				return this._Remark;
+			}
+			set
+			{
+				if ((this._Remark != value))
+				{
+					this._Remark = value;
+				}
+			}
+		}
+	}
+	
+	public partial class ICC_Get_List_InterestWizard_By_IDResult
+	{
+		
+		private int _ID;
+		
+		private string _CardCode;
+		
+		private string _CardName;
+		
+		private string _Ref;
+		
+		private string _Serial;
+		
+		private string _Remark;
+		
+		private System.DateTime _PostingDate;
+		
+		private System.DateTime _DueDate;
+		
+		private string _CreatedBy;
+		
+		private string _UpdatedBy;
+		
+		private System.Nullable<System.DateTime> _CreatedDate;
+		
+		private System.Nullable<System.DateTime> _UpdatedDate;
+		
+		private System.Nullable<decimal> _TotalInterestAmt;
+		
+		private System.Nullable<decimal> _TotalGeneratedAmt;
+		
+		private System.Nullable<decimal> _TotalRemainingAmt;
+		
+		private System.Nullable<decimal> _TotalApplyAmt;
+		
+		private System.Nullable<decimal> _TotalNewremainingAmt;
+		
+		private string _ApprovalStatus;
+		
+		private string _ApprovalTemplate;
+		
+		private string _TemplateDesc;
+		
+		private string _LastApprover;
+		
+		private string _LoanStatus;
+		
+		public ICC_Get_List_InterestWizard_By_IDResult()
+		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", DbType="Int NOT NULL")]
+		public int ID
+		{
+			get
+			{
+				return this._ID;
+			}
+			set
+			{
+				if ((this._ID != value))
+				{
+					this._ID = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CardCode", DbType="NVarChar(50) NOT NULL", CanBeNull=false)]
+		public string CardCode
+		{
+			get
+			{
+				return this._CardCode;
+			}
+			set
+			{
+				if ((this._CardCode != value))
+				{
+					this._CardCode = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CardName", DbType="NVarChar(250)")]
+		public string CardName
+		{
+			get
+			{
+				return this._CardName;
+			}
+			set
+			{
+				if ((this._CardName != value))
+				{
+					this._CardName = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Ref", DbType="NVarChar(250)")]
+		public string Ref
+		{
+			get
+			{
+				return this._Ref;
+			}
+			set
+			{
+				if ((this._Ref != value))
+				{
+					this._Ref = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Serial", DbType="NVarChar(250)")]
+		public string Serial
+		{
+			get
+			{
+				return this._Serial;
+			}
+			set
+			{
+				if ((this._Serial != value))
+				{
+					this._Serial = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Remark", DbType="NVarChar(500)")]
+		public string Remark
+		{
+			get
+			{
+				return this._Remark;
+			}
+			set
+			{
+				if ((this._Remark != value))
+				{
+					this._Remark = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PostingDate", DbType="Date NOT NULL")]
+		public System.DateTime PostingDate
+		{
+			get
+			{
+				return this._PostingDate;
+			}
+			set
+			{
+				if ((this._PostingDate != value))
+				{
+					this._PostingDate = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DueDate", DbType="Date NOT NULL")]
+		public System.DateTime DueDate
+		{
+			get
+			{
+				return this._DueDate;
+			}
+			set
+			{
+				if ((this._DueDate != value))
+				{
+					this._DueDate = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CreatedBy", DbType="NVarChar(50)")]
+		public string CreatedBy
+		{
+			get
+			{
+				return this._CreatedBy;
+			}
+			set
+			{
+				if ((this._CreatedBy != value))
+				{
+					this._CreatedBy = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UpdatedBy", DbType="NVarChar(50)")]
+		public string UpdatedBy
+		{
+			get
+			{
+				return this._UpdatedBy;
+			}
+			set
+			{
+				if ((this._UpdatedBy != value))
+				{
+					this._UpdatedBy = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CreatedDate", DbType="Date")]
+		public System.Nullable<System.DateTime> CreatedDate
+		{
+			get
+			{
+				return this._CreatedDate;
+			}
+			set
+			{
+				if ((this._CreatedDate != value))
+				{
+					this._CreatedDate = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UpdatedDate", DbType="Date")]
+		public System.Nullable<System.DateTime> UpdatedDate
+		{
+			get
+			{
+				return this._UpdatedDate;
+			}
+			set
+			{
+				if ((this._UpdatedDate != value))
+				{
+					this._UpdatedDate = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TotalInterestAmt", DbType="Decimal(19,6)")]
+		public System.Nullable<decimal> TotalInterestAmt
+		{
+			get
+			{
+				return this._TotalInterestAmt;
+			}
+			set
+			{
+				if ((this._TotalInterestAmt != value))
+				{
+					this._TotalInterestAmt = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TotalGeneratedAmt", DbType="Decimal(19,6)")]
+		public System.Nullable<decimal> TotalGeneratedAmt
+		{
+			get
+			{
+				return this._TotalGeneratedAmt;
+			}
+			set
+			{
+				if ((this._TotalGeneratedAmt != value))
+				{
+					this._TotalGeneratedAmt = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TotalRemainingAmt", DbType="Decimal(19,6)")]
+		public System.Nullable<decimal> TotalRemainingAmt
+		{
+			get
+			{
+				return this._TotalRemainingAmt;
+			}
+			set
+			{
+				if ((this._TotalRemainingAmt != value))
+				{
+					this._TotalRemainingAmt = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TotalApplyAmt", DbType="Decimal(19,6)")]
+		public System.Nullable<decimal> TotalApplyAmt
+		{
+			get
+			{
+				return this._TotalApplyAmt;
+			}
+			set
+			{
+				if ((this._TotalApplyAmt != value))
+				{
+					this._TotalApplyAmt = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TotalNewremainingAmt", DbType="Decimal(19,6)")]
+		public System.Nullable<decimal> TotalNewremainingAmt
+		{
+			get
+			{
+				return this._TotalNewremainingAmt;
+			}
+			set
+			{
+				if ((this._TotalNewremainingAmt != value))
+				{
+					this._TotalNewremainingAmt = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ApprovalStatus", DbType="NVarChar(50)")]
+		public string ApprovalStatus
+		{
+			get
+			{
+				return this._ApprovalStatus;
+			}
+			set
+			{
+				if ((this._ApprovalStatus != value))
+				{
+					this._ApprovalStatus = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ApprovalTemplate", DbType="NVarChar(50)")]
+		public string ApprovalTemplate
+		{
+			get
+			{
+				return this._ApprovalTemplate;
+			}
+			set
+			{
+				if ((this._ApprovalTemplate != value))
+				{
+					this._ApprovalTemplate = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TemplateDesc", DbType="NVarChar(200)")]
+		public string TemplateDesc
+		{
+			get
+			{
+				return this._TemplateDesc;
+			}
+			set
+			{
+				if ((this._TemplateDesc != value))
+				{
+					this._TemplateDesc = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_LastApprover", DbType="NVarChar(250)")]
+		public string LastApprover
+		{
+			get
+			{
+				return this._LastApprover;
+			}
+			set
+			{
+				if ((this._LastApprover != value))
+				{
+					this._LastApprover = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_LoanStatus", DbType="NVarChar(500)")]
+		public string LoanStatus
+		{
+			get
+			{
+				return this._LoanStatus;
+			}
+			set
+			{
+				if ((this._LoanStatus != value))
+				{
+					this._LoanStatus = value;
 				}
 			}
 		}

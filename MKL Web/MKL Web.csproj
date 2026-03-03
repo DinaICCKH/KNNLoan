@@ -7491,6 +7491,8 @@
     <Content Include="Views\sales\LoanInstallmentApprovalListing.cshtml" />
     <Content Include="Views\sales\PreviewLoanDraf.cshtml" />
     <Content Include="Views\sales\InterestWizard.cshtml" />
+    <Content Include="Views\sales\InterestWizardApprovalListing.cshtml" />
+    <Content Include="Views\sales\PreviewInterestwizard.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

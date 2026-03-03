@@ -13,9 +13,52 @@
     <script src="../../Scripts/js/sales.js"></script>
 
     <script>
+        // ================= SUM CHECKED ROWS =================
+        function sum_checked_interestwizard() {
+
+            let sumInterest = 0,
+                sumGenerated = 0,
+                sumRemaining = 0,
+                sumApply = 0,
+                sumNewRemaining = 0;
+
+            $("#table_interestwizard_list tbody tr").each(function () {
+
+                let rowindex = $(this).attr('id').split("_").pop();
+
+                if ($("#chk_interest_wizard_line_" + rowindex).is(":checked")) {
+
+                    let interest = parseFloat($("#tr_interestwizard_interestamt_" + rowindex).text()) || 0;
+                    let generated = parseFloat($("#tr_interestwizard_generatedamt_" + rowindex).text()) || 0;
+                    let remaining = parseFloat($("#tr_interestwizard_remaining_" + rowindex).text()) || 0;
+                    let apply = parseFloat($("#applyamt_interest_wizard_line_" + rowindex).val()) || 0;
+                    let newRemaining = parseFloat($("#tr_interestwizard_newremaining_" + rowindex).text()) || 0;
+
+                    sumInterest += interest;
+                    sumGenerated += generated;
+                    sumRemaining += remaining;
+                    sumApply += apply;
+                    sumNewRemaining += newRemaining;
+                }
+            });
+
+            $("#sum_interest_amt").text(sumInterest.toFixed(2));
+            $("#sum_generated_amt").text(sumGenerated.toFixed(2));
+            $("#sum_remaining").text(sumRemaining.toFixed(2));
+            $("#sum_apply_amt").text(sumApply.toFixed(2));
+            $("#sum_new_remaining").text(sumNewRemaining.toFixed(2));
+        }
+
+
         $(document).ready(function () {
 
+            // ================= CUSTOMER FILTER =================
             $("#txt_pop_filter_vendor_name").keyup(function () {
+
+                var searchText = $("#txt_pop_filter_vendor_name")
+                    .val()
+                    .replace(/\s+/g, '')
+                    .toLowerCase();
 
                 $("#table_pop_customer_list > tbody > tr").each(function () {
 
@@ -24,18 +67,74 @@
                     var text =
                         $("#td_pop_vendor_cust_code_" + id).text().toLowerCase() +
                         $("#td_pop_vendor_cust_name_" + id).text().toLowerCase() +
+                        $("#td_pop_vendor_cust_distnumber_" + id).text().toLowerCase() +
+                        $("#td_pop_vendor_cust_baseentry_" + id).text().toLowerCase() +
                         $("#td_pop_vendor_phone_" + id).text().toLowerCase();
 
-                    if (text.replace(/\s+/g, '')
-                        .indexOf($("#txt_pop_filter_vendor_name")
-                            .val()
-                            .replace(/\s+/g, '')
-                            .toLowerCase()) == -1)
+                    text = text.replace(/\s+/g, '');
+
+                    if (text.indexOf(searchText) === -1)
                         $(this).hide();
                     else
                         $(this).show();
                 });
             });
+
+
+            // ================= CHECK ALL =================
+            $(document).on("change", "#chk_interestwizard_select_all", function () {
+
+                var checked = $(this).is(":checked");
+
+                $("input[type=checkbox][id^='chk_interest_wizard_line_']")
+                    .prop("checked", checked);
+
+                sum_checked_interestwizard();
+            });
+
+
+            // ================= ROW CHECKBOX CHANGE =================
+            $(document).on("change", "input[type=checkbox][id^='chk_interest_wizard_line_']", function () {
+
+                var totalRows = $("input[type=checkbox][id^='chk_interest_wizard_line_']").length;
+                var checkedRows = $("input[type=checkbox][id^='chk_interest_wizard_line_']:checked").length;
+
+                $("#chk_interestwizard_select_all")
+                    .prop("checked", totalRows === checkedRows);
+
+                sum_checked_interestwizard();
+            });
+
+
+            // ================= APPLY AMT INPUT CHANGE (UPDATED SAFE VERSION) =================
+            $(document).on("input", ".apply-amt-input", function () {
+
+                let rowindex = $(this).attr("id").split("_").pop();
+
+                let remaining = parseFloat($("#tr_interestwizard_remaining_" + rowindex).text()) || 0;
+                let apply = parseFloat($(this).val()) || 0;
+
+                // 🚫 Prevent negative values
+                if (apply < 0) {
+                    apply = 0;
+                    $(this).val(0);
+                }
+
+                // 🚫 Prevent Apply > Remaining
+                if (apply > remaining) {
+                    apply = remaining;
+                    $(this).val(remaining.toFixed(2));
+                }
+
+                // ✅ Calculate new remaining
+                let newRemaining = remaining - apply;
+
+                $("#tr_interestwizard_newremaining_" + rowindex)
+                    .text(newRemaining.toFixed(2));
+
+                sum_checked_interestwizard();
+            });
+
         });
     </script>
 </head>
@@ -67,7 +166,7 @@
                                         <input type="text"
                                                class="form-control form-control-insde"
                                                id="txt_pop_filter_vendor_name"
-                                               placeholder="Customer Code or Customer Name">
+                                               placeholder="customer,serial or base Entry">
                                     </div>
                                 </td>
                             </tr>
@@ -75,8 +174,8 @@
                             <tr>
                                 <th style="width:15%">Customer Code</th>
                                 <th style="width:25%">Customer Name</th>
-                                <th style="width:25%">Customer KH</th>
-                                <th style="width:10%">Gender</th>
+                                <th style="width:25%">Serial</th>
+                                <th style="width:10%">BaseEntry</th>
                                 <th style="width:15%">Phone</th>
                             </tr>
                         </thead>
@@ -90,8 +189,8 @@
                                     <tr id="tr_pop_customer_@rowindex" onclick="tr_pop_customer_selected(@rowindex)">
                                         <td id="td_pop_vendor_cust_code_@rowindex">@x.CardCode</td>
                                         <td id="td_pop_vendor_cust_name_@rowindex">@x.CardName</td>
-                                        <td id="td_pop_vendor_cust_fname_@rowindex">@x.CardFName</td>
-                                        <td id="td_pop_vendor_cust_gender_@rowindex">@x.U_Gender</td>
+                                        <td id="td_pop_vendor_cust_distnumber_@rowindex">@x.DistNumber</td>
+                                        <td id="td_pop_vendor_cust_baseentry_@rowindex">@x.BaseEntry</td>
                                         <td id="td_pop_vendor_phone_@rowindex">@x.Phone1</td>
                                         <td></td>
                                     </tr>
@@ -139,250 +238,274 @@
     <input type="hidden" id="txt_ocrcode3" value="-1" />
     <input type="hidden" id="txt_cardtype" value="-1" />
 
-    <div class="col-md-12">
-        <div class="box box-primary">
+        <div class="col-md-12">
+            <div class="box box-primary">
 
-            <!-- Header -->
-            <div class="box-header with-border">
-                <h5 class="box-title">@ViewBag.Title</h5>
-            </div>
+                <!-- Header -->
+                <div class="box-header with-border">
+                    <h5 class="box-title">@ViewBag.Title</h5>
+                </div>
 
-            <!-- Filter Section -->
-            <div class="box-header with-border">
+                <!-- Filter Section -->
+                <div class="box-header with-border">
 
-                <table class="table" role="none">
-                    <thead>
-                        <tr>
-                            <td colspan="1" style="width:100%;">
-                                <fieldset class="scheduler-border">
-                                    <legend class="scheduler-border"
-                                            style="width:25%; font-weight:bold;"></legend>
+                    <table class="table" role="none">
+                        <thead>
+                            <tr>
+                                <td colspan="1" style="width:100%;">
+                                    <fieldset class="scheduler-border">
+                                        <legend class="scheduler-border"
+                                                style="width:25%; font-weight:bold;"></legend>
 
-                                    <div class="row" style="margin:0px; margin-top:10px; margin-left:-10px;">
+                                        <div class="row" style="margin:0px; margin-top:10px; margin-left:-10px;">
 
-                                        <table class="table" style="margin-bottom:0px;">
-                                            <thead>
-                                                <tr>
+                                            <table class="table" style="margin-bottom:0px;">
+                                                <thead>
+                                                    <tr>
 
-                                                    <!-- Posting Date -->
-                                                    <td style="width:10%;">
-                                                        <div class="form-group">
-                                                            <label class="form-control controlLabel">
-                                                                Posting Date
-                                                            </label>
-                                                        </div>
-                                                    </td>
+                                                        <!-- Posting Date -->
+                                                        <td style="width:10%;">
+                                                            <div class="form-group">
+                                                                <label class="form-control controlLabel">
+                                                                    Posting Date
+                                                                </label>
+                                                            </div>
+                                                        </td>
 
-                                                    <td style="width:40%;">
-                                                        <div class="form-group">
+                                                        <td style="width:40%;">
+                                                            <div class="form-group">
 
-                                                            <table style="width:100%;">
-                                                                <tr>
-                                                                    <td style="width:40%;">
-                                                                        <div class="input-group date">
-                                                                            <div class="input-group-addon">
-                                                                                <i class="fa fa-calendar"></i>
+                                                                <table style="width:100%;">
+                                                                    <tr>
+                                                                        <td style="width:40%;">
+                                                                            <div class="input-group date">
+                                                                                <div class="input-group-addon">
+                                                                                    <i class="fa fa-calendar"></i>
+                                                                                </div>
+                                                                                <input type="text"
+                                                                                       class="form-control pull-right datetime form-control-insde"
+                                                                                       readonly
+                                                                                       id="txt_posting_date"
+                                                                                       value="@docdate">
                                                                             </div>
-                                                                            <input type="text"
-                                                                                   class="form-control pull-right datetime form-control-insde"
-                                                                                   readonly
-                                                                                   id="txt_posting_date"
-                                                                                   value="@docdate">
-                                                                        </div>
-                                                                    </td>
+                                                                        </td>
 
-                                                                    <td style="width:20%; text-align:right; padding-right:10px">
-                                                                        Due Date
-                                                                    </td>
+                                                                        <td style="width:20%; text-align:right; padding-right:10px">
+                                                                            Due Date
+                                                                        </td>
 
-                                                                    <td style="width:40%;">
-                                                                        <div class="input-group date">
-                                                                            <div class="input-group-addon">
-                                                                                <i class="fa fa-calendar"></i>
+                                                                        <td style="width:40%;">
+                                                                            <div class="input-group date">
+                                                                                <div class="input-group-addon">
+                                                                                    <i class="fa fa-calendar"></i>
+                                                                                </div>
+                                                                                <input type="text"
+                                                                                       class="form-control pull-right datetime form-control-insde"
+                                                                                       readonly
+                                                                                       id="txt_due_date"
+                                                                                       value="@docdate">
                                                                             </div>
-                                                                            <input type="text"
-                                                                                   class="form-control pull-right datetime form-control-insde"
-                                                                                   readonly
-                                                                                   id="txt_due_date"
-                                                                                   value="@docdate">
-                                                                        </div>
-                                                                    </td>
-                                                                </tr>
-                                                            </table>
+                                                                        </td>
+                                                                    </tr>
+                                                                </table>
 
-                                                        </div>
-                                                    </td>
+                                                            </div>
+                                                        </td>
 
-                                                    <!-- Customer -->
-                                                    <td style="width:10%;">
-                                                        <div class="form-group">
-                                                            <label class="form-control controlLabel">
-                                                                Customer
-                                                            </label>
-                                                        </div>
-                                                    </td>
+                                                        <!-- Customer -->
+                                                        <td style="width:10%;">
+                                                            <div class="form-group">
+                                                                <label class="form-control controlLabel">
+                                                                    Customer
+                                                                </label>
+                                                            </div>
+                                                        </td>
 
-                                                    <td style="width:40%;">
-                                                        <div class="input-group">
+                                                        <td style="width:40%;">
+                                                            <div class="input-group">
+                                                                <input type="text"
+                                                                       class="form-control form-control-insde"
+                                                                       id="txt_card_code"
+                                                                       readonly
+                                                                       placeholder="Customer">
+
+                                                                <div class="input-group-addon">
+                                                                    <i class="fa fa-user text-info"
+                                                                       onclick="cmd_show_customer_penaltywizard()"
+                                                                       style="cursor:pointer"></i>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+
+                                                    </tr>
+
+                                                    <!-- Customer Name + Ref -->
+                                                    <tr>
+                                                        <td>
+                                                            <div class="form-group">
+                                                                <label class="form-control controlLabel">
+                                                                    Customer Name
+                                                                </label>
+                                                            </div>
+                                                        </td>
+
+                                                        <td>
                                                             <input type="text"
                                                                    class="form-control form-control-insde"
-                                                                   id="txt_card_code"
-                                                                   readonly
-                                                                   placeholder="Customer">
+                                                                   id="txt_card_name"
+                                                                   placeholder="Customer Name" disabled>
+                                                        </td>
 
-                                                            <div class="input-group-addon">
-                                                                <i class="fa fa-user text-info"
-                                                                   onclick="cmd_show_customer_penaltywizard()"
-                                                                   style="cursor:pointer"></i>
+                                                        <td>
+                                                            <div class="form-group">
+                                                                <label class="form-control controlLabel">
+                                                                    Ref
+                                                                </label>
                                                             </div>
-                                                        </div>
-                                                    </td>
+                                                        </td>
 
-                                                </tr>
+                                                        <td>
+                                                            <input type="text"
+                                                                   class="form-control form-control-insde"
+                                                                   id="txt_ref"
+                                                                   placeholder="Ref">
+                                                        </td>
+                                                    </tr>
 
-                                                <!-- Customer Name + Ref -->
-                                                <tr>
-                                                    <td>
-                                                        <div class="form-group">
-                                                            <label class="form-control controlLabel">
-                                                                Customer Name
-                                                            </label>
-                                                        </div>
-                                                    </td>
+                                                    <tr>
+                                                        <td style="width:10%;">
+                                                            <div class="form-group">
+                                                                <label class="form-control controlLabel">
+                                                                    Remark
+                                                                </label>
+                                                            </div>
+                                                        </td>
 
-                                                    <td>
-                                                        <input type="text"
-                                                               class="form-control form-control-insde"
-                                                               id="txt_card_name"
-                                                               placeholder="Customer Name" disabled>
-                                                    </td>
+                                                        <td style="width:45%;">
+                                                            <input type="text"
+                                                                   class="form-control form-control-insde"
+                                                                   id="txt_remark"
+                                                                   placeholder="Remark"
+                                                                   style="width:100%;">
+                                                        </td>
 
-                                                    <td>
-                                                        <div class="form-group">
-                                                            <label class="form-control controlLabel">
-                                                                Ref
-                                                            </label>
-                                                        </div>
-                                                    </td>
+                                                        <td style="width:10%;">
+                                                            <div class="form-group">
+                                                                <label class="form-control controlLabel">
+                                                                    Serial
+                                                                </label>
+                                                            </div>
+                                                        </td>
 
-                                                    <td>
-                                                        <input type="text"
-                                                               class="form-control form-control-insde"
-                                                               id="txt_ref"
-                                                               placeholder="Ref">
-                                                    </td>
-                                                </tr>
+                                                        <td style="width:35%;">
+                                                            <input type="text"
+                                                                   class="form-control form-control-insde"
+                                                                   id="txt_serial"
+                                                                   placeholder="Serial"
+                                                                   style="width:100%;" disabled>
+                                                        </td>
+                                                    </tr>
 
-                                                <tr>
-                                                    <td style="width:10%;">
-                                                        <div class="form-group">
-                                                            <label class="form-control controlLabel">
-                                                                Remark
-                                                            </label>
-                                                        </div>
-                                                    </td>
+                                                </thead>
+                                            </table>
 
-                                                    <td colspan="3" style="width:90%;">
-                                                        <input type="text"
-                                                               class="form-control form-control-insde"
-                                                               id="txt_remark"
-                                                               placeholder="Remark"
-                                                               style="width:100%;">
-                                                    </td>
-                                                </tr>
+                                        </div>
+                                    </fieldset>
+                                </td>
+                            </tr>
 
-                                            </thead>
-                                        </table>
+                            <!-- ================= INTEREST LISTING ================= -->
 
-                                    </div>
-                                </fieldset>
-                            </td>
-                        </tr>
+                            <tr>
+                                <td colspan="4">
 
-                        <!-- ================= INTEREST LISTING ================= -->
+                                    <fieldset class="scheduler-border" style="padding:5px;">
+                                        <legend class="scheduler-border" style="font-weight:bold;">
+                                            <span style="cursor:pointer;"
+                                                  onclick="togglePenaltyTable()">
+                                                Interest Listing
+                                                <i id="toggle_penalty_icon"
+                                                   class="fa fa-chevron-up"
+                                                   style="margin-left:5px;"></i>
+                                            </span>
+                                        </legend>
 
-                        <tr>
-                            <td colspan="4">
+                                        <div id="penalty_table_wrapper"
+                                             class="row"
+                                             style="margin:0px; margin-top:10px; position:relative; min-height:60vh; height:100%; overflow:auto">
 
-                                <fieldset class="scheduler-border" style="padding:5px;">
-                                    <legend class="scheduler-border" style="font-weight:bold;">
-                                        <span style="cursor:pointer;"
-                                              onclick="togglePenaltyTable()">
-                                            Interest Listing
-                                            <i id="toggle_penalty_icon"
-                                               class="fa fa-chevron-up"
-                                               style="margin-left:5px;"></i>
-                                        </span>
-                                    </legend>
+                                            <table class="table"
+                                                   id="table_interestwizard_list"
+                                                   style="margin-bottom:0px; position:absolute; min-width:2000px; width:100%;">
 
-                                    <div id="penalty_table_wrapper"
-                                         class="row"
-                                         style="margin:0px; margin-top:10px; position:relative; min-height:60vh; height:100%; overflow:auto">
+                                                <thead style="position:sticky; top:0; z-index:1000;">
+                                                    <tr class="bg-gray">
+                                                        <td style="width:2%; text-align:center;">#</td>
 
-                                        <table class="table"
-                                               id="table_interestwizard_list"
-                                               style="margin-bottom:0px; position:absolute; min-width:2000px; width:100%;">
+                                                        <th style="width:1%; text-align:center;">
+                                                            <input type="checkbox" id="chk_interestwizard_select_all" />
+                                                        </th>
+                                                        <td style="width:4%;">BaseEntry</td>
+                                                        <td style="width:2%;">LoanID</td>
+                                                        <td style="width:4%;">Posting Date</td>
+                                                        <td style="width:4%;">Due Date</td>
+                                                        <td style="width:5%;">Item Code</td>
+                                                        <td style="width:10%;">Item Name</td>
+                                                        <td style="width:6%;">Serial</td>
+                                                        <td style="width:2%;">Reason</td>
+                                                        <td style="width:4%; text-align:right;">Interest Amt</td>
+                                                        <td style="width:4%; text-align:right;">Generated Amt</td>
+                                                        <td style="width:4%; text-align:right;">Remaining</td>
+                                                        <td style="width:4%; text-align:right;">Apply Amt</td>
+                                                        <td style="width:4%; text-align:right;">New Remaining</td>
+                                                        <td style="width:34%;">Remark</td>
+                                                    </tr>
+                                                </thead>
 
-                                            <thead style="position:sticky; top:0; z-index:1000;">
-                                                <tr class="bg-gray">
-                                                    <td style="width:2%; text-align:center;">#</td>
-                                                    <td style="width:1%; text-align:center;"></td> <!-- Checkbox column -->
-                                                    <td style="width:4%;">BaseEntry</td>
-                                                    <td style="width:2%;">LoanID</td>
-                                                    <td style="width:4%;">Posting Date</td>
-                                                    <td style="width:4%;">Due Date</td>
-                                                    <td style="width:5%;">Item Code</td>
-                                                    <td style="width:10%;">Item Name</td>
-                                                    <td style="width:6%;">Serial</td>
-                                                    <td style="width:2%;">Reason</td>
-                                                    <td style="width:4%; text-align:right;">Interest Amt</td>
-                                                    <td style="width:4%; text-align:right;">Generated Amt</td>
-                                                    <td style="width:4%; text-align:right;">Remaining</td>
-                                                    <td style="width:4%; text-align:right;">Apply Amt</td>
-                                                    <td style="width:4%; text-align:right;">New Remaining</td>
-                                                    <td style="width:34%;">Remark</td>
-                                                </tr>
-                                            </thead>
+                                                <tbody id="interest_body">
+                                                </tbody>
 
-                                            <tbody>
+                                                <tfoot>
+                                                    <tr class="bg-light">
+                                                        <td colspan="10" style="text-align:right; font-weight:bold;">Total:</td>
+                                                        <td id="sum_interest_amt" style="text-align:right;">0.00</td>
+                                                        <td id="sum_generated_amt" style="text-align:right;">0.00</td>
+                                                        <td id="sum_remaining" style="text-align:right;">0.00</td>
+                                                        <td id="sum_apply_amt" style="text-align:right;">0.00</td>
+                                                        <td id="sum_new_remaining" style="text-align:right;">0.00</td>
+                                                        <td></td>
+                                                    </tr>
+                                                </tfoot>
+                                            </table>
 
-                                            </tbody>
+                                        </div>
+                                    </fieldset>
 
-                                        </table>
+                                </td>
+                            </tr>
 
-                                    </div>
-                                </fieldset>
+                        </thead>
+                    </table>
+                </div>
 
-                            </td>
-                        </tr>
+                <!-- Footer Buttons -->
+                <div class="box-footer">
 
-                    </thead>
-                </table>
+                    <button type="button"
+                            style="background-color:green"
+                            class="btn btn-info btn-flat"
+                            id="btn_generate_penalty_List"
+                            onclick="cmd_interestwizard_generate()">
+                        Load Interest
+                    </button>
+
+                    <button type="button"
+                            class="btn btn-primary btn-flat"
+                            onclick="cmd_save_interestwizard()">
+                        Submit
+                    </button>
+                </div>
+
             </div>
-
-            <!-- Footer Buttons -->
-            <div class="box-footer">
-                <button type="button"
-                        class="btn btn-danger btn-flat"
-                        onclick="cmd_remove_all_row_payment_schedule()">
-                    Remove Row
-                </button>
-
-                <button type="button"
-                        style="background-color:green"
-                        class="btn btn-info btn-flat"
-                        id="btn_generate_penalty_List"
-                        onclick="cmd_interestwizard_generate()">
-                    Load Interest
-                </button>
-
-                <button type="button"
-                        class="btn btn-primary btn-flat"
-                        onclick="cmd_save_penaltyDraf()">
-                    Submit
-                </button>
-            </div>
-
         </div>
-    </div>
 </div>

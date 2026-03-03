@@ -1758,10 +1758,16 @@ function cmd_pop_choose_customer_interest() {
     var id = $("#txt_bp_selected_row").val();
     var cardcode = $("#td_pop_vendor_cust_code_" + id).text();
     var cardname = $("#td_pop_vendor_cust_name_" + id).text();
+    var serial = $("#td_pop_vendor_cust_distnumber_" + id).text();
+    var ref = $("#td_pop_vendor_cust_baseentry_" + id).text();
     $("#txt_card_code").val(cardcode);
     $("#txt_card_name").val(cardname);
+    $("#txt_serial").val(serial);
+    $("#txt_ref").val(ref);
     $("#modal-cust_list").modal('hide');
     $("#txt_bp_selected_row").val("-1");
+    // 🔹 Clear existing rows before adding new ones
+    $("#table_interestwizard_list > tbody").empty();
 }
 
 
@@ -3643,6 +3649,120 @@ function checkbox_tr_payment_detail(selectIndex) {
     });
 }
 
+function cmd_save_interest_wizard() {
+
+    if ($("#table_interestwizard_list >tbody >tr").length <= 0) {
+        ShowAlertCus("No data to save!", "warning");
+    } else {
+        var postingdate = $('#txt_posting_date').val().trim().split("-");
+        var reqdate = $('#txt_due_date').val().trim().split("-");
+        var cardcode = $('#txt_card_code').val();
+        var cardname = $('#txt_card_name').val();
+        var Ref = $('#txt_ref').val();
+        var Remark = $('#txt_remark').val();
+        var installmentRow_List = [];
+        var head = {
+  
+            DocDate: docdate[2] + "/" + docdate[1] + "/" + docdate[0],
+            DueDate: reqdate[2] + "/" + reqdate[1] + "/" + reqdate[0],
+            CardCode: $("#txt_card_code").val(),
+            CardName: $("#txt_card_name").val(),
+            CardCode: $("#txt_card_code").val(),
+            CardName: $("#txt_card_name").val(),
+            CardCode: $("#txt_card_code").val()
+        };
+        $("#table_interestwizard_list >tbody >tr").each(function (index) {
+            index++;
+
+            var docpostingdate = $('#tr_payment_detail_paymentdate_line_' + index).val().split("-");
+            var docduedate = $('#tr_payment_detail_paymentdate_line_' + index).text().trim().split("-");
+            var detail = {
+                ID: $("#tr_payment_detail_installmentid_line_" + index).text().trim(),
+                BaseEntry: $("#tr_payment_detail_baseentry_line_" + index).text().trim(),
+                BaseLine: $("#tr_payment_detail_baseline_line_" + index).text().trim(),
+                InstallmentBaseID: $("#tr_payment_detail_baseentry_line_" + index).text().trim(),
+                InstallmentBaseVisorder: $("#tr_payment_detail_baseline_line_" + index).text().trim(),
+                VisOrder: (index - 1),
+                ItemCode: $("#txt_item_code").val(),
+                Principle: returnstringvalue($("#tr_payment_detail_principle_line_" + index).text().trim()),
+                Interest: returnstringvalue($("#tr_payment_detail_interest_line_" + index).text().trim()),
+                Monthly: returnstringvalue($("#tr_payment_detail_monthlypay_line_" + index).text().trim()),
+                PaymentDate: $("#InstallmentDate_" + index).val(),
+                DueDate: docduedate[2] + "/" + docduedate[1] + "/" + docduedate[0],
+                Remaining: returnstringvalue($("#tr_payment_detail_remainingamt_line_" + index).text().trim()),
+                ReIncloudInter: parseFloat(returnstringvalue($("#tr_payment_detail_remainingamt_line_" + index).text().trim())) + parseFloat(returnstringvalue($("#tr_payment_detail_interest_line_" + index).text().trim())),
+                RowStatus: $("#tr_payment_detail_status_line_" + index).text().trim(),
+                CuInterest: returnstringvalue($("#tr_payment_detail_culnterest_line_" + index).text().trim()),
+                CuPayment: returnstringvalue($("#tr_payment_detail_cupayment_line_" + index).text().trim()),
+                FixedPayment: returnstringvalue($("#tr_payment_detail_fixedpayment_line_" + index).text().trim()),
+                ARNo: $("#tr_payment_detail_arno_line_" + index).text().trim(),
+                PaymentNo: $("#tr_payment_detail_paymentno_line_" + index).text().trim(),
+
+                Method: $("#select_method_" + index).val(),
+                InstallmentAmt: returnstringvalue($("#txt_before_discount_amount").val().trim()),
+                DiscountAmt: "0.00",
+                DepositAmt: returnstringvalue($("#tr_payment_detail_depositamt_line_" + index).text().trim()),
+                AnnualRate: returnstringvalue($("#tr_payment_detail_annulrate_line_" + index).text().trim()),
+                PeriodMonths: returnstringvalue($("#tr_payment_detail_period_line_" + index).text().trim()),
+                HouseStatus: $("#tr_payment_detail_housestatus_line_" + index).text().trim(),
+                Remarks: $("#tr_payment_detail_remarks_line_" + index).text().trim(),
+                DiscountAmount: 0,
+                DiscountPer: 0,
+                SpecialDisAmount: 0,
+                SpecialDisPer: 0,
+                AdditionalDisAmount: 0,
+                AdditionalDisPer: "0.00",
+                ItemName: $("#txt_item_name").val(),
+                OcrCode: $("#txt_ocrcode").val(),
+                OcrCode2: $("#txt_ocrcode2").val(),
+                OcrCode3: $("#txt_ocrcode3").val(),
+                ARNoInterest: $("#tr_payment_detail_arnointerest_line_" + index).text().trim(),
+                PaymentNoInterest: $("#tr_payment_detail_paymentnointerest_line_" + index).text().trim(),
+                VarianDay: $("#tr_payment_detail_varianday_line_" + index).text().trim(),
+                InterestonsheduleVarian: returnstringvalue($("#tr_payment_detail_interestonscheduleamt_line_" + index).text().trim())
+            };
+            installmentRow_List.push(detail);
+
+        });
+        $("#tbl_Remove_List >tbody>tr").each(function (index) {
+            var tr_remve = {
+                ID: $("#tr_remove_head_id_" + index).text().trim(),
+                BaseEntry: $("#tr_remove_detail_id_" + index).text().trim()
+            };
+            del_list.push(tr_remve);
+        });
+        $.ajax({
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            type: 'POST',
+            url: '/amendments/save_change_schedule',
+            data: JSON.stringify(
+                {
+                    'header': head,
+                    'installment_row': installmentRow_List,
+                    'del_list': del_list
+                }),
+            beforeSend: function () {
+                $("#loading").show();
+            },
+            complete: function () {
+                $("#loading").hide();
+            },
+            success: function (data) {
+                if (data.status == "OK") {
+                    ShowAlertCus("Payment Shcedule was saved", "success");
+                    location.reload();
+                } else {
+                    ShowAlertCus("Error while saving Change Payment Shcedule!", "warning");
+                }
+            },
+            failure: function (response) {
+                $('#result').html(response);
+            }
+        });
+    }
+}
+
 function cmd_save_payment_shcedule() {
     var remainingAmt = returnstringvalue($("#txt_remaining_amount").val());
     if ($("#table_payment_schedule >tbody >tr").length <= 0) {
@@ -4279,94 +4399,87 @@ function cmd_interestwizard_generate() {
 function get_interestwizard() {
 
     var CardCode = $("#txt_card_code").val();
+    var serial = $("#txt_serial").val();
 
     $.ajax({
         url: '/sales/get_interest_List',
         type: 'POST',
-        data: { CardCode: CardCode },
+        data: { CardCode: CardCode, serial: serial },
         datatype: 'json',
         beforeSend: function () { $("#loading").show(); },
         complete: function () { $("#loading").hide(); },
         success: function (data) {
 
-            var rowindex = $("#table_interestwizard_list >tbody >tr").length;
+            var rowindex = 1;
             var mydata = data.data;
 
-            if (rowindex > 0) {
-                var lasttr = $("#table_interestwizard_list >tbody >tr:last");
-                rowindex = parseInt(lasttr.attr('id').replace("tr_payment_", "")) + 1;
-            } else {
-                rowindex = 1;
-            }
+            $("#table_interestwizard_list > tbody").empty();
 
             for (var i = 0; i < mydata.length; i++) {
                 var x = mydata[i];
 
-                var row = "<tr id='tr_payment_" + rowindex + "'>";
+                var row = "<tr id='tr_interestwizard_" + rowindex + "'>";
 
                 // 1. Row index #
-                row += "<td style='text-align:center; vertical-align: middle;'>" + rowindex + "</td>";
+                row += "<td id='tr_interestwizard_index_" + rowindex + "' style='text-align:center; vertical-align: middle;'>" + rowindex + "</td>";
 
-                // 2. Checkbox for selection
-                row += "<td style='text-align:center; vertical-align: middle;'>" +
-                    "<input type='checkbox' id='chk_" + rowindex + "' onclick='checkbox_tr_payment_detail(" + rowindex + ")' />" +
+                // 2. Checkbox
+                row += "<td id='tr_interestwizard_checkbox_" + rowindex + "' style='text-align:center; vertical-align: middle;'>" +
+                    "<input type='checkbox' id='chk_interest_wizard_line_" + rowindex + "' />" +
                     "</td>";
 
                 // 3. BaseEntry
-                row += "<td style='text-align:left; vertical-align: middle;'>" + (x.BaseEntry || "") + "</td>";
+                row += "<td id='tr_interestwizard_baseentry_" + rowindex + "' style='text-align:left; vertical-align: middle;'>" + (x.BaseEntry || "") + "</td>";
 
                 // 4. LoanID (ID)
-                row += "<td style='text-align:left; vertical-align: middle;'>" + (x.ID || "") + "</td>";
+                row += "<td id='tr_interestwizard_loanid_" + rowindex + "' style='text-align:left; vertical-align: middle;'>" + (x.ID || "") + "</td>";
 
                 // 5. Posting Date
-                row += "<td style='text-align:left; vertical-align: middle;'>" + (x.PaymentDate || "") + "</td>";
+                row += "<td id='tr_interestwizard_postingdate_" + rowindex + "' style='text-align:left; vertical-align: middle;'>" + (x.PaymentDate || "") + "</td>";
 
                 // 6. Due Date
-                row += "<td style='text-align:left; vertical-align: middle;'>" + (x.DueDate || "") + "</td>";
+                row += "<td id='tr_interestwizard_duedate_" + rowindex + "' style='text-align:left; vertical-align: middle;'>" + (x.DueDate || "") + "</td>";
 
                 // 7. Item Code
-                row += "<td style='text-align:left; vertical-align: middle;'>" + (x.ItemCode || "") + "</td>";
+                row += "<td id='tr_interestwizard_itemcode_" + rowindex + "' style='text-align:left; vertical-align: middle;'>" + (x.ItemCode || "") + "</td>";
 
                 // 8. Item Name
-                row += "<td style='text-align:left; vertical-align: middle;'>" + (x.ItemName || "") + "</td>";
+                row += "<td id='tr_interestwizard_itemname_" + rowindex + "' style='text-align:left; vertical-align: middle;'>" + (x.ItemName || "") + "</td>";
 
                 // 9. Serial (DistNumber)
-                row += "<td style='text-align:left; vertical-align: middle;'>" + (x.DistNumber || "") + "</td>";
+                row += "<td id='tr_interestwizard_serial_" + rowindex + "' style='text-align:left; vertical-align: middle;'>" + (x.DistNumber || "") + "</td>";
 
                 // 10. Reason (Method)
-                row += "<td style='text-align:left; vertical-align: middle;'>" + (x.Method || "") + "</td>";
+                row += "<td id='tr_interestwizard_reason_" + rowindex + "' style='text-align:left; vertical-align: middle;'>" + (x.Method || "") + "</td>";
 
-                // 11. Interest Amt (OriginalInterest)
-                row += "<td style='text-align:right; vertical-align: middle;'>" + convert2digit(x.OriginalInterest) + "</td>";
+                // 11. Interest Amt
+                row += "<td id='tr_interestwizard_interestamt_" + rowindex + "' style='text-align:right; vertical-align: middle;'>" + convert2digit(x.OriginalInterest) + "</td>";
 
-                // 12. Generated Amt (ApplyInterest)
-                row += "<td style='text-align:right; vertical-align: middle;'>" + convert2digit(x.ApplyInterest) + "</td>";
+                // 12. Generated Amt
+                row += "<td id='tr_interestwizard_generatedamt_" + rowindex + "' style='text-align:right; vertical-align: middle;'>" + convert2digit(x.ApplyInterest) + "</td>";
 
-                // 14. Remaining
-                row += "<td style='text-align:right; vertical-align: middle;' id='remaining_" + rowindex + "'>" +
-                    convert2digit(x.Remaining) +
-                    "</td>";
+                // 13. Remaining
+                row += "<td id='tr_interestwizard_remaining_" + rowindex + "' style='text-align:right; vertical-align: middle;'>" + convert2digit(x.Remaining) + "</td>";
 
-                // 13. Apply Amt (editable numeric input)
-                row += "<td style='text-align:right; vertical-align: middle;'>" +
+                // 14. Apply Amt
+                row += "<td id='tr_interestwizard_applyamt_" + rowindex + "' style='text-align:right; vertical-align: middle;'>" +
                     "<input type='number' class='form-control apply-amt-input' " +
-                    "id='applyamt_" + rowindex + "' " +
+                    "id='applyamt_interest_wizard_line_" + rowindex + "' " +
                     "data-remaining='" + convert2digit(x.Remaining) + "' " +
                     "value='" + convert2digit(x.ApplyInterest) + "' " +
-                    "oninput='validateApplyAmt(" + rowindex + ")' " +
                     "style='text-align:right; color:blue;' />" +
                     "</td>";
 
-               
-
-                // 15. New Remaining (calculated)
-                row += "<td style='text-align:right; vertical-align: middle;' id='newremaining_" + rowindex + "'>" +
+                // 15. New Remaining
+                row += "<td id='tr_interestwizard_newremaining_" + rowindex + "' style='text-align:right; vertical-align: middle;'>" +
                     convert2digit(x.Remaining - x.ApplyInterest) +
                     "</td>";
 
-                // 16. Remark (textarea)
-                row += "<td style='text-align:left; vertical-align: middle;'>" +
-                    "<textarea id='remark_" + rowindex + "' name='remark_" + rowindex + "' rows='1' class='form-control'>" + (x.Remarks || "") + "</textarea>" +
+                // 16. Remark
+                row += "<td id='tr_interestwizard_remark_" + rowindex + "' style='text-align:left; vertical-align: middle;'>" +
+                    "<textarea id='remark_interest_wizard_line_" + rowindex + "' rows='1' class='form-control'>" +
+                    (x.Remarks || "") +
+                    "</textarea>" +
                     "</td>";
 
                 row += "</tr>";
@@ -4620,6 +4733,141 @@ function cmd_save_penaltyDraf() {
         });
     }
 }
+
+function cmd_save_interestwizard() {
+
+    // 1️⃣ Check if table has rows
+    if ($("#table_interestwizard_list >tbody >tr").length <= 0) {
+        ShowAlertCus("No data of interest to save!", "warning");
+        return;
+    }
+
+    var rowsList = [];
+    var hasError = false;
+
+    // 2️⃣ Header Object
+    var head = {
+        PostingDate: $("#txt_posting_date").val(),
+        DueDate: $("#txt_due_date").val(),
+
+        CardCode: $("#txt_card_code").val(),
+        CardName: $("#txt_card_name").val(),
+        Ref: $("#txt_ref").val(),
+        Remark: $("#txt_remark").val(),
+        Serial: $("#txt_serial").val(),
+
+        TotalInterestAmt: returnstringvalue($("#sum_interest_amt").text().trim()),
+        TotalGeneratedAmt: returnstringvalue($("#sum_generated_amt").text().trim()),
+        TotalRemainingAmt: returnstringvalue($("#sum_remaining").text().trim()),
+        TotalApplyAmt: returnstringvalue($("#sum_apply_amt").text().trim()),
+        TotalNewremainingAmt: returnstringvalue($("#sum_new_remaining").text().trim())
+    };
+
+    // 3️⃣ Loop Rows
+    $("#table_interestwizard_list >tbody >tr").each(function (index) {
+
+        index++;
+
+        // ✅ Only process checked rows
+        if ($("#chk_interest_wizard_line_" + index).is(":checked")) {
+
+            // Get Apply Amount correctly
+            var ApplyAmt = parseFloat($("#applyamt_interest_wizard_line_" + index).val()) || 0;
+
+            // 🚫 Block zero or negative ApplyAmt
+            if (ApplyAmt <= 0) {
+                ShowAlertCus("Apply Amount must be greater than zero! (Row " + index + ")", "warning");
+                hasError = true;
+                return false; // break loop
+            }
+
+            // Get Dates
+            var postingdate = $("#tr_interestwizard_postingdate_" + index).text().trim();
+            var duedate = $("#tr_interestwizard_duedate_" + index).text().trim();
+
+            var postArr = postingdate ? postingdate.split("-") : [];
+            var dueArr = duedate ? duedate.split("-") : [];
+
+
+
+            // Safety date format check
+            if (postArr.length !== 3 || dueArr.length !== 3) {
+                ShowAlertCus("Invalid date format in row " + index, "warning");
+                hasError = true;
+                return false;
+            }
+
+            var detail = {
+                VisOrder: (index - 1),
+                LineNum: (index - 1),
+                OldPostingDate: postArr[2] + "/" + postArr[1] + "/" + postArr[0],
+                OldDueDate: dueArr[2] + "/" + dueArr[1] + "/" + dueArr[0],
+                NewPostingDate: $("#txt_posting_date").val(),
+                NewDueDate: $("#txt_due_date").val(),
+
+
+                BaseEntry: $("#tr_interestwizard_baseentry_" + index).text().trim(),
+                LoanID: $("#tr_interestwizard_loanid_" + index).text().trim(),
+                ItemCode: $("#tr_interestwizard_itemcode_" + index).text().trim(),
+                ItemName: $("#tr_interestwizard_itemname_" + index).text().trim(),
+                Serial: $("#tr_interestwizard_serial_" + index).text().trim(),
+                Reason: $("#tr_interestwizard_reason_" + index).text().trim(),
+
+                InterestAmt: returnstringvalue($("#tr_interestwizard_interestamt_" + index).text().trim()),
+                GeneratedAmt: returnstringvalue($("#tr_interestwizard_generatedamt_" + index).text().trim()),
+                RemainingAmt: returnstringvalue($("#tr_interestwizard_remaining_" + index).text().trim()),
+                ApplyAmt: ApplyAmt,
+                NewRemainingAmt: returnstringvalue($("#tr_interestwizard_newremaining_" + index).text().trim()),
+
+                Remark: $("#remark_interest_wizard_line_" + index).val()
+            };
+
+            rowsList.push(detail);
+        }
+    });
+
+    // 4️⃣ Stop if validation failed
+    if (hasError) return;
+
+    // 5️⃣ Ensure at least one row selected
+    if (rowsList.length === 0) {
+        ShowAlertCus("Please select at least one row!", "warning");
+        return;
+    }
+
+    // 6️⃣ AJAX Save
+    $.ajax({
+        contentType: 'application/json; charset=utf-8',
+        dataType: 'json',
+        type: 'POST',
+        url: '/sales/save_interest_wizard',
+        data: JSON.stringify({
+            header: head,
+            rows: rowsList
+        }),
+        beforeSend: function () {
+            $("#loading").show();
+        },
+        complete: function () {
+            $("#loading").hide();
+        },
+        success: function (data) {
+
+            if (data.status === "OK") {
+                ShowAlertCus("Interest wizard was saved", "success");
+                location.reload();
+            } else {
+                ShowAlertCus("Error while saving Interest Wizard!", "warning");
+            }
+        },
+        error: function (error) {
+            ShowAlertCus("Server error while saving!", "danger");
+            console.log(error);
+        }
+    });
+}
+
+
 
 function cmd_pop_choose_payment_schedule_restructure(OptionType) {
     if (OptionType == 1) {
@@ -5571,4 +5819,44 @@ function cmd_save_approval_ChangeItem(Type) {
         }
     });
 
+}
+
+function cmd_save_approval_InterestWizard(Type) {
+
+    var head = {
+        DocEntry: $("#txt_draf_ID").val(),
+        Comment: $("#txt_approverComment").val(),
+        DocStatus: Type
+    };
+    $.ajax({
+        contentType: 'application/json; charset=utf-8',
+        dataType: 'json',
+        type: 'POST',
+        url: '/sales/save_approval_interestWizard',
+        data: JSON.stringify(
+            {
+                'header': head
+            }),
+        beforeSend: function () {
+            $("#loading").show();
+        },
+        complete: function () {
+            $("#loading").hide();
+        },
+        success: function (data) {
+            if (data.status === "OK") {
+                ShowAlertCus("Update Record was saved", "success");
+
+                setTimeout(function () {
+                    window.location.href = "/sales/InterestWizardApprovalListing";
+                }, 1500); // Wait 1.5 seconds before redirect
+            } else {
+                ShowAlertCus("Error while saving", "danger");
+            }
+        },
+
+        failure: function (response) {
+            $('#result').html(response);
+        }
+    });
 }

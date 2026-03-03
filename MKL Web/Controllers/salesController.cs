@@ -1744,23 +1744,229 @@ namespace MKL_Web.Controllers
             return View();
         }
 
-        public JsonResult get_interest_List(string CardCode)
+        public JsonResult save_interest_wizard(InterestWizard header, List<InterestWizard1> rows)
+        {
+            status = "OK";
+            int LastEntry = 0;
+
+            if (status == "OK")
+            {
+                var trans = TransWithCommitted();
+                try
+                {
+                    if (header != null)
+                    {
+                        using (trans)
+                        {
+                            var rawResult = db.ICC_ApprovalTempate_Check("LI", "", header.TotalApplyAmt);
+
+                            var list = rawResult.Select(x => new ApprovalTemplate
+                            {
+                                AppStageCode = Convert.ToInt32(x.AppStageCode),
+                                AppTemplateID = x.AppTemplateID,
+                                TemplateDesc = x.TemplateDesc,
+                                Type = x.Type.ToString(),
+                                FromAmt = Convert.ToDecimal(x.FromAmt),
+                                ToAmt = Convert.ToDecimal(x.ToAmt),
+                                DocID = x.DocID,
+                                NextApprover = x.NextApprover
+                            }).ToList();
+
+
+                            if (!list.Any())
+                            {
+                                status = "Error: No approval template found.";
+                                return Json(new { status, LastEntry }, JsonRequestBehavior.AllowGet);
+                            }
+                            else
+                            {
+
+                                var AppTemplate = list.FirstOrDefault();
+                                if (AppTemplate != null)
+                                {
+                                    int AppStageCode = AppTemplate.AppStageCode;
+                                    int AppTemplateID = AppTemplate.AppTemplateID;
+                                    string TemplateDesc = AppTemplate.TemplateDesc;
+                                    string Type = AppTemplate.Type;
+                                    decimal FromAmt = AppTemplate.FromAmt;
+                                    decimal ToAmt = AppTemplate.ToAmt;
+                                    string DocID = AppTemplate.DocID;
+                                    string NextApprover = AppTemplate.NextApprover;
+
+                                    if (header == null || rows == null)
+                                    {
+                                        status = "blank";
+                                    }
+                                    else
+                                    {
+                                        InterestWizard H = new InterestWizard();
+                                        H = db.InterestWizards.Where(a => a.ID == header.ID).FirstOrDefault();
+                                        if (H == null)
+                                        {
+                                            H = header;
+
+                                            H.PostingDate = header.PostingDate;
+                                            H.DueDate = header.DueDate;
+                                            H.CardCode = header.CardCode;
+                                            H.CardName = header.CardName;
+
+                                            H.Ref = header.Ref;
+                                            H.Serial = header.Serial;
+                                            H.Remark = header.Remark;
+                                            
+
+                                            H.TotalInterestAmt = header.TotalInterestAmt;
+                                            H.TotalGeneratedAmt = header.TotalGeneratedAmt;
+                                            H.TotalRemainingAmt = header.TotalRemainingAmt;
+                                            H.TotalApplyAmt = header.TotalApplyAmt;
+                                            H.TotalNewremainingAmt = header.TotalNewremainingAmt;
+
+                                            H.CreatedBy = Session["UCode"].ToString();
+                                            H.CreatedDate = DateTime.Now;
+                                            H.UpdatedDate = DateTime.Now;
+                                            H.ApprovalStage = AppStageCode.ToString();
+                                            H.NextApprover = NextApprover;
+                                            H.DocStatus = "Draf";
+                                            H.ApprovalTemplate = AppTemplateID.ToString();
+                                            H.ApprovalTemplateName = TemplateDesc.ToString();
+
+                                            db.InterestWizards.InsertOnSubmit(H);
+                                            db.InterestWizards.Context.SubmitChanges();
+
+                                            LastEntry = H.ID;
+
+                                            List<InterestWizard1> d = new List<InterestWizard1>();
+                                            rows.ForEach(a => a.ID = H.ID);
+                                            d = rows;
+                                            db.InterestWizard1s.InsertAllOnSubmit(d);
+                                            db.InterestWizard1s.Context.SubmitChanges();
+
+                                           
+                                            ///Update SO status 
+                                            var accrualIDs = rows.Select(r => r.BaseEntry).ToList();
+
+                                            var sO = db.SOs.FirstOrDefault(a => accrualIDs.Contains(a.DocEntry.ToString()));
+
+                                            if (sO != null)
+                                            {
+                                                sO.LastError = "This document is linked with pending penalty wizard draft No: " + LastEntry + " -> Reference: " + header.Ref;
+                                                sO.Frozenfor = "Y";
+
+                                                db.SOs.Context.SubmitChanges(); // Commit change
+                                            }
+                                            else
+                                            {
+                                                status = "Error";
+                                            }
+
+                                            /// Freez each row 
+                                            var loanIDs = rows.Select(r => r.LoanID).ToList();
+
+                                            var installmentrows = db.InstallmentRows.Where(a => loanIDs.Contains(a.ID.ToString())).ToList();
+
+                                            if (installmentrows.Any())
+                                            {
+                                                foreach (var pD in installmentrows)
+                                                {
+                                                    pD.ErrorLog = "This document is linked with pending interest wizard draft No: " + LastEntry + " -> Reference: " + header.Ref;
+                                                    pD.ApplyInterestStatus = "Freez";
+                                                }
+
+                                                db.InstallmentRows.Context.SubmitChanges(); // Commit all changes
+                                            }
+                                            else
+                                            {
+                                                status = "Error";
+                                            }
+
+
+                                        }
+
+                                        // For Update Generate approval Document Generate
+                                        var resut = db.ICC_ApprovalDocument_Generate(AppStageCode, LastEntry, "InterestWizard");
+
+                                        var list2 = resut.Select(x => new ExcecResult
+                                        {
+                                            Result = x.Result
+
+                                        }).ToList();
+                                        var resultvalue = list2.FirstOrDefault();
+                                        if (resultvalue.Result != "Success")
+                                        {
+                                            status = "Fail";
+                                        }
+
+                                        var link = "/sales/PreviewInterestwizard?DocEntry=" + LastEntry;
+
+                                        // For Update Generate approval ALERT Document Generate
+                                        var resut3 = db.ICC_ApprovalDocumentAlert_Generate(AppStageCode, LastEntry, "InterestWizard", AppTemplateID.ToString(), Session["UCode"].ToString(), link, NextApprover);
+
+                                        var list3 = resut3.Select(x => new ExcecResult
+                                        {
+                                            Result = x.Result
+
+                                        }).ToList();
+                                        var resultvalue3 = list3.FirstOrDefault();
+                                        if (resultvalue3.Result != "Success")
+                                        {
+                                            status = "Fail";
+                                        }
+                                    }
+
+
+                                    if (status == "OK")
+                                    {
+                                        trans.Complete();
+                                        trans.Dispose();
+                                    }
+                                    else
+                                    {
+                                        status = "Error";
+                                    }
+
+                                }
+
+                            }
+                        }
+                    }
+                    else
+                    {
+                        status = "Error";
+                    }
+                }
+                catch (Exception ex)
+                {
+                    status = "Failed";
+                    //ErrorDes = ex.Message;
+                }
+            }
+            return Json(new { status = status, LastEntry = LastEntry }, JsonRequestBehavior.AllowGet);
+        }
+
+
+
+
+        public JsonResult get_interest_List(string CardCode, string serial)
         {
             if (string.IsNullOrEmpty(CardCode))
                 return Json(new { status = "error", message = "CardCode is required" }, JsonRequestBehavior.AllowGet);
 
             try
             {
-                // Execute the stored procedure
-                var dt = view.getTable($"EXEC ICC_GET_InterestWizardList '{CardCode}'",
+                // Handle null serial
+                serial = serial ?? "";
+
+                // Build stored procedure call
+                string query = $"EXEC ICC_GET_InterestWizardList '{CardCode}', '{serial}'";
+
+                var dt = view.getTable(query,
                                        ConfigurationManager.AppSettings["sql"].ToString());
 
-                // Map DataTable to strongly-typed list
                 var list = dt.AsEnumerable().Select(x => new InterestWizardItem
                 {
                     ID = x["ID"] != DBNull.Value ? Convert.ToInt32(x["ID"]) : 0,
-                    PaymentDate = Convert.ToDateTime(x["PaymentDate"].ToString()).ToString("dd-MMM-yyyy"),
-                    DueDate = Convert.ToDateTime(x["DueDate"].ToString()).ToString("dd-MMM-yyyy"),
+                    PaymentDate = Convert.ToDateTime(x["PaymentDate"]).ToString("dd-MMM-yyyy"),
+                    DueDate = Convert.ToDateTime(x["DueDate"]).ToString("dd-MMM-yyyy"),
                     BaseEntry = x["BaseEntry"]?.ToString() ?? "",
                     ItemCode = x["ItemCode"]?.ToString() ?? "",
                     ItemName = x["ItemName"]?.ToString() ?? "",
@@ -2548,6 +2754,89 @@ namespace MKL_Web.Controllers
                 status = status,
                 data = data,
             });
+        }
+
+        public ActionResult InterestWizardApprovalListing(string Status = "Draf", DateTime? fdate = null, DateTime? tdate = null, string CreateBy = "")
+        {
+            // Use default date if null
+            DateTime fromDate = fdate ?? new DateTime(1999, 1, 1);
+            DateTime toDate = tdate ?? new DateTime(1999, 1, 1);
+
+            var result = db.ICC_Get_List_Approval_interestWizard(
+                Status ?? "Draf",
+                fromDate,
+                toDate,
+                CreateBy ?? ""
+            ).ToList();
+
+            ViewBag.Listing = result;
+            return View();
+        }
+
+        public ActionResult PreviewInterestwizard(int DocEntry)
+        {
+            ViewBag.rows = db.InterestWizard1s
+            .Where(x => x.ID == DocEntry)
+            .OrderBy(x => x.LineNum)
+            .ToList();
+
+            ViewBag.Header = db.ICC_Get_List_InterestWizard_By_ID(DocEntry).ToList();
+            ViewBag.Checkbutton = db.ICC_Approval_Check_EnableButton("InterestWizard", DocEntry, Session["UCode"].ToString()).ToList();
+            return View();
+        }
+
+        public JsonResult save_approval_interestWizard(SO header)
+        {
+            string status = "OK";
+            int lastEntry = 0;
+
+            try
+            {
+                using (var trans = TransWithCommitted())
+                {
+                    try
+                    {
+                        try
+                        {
+                            // For Update Generate approval Document Generate
+                            var resut = db.ICC_Approval_LoanDraf_Submit_Doc(header.DocStatus, Session["UCode"].ToString(), header.DocEntry, header.Comment?.ToString() ?? "");
+
+                            var list2 = resut.Select(x => new ExcecResult
+                            {
+                                Result = x.Result
+                            }).ToList();
+                            var resultvalue = list2.FirstOrDefault();
+                            if (resultvalue.Result != "Success")
+                            {
+                                status = "Fail";
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            status = "Error";
+                        }
+
+
+                        if (status == "OK")
+                        {
+                            trans.Complete();
+                            trans.Dispose();
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        status = "Error";
+                        return Json(new { status, error = ex.Message });
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                status = "Error";
+                return Json(new { status, error = ex.Message });
+            }
+
+            return Json(new { status, lastEntry });
         }
     }
 }
