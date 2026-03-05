@@ -301,6 +301,7 @@
                                                             <label for="inputEmail3" style="padding-left:2px;" class="form-control controlLabel">Maturity Payment</label>
                                                         </div>
                                                     </td>
+
                                                     <td style="width:40%;">
                                                         <div class="form-group">
                                                             <table style="width:100%;" id="table_doc_discount">
@@ -318,6 +319,7 @@
                                                             </table>
                                                         </div>
                                                     </td>
+
                                                 </tr>
                                             </thead>
                                         </table>
@@ -461,29 +463,34 @@
 
                                     <!-- Toggleable content - shown by default -->
                                     <div id="table_wrapper" class="row" style="position: relative; overflow: auto; height: 100%; min-height: 30vh">
-                                        <table class="table" style="margin-bottom: 0px; position: absolute; min-width: 2000px; width: 100%;">
+                                        <table class="table" style="margin-bottom: 0px; position: absolute; min-width: 3000px; width: 100%;">
                                             <thead style="position:sticky; top: 0; z-index: 1000;">
                                                 <tr class="bg-gray" role="row">
 
-                                                    <th style="width:1%; text-align:left;">#</th>
-                                                    <th style="width:9%; text-align:left;">DocDate</th>
-                                                    <th style="width:6%; text-align:left;">DueDate</th>
-                                                    <th style="width:5%; text-align:left;">Principle</th>
-                                                    <th style="width:5%; text-align:left;">Interest</th>
-                                                    <th style="width:5%; text-align:left;">Monthly</th>
-                                                    <th style="width:5%; text-align:left;">Remain</th>
-                                                    <th style="width:5%; text-align:left;">Re+Int</th>
-                                                    <th style="width:5%; text-align:left;">C.Prin</th>
-                                                    <th style="width:4%; text-align:left;">C.Int</th>
-                                                    <th style="width:5%; text-align:left;">C.Prin+Int</th>
-                                                    <th style="width:5%; text-align:left;">Pay.Type</th>
-                                                    <th style="width:4%; text-align:left;">ARNo</th>
-                                                    <th style="width:4%; text-align:left;">PayNo</th>
-                                                    <th style="width:4%; text-align:left;">Int.ARNo</th>
-                                                    <th style="width:4%; text-align:left;">Int.PayNo</th>
-                                                    <th style="width:2%; text-align:left;">V.Day</th>
-                                                    <th style="width:4%; text-align:left;">Int.Re.Amt</th>
-                                                    <th style="width:8%; text-align:left;">Remark</th>
+                                                    <th style="width:3%;">#</th>
+                                                    <th style="width:6%;">DocDate</th>
+                                                    <th style="width:6%;">DueDate</th>
+                                                    <th style="width:4.5%;">Principle</th>
+                                                    <th style="width:4.5%;">Interest</th>
+                                                    <th style="width:4.5%;">Monthly</th>
+                                                    <th style="width:4.5%;">Remain</th>
+                                                    <th style="width:4.5%;">Re+Int</th>
+                                                    <th style="width:4.5%;">C.Prin</th>
+                                                    <th style="width:4%;">C.Int</th>
+                                                    <th style="width:5%;">C.Prin+Int</th>
+                                                    <th style="width:5%;">Pay.Type</th>
+                                                    <th style="width:4%;">ARNo</th>
+                                                    <th style="width:4%;">PayNo</th>
+                                                    <th style="width:4%;">Int.ARNo</th>
+                                                    <th style="width:4%;">Int.PayNo</th>
+                                                    <th style="width:3%;">V.Day</th>
+                                                    <th style="width:5%;">Int.Re.Amt</th>
+                                                    <th style="width:7%;">Remark</th>
+
+                                                    <th style="width:5%;">Cheque No.#</th>
+                                                    <th style="width:6%;">Name on Cheque</th>
+                                                    <th style="width:6%;">Bank Name</th>
+                                                    <th style="width:4%;">Payee Name</th>
 
                                                 </tr>
                                             </thead>
@@ -494,33 +501,37 @@
                                                     {
                                                         // Determine row style
                                                         var rowStyle = item.ARNo != -1 ? "background-color: lightblue;" : "";
-                                                        <tr style="@rowStyle">
-                                                            <td>@index</td>
-                                                            <td>@Convert.ToDateTime(item.PaymentDate).ToString("dd-MMM-yyyy")</td>
-                                                            <td>@Convert.ToDateTime(item.DueDate).ToString("dd-MMM-yyyy")</td>
-                                                            <td class="principle">@String.Format("{0:N2}", item.Principle)</td>
-                                                            <td class="interest">@String.Format("{0:N2}", item.Interest)</td>
-                                                            <td class="monthly">@String.Format("{0:N2}", item.Monthly)</td>
-                                                            <td>@String.Format("{0:N2}", item.Remaining)</td>
-                                                            <td>@String.Format("{0:N2}", item.Remaining + item.Interest)</td>
-                                                            <td>@String.Format("{0:N2}", item.CuPayment)</td>
-                                                            <td>@String.Format("{0:N2}", item.CuInterest)</td>
-                                                            <td>@String.Format("{0:N2}", item.CuPayment + item.CuInterest)</td>
-                                                            <td>@item.Method</td>
+                                                                                                <tr style="@rowStyle">
+                                                                                                    <td>@index</td>
+                                                                                                    <td>@Convert.ToDateTime(item.PaymentDate).ToString("dd-MMM-yyyy")</td>
+                                                                                                    <td>@Convert.ToDateTime(item.DueDate).ToString("dd-MMM-yyyy")</td>
+                                                                                                    <td class="principle">@String.Format("{0:N2}", item.Principle)</td>
+                                                                                                    <td class="interest">@String.Format("{0:N2}", item.Interest)</td>
+                                                                                                    <td class="monthly">@String.Format("{0:N2}", item.Monthly)</td>
+                                                                                                    <td>@String.Format("{0:N2}", item.Remaining)</td>
+                                                                                                    <td>@String.Format("{0:N2}", item.Remaining + item.Interest)</td>
+                                                                                                    <td>@String.Format("{0:N2}", item.CuPayment)</td>
+                                                                                                    <td>@String.Format("{0:N2}", item.CuInterest)</td>
+                                                                                                    <td>@String.Format("{0:N2}", item.CuPayment + item.CuInterest)</td>
+                                                                                                    <td>@item.Method</td>
 
-                                                            <td>@item.ARNo</td>
-                                                            <td>@item.PaymentNo</td>
-                                                            <td>@item.ARNoInterest</td>
-                                                            <td>@item.PaymentNoInterest</td>
-                                                            <td style="color:@(item.VarianDay > 0 ? "red" : (item.VarianDay < 0 ? "green" : "inherit"))">
-                                                                @item.VarianDay
-                                                            </td>
-                                                            <td style="color:@(item.InterestonsheduleVarian > 0 ? "red" : (item.InterestonsheduleVarian < 0 ? "green" : "inherit"))">
-                                                                @String.Format("{0:N2}", item.InterestonsheduleVarian)
-                                                            </td>
+                                                                                                    <td>@item.ARNo</td>
+                                                                                                    <td>@item.PaymentNo</td>
+                                                                                                    <td>@item.ARNoInterest</td>
+                                                                                                    <td>@item.PaymentNoInterest</td>
+                                                                                                    <td style="color:@(item.VarianDay > 0 ? "red" : (item.VarianDay < 0 ? "green" : "inherit"))">
+                                                                                                        @item.VarianDay
+                                                                                                    </td>
+                                                                                                    <td style="color:@(item.InterestonsheduleVarian > 0 ? "red" : (item.InterestonsheduleVarian < 0 ? "green" : "inherit"))">
+                                                                                                        @String.Format("{0:N2}", item.InterestonsheduleVarian)
+                                                                                                    </td>
 
-                                                            <td>@item.Remarks</td>
-                                                        </tr>
+                                                                                                    <td>@item.Remarks</td>
+                                                                                                    <td>@item.ChequeNo</td>
+                                                                                                    <td>@item.ChequeName</td>
+                                                                                                    <td>@item.ChequeBankName</td>
+                                                                                                    <td>@item.PayeeName</td>
+                                                                                                </tr>
                                                         index++;
                                                     }
                                                 }
@@ -535,6 +546,10 @@
                                                     <td class="bg-gray" style="text-align:left;" id="txt_total_principle">0.00</td>
                                                     <td class="bg-gray" style="text-align:left;" id="txt_total_interest">0.00</td>
                                                     <td class="bg-gray" style="text-align:left;" id="txt_total_monthly">0.00</td>
+                                                    <td class="bg-gray" style="text-align:right;"></td>
+                                                    <td class="bg-gray" style="text-align:right;"></td>
+                                                    <td class="bg-gray" style="text-align:right;"></td>
+                                                    <td class="bg-gray" style="text-align:right;"></td>
                                                     <td class="bg-gray" style="text-align:right;"></td>
                                                     <td class="bg-gray" style="text-align:right;"></td>
                                                     <td class="bg-gray" style="text-align:right;"></td>

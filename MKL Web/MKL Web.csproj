@@ -7493,6 +7493,8 @@
     <Content Include="Views\sales\InterestWizard.cshtml" />
     <Content Include="Views\sales\InterestWizardApprovalListing.cshtml" />
     <Content Include="Views\sales\PreviewInterestwizard.cshtml" />
+    <Content Include="Views\sales\Activity.cshtml" />
+    <Content Include="Views\sales\ActivityReport.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

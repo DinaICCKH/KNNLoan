@@ -1298,6 +1298,20 @@ namespace MKL_Web.Models
 			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), docEntry);
 			return ((ISingleResult<ICC_Get_List_InterestWizard_By_IDResult>)(result.ReturnValue));
 		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.ICC_Approval_interestwizard_Submit_Doc")]
+		public ISingleResult<ICC_Approval_interestwizard_Submit_DocResult> ICC_Approval_interestwizard_Submit_Doc([global::System.Data.Linq.Mapping.ParameterAttribute(Name="AppStatus", DbType="NVarChar(50)")] string appStatus, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Approver", DbType="NVarChar(50)")] string approver, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="ID", DbType="Int")] System.Nullable<int> iD, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Comment", DbType="NVarChar(MAX)")] string comment)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), appStatus, approver, iD, comment);
+			return ((ISingleResult<ICC_Approval_interestwizard_Submit_DocResult>)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.ICC_GeneratedInterestWizard_List")]
+		public ISingleResult<ICC_GeneratedInterestWizard_ListResult> ICC_GeneratedInterestWizard_List([global::System.Data.Linq.Mapping.ParameterAttribute(Name="LoanID", DbType="Int")] System.Nullable<int> loanID)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), loanID);
+			return ((ISingleResult<ICC_GeneratedInterestWizard_ListResult>)(result.ReturnValue));
+		}
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Controller")]
@@ -51519,6 +51533,94 @@ namespace MKL_Web.Models
 				if ((this._LoanStatus != value))
 				{
 					this._LoanStatus = value;
+				}
+			}
+		}
+	}
+	
+	public partial class ICC_Approval_interestwizard_Submit_DocResult
+	{
+		
+		private string _Result;
+		
+		public ICC_Approval_interestwizard_Submit_DocResult()
+		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Result", DbType="NVarChar(MAX)")]
+		public string Result
+		{
+			get
+			{
+				return this._Result;
+			}
+			set
+			{
+				if ((this._Result != value))
+				{
+					this._Result = value;
+				}
+			}
+		}
+	}
+	
+	public partial class ICC_GeneratedInterestWizard_ListResult
+	{
+		
+		private string _ARNo;
+		
+		private System.Nullable<System.DateTime> _NewPostingDate;
+		
+		private System.Nullable<System.DateTime> _NewDueDate;
+		
+		public ICC_GeneratedInterestWizard_ListResult()
+		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ARNo", DbType="NVarChar(50)")]
+		public string ARNo
+		{
+			get
+			{
+				return this._ARNo;
+			}
+			set
+			{
+				if ((this._ARNo != value))
+				{
+					this._ARNo = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_NewPostingDate", DbType="Date")]
+		public System.Nullable<System.DateTime> NewPostingDate
+		{
+			get
+			{
+				return this._NewPostingDate;
+			}
+			set
+			{
+				if ((this._NewPostingDate != value))
+				{
+					this._NewPostingDate = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_NewDueDate", DbType="Date")]
+		public System.Nullable<System.DateTime> NewDueDate
+		{
+			get
+			{
+				return this._NewDueDate;
+			}
+			set
+			{
+				if ((this._NewDueDate != value))
+				{
+					this._NewDueDate = value;
 				}
 			}
 		}

@@ -2799,7 +2799,7 @@ namespace MKL_Web.Controllers
                         try
                         {
                             // For Update Generate approval Document Generate
-                            var resut = db.ICC_Approval_LoanDraf_Submit_Doc(header.DocStatus, Session["UCode"].ToString(), header.DocEntry, header.Comment?.ToString() ?? "");
+                            var resut = db.ICC_Approval_interestwizard_Submit_Doc(header.DocStatus, Session["UCode"].ToString(), header.DocEntry, header.Comment?.ToString() ?? "");
 
                             var list2 = resut.Select(x => new ExcecResult
                             {
@@ -2837,6 +2837,31 @@ namespace MKL_Web.Controllers
             }
 
             return Json(new { status, lastEntry });
+        }
+
+
+        public JsonResult GetLoanDetail(int LoanID)
+        {
+            var data = db.ICC_GeneratedInterestWizard_List(LoanID)
+                .ToList()
+                .Select(x => new
+                {
+                    x.ARNo,
+                    NewPostingDate = x.NewPostingDate?.ToString("dd-MMM-yyyy"),
+                    NewDueDate = x.NewDueDate?.ToString("dd-MMM-yyyy")
+                });
+            return Json(data, JsonRequestBehavior.AllowGet);
+        }
+
+
+        public ActionResult Activity()
+        {
+            return View();
+        }
+
+        public ActionResult ActivityReport()
+        {
+            return View();
         }
     }
 }

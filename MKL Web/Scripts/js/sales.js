@@ -562,13 +562,24 @@ function cmd_copy_from_payment_schedule(type) {
     var cardcode = "";
     cardcode = $("#txt_card_code").val();
 
-    if (cardcode === "") {
+    if (!cardcode) {
         ShowAlertCus("Please choose customer information", "danger");
+        $("#txt_cardcode").focus();
+        return false;
     }
+
     else {
         if (type == "1") {
 
             var ref = $("#txt_changeitem_ref").val();
+
+            var EffictiveDate = $("#txt_effective_date").val();
+
+            if (!EffictiveDate) {
+                ShowAlertCus("Please choose effective date first.", "danger");
+                $("#txt_effective_date").focus();   // optional: auto focus
+                return false;                       // 🔥 stop function
+            }
 
             if (ref === "" && pageID === "ChangeItem") {
                 ShowAlertCus("Please choose Change Reference first", "danger");
@@ -2484,6 +2495,7 @@ function get_selected_payment_schedule_by_so_forReschedule() {
 
                 disable_enable_remove_by_line();
                 set_date_of_payment();
+                $("#txt_effective_date").prop("disabled", true);
 
                 $("#modal-schedule-list").modal('hide');
                 $("#txt_payment_schedule_selected_row").val("-1");
@@ -4431,8 +4443,16 @@ function get_interestwizard() {
                 // 3. BaseEntry
                 row += "<td id='tr_interestwizard_baseentry_" + rowindex + "' style='text-align:left; vertical-align: middle;'>" + (x.BaseEntry || "") + "</td>";
 
+                //// 4. LoanID (ID)
+                //row += "<td id='tr_interestwizard_loanid_" + rowindex + "' style='text-align:left; vertical-align: middle;'>" + (x.ID || "") + "</td>";
+
                 // 4. LoanID (ID)
-                row += "<td id='tr_interestwizard_loanid_" + rowindex + "' style='text-align:left; vertical-align: middle;'>" + (x.ID || "") + "</td>";
+                row += "<td id='tr_interestwizard_loanid_" + rowindex + "' " +
+                    "class='loanid-cell' " +
+                    "data-loanid='" + (x.ID || "") + "' " +
+                    "style='text-align:left; vertical-align: middle; cursor:pointer;'>" +
+                    (x.ID || "") +
+                    "</td>";
 
                 // 5. Posting Date
                 row += "<td id='tr_interestwizard_postingdate_" + rowindex + "' style='text-align:left; vertical-align: middle;'>" + (x.PaymentDate || "") + "</td>";
@@ -4465,14 +4485,12 @@ function get_interestwizard() {
                 row += "<td id='tr_interestwizard_applyamt_" + rowindex + "' style='text-align:right; vertical-align: middle;'>" +
                     "<input type='number' class='form-control apply-amt-input' " +
                     "id='applyamt_interest_wizard_line_" + rowindex + "' " +
-                    "data-remaining='" + convert2digit(x.Remaining) + "' " +
-                    "value='" + convert2digit(x.ApplyInterest) + "' " +
                     "style='text-align:right; color:blue;' />" +
                     "</td>";
 
                 // 15. New Remaining
                 row += "<td id='tr_interestwizard_newremaining_" + rowindex + "' style='text-align:right; vertical-align: middle;'>" +
-                    convert2digit(x.Remaining - x.ApplyInterest) +
+                    convert2digit(x.Remaining) +
                     "</td>";
 
                 // 16. Remark

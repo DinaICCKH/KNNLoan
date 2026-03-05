@@ -306,28 +306,39 @@
 
                                 </div>
                                 <div id="schedule_table_scroll" style="position: relative; overflow: auto; height: 100%; min-height: 30vh ">
-                                    <table class="table" style="margin-bottom: 0px; position: absolute; min-width: 2000px; width: 100%;" id="table_payment_schedule">
+                                    <table class="table" style="margin-bottom: 0px; position: absolute; min-width: 3000px; width: 100%;" id="table_payment_schedule">
                                         <thead style="position:sticky; top: 0; z-index: 1000;">
                                             <tr class="bg-gray" role="row">
 
-                                                <td style="width:4%; text-align:left;">#</td>
-                                                <td style="width: 7%; text-align: left;">DocDate</td>
-                                                <td style="width: 7%; text-align: left;">DueDate</td>
-                                                <td style="width: 7%; text-align: left;">Principle</td>
-                                                <td style="width: 6%; text-align: left;">Interest</td>
-                                                <td style="width: 7%; text-align: left;">MonthlyPay</td>
-                                                <td style="width: 6%; text-align: left;">Remain</td>
-                                                <td style="width: 7%; text-align: left;">Remain+Int</td>
-                                                <td style="width: 6%; text-align: left;">C.Principle</td>
-                                                <td style="width: 7%; text-align: left;">C.Int</td>
-                                                <td style="width: 7%; text-align: left; ">C.Principle+Int</td>
-                                                <td style="width: 5%; text-align: left;">Reason</td>
-                                                <td style="width: 4%; text-align: left;">ARNo</td>
-                                                <td style="width: 4%; text-align: left;">PayNo</td>
-                                                <td style="width: 4%; text-align: left;">ARNoInt</td>
-                                                <td style="width: 4%; text-align: left;">PayNoInt</td>
-                                                <td style="width: 8%; text-align: left;">LastError</td>
-                                                <td style="width: 10%; text-align: left;">Remark</td>
+                                                <td style="width:3%;">#</td>
+
+                                                <td style="width:5%;">DocDate</td>
+                                                <td style="width:5%;">DueDate</td>
+
+                                                <td style="width:5%;">Principle</td>
+                                                <td style="width:4.5%;">Interest</td>
+                                                <td style="width:5%;">MonthlyPay</td>
+                                                <td style="width:4.5%;">Remain</td>
+                                                <td style="width:5%;">Remain+Int</td>
+                                                <td style="width:4.5%;">C.Principle</td>
+                                                <td style="width:4.5%;">C.Int</td>
+                                                <td style="width:5%;">C.Principle+Int</td>
+
+                                                <td style="width:4%;">Reason</td>
+
+                                                <td style="width:3%;">ARNo</td>
+                                                <td style="width:3%;">PayNo</td>
+                                                <td style="width:3%;">ARNoInt</td>
+                                                <td style="width:3%;">PayNoInt</td>
+
+                                                <td style="width:6%;">LastError</td>
+                                                <td style="width:7%;">Remark</td>
+
+                                                <th style="width:4%;">Cheque No.#</th>
+                                                <th style="width:5%;">Name on Cheque</th>
+                                                <th style="width:5%;">Bank Name</th>
+                                                <th style="width:3%;">Payee Name</th>
+
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -337,27 +348,32 @@
                                                 {
                                                     // Determine row style
                                                     var rowStyle = item.ARNo != -1 ? "background-color: lightblue;" : "";
-                                                    <tr style="@rowStyle">
-                                                        <td>@index</td>
-                                                        <td>@Convert.ToDateTime(item.PaymentDate).ToString("dd-MMM-yyyy")</td>
-                                                        <td>@Convert.ToDateTime(item.DueDate).ToString("dd-MMM-yyyy")</td>
-                                                        <td class="principle">@String.Format("{0:N2}", item.Principle)</td>
-                                                        <td class="interest">@String.Format("{0:N2}", item.Interest)</td>
-                                                        <td class="monthly">@String.Format("{0:N2}", item.Monthly)</td>
-                                                        <td>@String.Format("{0:N2}", item.Remaining)</td>
-                                                        <td>@String.Format("{0:N2}", item.Remaining + item.Interest)</td>
-                                                        <td>@String.Format("{0:N2}", item.CuPayment)</td>
-                                                        <td>@String.Format("{0:N2}", item.CuInterest)</td>
-                                                        <td>@String.Format("{0:N2}", item.CuPayment + item.CuInterest)</td>
-                                                        <td>@item.Method</td>
+                                                                                        <tr style="@rowStyle">
+                                                                                            <td>@index</td>
+                                                                                            <td>@Convert.ToDateTime(item.PaymentDate).ToString("dd-MMM-yyyy")</td>
+                                                                                            <td>@Convert.ToDateTime(item.DueDate).ToString("dd-MMM-yyyy")</td>
+                                                                                            <td class="principle">@String.Format("{0:N2}", item.Principle)</td>
+                                                                                            <td class="interest">@String.Format("{0:N2}", item.Interest)</td>
+                                                                                            <td class="monthly">@String.Format("{0:N2}", item.Monthly)</td>
+                                                                                            <td>@String.Format("{0:N2}", item.Remaining)</td>
+                                                                                            <td>@String.Format("{0:N2}", item.Remaining + item.Interest)</td>
+                                                                                            <td>@String.Format("{0:N2}", item.CuPayment)</td>
+                                                                                            <td>@String.Format("{0:N2}", item.CuInterest)</td>
+                                                                                            <td>@String.Format("{0:N2}", item.CuPayment + item.CuInterest)</td>
+                                                                                            <td>@item.Method</td>
 
-                                                        <td>@item.ARNo</td>
-                                                        <td>@item.PaymentNo</td>
-                                                        <td>@item.ARNoInterest</td>
-                                                        <td>@item.PaymentNoInterest</td>
-                                                        <td>@item.ErrorLog</td>
-                                                        <td>@item.Remarks</td>
-                                                    </tr>
+                                                                                            <td>@item.ARNo</td>
+                                                                                            <td>@item.PaymentNo</td>
+                                                                                            <td>@item.ARNoInterest</td>
+                                                                                            <td>@item.PaymentNoInterest</td>
+                                                                                            <td>@item.ErrorLog</td>
+                                                                                            <td>@item.Remarks</td>
+                                                                                            <td>@item.ChequeNo</td>
+                                                                                            <td>@item.ChequeName</td>
+                                                                                            <td>@item.ChequeBankName</td>
+                                                                                            <td>@item.PayeeName</td>
+
+                                                                                        </tr>
                                                     index++;
                                                 }
                                             }
@@ -371,6 +387,11 @@
                                                 <td class="bg-gray" style="text-align:left;" id="txt_total_principle">0.00</td>
                                                 <td class="bg-gray" style="text-align:left;" id="txt_total_interest">0.00</td>
                                                 <td class="bg-gray" style="text-align:left;" id="txt_total_monthly">0.00</td>
+                                                <td class="bg-gray" style="text-align:right;"></td>
+                                                <td class="bg-gray" style="text-align:right;"></td>
+                                                <td class="bg-gray" style="text-align:right;"></td>
+                                                <td class="bg-gray" style="text-align:right;"></td>
+                                                <td class="bg-gray" style="text-align:right;"></td>
                                                 <td class="bg-gray" style="text-align:right;"></td>
                                                 <td class="bg-gray" style="text-align:right;"></td>
                                                 <td class="bg-gray" style="text-align:right;"></td>

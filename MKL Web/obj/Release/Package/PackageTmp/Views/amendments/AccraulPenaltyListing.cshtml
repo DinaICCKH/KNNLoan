@@ -5,92 +5,125 @@
     List<V_ARMemo> po = ViewBag.armemoList;
     List<ICC_Get_List_PenaltyDraf_AccraulResult> applist = ViewBag.AccraulPenaltyListing;
 }
+
 <head>
     <title>@ViewBag.Title</title>
     <script src="../../Scripts/js/sales.js"></script>
-</head>
 
+    <style>
+        td {
+            vertical-align: middle !important;
+            white-space: nowrap;
+        }
+
+        .short-text {
+            display: inline;
+        }
+
+        .full-text {
+            display: none;
+            white-space: normal;
+            max-width: 300px;
+        }
+
+        .toggle-text {
+            margin-left: 5px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+    </style>
+</head>
 
 @using (Html.BeginForm("AccraulPenaltyListing", "amendments", FormMethod.Get))
 {
     <section class="content-header content-header-title">
-        <h5 style="padding-top:10px !important; padding-left:0px !important;">@ViewBag.Title</h5>
+        <h5 style="padding-top:10px !important; padding-left:0px !important;">
+            @ViewBag.Title
+        </h5>
     </section>
 
-    <div class="form-inline d-flex align-items-center flex-wrap" style="gap: 10px; padding-bottom:10px !important">
+    <div class="form-inline d-flex align-items-center flex-wrap"
+         style="gap:10px; padding-bottom:10px !important">
+
         <div class="form-group mb-2">
-            <label for="Status" class="mr-1">Status</label>
+            <label class="mr-1">Status</label>
             @Html.DropDownList("Status", new List<SelectListItem>
             {
                 new SelectListItem { Text = "Draf", Value = "D" },
                 new SelectListItem { Text = "Closed", Value = "C" },
                 new SelectListItem { Text = "Reject", Value = "R" }
-            }, "All", new { @class = "form-control form-control-sm", style = "width: 120px;" })
+            }, "All", new { @class = "form-control form-control-sm", style = "width:120px;" })
         </div>
 
         <div class="form-group mb-2">
-            <label for="Status" class="mr-1">Frozen For</label>
+            <label class="mr-1">Frozen For</label>
             @Html.DropDownList("Frozen", new List<SelectListItem>
             {
                 new SelectListItem { Text = "Y", Value = "Yes" },
                 new SelectListItem { Text = "N", Value = "No" }
-            }, "All", new { @class = "form-control form-control-sm", style = "width: 120px;" })
+            }, "All", new { @class = "form-control form-control-sm", style = "width:120px;" })
         </div>
 
         <div class="form-group mb-2">
-            <label for="tdate" class="mr-2">From Date</label>
-            <div class="form-group">
-                <div class="input-group date">
-                    <div class="input-group-addon">
-                        <i class="fa fa-calendar"></i>
-                    </div>
-                    <input type="text" class="form-control pull-right datetime form-control-insde" readonly="readonly" id="fdate" placeholder="From Date">
+            <label class="mr-2">From Date</label>
+            <div class="input-group date">
+                <div class="input-group-addon">
+                    <i class="fa fa-calendar"></i>
                 </div>
+                <input type="text" class="form-control datetime"
+                       readonly="readonly" id="fdate"
+                       placeholder="From Date">
             </div>
         </div>
 
         <div class="form-group mb-2">
-            <label for="tdate" class="mr-2">To Date</label>
-
-            <div class="form-group">
-                <div class="input-group date">
-                    <div class="input-group-addon">
-                        <i class="fa fa-calendar"></i>
-                    </div>
-                    <input type="text" class="form-control pull-right datetime form-control-insde" readonly="readonly" id="tdate" placeholder="From Date">
+            <label class="mr-2">To Date</label>
+            <div class="input-group date">
+                <div class="input-group-addon">
+                    <i class="fa fa-calendar"></i>
                 </div>
+                <input type="text" class="form-control datetime"
+                       readonly="readonly" id="tdate"
+                       placeholder="To Date">
             </div>
         </div>
+
         <div class="form-group mb-2">
-            <label for="Item" class="mr-3">Item</label>
-            @Html.TextBox("Item", Request["Item"], new { @class = "form-control form-control-sm", style = "width: 120px;" })
+            <label class="mr-3">Item</label>
+            @Html.TextBox("Item", Request["Item"],
+                new { @class = "form-control form-control-sm", style = "width:120px;" })
         </div>
+
         <div class="form-group mb-2">
-            <label for="Serial" class="mr-2">Serial</label>
-            @Html.TextBox("Serial", Request["Serial"], new { @class = "form-control form-control-sm", style = "width: 120px;" })
+            <label class="mr-2">Serial</label>
+            @Html.TextBox("Serial", Request["Serial"],
+                new { @class = "form-control form-control-sm", style = "width:120px;" })
         </div>
+
         <div class="form-group mb-2">
-            <label for="Customer" class="mr-2">Customer</label>
-            @Html.TextBox("Customer", Request["Customer"], new { @class = "form-control form-control-sm", style = "width: 140px;" })
+            <label class="mr-2">Customer</label>
+            @Html.TextBox("Customer", Request["Customer"],
+                new { @class = "form-control form-control-sm", style = "width:140px;" })
         </div>
 
         <div class="form-group mb-2 ml-2">
-            <button type="submit" class="btn btn-primary btn-sm">Search</button>
+            <button type="submit" class="btn btn-primary btn-sm">
+                Search
+            </button>
         </div>
     </div>
 }
 
-
 <div class="row">
-
-
-
     <div class="col-md-12">
         <div class="box box-primary">
-            <div class="table-responsive" style="overflow-x: auto;">
-                <table id="table_pr_assignment" class="table table-bordered table-hover display nowrap" style="width:100%">
+            <div class="table-responsive">
+                <table id="table_pr_assignment"
+                       class="table table-bordered table-hover display nowrap"
+                       style="width:100%">
+
                     <thead>
-                        <tr class="bg-gray" role="row">
+                        <tr class="bg-gray">
                             <th>ID</th>
                             <th>In.Entry</th>
                             <th>Card Code</th>
@@ -116,35 +149,73 @@
                             <th>Frozen Remark</th>
                         </tr>
                     </thead>
+
                     <tbody>
                         @{
                             int rowindex = 1;
                             foreach (var x in applist)
                             {
-                                <tr id="tr_@rowindex">
-                                    <td style="text-align:center;">@x.ID</td>
+                                <tr>
+                                    <td>@x.ID</td>
                                     <td style="color:blue;text-decoration:underline;">
-                                        <a href="/sales/PreviewLoan?DocEntry=@x.InstallmentID">@x.InstallmentID</a>
+                                        <a href="/sales/PreviewLoan?DocEntry=@x.InstallmentID">
+                                            @x.InstallmentID
+                                        </a>
                                     </td>
                                     <td>@x.CardCode</td>
                                     <td>@x.CardName</td>
                                     <td>@x.ItemCode</td>
                                     <td>@x.ItemName</td>
                                     <td>@x.SerialNo</td>
-                                    <td>@x.Comment</td>
+
+                                    <!-- Doc Comment -->
+                                    <td>
+                                        @{
+                                            var comment = x.Comment ?? "";
+                                            var shortComment = comment.Length > 20
+                                                ? comment.Substring(0, 20) + "..."
+                                                : comment;
+                                        }
+
+                                        <span class="short-text">@shortComment</span>
+
+                                        @if (comment.Length > 20)
+                                        {
+                                            <span class="full-text">@comment</span>
+                                            <a class="toggle-text text-primary">Show</a>
+                                        }
+                                    </td>
+
                                     <td>@(x.DueDate?.ToString("dd-MMM-yyyy") ?? "-")</td>
                                     <td>@(x.PaymentDate?.ToString("dd-MMM-yyyy") ?? "-")</td>
 
+                                    <td class="text-right">@(x.CHQAmt?.ToString("N2"))</td>
+                                    <td class="text-right">@(x.PrincipleAmt?.ToString("N2"))</td>
+                                    <td class="text-right">@(x.InterestAmt?.ToString("N2"))</td>
+                                    <td class="text-right">@(x.OutStandingAmt?.ToString("N2"))</td>
+                                    <td class="text-right">@(x.PenaltyPercent?.ToString("N2"))</td>
+                                    <td class="text-right">@(x.PenaltyAmt?.ToString("N2"))</td>
 
-                                    <td style="text-align:right;">@(x.CHQAmt.HasValue ? x.CHQAmt.Value.ToString("N2") : "")</td>
-                                    <td style="text-align:right;">@(x.PrincipleAmt.HasValue ? x.PrincipleAmt.Value.ToString("N2") : "")</td>
-                                    <td style="text-align:right;">@(x.InterestAmt.HasValue ? x.InterestAmt.Value.ToString("N2") : "")</td>
-                                    <td style="text-align:right;">@(x.OutStandingAmt.HasValue ? x.OutStandingAmt.Value.ToString("N2") : "")</td>
-                                    <td style="text-align:right;">@(x.PenaltyPercent.HasValue ? x.PenaltyPercent.Value.ToString("N2") : "")</td>
-                                    <td style="text-align:right;">@(x.PenaltyAmt.HasValue ? x.PenaltyAmt.Value.ToString("N2") : "")</td>
+                                    <td>@x.OverDay</td>
 
-                                    <td style="text-align:center;">@x.OverDay</td>
-                                    <td>@x.Remark</td>
+                                    <!-- Remark -->
+                                    <td>
+                                        @{
+                                            var remark = x.Remark ?? "";
+                                            var shortRemark = remark.Length > 20
+                                                ? remark.Substring(0, 20) + "..."
+                                                : remark;
+                                        }
+
+                                        <span class="short-text">@shortRemark</span>
+
+                                        @if (remark.Length > 20)
+                                        {
+                                            <span class="full-text">@remark</span>
+                                            <a class="toggle-text text-primary">Show</a>
+                                        }
+                                    </td>
+
                                     <td>@x.Status</td>
                                     <td>@x.ApprovalTemplate</td>
                                     <td>@x.LastApproval</td>
@@ -155,6 +226,7 @@
                             }
                         }
                     </tbody>
+
                 </table>
             </div>
         </div>
@@ -175,21 +247,32 @@
             paging: true,
             searching: true,
             autoWidth: false,
-            pageLength: 50,
-            dom: 'Brtip',
+            pageLength: 20,
+            lengthMenu: [[20, 50, 100, -1], [20, 50, 100, "All"]],
+            dom: 'Bfrtip',
             buttons: ['copy', 'excel', 'print'],
             columnDefs: [
                 { targets: '_all', className: 'dt-head-center' }
-            ],
-            language: {
-                search: "Search records:",
-                lengthMenu: "Display _MENU_ records per page",
-                zeroRecords: "No matching records found",
-                info: "Showing _START_ to _END_ of _TOTAL_ records",
-                infoEmpty: "No records available",
-                infoFiltered: "(filtered from _MAX_ total records)"
+            ]
+        });
+
+        // Toggle Show/Hide
+        $(document).on("click", ".toggle-text", function () {
+
+            var td = $(this).closest("td");
+            var shortText = td.find(".short-text");
+            var fullText = td.find(".full-text");
+
+            if (fullText.is(":visible")) {
+                fullText.hide();
+                shortText.show();
+                $(this).text("Show");
+            } else {
+                shortText.hide();
+                fullText.show();
+                $(this).text("Hide");
             }
         });
-    });
 
+    });
 </script>
