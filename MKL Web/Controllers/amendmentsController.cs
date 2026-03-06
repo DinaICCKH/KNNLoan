@@ -1367,7 +1367,7 @@ namespace MKL_Web.Controllers
             return View();
         }
 
-        public JsonResult save_approval_Reschedule(SO header)
+        public JsonResult save_approval_Reschedule(SO header,List<InstallmentRowDraf> details)
         {
             string status = "OK";
             int lastEntry = 0;
@@ -1388,9 +1388,39 @@ namespace MKL_Web.Controllers
                                 Result = x.Result
                             }).ToList();
                             var resultvalue = list2.FirstOrDefault();
+
                             if (resultvalue.Result != "Success")
                             {
                                 status = "Fail";
+                            }
+                            else
+                            {
+                                if (header.DocStatus == "Approve")
+                                {
+                                    //// Update the information of the draft follow last approver. 
+                                    InstallmentRowDrafH H = new InstallmentRowDrafH();
+                                    H = db.InstallmentRowDrafHs.Where(a => a.DocEntry == header.DocEntry).FirstOrDefault();
+                                    if (H != null)
+                                    {
+
+                                        H.EffictiveDate = header.DocumentDate;
+                                        db.InstallmentRowDrafHs.Context.SubmitChanges();
+
+                                        foreach (var detail in details)
+                                        {
+                                            var row = db.InstallmentRowDrafs
+                                                        .FirstOrDefault(r => r.DocEntry == header.DocEntry
+                                                                             && r.VisOrder == detail.VisOrder);
+                                            if (row != null)
+                                            {
+                                                row.VarianDay = detail.VarianDay;
+                                                row.InterestonsheduleVarian = detail.InterestonsheduleVarian;
+                                            }
+                                        }
+                                        db.SubmitChanges();
+                                    }
+                                }
+                                
                             }
                         }
                         catch (Exception ex)

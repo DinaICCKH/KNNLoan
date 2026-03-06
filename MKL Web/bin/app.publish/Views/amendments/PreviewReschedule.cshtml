@@ -259,17 +259,8 @@
                                                                         </div>
                                                                     </td>
 
-                                                                    @*<td style="width:30%;text-align:right;padding-right:10px">Maturity Payment</td>
-                                                                    <td style="width:30%;">
-                                                                        <div class="input-group date">
-                                                                            <div class="input-group-addon">
-                                                                                <i class="fa fa-calendar"></i>
-                                                                            </div>
-                                                                            <input type="text" class="form-control pull-right datetime form-control-insde" disabled readonly="readonly" id="txt_maturity_payment" placeholder="Posting Date" value="@MaturityPayment">
-                                                                        </div>
-                                                                    </td>*@
-
-                                                                    <td style="width:30%;text-align:right;padding-right:10px">Effective Date</td>
+                                                 
+                                                                    <td style="width:30%;text-align:right;padding-right:10px">Previous Effective Date</td>
                                                                     <td style="width:30%;">
                                                                         <div class="input-group date">
                                                                             <div class="input-group-addon">
@@ -309,16 +300,56 @@
                                                             <input type="text" class="form-control form-control-insde" readonly="readonly" value="@CreateBy" id="txt_requester_name" placeholder="Requester">
                                                         </div>
                                                     </td>
+
+
+
                                                     <td style="width:10%;">
                                                         <div class="form-group">
-                                                            <label for="inputEmail3" style="padding-left:2px;" class="form-control controlLabel">Approval Template</label>
+                                                            <label for="inputEmail3" style="padding-left:2px;color:blue;" class="form-control controlLabel">New Effective Date</label>
                                                         </div>
                                                     </td>
+
                                                     <td style="width:40%;">
                                                         <div class="form-group">
-                                                            <input type="text" class="form-control form-control-insde" readonly="readonly" value="@AppTemplate" id="txt_app_template" placeholder="Approval Template">
+                                                            <table style="width:100%;" id="table_doc_discount">
+                                                                <tr>
+
+                                                                    <td style="width:30%;">
+                                                                        <div class="input-group date">
+                                                                            <div class="input-group-addon">
+                                                                                <i class="fa fa-calendar"></i>
+                                                                            </div>
+                                                                            <input type="text"
+                                                                                   class="form-control pull-right datetime form-control-insde"
+                                                                                   id="txt_new_effective_date"
+                                                                                   placeholder="New Effective Date">
+                                                                        </div>
+                                                                    </td>
+
+                                                                    <td style="width:10%;">
+                                                                        <div class="form-group">
+                                                                            <label class="form-control controlLabel">Approval Template</label>
+                                                                        </div>
+                                                                    </td>
+
+                                                                    <td style="width:50%;">
+                                                                        <div class="form-group">
+                                                                            <input type="text"
+                                                                                   class="form-control form-control-insde"
+                                                                                   readonly="readonly"
+                                                                                   value="@AppTemplate"
+                                                                                   id="txt_app_template"
+                                                                                   placeholder="Approval Template">
+                                                                        </div>
+                                                                    </td>
+
+                                                                </tr>
+                                                            </table>
                                                         </div>
                                                     </td>
+
+
+                                                    
                                                 </tr>
 
                                                 <tr>
@@ -425,120 +456,120 @@
                                     </div>
 
                                     <!-- Toggleable content - shown by default -->
-                                    <div id="table_wrapper" class="row" style="position: relative; overflow: auto; height: 100%; min-height: 30vh">
-                                        <table class="table" style="margin-bottom: 0px; position: absolute; min-width: 2000px; width: 100%;">
-                                            <thead style="position:sticky; top: 0; z-index: 1000;">
-                                                <tr class="bg-gray" role="row">
+                                    <div id="table_wrapper" class="row" style="position: relative; overflow: auto; height: 100%; min-height: 35vh">
+                                        
+                                           <table class="table" style="margin-bottom: 0px; position: absolute; width: 100%; min-width:2000px;" id="table_payment_schedule">
+                                                <thead style="position:sticky; top: 0; z-index: 1000;">
+                                                    <tr class="bg-gray" role="row">
 
-                                                    <th style="width:1%; text-align:left;">#</th>
-                                                    <th style="width: 8%; text-align: left;">DocDate</th>
-                                                    <th style="width: 7%; text-align: left;">DueDate</th>
-                                                    <th style="width: 6%; text-align: left;">Principle</th>
-                                                    <th style="width: 6%; text-align: left;">Interest</th>
-                                                    <th style="width: 6%; text-align: left;">Monthly</th>
-                                                    <th style="width: 6%; text-align: left;">Remain</th>
-                                                    <th style="width: 6%; text-align: left;">Re+Int</th>
-                                                    <th style="width: 6%; text-align: left;">C.Prin</th>
-                                                    <th style="width: 5%; text-align: left;">C.Int</th>
-                                                    <th style="width: 6%; text-align: left;">C.Prin+Int</th>
-                                                    <th style="width: 6%; text-align: left;">Pay.Type</th>
-                                                    <th style="width: 5%; text-align: left;">ARNo</th>
-                                                    <th style="width: 5%; text-align: left;">PayNo</th>
-                                                    <th style="width: 5%; text-align: left;">Int.ARNo</th>
-                                                    <th style="width: 5%; text-align: left;">Int.PayNo</th>
-                                                    <th style="width: 2%; text-align: left;">V.Day</th>
-                                                    <th style="width: 5%; text-align: left;">Int.Re.Amt</th>
-                                                    <th style="width: 5%; text-align: left;">IntV.ARNo</th>
-                                                    <th style="width: 5%; text-align: left;">Remark</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                @{
-                                                    int index = 1;
-                                                    foreach (var item in installment)
-                                                    {
-                                                        string rowClass = "";
-
-                                                        if (item.ARNo != -1)
+                                                        <th style="width:1%; text-align:left;">#</th>
+                                                        <th style="width: 8%; text-align: left;">DocDate</th>
+                                                        <th style="width: 7%; text-align: left;">DueDate</th>
+                                                        <th style="width: 6%; text-align: left;">Principle</th>
+                                                        <th style="width: 6%; text-align: left;">Interest</th>
+                                                        <th style="width: 6%; text-align: left;">Monthly</th>
+                                                        <th style="width: 6%; text-align: left;">Remain</th>
+                                                        <th style="width: 6%; text-align: left;">Re+Int</th>
+                                                        <th style="width: 6%; text-align: left;">C.Prin</th>
+                                                        <th style="width: 5%; text-align: left;">C.Int</th>
+                                                        <th style="width: 6%; text-align: left;">C.Prin+Int</th>
+                                                        <th style="width: 6%; text-align: left;">Pay.Type</th>
+                                                        <th style="width: 5%; text-align: left;">ARNo</th>
+                                                        <th style="width: 5%; text-align: left;">PayNo</th>
+                                                        <th style="width: 2%; text-align: left;">V.Day</th>
+                                                        <th style="width: 5%; text-align: left;">Int.Re.Amt</th>
+                                                        <th style="width: 5%; text-align: left;">IntV.ARNo</th>
+                                                        <th style="width: 14%; text-align: left;">Remark</th>
+                                                        <th style="width: 1%; text-align: left;">Status</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @{
+                                                        int index = 1;
+                                                        foreach (var item in installment)
                                                         {
-                                                            rowClass = "bg-light-blue";
+                                                            string rowClass = "";
+
+                                                            if (item.ARNo != -1)
+                                                            {
+                                                                rowClass = "bg-light-blue";
+                                                            }
+
+                                                            if (item.VarianDay != 0)
+                                                            {
+                                                                rowClass = "bg-light-green"; // override
+                                                            }
+                                                            <tr class="@rowClass">
+                                                                <td id="tr_visorder_@index">@(item.VisOrder+1)</td>
+                                                                <td id="InstallmentDate_@index">@Convert.ToDateTime(item.PaymentDate).ToString("dd-MMM-yyyy")</td>
+                                                                <td id="tr_payment_detail_paymentdate_line_@index">@Convert.ToDateTime(item.DueDate).ToString("dd-MMM-yyyy")</td>
+                                                                <td class="principle">@String.Format("{0:N2}", item.Principle)</td>
+                                                                <td class="interest">@String.Format("{0:N2}", item.Interest)</td>
+                                                                <td id="tr_payment_detail_monthlypay_line_@index" class="monthly">@String.Format("{0:N2}", item.Monthly)</td>
+                                                                <td>@String.Format("{0:N2}", item.Remaining)</td>
+                                                                <td>@String.Format("{0:N2}", item.Remaining + item.Interest)</td>
+                                                                <td>@String.Format("{0:N2}", item.CuPayment)</td>
+                                                                <td>@String.Format("{0:N2}", item.CuInterest)</td>
+                                                                <td>@String.Format("{0:N2}", item.CuPayment + item.CuInterest)</td>
+                                                                <td>@item.Method</td>
+
+                                                                <td>@item.ARNo</td>
+                                                                <td>@item.PaymentNo</td>
+                                                                <td id="tr_payment_detail_varianday_line_@index" style="color:@(item.VarianDay > 0 ? "red" : (item.VarianDay < 0 ? "green" : "inherit"))">
+                                                                    @item.VarianDay
+                                                                </td>
+
+                                                                <td id="tr_payment_detail_interestonscheduleamt_line_@index" style="color:@(item.InterestonsheduleVarian > 0 ? "red" : (item.InterestonsheduleVarian < 0 ? "green" : "inherit"))">
+                                                                    @String.Format("{0:N2}", item.InterestonsheduleVarian)
+                                                                </td>
+                                                                <td>
+                                                                    @{
+                                                                        int number;
+                                                                        if (int.TryParse(item.OcrCode3, out number))
+                                                                        {
+                                                                            @item.OcrCode3
+                                                                        }
+                                                                    }
+                                                                </td>
+
+
+                                                                <td>@item.Remarks</td>
+                                                                <td id="tr_payment_detail_status_line_@index">
+                                                                    @item.RowStatus
+                                                                </td>
+                                                            </tr>
+
+                                                            index++;
                                                         }
-
-                                                        if (item.VarianDay != 0)
-                                                        {
-                                                            rowClass = "bg-light-green"; // override
-                                                        }
-                                                                                                <tr class="@rowClass">
-                                                                                                    <td>@index</td>
-                                                                                                    <td>@Convert.ToDateTime(item.PaymentDate).ToString("dd-MMM-yyyy")</td>
-                                                                                                    <td>@Convert.ToDateTime(item.DueDate).ToString("dd-MMM-yyyy")</td>
-                                                                                                    <td class="principle">@String.Format("{0:N2}", item.Principle)</td>
-                                                                                                    <td class="interest">@String.Format("{0:N2}", item.Interest)</td>
-                                                                                                    <td class="monthly">@String.Format("{0:N2}", item.Monthly)</td>
-                                                                                                    <td>@String.Format("{0:N2}", item.Remaining)</td>
-                                                                                                    <td>@String.Format("{0:N2}", item.Remaining + item.Interest)</td>
-                                                                                                    <td>@String.Format("{0:N2}", item.CuPayment)</td>
-                                                                                                    <td>@String.Format("{0:N2}", item.CuInterest)</td>
-                                                                                                    <td>@String.Format("{0:N2}", item.CuPayment + item.CuInterest)</td>
-                                                                                                    <td>@item.Method</td>
-
-                                                                                                    <td>@item.ARNo</td>
-                                                                                                    <td>@item.PaymentNo</td>
-                                                                                                    <td>@item.ARNoInterest</td>
-                                                                                                    <td>@item.PaymentNoInterest</td>
-
-                                                                                                    <td style="color:@(item.VarianDay > 0 ? "red" : (item.VarianDay < 0 ? "green" : "inherit"))">
-                                                                                                        @item.VarianDay
-                                                                                                    </td>
-
-                                                                                                    <td style="color:@(item.InterestonsheduleVarian > 0 ? "red" : (item.InterestonsheduleVarian < 0 ? "green" : "inherit"))">
-                                                                                                        @String.Format("{0:N2}", item.InterestonsheduleVarian)
-                                                                                                    </td>
-                                                                                                    <td>
-                                                                                                        @{
-                                                                                                            int number;
-                                                                                                            if (int.TryParse(item.OcrCode3, out number))
-                                                                                                            {
-                                                                                                                @item.OcrCode3
-                                                                                                            }
-                                                                                                        }
-                                                                                                    </td>
-
-
-                                                                                                    <td>@item.Remarks</td>
-                                                                                                </tr>
-
-                                                        index++;
                                                     }
-                                                }
-                                            </tbody>
+                                                </tbody>
 
 
-                                            <tfoot>
-                                                <tr>
-                                                    <td class="bg-gray" style="text-align:right;"></td>
-                                                    <td class="bg-gray" style="text-align:right;"></td>
-                                                    <td class="bg-gray" style="text-align:left;"><b>Total</b></td>
-                                                    <td class="bg-gray" style="text-align:left;" id="txt_total_principle">0.00</td>
-                                                    <td class="bg-gray" style="text-align:left;" id="txt_total_interest">0.00</td>
-                                                    <td class="bg-gray" style="text-align:left;" id="txt_total_monthly">0.00</td>
-                                                    <td class="bg-gray" style="text-align:right;"></td>
-                                                    <td class="bg-gray" style="text-align:right;"></td>
-                                                    <td class="bg-gray" style="text-align:right;"></td>
-                                                    <td class="bg-gray" style="text-align:right;"></td>
-                                                    <td class="bg-gray" style="text-align:right;"></td>
-                                                    <td class="bg-gray" style="text-align:right;"></td>
-                                                    <td class="bg-gray" style="text-align:right;"></td>
-                                                    <td class="bg-gray" style="text-align:right;"></td>
-                                                    <td class="bg-gray" style="text-align:right;"></td>
-                                                    <td class="bg-gray" style="text-align:right;"></td>
-                                                    <td class="bg-gray" style="text-align:right;"></td>
-                                                    <td class="bg-gray" style="text-align:right;"></td>
-                                                    <td class="bg-gray" style="text-align:right;"></td>
-                                                </tr>
-                                            </tfoot>
+                                                <tfoot>
+                                                    <tr>
+                                                        <td class="bg-gray" style="text-align:right;"></td>
+                                                        <td class="bg-gray" style="text-align:right;"></td>
+                                                        <td class="bg-gray" style="text-align:left;"><b>Total</b></td>
+                                                        <td class="bg-gray" style="text-align:left;" id="txt_total_principle">0.00</td>
+                                                        <td class="bg-gray" style="text-align:left;" id="txt_total_interest">0.00</td>
+                                                        <td class="bg-gray" style="text-align:left;" id="txt_total_monthly">0.00</td>
+                                                        <td class="bg-gray" style="text-align:right;"></td>
+                                                        <td class="bg-gray" style="text-align:right;"></td>
+                                                        <td class="bg-gray" style="text-align:right;"></td>
+                                                        <td class="bg-gray" style="text-align:right;"></td>
+                                                        <td class="bg-gray" style="text-align:right;"></td>
+                                                        <td class="bg-gray" style="text-align:right;"></td>
+                                                        <td class="bg-gray" style="text-align:right;"></td>
+                                                        <td class="bg-gray" style="text-align:right;"></td>
+                                                        <td class="bg-gray" style="text-align:right;"></td>
+                                                        <td class="bg-gray" style="text-align:right;"></td>
+                                                        <td class="bg-gray" style="text-align:right;"></td>
+                                                        <td class="bg-gray" style="text-align:right;"></td>
+                                                        <td class="bg-gray" style="text-align:right;"></td>
+                                                    </tr>
+                                                </tfoot>
 
-                                        </table>
+                                            </table>
                                     </div>
                                 </fieldset>
                             </td>
@@ -609,56 +640,190 @@
 
 <div id="alert-container" style="position: fixed; top: 20px; right: 20px; z-index: 9999;"></div>
 
-
 <script>
-    $(document).ready(function () {
+$(document).ready(function () {
 
-         var checkbutton = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Checkbutton.FirstOrDefault()));
-             var checkbuttonstatus = checkbutton?.Approver ?? "N";
-             console.log("checkbuttonstatus:", checkbuttonstatus);
+    // ===============================
+    // APPROVER BUTTON CONTROL
+    // ===============================
+    var checkbutton = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Checkbutton.FirstOrDefault()));
+    var checkbuttonstatus = checkbutton?.Approver ?? "N";
+    console.log("checkbuttonstatus:", checkbuttonstatus);
 
-             if (checkbuttonstatus.toUpperCase() === 'Y') {
-                 console.log("Showing buttons");
-                 $('#btnReject').show();
-                 $('#btnApprove').show();
-             } else {
-                 console.log("Hiding buttons");
-                 $('#btnReject').hide();
-                 $('#btnApprove').hide();
-        }
-
-        function sumColumn(className) {
-            let total = 0;
-            $("." + className).each(function () {
-                let val = parseFloat($(this).text().replace(/,/g, ''));
-                if (!isNaN(val)) total += val;
-            });
-            return total.toFixed(2);
-        }
-
-        $('#txt_total_principle').text(sumColumn("principle"));
-        $('#txt_total_interest').text(sumColumn("interest"));
-        $('#txt_total_monthly').text(sumColumn("monthly"));
-
-        // Load column settings UI
-        buildColumnSettingsCheckboxes();
-    });
-
-    function toggle() {
-        var wrapper = document.getElementById("table_wrapper");
-        var icon = document.getElementById("toggle_icon");
-
-        if (wrapper.style.display === "none") {
-            wrapper.style.display = "block";
-            icon.classList.remove("fa-chevron-down");
-            icon.classList.add("fa-chevron-up");
-        } else {
-            wrapper.style.display = "none";
-            icon.classList.remove("fa-chevron-up");
-            icon.classList.add("fa-chevron-down");
-        }
+    if (checkbuttonstatus.toUpperCase() === 'Y') {
+        $('#btnReject').show();
+        $('#btnApprove').show();
+    } else {
+        $('#btnReject').hide();
+        $('#btnApprove').hide();
     }
 
+    // ===============================
+    // COLUMN TOTAL
+    // ===============================
+    function sumColumn(className) {
+        let total = 0;
+        $("." + className).each(function () {
+            let val = parseFloat($(this).text().replace(/,/g, ''));
+            if (!isNaN(val)) total += val;
+        });
+        return total.toFixed(2);
+    }
+
+    $('#txt_total_principle').text(sumColumn("principle"));
+    $('#txt_total_interest').text(sumColumn("interest"));
+    $('#txt_total_monthly').text(sumColumn("monthly"));
+
+    // Load column settings UI
+    buildColumnSettingsCheckboxes();
+
+    // ===============================
+    // STORE PREVIOUS EFFECTIVE DATE
+    // ===============================
+    let previousEffectiveDate = $("#txt_new_effective_date").val();
+
+
+    // ===============================
+    // UPDATE VARIAN DAY FUNCTION
+    // ===============================
+    function updateVarianDays() {
+
+        let effectiveDate = moment($("#txt_new_effective_date").val(), "DD-MMM-YYYY");
+        if (!effectiveDate.isValid()) return;
+
+        let openRowCounter = 0;
+
+
+        $("#table_payment_schedule tbody tr").each(function (index) {
+
+      
+            let rowIndex = index + 1;
+
+            let rowStatus = $("#tr_payment_detail_status_line_" + rowIndex).text().trim();
+            if (rowStatus !== "O") return;
+
+            openRowCounter++;
+
+            let dueDateText = $("#tr_payment_detail_paymentdate_line_" + rowIndex).text().trim();
+            let dueDate = moment(dueDateText, "DD-MMM-YYYY");
+            if (!dueDate.isValid()) return;
+
+            let postDateText = $("#InstallmentDate_" + rowIndex).val();
+            let postDate = moment(postDateText, "DD-MMM-YYYY");
+
+            let varianDay = 0;
+
+            if (openRowCounter === 1) {
+                varianDay = effectiveDate.diff(dueDate, 'days');
+            } else {
+
+                if (!postDate.isValid()) return;
+
+                varianDay = postDate.diff(dueDate, 'days');
+            }
+
+
+            
+
+            if (isNaN(varianDay) || varianDay < 0) varianDay = 0;
+
+            $("#tr_payment_detail_varianday_line_" + rowIndex)
+                .text(varianDay)
+                .css("color", varianDay === 0 ? "black" : "red");
+
+            let monthlyPay = parseFloat(
+                $("#tr_payment_detail_monthlypay_line_" + rowIndex)
+                    .text()
+                    .replace(/,/g, '')
+            ) || 0;
+
+            let result = varianDay === 0
+                ? 0
+                : (monthlyPay * 0.0125) / 30 * varianDay;
+
+            if (isNaN(result)) result = 0;
+
+            $("#tr_payment_detail_interestonscheduleamt_line_" + rowIndex)
+                .text(result.toFixed(2))
+                .css("color", result === 0 ? "black" : "red");
+
+        });
+    }
+
+
+    // ===============================
+    // EFFECTIVE DATE CHANGE EVENT
+    // ===============================
+    $(document).on("change", "#txt_new_effective_date", function () {
+
+        let newDate = $(this).val();
+        let input = $(this);
+
+        Swal.fire({
+            title: 'Recalculate Schedule?',
+            text: "Changing the effective date will recalculate Varian Days.",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Yes, continue',
+            cancelButtonText: 'Cancel'
+        }).then((result) => {
+
+            if (result.isConfirmed) {
+
+                previousEffectiveDate = newDate;
+                updateVarianDays();
+
+            } else {
+
+                input.val(previousEffectiveDate);
+            }
+
+        });
+
+    });
+
+
+    // ===============================
+    // APPROVE BUTTON VALIDATION
+    // ===============================
+    $("#btnApprove").click(function () {
+
+        var neweffectivedate = $("#txt_new_effective_date").val();
+
+        if (neweffectivedate === "") {
+            ShowAlertCus("Please select the new effective date", "warning");
+            return false;
+        }
+
+        return true;
+
+    });
+
+});
+
+
+// ===============================
+// TOGGLE TABLE
+// ===============================
+function toggle() {
+
+    var wrapper = document.getElementById("table_wrapper");
+    var icon = document.getElementById("toggle_icon");
+
+    if (wrapper.style.display === "none") {
+
+        wrapper.style.display = "block";
+        icon.classList.remove("fa-chevron-down");
+        icon.classList.add("fa-chevron-up");
+
+    } else {
+
+        wrapper.style.display = "none";
+        icon.classList.remove("fa-chevron-up");
+        icon.classList.add("fa-chevron-down");
+
+    }
+}
 </script>
 
 

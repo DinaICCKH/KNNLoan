@@ -562,13 +562,24 @@ function cmd_copy_from_payment_schedule(type) {
     var cardcode = "";
     cardcode = $("#txt_card_code").val();
 
-    if (cardcode === "") {
+    if (!cardcode) {
         ShowAlertCus("Please choose customer information", "danger");
+        $("#txt_cardcode").focus();
+        return false;
     }
+
     else {
         if (type == "1") {
 
             var ref = $("#txt_changeitem_ref").val();
+
+            var EffictiveDate = $("#txt_effective_date").val();
+
+            if (!EffictiveDate) {
+                ShowAlertCus("Please choose effective date first.", "danger");
+                $("#txt_effective_date").focus();   // optional: auto focus
+                return false;                       // 🔥 stop function
+            }
 
             if (ref === "" && pageID === "ChangeItem") {
                 ShowAlertCus("Please choose Change Reference first", "danger");
@@ -2484,6 +2495,7 @@ function get_selected_payment_schedule_by_so_forReschedule() {
 
                 disable_enable_remove_by_line();
                 set_date_of_payment();
+                $("#txt_effective_date").prop("disabled", true);
 
                 $("#modal-schedule-list").modal('hide');
                 $("#txt_payment_schedule_selected_row").val("-1");
@@ -5541,11 +5553,44 @@ function cmd_save_approval_Restructure(Type) {
 
 function cmd_save_approval_Reschedule(Type) {
 
+    var neweffectivedate = $("#txt_new_effective_date").val().trim();
+
+    if (Type === "Approve" && neweffectivedate === "") {
+        ShowAlertCus("Please select the new effective date", "warning");
+        $("#txt_new_effective_date").focus();
+        return false;
+    }
+
     var head = {
         DocEntry: $("#txt_draf_ID").val(),
         Comment: $("#txt_approverComment").val(),
-        DocStatus: Type
+        DocStatus: Type,
+        DocumentDate:neweffectivedate
     };
+
+    // Initialize array to hold row data
+    var rows = [];
+
+    $("#table_payment_schedule tbody tr").each(function (index) {
+        var rowIndex = index + 1;
+
+        // Get the values from the specific cells
+        var visOrder = parseInt($("#tr_visorder_" + rowIndex).text()) || 0;
+        var varianDay = parseInt($("#tr_payment_detail_varianday_line_" + rowIndex).text()) || 0;
+        var interestAmt = parseFloat(
+            $("#tr_payment_detail_interestonscheduleamt_line_" + rowIndex).text().replace(/,/g, '')
+        ) || 0;
+
+        // Push an object for this row
+        rows.push({
+            VisOrder: visOrder-1,
+            VarianDay: varianDay,
+            InterestonsheduleVarian: interestAmt
+        });
+    });
+
+    console.log(rows);
+
     $.ajax({
         contentType: 'application/json; charset=utf-8',
         dataType: 'json',
@@ -5553,7 +5598,8 @@ function cmd_save_approval_Reschedule(Type) {
         url: '/amendments/save_approval_Reschedule',
         data: JSON.stringify(
             {
-                'header': head
+                header: head,      // existing header object
+                details: rows      // the array we just generated from the table
             }),
         beforeSend: function () {
             $("#loading").show();

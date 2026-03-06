@@ -11,86 +11,92 @@
     <script src="../../Scripts/js/sales.js"></script>
     <script src="~/Scripts/js/Dina_CustomizationFormSettingandCopytoClibord.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
-
     <script>
+        var originalInstallmentDates = [];
+
         $(document).ready(function () {
 
-            // Vendor filter script
-            $("#txt_pop_filter_vendor_name").keyup(function () {
-                $("#table_pop_customer_list >tbody >tr").each(function () {
-                    var id = $(this).attr('id').replace("tr_pop_customer_", "");
-                    var text = $("#td_pop_vendor_cust_code_" + id).text().toLowerCase() +
-                        $("#td_pop_vendor_cust_name_" + id).text().toLowerCase() +
-                        $("#td_pop_vendor_phone_" + id).text().toLowerCase();
-
-                    var keyword = $("#txt_pop_filter_vendor_name").val().replace(/\s+/g, '').toLowerCase();
-
-                    if (text.replace(/\s+/g, '').indexOf(keyword) === -1)
-                        $(this).hide();
-                    else
-                        $(this).show();
+            // ===============================
+            // STORE ORIGINAL INSTALLMENT DATES
+            // ===============================
+            window.storeOriginalDates = function () {
+                originalInstallmentDates = [];
+                $("input[id^='InstallmentDate_']").each(function () {
+                    originalInstallmentDates.push($(this).val());
                 });
-            });
+            };
 
-            function updateVarianDays(changedIndex) {
+            // ===============================
+            // UPDATE VARIAN DAY (ONLY OPEN ROWS)
+            // ===============================
+
+            function updateVarianDays() {
+
                 let effectiveDate = moment($("#txt_effective_date").val(), "DD-MMM-YYYY");
                 if (!effectiveDate.isValid()) return;
 
-                for (let i = changedIndex - 1; i < originalInstallmentDates.length; i++) {
-                    let selector = "#tr_payment_detail_paymentdate_line_" + (i + 1);
-                    let paymentDateInput = $(selector).find("input");
-                    let paymentDateText = paymentDateInput.length > 0 ? paymentDateInput.val() : $(selector).text().trim();
-                    let paymentDate = moment(paymentDateText, "DD-MMM-YYYY");
+                let openRowCounter = 0;
 
-                    if (!paymentDate.isValid()) continue;
+                $("#table_payment_schedule tbody tr").each(function (index) {
+
+                    let rowIndex = index + 1;
+                    let rowStatus = $("#tr_payment_detail_status_line_" + rowIndex).text().trim();
+
+                    if (rowStatus !== "O") return;
+
+                    openRowCounter++;
+
+                    let dueDateText = $("#tr_payment_detail_paymentdate_line_" + rowIndex).text().trim();
+                    let dueDate = moment(dueDateText, "DD-MMM-YYYY");
+                    if (!dueDate.isValid()) return;
+
+                    if (dueDate.isAfter(effectiveDate)) {
+                        $("#tr_payment_detail_varianday_line_" + rowIndex).text(0).css("color", "black");
+                        $("#tr_payment_detail_interestonscheduleamt_line_" + rowIndex).text("0.00").css("color", "black");
+                        return;
+                    }
+
+                    let postDateText = $("#InstallmentDate_" + rowIndex).val();
+                    let postDate = moment(postDateText, "DD-MMM-YYYY");
 
                     let varianDay = 0;
-                    if (i === 0) {
-                        let prevSelector = "#tr_payment_detail_paymentdate_line_0";
-                        let prevDateInput = $(prevSelector).find("input");
-                        let prevDateText = prevDateInput.length > 0 ? prevDateInput.val() : $(prevSelector).text().trim();
-                        let prevDate = moment(prevDateText, "DD-MMM-YYYY");
-                        if (prevDate.isValid()) varianDay = paymentDate.diff(prevDate, 'days');
+
+                    if (openRowCounter === 1) {
+                        varianDay = effectiveDate.diff(dueDate, 'days');
                     } else {
-                        varianDay = effectiveDate.diff(paymentDate, 'days');
+                        if (!postDate.isValid()) return;
+                        varianDay = postDate.diff(dueDate, 'days');
                     }
 
-                    if (varianDay < 0) varianDay = 0;
+                    if (isNaN(varianDay) || varianDay < 0) varianDay = 0;
 
-                    // Update varian day in UI
-                    let varianSelector = "#tr_payment_detail_varianday_line_" + (i + 1);
-                    let $varianElement = $(varianSelector);
-                    if ($varianElement.is("input")) {
-                        $varianElement.val(varianDay);
-                        $varianElement.css("color", varianDay === 0 ? "black" : "red");
-                    } else {
-                        $varianElement.text(varianDay);
-                        $varianElement.css("color", varianDay === 0 ? "black" : "red");
-                    }
+                    $("#tr_payment_detail_varianday_line_" + rowIndex)
+                        .text(varianDay)
+                        .css("color", varianDay === 0 ? "black" : "red");
 
-                    // --- Calculate extra charge immediately ---
                     let monthlyPay = parseFloat(
-                        $("#tr_payment_detail_monthlypay_line_" + (i + 1))
+                        $("#tr_payment_detail_monthlypay_line_" + rowIndex)
                             .text()
                             .replace(/,/g, '')
                     ) || 0;
 
+                    let result = varianDay === 0
+                        ? 0
+                        : (monthlyPay * 0.0125) / 30 * varianDay;
 
-                    let result = varianDay === 0 ? 0 : (monthlyPay * 0.0125) / 30 * varianDay;
+                    if (isNaN(result)) result = 0;
 
-
-
-                    let $extraElement = $("#tr_payment_detail_interestonscheduleamt_line_" + (i + 1));
-
-                    if ($extraElement.is("input")) {
-                        $extraElement.val(result.toFixed(2)).css("color", result === 0 ? "black" : "red");
-                    } else {
-                        $extraElement.text(result.toFixed(2)).css("color", result === 0 ? "black" : "red");
-                    }
-                }
+                    $("#tr_payment_detail_interestonscheduleamt_line_" + rowIndex)
+                        .text(result.toFixed(2))
+                        .css("color", result === 0 ? "black" : "red");
+                });
             }
 
-            $(document).on("change", ".datetime", function () {
+            // ===============================
+            // INSTALLMENT DATE CHANGE
+            // ===============================
+            $(document).on("change", "input[id^='InstallmentDate_']", function () {
+
                 let changedInput = $(this);
                 let changedId = changedInput.attr("id");
                 let changedIndex = parseInt(changedId.split("_")[1]);
@@ -101,33 +107,72 @@
                 let targetDay = newDate.date();
 
                 Swal.fire({
-                    title: 'Apply date change to all next rows?',
-                    text: "Click Yes to update all following rows, or No to update only this row.",
+                    title: 'Apply date change to all next OPEN rows?',
+                    text: "Yes = update all next OPEN rows. No = only this row.",
                     icon: 'question',
                     showCancelButton: true,
                     confirmButtonText: 'Yes, update all',
-                    cancelButtonText: 'No, just this one',
+                    cancelButtonText: 'No, only this'
                 }).then((result) => {
+
                     if (result.isConfirmed) {
-                        for (let i = changedIndex - 1; i < originalInstallmentDates.length; i++) {
-                            let updatedDate = moment(newDate).add(i - (changedIndex - 1), 'months');
-                            updatedDate.date(Math.min(targetDay, updatedDate.daysInMonth()));
-                            $("#InstallmentDate_" + (i + 1)).val(updatedDate.format("DD-MMM-YYYY"));
-                        }
 
-                        updateVarianDays(changedIndex);
+                        let monthOffset = 0;
 
-                    } else {
-                        updateVarianDays(changedIndex);
+                        $("#table_payment_schedule tbody tr").each(function (index) {
+
+                            let rowIndex = index + 1;
+                            let rowStatus = $("#tr_payment_detail_status_line_" + rowIndex).text().trim();
+
+                            if (rowIndex >= changedIndex && rowStatus === "O") {
+
+                                let updatedDate = moment(newDate).add(monthOffset, 'months');
+                                updatedDate.date(Math.min(targetDay, updatedDate.daysInMonth()));
+
+                                $("#InstallmentDate_" + rowIndex)
+                                    .val(updatedDate.format("DD-MMM-YYYY"));
+
+                                monthOffset++;
+                            }
+                        });
                     }
 
+                    updateVarianDays();
                     storeOriginalDates();
                 });
+            });
 
+            // ===============================
+            // VENDOR FILTER SCRIPT (ADDED)
+            // ===============================
+            $("#txt_pop_filter_vendor_name").on("keyup", function () {
+
+                let keyword = $(this).val()
+                    .replace(/\s+/g, '')
+                    .toLowerCase();
+
+                $("#table_pop_customer_list > tbody > tr").each(function () {
+
+                    let id = $(this).attr('id').replace("tr_pop_customer_", "");
+
+                    let text =
+                        $("#td_pop_vendor_cust_code_" + id).text().toLowerCase() +
+                        $("#td_pop_vendor_cust_name_" + id).text().toLowerCase() +
+                        $("#td_pop_vendor_phone_" + id).text().toLowerCase();
+
+                    text = text.replace(/\s+/g, '');
+
+                    if (text.indexOf(keyword) === -1) {
+                        $(this).hide();
+                    } else {
+                        $(this).show();
+                    }
+                });
             });
 
         });
     </script>
+
 
 </head>
 <div class="modal fade" id="modal-cust_list">
@@ -402,7 +447,7 @@
                             </td>
                             <td style="width:40%;">
                                 <div class="form-group">
-                                    <input type="text" class="form-control form-control-insde" id="txt_card_name" placeholder="Customer Name" onchange="txt_po_vendor_name_change()" onkeydown='txtautocompletepo()'>
+                                    <input type="text" class="form-control form-control-insde" id="txt_card_name" placeholder="Customer Name" onchange="txt_po_vendor_name_change()" onkeydown='txtautocompletepo()' disabled>
                                 </div>
                             </td>
                             <td style="width:10%;">
@@ -505,10 +550,10 @@
                                                     <td style="width:40%;">
                                                         <div class="form-group">
                                                             <div class="input-group date">
-                                                                <div class="input-group-addon">
+                                                                <div class="input-group-addon"> 
                                                                     <i class="fa fa-calendar"></i>
                                                                 </div>
-                                                                <input type="text" class="form-control pull-right datetime form-control-insde" id="txt_effective_date" placeholder="Posting Date" value="@docdate">
+                                                                <input type="text" class="form-control pull-right datetime form-control-insde" id="txt_effective_date" placeholder="Posting Date">
                                                             </div>
                                                         </div>
                                                     </td>

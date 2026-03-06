@@ -47,6 +47,16 @@ function clear_form_data() {
     $("#txt_referral").val('');
     $("#txt_con_period").val('');
 
+    if ($("#txt_effective_date").length > 0) {
+
+        var effectiveDate = $("#txt_effective_date").val();
+
+        if (effectiveDate) {
+            $("#txt_effective_date").val('');
+            $("#txt_effective_date").prop("disabled", false);
+        }
+    }
+
     $("#txt_before_discount_amount").val('0.00');
     $("#txt_project").val('');
     $("#txt_discount_per").val('0.00');
