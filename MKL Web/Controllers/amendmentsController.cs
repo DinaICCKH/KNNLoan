@@ -442,9 +442,9 @@ namespace MKL_Web.Controllers
             return Json(new { status, lastEntry });
         }
 
-        public JsonResult get_penalty_drafList(string Customer, DateTime FromPosting, DateTime ToPosting, DateTime FromDueDate, DateTime ToDueDate, string WaiveOption)
+        public JsonResult get_penalty_drafList(string Customer, DateTime ToDueDate, decimal WaiveOption)
         {
-            string sqltext = "exec ICC_Get_List_Penalty_Draf '" + Customer + "','" + FromPosting + "','" + ToPosting + "','" + FromDueDate + "','" + ToDueDate + "','" + WaiveOption + "'";
+            string sqltext = "exec ICC_Get_List_Penalty_Draf '" + Customer + "','" + ToDueDate + "','" + WaiveOption + "'";
 
             List<PenaltyGenerateTable> list = new List<PenaltyGenerateTable>();
             list = (from x in view.getTable(sqltext, ConfigurationManager.AppSettings["sql"].ToString()).AsEnumerable()

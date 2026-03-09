@@ -175,20 +175,12 @@
 
                                                     <td style="width:10%;">
                                                         <div class="form-group">
-                                                            <label for="inputEmail3" style="padding-left:2px;" class="form-control controlLabel">Waive Option</label>
+                                                            <label style="padding-left:2px;" class="form-control controlLabel">Waive %</label>
                                                         </div>
                                                     </td>
                                                     <td style="width:40%;">
                                                         <div class="form-group">
-                                                            <select class="form-control" id="cbo_waive_option">
-                                                                @{
-                                                                    <option value=""></option>
-                                                                    foreach (var x in Waiveoption)
-                                                                    {
-                                                                        <option value="@x.Code">@x.Name</option>
-                                                                    }
-                                                                }
-                                                            </select>
+                                                            <input type="number" class="form-control" id="txt_waive_option" min="0" step="1">
                                                         </div>
                                                     </td>
                                                 </tr>
@@ -213,45 +205,13 @@
                                     <div class="row" style="margin:0px;margin-top:10px;margin-left:-10px;">
                                         <table class="table" style="margin-bottom:0px;">
                                             <thead>
+                                               
                                                 <tr>
 
-                                                    <td style="width:10%;">
-                                                        <div class="form-group">
-                                                            <label for="inputEmail3" style="padding-left:2px;" class="form-control controlLabel">Posting Date From</label>
-                                                        </div>
-                                                    </td>
-
-                                                    <td style="width:40%;">
-                                                        <div class="form-group">
-                                                            <table style="width:100%;" id="table_doc_discount">
-                                                                <tr>
-                                                                    <td style="width:40%;">
-                                                                        <div class="input-group date">
-                                                                            <div class="input-group-addon">
-                                                                                <i class="fa fa-calendar"></i>
-                                                                            </div>
-                                                                            <input type="text" class="form-control pull-right datetime form-control-insde" readonly="readonly" id="txt_fposting_date"  value="@docdate">
-                                                                        </div>
-                                                                    </td>
-                                                                    <td style="width:20%;text-align:right;padding-right:10px">To Posting Date</td>
-                                                                    <td style="width:40%;">
-                                                                        <div class="input-group date">
-                                                                            <div class="input-group-addon">
-                                                                                <i class="fa fa-calendar"></i>
-                                                                            </div>
-                                                                            <input type="text" class="form-control pull-right datetime form-control-insde" readonly="readonly" id="txt_tposting_date"  value="@docdate">
-                                                                        </div>
-                                                                    </td>
-
-                                                                </tr>
-                                                            </table>
-                                                        </div>
-                                                    </td>
-
 
                                                     <td style="width:10%;">
                                                         <div class="form-group">
-                                                            <label for="inputEmail3" class="form-control controlLabel">Due Date From </label>
+                                                            <label for="inputEmail3" class="form-control controlLabel">To DueDate</label>
                                                         </div>
                                                     </td>
 
@@ -265,16 +225,16 @@
                                                                             <div class="input-group-addon">
                                                                                 <i class="fa fa-calendar"></i>
                                                                             </div>
-                                                                            <input type="text" class="form-control pull-right datetime form-control-insde" readonly="readonly" id="txt_fdue_date" value="@docdate">
+                                                                            <input type="text" class="form-control pull-right datetime form-control-insde" readonly="readonly" id="txt_tdue_date" value="@docdate">
                                                                         </div>
                                                                     </td>
-                                                                    <td style="width:20%;text-align:right;padding-right:10px">To DueDate</td>
+                                                                    <td style="width:20%;text-align:right;padding-right:10px">From Customer</td>
                                                                     <td style="width:40%;">
-                                                                        <div class="input-group date">
+                                                                        <div class="input-group">
+                                                                            <input type="text" class="form-control form-control-insde" id="txt_card_code" readonly="readonly" placeholder=" From Customer">
                                                                             <div class="input-group-addon">
-                                                                                <i class="fa fa-calendar"></i>
+                                                                                <i class="fa fa-user text-info" onclick="cmd_show_customer_change_house('1','1')" style="cursor:pointer"></i>
                                                                             </div>
-                                                                            <input type="text" class="form-control pull-right datetime form-control-insde" readonly="readonly" id="txt_tdue_date" value="@docdate">
                                                                         </div>
                                                                     </td>
 
@@ -283,23 +243,6 @@
                                                         </div>
                                                     </td>
 
-                                                </tr>
-
-
-                                                <tr>
-                                                    <td style="width:10%;">
-                                                        <div class="form-group">
-                                                            <label class="form-control controlLabel">From Customer</label>
-                                                        </div>
-                                                    </td>
-                                                    <td style="width:40%;">
-                                                        <div class="input-group">
-                                                            <input type="text" class="form-control form-control-insde" id="txt_card_code" readonly="readonly" placeholder=" From Customer">
-                                                            <div class="input-group-addon">
-                                                                <i class="fa fa-user text-info" onclick="cmd_show_customer_change_house('1','1')" style="cursor:pointer"></i>
-                                                            </div>
-                                                        </div>
-                                                    </td>
 
                                                     <td style="width:10%;">
                                                         <div class="form-group">
