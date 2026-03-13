@@ -574,28 +574,33 @@ function cmd_copy_from_payment_schedule(type) {
     }
 
     else {
+
         if (type == "1") {
 
             var ref = $("#txt_changeitem_ref").val();
+            var cardcode = $("#txt_card_code").val();
 
-            var EffictiveDate = $("#txt_effective_date").val();
+            // Check if effective date field exists
+            if ($("#txt_effective_date").length > 0) {
 
-            if (!EffictiveDate) {
-                ShowAlertCus("Please choose effective date first.", "danger");
-                $("#txt_effective_date").focus();   // optional: auto focus
-                return false;                       // 🔥 stop function
+                var EffictiveDate = $("#txt_effective_date").val();
+
+                if (!EffictiveDate) {
+                    ShowAlertCus("Please choose effective date first.", "danger");
+                    $("#txt_effective_date").focus();
+                    return false;
+                }
             }
 
             if (ref === "" && pageID === "ChangeItem") {
                 ShowAlertCus("Please choose Change Reference first", "danger");
-                return; // stop execution if condition is met
+                return;
             }
 
-            var cardcode = $("#txt_card_code").val();
             $("#modal-schedule-list").modal('show');
             get_payment_schedule_list(cardcode);
-
         }
+
 
         if (type == "2") {
             let PeriodM = parseInt($("#txt_period").val()) || 0;
@@ -4611,58 +4616,89 @@ function get_penaltydraf_waive() {
 
 
                 for (i = 0; i < mydata.length; i++) {
+
                     var x = mydata[i];
 
                     var data = "<tr id='tr_payment_" + rowindex + "'>";
 
-                    // 1. Empty cell to match the first header column
+                    // 1. Empty column
                     data += "<td></td>";
 
-                    // 2. Checkbox + remove icon
+                    // 2. Remove icon + checkbox
                     data += "<td style='text-align:center; vertical-align: middle;'>"
                         + "<i class='fa fa-fw fa-remove' style='cursor:pointer; margin-right:8px; color:red;' title='Remove row' onclick='cmd_tr_payment_detail_remove_line(" + rowindex + ")'></i>"
                         + "<input type='checkbox' id='tr_payment_detail_checkbox_remove_line_" + rowindex + "' style='cursor:pointer;' onclick='checkbox_tr_payment_detail(" + rowindex + ")'>"
                         + "</td>";
 
-                    // 3. Row index
+                    // 3. Row number
                     data += "<td style='text-align:left; vertical-align: middle;'>" + rowindex + "</td>";
 
-                    // 4. Posting Date (date picker input)
-                    data += "<td style='text-align:Left; color:blue; vertical-align: middle;'>" +
-                        "<div class='form-group'>" +
-                        "<div class='input-group date'>" +
-                        "<div class='input-group-addon'><i class='fa fa-calendar'></i></div>" +
-                        "<input type='text' style='text-align:left; color:blue; vertical-align: middle;' class='form-control pull-right datetime form-control-insde' name='InstallmentDate_" + rowindex + "' id='InstallmentDate_" + rowindex + "' value='" + PenaltyDate + "' placeholder='Choose Date' />" +
-                        "</div></div></td>";
+                    //// 4. Posting Date
+                    //data += "<td style='text-align:left; color:blue; vertical-align: middle;'>"
+                    //    + "<div class='form-group'>"
+                    //    + "<div class='input-group date'>"
+                    //    + "<div class='input-group-addon'><i class='fa fa-calendar'></i></div>"
+                    //    + "<input type='text' style='text-align:left; color:blue;' class='form-control pull-right datetime form-control-insde'"
+                    //    + " name='InstallmentDate_" + rowindex + "'"
+                    //    + " id='InstallmentDate_" + rowindex + "'"
+                    //    + " value='" + PenaltyDate + "' placeholder='Choose Date' />"
+                    //    + "</div></div></td>";
 
-                    // 5–18. Regular data fields
-                    data += "<td style='text-align:left; vertical-align: middle;' id='td_paymentdate_" + rowindex + "'>" + x.PaymentDate + "</td>";
+                   
+
+                    // Customer
                     data += "<td style='text-align:left; vertical-align: middle;' id='td_cardcode_" + rowindex + "'>" + x.CardCode + "</td>";
                     data += "<td style='text-align:left; vertical-align: middle;' id='td_cardname_" + rowindex + "'>" + x.CardName + "</td>";
-                    data += "<td style='text-align:left; vertical-align: middle;' id='td_id_" + rowindex + "'>" + x.ID + "</td>";
+
+                    
+
+                    // Installment
+                    data += "<td style='text-align:left; vertical-align: middle;' id='td_installmentrow_" + rowindex + "'>" + x.InstallmentRow + "</td>";
                     data += "<td style='text-align:left; vertical-align: middle;' id='td_installmentid_" + rowindex + "'>" + x.InstallmentID + "</td>";
+
+                    // Amounts
                     data += "<td style='text-align:left; vertical-align: middle;' id='td_principle_" + rowindex + "'>" + convert2digit(x.PrincipleAmt) + "</td>";
-                    data += "<td style='text-align:left; vertical-align: middle;' id='td_interest_" + rowindex + "'>" + convert2digit(x.InterestAmt) + "</td>";
+                    data += "<td style='text-align:left; vertical-align: middle;' id='td_principle_" + rowindex + "'>" + convert2digit(x.interestAmt) + "</td>";
                     data += "<td style='text-align:left; vertical-align: middle;' id='td_chqamt_" + rowindex + "'>" + convert2digit(x.CHQAmt) + "</td>";
+
+                    // NEW: From Payment Date
+                    data += "<td style='text-align:left; vertical-align: middle;' id='td_frompaymentdate_" + rowindex + "'>" + x.FromPaymentDate + "</td>";
+
+                    // NEW: To Payment Date
+                    data += "<td style='text-align:left; vertical-align: middle;' id='td_topaymentdate_" + rowindex + "'>" + x.TOPaymentDate + "</td>";
+
+                    data += "<td style='text-align:left; vertical-align: middle;' id='td_overday_" + rowindex + "'>" + x.TotalOverDay + "</td>";
+
+                    // Penalty Percent
                     data += "<td style='text-align:left; vertical-align: middle;' id='td_penaltypercent_" + rowindex + "'>" + convert2digit(x.PenaltyPercent) + "</td>";
-                    data += "<td style='text-align:left; vertical-align: middle;' id='td_penaltyamt_" + rowindex + "'>" + convert2digit(x.PenaltyAmt) + "</td>";
+
+
+                    // NEW: Total Penalty
+                    data += "<td style='text-align:left; vertical-align: middle;' id='td_totalpenalty_" + rowindex + "'>" + convert2digit(x.TotalPenalty) + "</td>";
+
+                    // Waive
                     data += "<td style='text-align:left; vertical-align: middle;' id='td_waivename_" + rowindex + "'>" + x.WaiveName + "</td>";
                     data += "<td style='text-align:left; vertical-align: middle;' id='td_applypercent_" + rowindex + "'>" + convert2digit(x.ApplyPercent) + "</td>";
-                    data += "<td style='text-align:left; vertical-align: middle;' id='td_waiveamt_" + rowindex + "'>" + convert2digit(x.WaiveAmt) + "</td>";
-                    data += "<td style='text-align:left; vertical-align: middle;' id='td_netamt_" + rowindex + "'>" + convert2digit(x.NetAmt) + "</td>";
 
-                    // 19. Remark with textarea (already has ID)
-                    data += "<td style='text-align:left; vertical-align: middle; color:blue;' id='td_remark_" + rowindex + "'>" +
-                        "<textarea id='remark_" + rowindex + "' name='remark_" + rowindex + "' rows='1' class='form-control' style='color:blue;'>" + x.Remark + "</textarea>" +
-                        "</td>";
+                    // NEW: Total Waive Amount
+                    data += "<td style='text-align:left; vertical-align: middle;' id='td_totalwaiveamt_" + rowindex + "'>" + convert2digit(x.TotalWaiveAmt) + "</td>";
 
-                    /// Hidden Item
+                    // Net Amount
+                    data += "<td style='text-align:left; vertical-align: middle;' id='td_totalnetamt_" + rowindex + "'>" + convert2digit(x.TotalNetAmt) + "</td>";
 
-                    data += "<td style='text-align:left; vertical-align: middle; display:none;' id='td_itemcode_" + rowindex + "'>" + x.ItemCode + "</td>";
-                    data += "<td style='text-align:left; vertical-align: middle; display:none;' id='td_itemname_" + rowindex + "'>" + x.ItemName + "</td>";
-                    data += "<td style='text-align:left; vertical-align: middle; display:none;' id='td_serialno_" + rowindex + "'>" + x.SerialNo + "</td>";
+                    // Remark
+                    data += "<td style='text-align:left vertical-align: middle;; color:blue;'>"
+                        + "<textarea id='remark_" + rowindex + "' name='remark_" + rowindex + "' rows='1' class='form-control' style='color:blue;'>"
+                        + (x.Remark || "")
+                        + "</textarea></td>";
 
-                    // Close the row
+                    // IDs (hidden for processing)
+                    data += "<td style='display:none;' id='td_ids_" + rowindex + "'>" + x.IDs + "</td>";
+                    // Hidden Item Info
+                    data += "<td style='display:none;' id='td_itemcode_" + rowindex + "'>" + x.ItemCode + "</td>";
+                    data += "<td style='display:none;' id='td_itemname_" + rowindex + "'>" + x.ItemName + "</td>";
+                    data += "<td style='display:none;' id='td_serialno_" + rowindex + "'>" + x.SerialNo + "</td>";
+
                     data += "</tr>";
 
                     $("#table_penalty_list >tbody").append(data);
@@ -4691,32 +4727,34 @@ function cmd_save_penaltyDraf() {
             PenaltyDate: $("#txt_penalty_date").val(),
             DocNumRef: $("#txt_doc_num").val(),
             Remark: $("#txt_remark").val(),
-            WaiveOption: $("#cbo_waive_option").val()
+            WaiveOption: $("#txt_waive_option").val()
         };
 
         $("#table_penalty_list >tbody >tr").each(function (index) {
             index++;
-            var penaltydate = $('#InstallmentDate_' + index).val().trim().split("-");
-            var documentdate = $('#td_paymentdate_' + index).text().trim().split("-");
+            var fromAccDate = $('#td_frompaymentdate_' + index).val().trim().split("-");
+            var toAccDate = $('#td_topaymentdate_' + index).text().trim().split("-");
             var detail = {
                 VisOrder: (index - 1),
-                PenaltyDate: penaltydate[2] + "/" + penaltydate[1] + "/" + penaltydate[0],
-                DocumentDate: documentdate[2] + "/" + documentdate[1] + "/" + documentdate[0],
+                FromAccDate: fromAccDate[2] + "/" + fromAccDate[1] + "/" + fromAccDate[0],
+                ToAccDate: toAccDate[2] + "/" + toAccDate[1] + "/" + toAccDate[0],
+                OverDay: $("#td_overday_" + index).text().trim(),
                 PenaltyRef: $("#txt_doc_num").val(),
                 BPCode: $("#td_cardcode_" + index).text().trim(),
                 BPName: $("#td_cardname_" + index).text().trim(),
                 ItemCode: $("#td_itemcode_" + index).text().trim(),
                 SerialNo: $("#td_serialno_" + index).text().trim(),
                 InstallmentID: $("#td_installmentid_" + index).text().trim(),
-                AccraulID: $("#td_id_" + index).text().trim(),
+                InstallmentRow: $("#td_installmentrow_" + index).text().trim(),
+                AccraulID: $("#td_ids_" + index).text().trim(),
                 PrincipleAmt: $("#td_principle_" + index).text().trim(),
                 InterestAmt: $("#td_interest_" + index).text().trim(),
                 CHQAmt: $("#td_chqamt_" + index).text().trim(),
                 PenaltyPercent: returnstringvalue($("#td_penaltypercent_" + index).text().trim()),
-                PenaltyAmt: returnstringvalue($("#td_penaltyamt_" + index).text().trim()),
+                PenaltyAmt: returnstringvalue($("#td_totalpenalty_" + index).text().trim()),
                 ApplyPercent: returnstringvalue($("#td_applypercent_" + index).text().trim()),
-                WaiveAmt: returnstringvalue($("#td_waiveamt_" + index).text().trim()),
-                NetAmt: returnstringvalue($("#td_netamt_" + index).text().trim()),
+                WaiveAmt: returnstringvalue($("#td_totalwaiveamt_" + index).text().trim()),
+                NetAmt: returnstringvalue($("#td_totalnetamt_" + index).text().trim()),
                 Remark: $("#td_remark_" + index).text(),
                 Status: "O"
                

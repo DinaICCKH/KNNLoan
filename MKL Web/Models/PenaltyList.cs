@@ -36,22 +36,21 @@ namespace MKL_Web.Models
         public string Comment { get; set; }
         public string SerialNo { get; set; }
 
-        public int ID { get; set; }
+        public int InstallmentRow { get; set; }
         public int InstallmentID { get; set; }
 
-        public string DueDate { get; set; }           // Formatted as "dd-MMM-yyyy"
-        public string PaymentDate { get; set; }       // Formatted as "dd-MMM-yyyy"
+        public string FromPaymentDate { get; set; }   // dd-MMM-yyyy
+        public string TOPaymentDate { get; set; }     // dd-MMM-yyyy
 
         public decimal CHQAmt { get; set; }
         public decimal PrincipleAmt { get; set; }
-        public decimal InterestAmt { get; set; }
-        public decimal OutStandingAmt { get; set; }
         public decimal PenaltyPercent { get; set; }
-        public decimal PenaltyAmt { get; set; }
 
-        public int OverDay { get; set; }
+        public int TotalOverDay { get; set; }
+        public decimal TotalPenalty { get; set; }
+        public decimal TotalWaiveAmt { get; set; }
+        public decimal TotalNetAmt { get; set; }
 
-        public string Remark { get; set; }
         public string OcrCode { get; set; }
         public string OcrCode2 { get; set; }
         public string OcrCode3 { get; set; }
@@ -60,14 +59,14 @@ namespace MKL_Web.Models
 
         public string Status { get; set; }
         public string ApprovalTemplate { get; set; }
-
-        public string ApprovalDate { get; set; }       // Formatted as "dd-MMM-yyyy"
+        public string ApprovalDate { get; set; }      // dd-MMM-yyyy
         public string LastApproval { get; set; }
 
         public string WaiveName { get; set; }
         public decimal ApplyPercent { get; set; }
-        public decimal WaiveAmt { get; set; }
-        public decimal NetAmt { get; set; }
+
+        public string IDs { get; set; }               // 29224;29225;29226...
+        public string Remark { get; set; }
     }
 
 

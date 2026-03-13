@@ -147,15 +147,9 @@ namespace MKL_Web.Models
     partial void InsertAppTemplate(AppTemplate instance);
     partial void UpdateAppTemplate(AppTemplate instance);
     partial void DeleteAppTemplate(AppTemplate instance);
-    partial void InsertPenaltyWizard(PenaltyWizard instance);
-    partial void UpdatePenaltyWizard(PenaltyWizard instance);
-    partial void DeletePenaltyWizard(PenaltyWizard instance);
     partial void InsertPenaltyDraft(PenaltyDraft instance);
     partial void UpdatePenaltyDraft(PenaltyDraft instance);
     partial void DeletePenaltyDraft(PenaltyDraft instance);
-    partial void InsertPenaltyWizardH(PenaltyWizardH instance);
-    partial void UpdatePenaltyWizardH(PenaltyWizardH instance);
-    partial void DeletePenaltyWizardH(PenaltyWizardH instance);
     partial void InsertSO(SO instance);
     partial void UpdateSO(SO instance);
     partial void DeleteSO(SO instance);
@@ -192,6 +186,12 @@ namespace MKL_Web.Models
     partial void InsertInterestWizard1(InterestWizard1 instance);
     partial void UpdateInterestWizard1(InterestWizard1 instance);
     partial void DeleteInterestWizard1(InterestWizard1 instance);
+    partial void InsertPenaltyWizardH(PenaltyWizardH instance);
+    partial void UpdatePenaltyWizardH(PenaltyWizardH instance);
+    partial void DeletePenaltyWizardH(PenaltyWizardH instance);
+    partial void InsertPenaltyWizard(PenaltyWizard instance);
+    partial void UpdatePenaltyWizard(PenaltyWizard instance);
+    partial void DeletePenaltyWizard(PenaltyWizard instance);
     #endregion
 		
 		public MKLDataContext(string connection) : 
@@ -818,27 +818,11 @@ namespace MKL_Web.Models
 			}
 		}
 		
-		public System.Data.Linq.Table<PenaltyWizard> PenaltyWizards
-		{
-			get
-			{
-				return this.GetTable<PenaltyWizard>();
-			}
-		}
-		
 		public System.Data.Linq.Table<PenaltyDraft> PenaltyDrafts
 		{
 			get
 			{
 				return this.GetTable<PenaltyDraft>();
-			}
-		}
-		
-		public System.Data.Linq.Table<PenaltyWizardH> PenaltyWizardHs
-		{
-			get
-			{
-				return this.GetTable<PenaltyWizardH>();
 			}
 		}
 		
@@ -967,6 +951,22 @@ namespace MKL_Web.Models
 			get
 			{
 				return this.GetTable<InterestWizard1>();
+			}
+		}
+		
+		public System.Data.Linq.Table<PenaltyWizardH> PenaltyWizardHs
+		{
+			get
+			{
+				return this.GetTable<PenaltyWizardH>();
+			}
+		}
+		
+		public System.Data.Linq.Table<PenaltyWizard> PenaltyWizards
+		{
+			get
+			{
+				return this.GetTable<PenaltyWizard>();
 			}
 		}
 		
@@ -23911,712 +23911,6 @@ namespace MKL_Web.Models
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.PenaltyWizard")]
-	public partial class PenaltyWizard : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _DocEntry;
-		
-		private int _VisOrder;
-		
-		private System.Nullable<System.DateTime> _PenaltyDate;
-		
-		private System.Nullable<System.DateTime> _DocumentDate;
-		
-		private string _PenaltyRef;
-		
-		private string _BPCode;
-		
-		private string _BPName;
-		
-		private string _ItemCode;
-		
-		private string _SerialNo;
-		
-		private int _InstallmentID;
-		
-		private System.Nullable<int> _AccraulID;
-		
-		private System.Nullable<decimal> _PrincipleAmt;
-		
-		private System.Nullable<decimal> _InterestAmt;
-		
-		private System.Nullable<decimal> _CHQAmt;
-		
-		private System.Nullable<decimal> _PenaltyPercent;
-		
-		private System.Nullable<decimal> _PenaltyAmt;
-		
-		private System.Nullable<decimal> _ApplyPercent;
-		
-		private System.Nullable<decimal> _WaiveAmt;
-		
-		private System.Nullable<decimal> _NetAmt;
-		
-		private string _Remark;
-		
-		private string _Status;
-		
-		private int _ARNo;
-		
-		private string _LastError;
-		
-		private EntityRef<PenaltyWizard> _PenaltyWizard2;
-		
-		private EntityRef<PenaltyWizard> _PenaltyWizard1;
-		
-		private EntityRef<PenaltyWizardH> _PenaltyWizardH;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnDocEntryChanging(int value);
-    partial void OnDocEntryChanged();
-    partial void OnVisOrderChanging(int value);
-    partial void OnVisOrderChanged();
-    partial void OnPenaltyDateChanging(System.Nullable<System.DateTime> value);
-    partial void OnPenaltyDateChanged();
-    partial void OnDocumentDateChanging(System.Nullable<System.DateTime> value);
-    partial void OnDocumentDateChanged();
-    partial void OnPenaltyRefChanging(string value);
-    partial void OnPenaltyRefChanged();
-    partial void OnBPCodeChanging(string value);
-    partial void OnBPCodeChanged();
-    partial void OnBPNameChanging(string value);
-    partial void OnBPNameChanged();
-    partial void OnItemCodeChanging(string value);
-    partial void OnItemCodeChanged();
-    partial void OnSerialNoChanging(string value);
-    partial void OnSerialNoChanged();
-    partial void OnInstallmentIDChanging(int value);
-    partial void OnInstallmentIDChanged();
-    partial void OnAccraulIDChanging(System.Nullable<int> value);
-    partial void OnAccraulIDChanged();
-    partial void OnPrincipleAmtChanging(System.Nullable<decimal> value);
-    partial void OnPrincipleAmtChanged();
-    partial void OnInterestAmtChanging(System.Nullable<decimal> value);
-    partial void OnInterestAmtChanged();
-    partial void OnCHQAmtChanging(System.Nullable<decimal> value);
-    partial void OnCHQAmtChanged();
-    partial void OnPenaltyPercentChanging(System.Nullable<decimal> value);
-    partial void OnPenaltyPercentChanged();
-    partial void OnPenaltyAmtChanging(System.Nullable<decimal> value);
-    partial void OnPenaltyAmtChanged();
-    partial void OnApplyPercentChanging(System.Nullable<decimal> value);
-    partial void OnApplyPercentChanged();
-    partial void OnWaiveAmtChanging(System.Nullable<decimal> value);
-    partial void OnWaiveAmtChanged();
-    partial void OnNetAmtChanging(System.Nullable<decimal> value);
-    partial void OnNetAmtChanged();
-    partial void OnRemarkChanging(string value);
-    partial void OnRemarkChanged();
-    partial void OnStatusChanging(string value);
-    partial void OnStatusChanged();
-    partial void OnARNoChanging(int value);
-    partial void OnARNoChanged();
-    partial void OnLastErrorChanging(string value);
-    partial void OnLastErrorChanged();
-    #endregion
-		
-		public PenaltyWizard()
-		{
-			this._PenaltyWizard2 = default(EntityRef<PenaltyWizard>);
-			this._PenaltyWizard1 = default(EntityRef<PenaltyWizard>);
-			this._PenaltyWizardH = default(EntityRef<PenaltyWizardH>);
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DocEntry", DbType="Int NOT NULL", IsPrimaryKey=true)]
-		public int DocEntry
-		{
-			get
-			{
-				return this._DocEntry;
-			}
-			set
-			{
-				if ((this._DocEntry != value))
-				{
-					if ((this._PenaltyWizard1.HasLoadedOrAssignedValue || this._PenaltyWizardH.HasLoadedOrAssignedValue))
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnDocEntryChanging(value);
-					this.SendPropertyChanging();
-					this._DocEntry = value;
-					this.SendPropertyChanged("DocEntry");
-					this.OnDocEntryChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_VisOrder", DbType="Int NOT NULL", IsPrimaryKey=true)]
-		public int VisOrder
-		{
-			get
-			{
-				return this._VisOrder;
-			}
-			set
-			{
-				if ((this._VisOrder != value))
-				{
-					if (this._PenaltyWizard1.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnVisOrderChanging(value);
-					this.SendPropertyChanging();
-					this._VisOrder = value;
-					this.SendPropertyChanged("VisOrder");
-					this.OnVisOrderChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PenaltyDate", DbType="DateTime")]
-		public System.Nullable<System.DateTime> PenaltyDate
-		{
-			get
-			{
-				return this._PenaltyDate;
-			}
-			set
-			{
-				if ((this._PenaltyDate != value))
-				{
-					this.OnPenaltyDateChanging(value);
-					this.SendPropertyChanging();
-					this._PenaltyDate = value;
-					this.SendPropertyChanged("PenaltyDate");
-					this.OnPenaltyDateChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DocumentDate", DbType="DateTime")]
-		public System.Nullable<System.DateTime> DocumentDate
-		{
-			get
-			{
-				return this._DocumentDate;
-			}
-			set
-			{
-				if ((this._DocumentDate != value))
-				{
-					this.OnDocumentDateChanging(value);
-					this.SendPropertyChanging();
-					this._DocumentDate = value;
-					this.SendPropertyChanged("DocumentDate");
-					this.OnDocumentDateChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PenaltyRef", DbType="NVarChar(250)")]
-		public string PenaltyRef
-		{
-			get
-			{
-				return this._PenaltyRef;
-			}
-			set
-			{
-				if ((this._PenaltyRef != value))
-				{
-					this.OnPenaltyRefChanging(value);
-					this.SendPropertyChanging();
-					this._PenaltyRef = value;
-					this.SendPropertyChanged("PenaltyRef");
-					this.OnPenaltyRefChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_BPCode", DbType="NVarChar(15) NOT NULL", CanBeNull=false)]
-		public string BPCode
-		{
-			get
-			{
-				return this._BPCode;
-			}
-			set
-			{
-				if ((this._BPCode != value))
-				{
-					this.OnBPCodeChanging(value);
-					this.SendPropertyChanging();
-					this._BPCode = value;
-					this.SendPropertyChanged("BPCode");
-					this.OnBPCodeChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_BPName", DbType="NVarChar(100)")]
-		public string BPName
-		{
-			get
-			{
-				return this._BPName;
-			}
-			set
-			{
-				if ((this._BPName != value))
-				{
-					this.OnBPNameChanging(value);
-					this.SendPropertyChanging();
-					this._BPName = value;
-					this.SendPropertyChanged("BPName");
-					this.OnBPNameChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ItemCode", DbType="NVarChar(100)")]
-		public string ItemCode
-		{
-			get
-			{
-				return this._ItemCode;
-			}
-			set
-			{
-				if ((this._ItemCode != value))
-				{
-					this.OnItemCodeChanging(value);
-					this.SendPropertyChanging();
-					this._ItemCode = value;
-					this.SendPropertyChanged("ItemCode");
-					this.OnItemCodeChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SerialNo", DbType="NVarChar(100) NOT NULL", CanBeNull=false)]
-		public string SerialNo
-		{
-			get
-			{
-				return this._SerialNo;
-			}
-			set
-			{
-				if ((this._SerialNo != value))
-				{
-					this.OnSerialNoChanging(value);
-					this.SendPropertyChanging();
-					this._SerialNo = value;
-					this.SendPropertyChanged("SerialNo");
-					this.OnSerialNoChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_InstallmentID", DbType="Int NOT NULL")]
-		public int InstallmentID
-		{
-			get
-			{
-				return this._InstallmentID;
-			}
-			set
-			{
-				if ((this._InstallmentID != value))
-				{
-					this.OnInstallmentIDChanging(value);
-					this.SendPropertyChanging();
-					this._InstallmentID = value;
-					this.SendPropertyChanged("InstallmentID");
-					this.OnInstallmentIDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AccraulID", DbType="Int")]
-		public System.Nullable<int> AccraulID
-		{
-			get
-			{
-				return this._AccraulID;
-			}
-			set
-			{
-				if ((this._AccraulID != value))
-				{
-					this.OnAccraulIDChanging(value);
-					this.SendPropertyChanging();
-					this._AccraulID = value;
-					this.SendPropertyChanged("AccraulID");
-					this.OnAccraulIDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PrincipleAmt", DbType="Decimal(19,6)")]
-		public System.Nullable<decimal> PrincipleAmt
-		{
-			get
-			{
-				return this._PrincipleAmt;
-			}
-			set
-			{
-				if ((this._PrincipleAmt != value))
-				{
-					this.OnPrincipleAmtChanging(value);
-					this.SendPropertyChanging();
-					this._PrincipleAmt = value;
-					this.SendPropertyChanged("PrincipleAmt");
-					this.OnPrincipleAmtChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_InterestAmt", DbType="Decimal(19,6)")]
-		public System.Nullable<decimal> InterestAmt
-		{
-			get
-			{
-				return this._InterestAmt;
-			}
-			set
-			{
-				if ((this._InterestAmt != value))
-				{
-					this.OnInterestAmtChanging(value);
-					this.SendPropertyChanging();
-					this._InterestAmt = value;
-					this.SendPropertyChanged("InterestAmt");
-					this.OnInterestAmtChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CHQAmt", DbType="Decimal(19,6)")]
-		public System.Nullable<decimal> CHQAmt
-		{
-			get
-			{
-				return this._CHQAmt;
-			}
-			set
-			{
-				if ((this._CHQAmt != value))
-				{
-					this.OnCHQAmtChanging(value);
-					this.SendPropertyChanging();
-					this._CHQAmt = value;
-					this.SendPropertyChanged("CHQAmt");
-					this.OnCHQAmtChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PenaltyPercent", DbType="Decimal(19,6)")]
-		public System.Nullable<decimal> PenaltyPercent
-		{
-			get
-			{
-				return this._PenaltyPercent;
-			}
-			set
-			{
-				if ((this._PenaltyPercent != value))
-				{
-					this.OnPenaltyPercentChanging(value);
-					this.SendPropertyChanging();
-					this._PenaltyPercent = value;
-					this.SendPropertyChanged("PenaltyPercent");
-					this.OnPenaltyPercentChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PenaltyAmt", DbType="Decimal(19,6)")]
-		public System.Nullable<decimal> PenaltyAmt
-		{
-			get
-			{
-				return this._PenaltyAmt;
-			}
-			set
-			{
-				if ((this._PenaltyAmt != value))
-				{
-					this.OnPenaltyAmtChanging(value);
-					this.SendPropertyChanging();
-					this._PenaltyAmt = value;
-					this.SendPropertyChanged("PenaltyAmt");
-					this.OnPenaltyAmtChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ApplyPercent", DbType="Decimal(19,6)")]
-		public System.Nullable<decimal> ApplyPercent
-		{
-			get
-			{
-				return this._ApplyPercent;
-			}
-			set
-			{
-				if ((this._ApplyPercent != value))
-				{
-					this.OnApplyPercentChanging(value);
-					this.SendPropertyChanging();
-					this._ApplyPercent = value;
-					this.SendPropertyChanged("ApplyPercent");
-					this.OnApplyPercentChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_WaiveAmt", DbType="Decimal(19,6)")]
-		public System.Nullable<decimal> WaiveAmt
-		{
-			get
-			{
-				return this._WaiveAmt;
-			}
-			set
-			{
-				if ((this._WaiveAmt != value))
-				{
-					this.OnWaiveAmtChanging(value);
-					this.SendPropertyChanging();
-					this._WaiveAmt = value;
-					this.SendPropertyChanged("WaiveAmt");
-					this.OnWaiveAmtChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_NetAmt", DbType="Decimal(19,6)")]
-		public System.Nullable<decimal> NetAmt
-		{
-			get
-			{
-				return this._NetAmt;
-			}
-			set
-			{
-				if ((this._NetAmt != value))
-				{
-					this.OnNetAmtChanging(value);
-					this.SendPropertyChanging();
-					this._NetAmt = value;
-					this.SendPropertyChanged("NetAmt");
-					this.OnNetAmtChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Remark", DbType="NVarChar(500)")]
-		public string Remark
-		{
-			get
-			{
-				return this._Remark;
-			}
-			set
-			{
-				if ((this._Remark != value))
-				{
-					this.OnRemarkChanging(value);
-					this.SendPropertyChanging();
-					this._Remark = value;
-					this.SendPropertyChanged("Remark");
-					this.OnRemarkChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Status", DbType="NVarChar(50)")]
-		public string Status
-		{
-			get
-			{
-				return this._Status;
-			}
-			set
-			{
-				if ((this._Status != value))
-				{
-					this.OnStatusChanging(value);
-					this.SendPropertyChanging();
-					this._Status = value;
-					this.SendPropertyChanged("Status");
-					this.OnStatusChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ARNo", DbType="Int NOT NULL")]
-		public int ARNo
-		{
-			get
-			{
-				return this._ARNo;
-			}
-			set
-			{
-				if ((this._ARNo != value))
-				{
-					this.OnARNoChanging(value);
-					this.SendPropertyChanging();
-					this._ARNo = value;
-					this.SendPropertyChanged("ARNo");
-					this.OnARNoChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_LastError", DbType="NVarChar(500)")]
-		public string LastError
-		{
-			get
-			{
-				return this._LastError;
-			}
-			set
-			{
-				if ((this._LastError != value))
-				{
-					this.OnLastErrorChanging(value);
-					this.SendPropertyChanging();
-					this._LastError = value;
-					this.SendPropertyChanged("LastError");
-					this.OnLastErrorChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="PenaltyWizard_PenaltyWizard", Storage="_PenaltyWizard2", ThisKey="DocEntry,VisOrder", OtherKey="DocEntry,VisOrder", IsUnique=true, IsForeignKey=false)]
-		public PenaltyWizard PenaltyWizard2
-		{
-			get
-			{
-				return this._PenaltyWizard2.Entity;
-			}
-			set
-			{
-				PenaltyWizard previousValue = this._PenaltyWizard2.Entity;
-				if (((previousValue != value) 
-							|| (this._PenaltyWizard2.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._PenaltyWizard2.Entity = null;
-						previousValue.PenaltyWizard1 = null;
-					}
-					this._PenaltyWizard2.Entity = value;
-					if ((value != null))
-					{
-						value.PenaltyWizard1 = this;
-					}
-					this.SendPropertyChanged("PenaltyWizard2");
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="PenaltyWizard_PenaltyWizard", Storage="_PenaltyWizard1", ThisKey="DocEntry,VisOrder", OtherKey="DocEntry,VisOrder", IsForeignKey=true)]
-		public PenaltyWizard PenaltyWizard1
-		{
-			get
-			{
-				return this._PenaltyWizard1.Entity;
-			}
-			set
-			{
-				PenaltyWizard previousValue = this._PenaltyWizard1.Entity;
-				if (((previousValue != value) 
-							|| (this._PenaltyWizard1.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._PenaltyWizard1.Entity = null;
-						previousValue.PenaltyWizard2 = null;
-					}
-					this._PenaltyWizard1.Entity = value;
-					if ((value != null))
-					{
-						value.PenaltyWizard2 = this;
-						this._DocEntry = value.DocEntry;
-						this._VisOrder = value.VisOrder;
-					}
-					else
-					{
-						this._DocEntry = default(int);
-						this._VisOrder = default(int);
-					}
-					this.SendPropertyChanged("PenaltyWizard1");
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="PenaltyWizardH_PenaltyWizard", Storage="_PenaltyWizardH", ThisKey="DocEntry", OtherKey="DocEntry", IsForeignKey=true)]
-		public PenaltyWizardH PenaltyWizardH
-		{
-			get
-			{
-				return this._PenaltyWizardH.Entity;
-			}
-			set
-			{
-				PenaltyWizardH previousValue = this._PenaltyWizardH.Entity;
-				if (((previousValue != value) 
-							|| (this._PenaltyWizardH.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._PenaltyWizardH.Entity = null;
-						previousValue.PenaltyWizards.Remove(this);
-					}
-					this._PenaltyWizardH.Entity = value;
-					if ((value != null))
-					{
-						value.PenaltyWizards.Add(this);
-						this._DocEntry = value.DocEntry;
-					}
-					else
-					{
-						this._DocEntry = default(int);
-					}
-					this.SendPropertyChanged("PenaltyWizardH");
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-	}
-	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.PenaltyDraft")]
 	public partial class PenaltyDraft : INotifyPropertyChanging, INotifyPropertyChanged
 	{
@@ -25252,384 +24546,6 @@ namespace MKL_Web.Models
 			{
 				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.PenaltyWizardH")]
-	public partial class PenaltyWizardH : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _DocEntry;
-		
-		private System.Nullable<System.DateTime> _PenaltyDate;
-		
-		private string _DocNumRef;
-		
-		private string _Remark;
-		
-		private string _WaiveOption;
-		
-		private string _ApprovalStage;
-		
-		private string _NextApprover;
-		
-		private System.Nullable<System.DateTime> _CreateDate;
-		
-		private System.Nullable<System.DateTime> _UpdateDate;
-		
-		private string _CreateBy;
-		
-		private string _UpdateBy;
-		
-		private string _Status;
-		
-		private string _ApprovalTemplate;
-		
-		private EntitySet<PenaltyWizard> _PenaltyWizards;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnDocEntryChanging(int value);
-    partial void OnDocEntryChanged();
-    partial void OnPenaltyDateChanging(System.Nullable<System.DateTime> value);
-    partial void OnPenaltyDateChanged();
-    partial void OnDocNumRefChanging(string value);
-    partial void OnDocNumRefChanged();
-    partial void OnRemarkChanging(string value);
-    partial void OnRemarkChanged();
-    partial void OnWaiveOptionChanging(string value);
-    partial void OnWaiveOptionChanged();
-    partial void OnApprovalStageChanging(string value);
-    partial void OnApprovalStageChanged();
-    partial void OnNextApproverChanging(string value);
-    partial void OnNextApproverChanged();
-    partial void OnCreateDateChanging(System.Nullable<System.DateTime> value);
-    partial void OnCreateDateChanged();
-    partial void OnUpdateDateChanging(System.Nullable<System.DateTime> value);
-    partial void OnUpdateDateChanged();
-    partial void OnCreateByChanging(string value);
-    partial void OnCreateByChanged();
-    partial void OnUpdateByChanging(string value);
-    partial void OnUpdateByChanged();
-    partial void OnStatusChanging(string value);
-    partial void OnStatusChanged();
-    partial void OnApprovalTemplateChanging(string value);
-    partial void OnApprovalTemplateChanged();
-    #endregion
-		
-		public PenaltyWizardH()
-		{
-			this._PenaltyWizards = new EntitySet<PenaltyWizard>(new Action<PenaltyWizard>(this.attach_PenaltyWizards), new Action<PenaltyWizard>(this.detach_PenaltyWizards));
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DocEntry", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public int DocEntry
-		{
-			get
-			{
-				return this._DocEntry;
-			}
-			set
-			{
-				if ((this._DocEntry != value))
-				{
-					this.OnDocEntryChanging(value);
-					this.SendPropertyChanging();
-					this._DocEntry = value;
-					this.SendPropertyChanged("DocEntry");
-					this.OnDocEntryChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PenaltyDate", DbType="DateTime")]
-		public System.Nullable<System.DateTime> PenaltyDate
-		{
-			get
-			{
-				return this._PenaltyDate;
-			}
-			set
-			{
-				if ((this._PenaltyDate != value))
-				{
-					this.OnPenaltyDateChanging(value);
-					this.SendPropertyChanging();
-					this._PenaltyDate = value;
-					this.SendPropertyChanged("PenaltyDate");
-					this.OnPenaltyDateChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DocNumRef", DbType="NVarChar(250)")]
-		public string DocNumRef
-		{
-			get
-			{
-				return this._DocNumRef;
-			}
-			set
-			{
-				if ((this._DocNumRef != value))
-				{
-					this.OnDocNumRefChanging(value);
-					this.SendPropertyChanging();
-					this._DocNumRef = value;
-					this.SendPropertyChanged("DocNumRef");
-					this.OnDocNumRefChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Remark", DbType="NVarChar(500)")]
-		public string Remark
-		{
-			get
-			{
-				return this._Remark;
-			}
-			set
-			{
-				if ((this._Remark != value))
-				{
-					this.OnRemarkChanging(value);
-					this.SendPropertyChanging();
-					this._Remark = value;
-					this.SendPropertyChanged("Remark");
-					this.OnRemarkChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_WaiveOption", DbType="NVarChar(10)")]
-		public string WaiveOption
-		{
-			get
-			{
-				return this._WaiveOption;
-			}
-			set
-			{
-				if ((this._WaiveOption != value))
-				{
-					this.OnWaiveOptionChanging(value);
-					this.SendPropertyChanging();
-					this._WaiveOption = value;
-					this.SendPropertyChanged("WaiveOption");
-					this.OnWaiveOptionChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ApprovalStage", DbType="NVarChar(250)")]
-		public string ApprovalStage
-		{
-			get
-			{
-				return this._ApprovalStage;
-			}
-			set
-			{
-				if ((this._ApprovalStage != value))
-				{
-					this.OnApprovalStageChanging(value);
-					this.SendPropertyChanging();
-					this._ApprovalStage = value;
-					this.SendPropertyChanged("ApprovalStage");
-					this.OnApprovalStageChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_NextApprover", DbType="NVarChar(250)")]
-		public string NextApprover
-		{
-			get
-			{
-				return this._NextApprover;
-			}
-			set
-			{
-				if ((this._NextApprover != value))
-				{
-					this.OnNextApproverChanging(value);
-					this.SendPropertyChanging();
-					this._NextApprover = value;
-					this.SendPropertyChanged("NextApprover");
-					this.OnNextApproverChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CreateDate", DbType="DateTime")]
-		public System.Nullable<System.DateTime> CreateDate
-		{
-			get
-			{
-				return this._CreateDate;
-			}
-			set
-			{
-				if ((this._CreateDate != value))
-				{
-					this.OnCreateDateChanging(value);
-					this.SendPropertyChanging();
-					this._CreateDate = value;
-					this.SendPropertyChanged("CreateDate");
-					this.OnCreateDateChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UpdateDate", DbType="DateTime")]
-		public System.Nullable<System.DateTime> UpdateDate
-		{
-			get
-			{
-				return this._UpdateDate;
-			}
-			set
-			{
-				if ((this._UpdateDate != value))
-				{
-					this.OnUpdateDateChanging(value);
-					this.SendPropertyChanging();
-					this._UpdateDate = value;
-					this.SendPropertyChanged("UpdateDate");
-					this.OnUpdateDateChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CreateBy", DbType="NVarChar(250)")]
-		public string CreateBy
-		{
-			get
-			{
-				return this._CreateBy;
-			}
-			set
-			{
-				if ((this._CreateBy != value))
-				{
-					this.OnCreateByChanging(value);
-					this.SendPropertyChanging();
-					this._CreateBy = value;
-					this.SendPropertyChanged("CreateBy");
-					this.OnCreateByChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UpdateBy", DbType="NVarChar(250)")]
-		public string UpdateBy
-		{
-			get
-			{
-				return this._UpdateBy;
-			}
-			set
-			{
-				if ((this._UpdateBy != value))
-				{
-					this.OnUpdateByChanging(value);
-					this.SendPropertyChanging();
-					this._UpdateBy = value;
-					this.SendPropertyChanged("UpdateBy");
-					this.OnUpdateByChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Status", DbType="NVarChar(50)")]
-		public string Status
-		{
-			get
-			{
-				return this._Status;
-			}
-			set
-			{
-				if ((this._Status != value))
-				{
-					this.OnStatusChanging(value);
-					this.SendPropertyChanging();
-					this._Status = value;
-					this.SendPropertyChanged("Status");
-					this.OnStatusChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ApprovalTemplate", DbType="NVarChar(50)")]
-		public string ApprovalTemplate
-		{
-			get
-			{
-				return this._ApprovalTemplate;
-			}
-			set
-			{
-				if ((this._ApprovalTemplate != value))
-				{
-					this.OnApprovalTemplateChanging(value);
-					this.SendPropertyChanging();
-					this._ApprovalTemplate = value;
-					this.SendPropertyChanged("ApprovalTemplate");
-					this.OnApprovalTemplateChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="PenaltyWizardH_PenaltyWizard", Storage="_PenaltyWizards", ThisKey="DocEntry", OtherKey="DocEntry")]
-		public EntitySet<PenaltyWizard> PenaltyWizards
-		{
-			get
-			{
-				return this._PenaltyWizards;
-			}
-			set
-			{
-				this._PenaltyWizards.Assign(value);
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-		
-		private void attach_PenaltyWizards(PenaltyWizard entity)
-		{
-			this.SendPropertyChanging();
-			entity.PenaltyWizardH = this;
-		}
-		
-		private void detach_PenaltyWizards(PenaltyWizard entity)
-		{
-			this.SendPropertyChanging();
-			entity.PenaltyWizardH = null;
 		}
 	}
 	
@@ -39299,6 +38215,1138 @@ namespace MKL_Web.Models
 						this._ID = default(int);
 					}
 					this.SendPropertyChanged("InterestWizard");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.PenaltyWizardH")]
+	public partial class PenaltyWizardH : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _DocEntry;
+		
+		private System.Nullable<System.DateTime> _PenaltyDate;
+		
+		private string _DocNumRef;
+		
+		private string _Remark;
+		
+		private string _WaiveOption;
+		
+		private string _ApprovalStage;
+		
+		private string _NextApprover;
+		
+		private System.Nullable<System.DateTime> _CreateDate;
+		
+		private System.Nullable<System.DateTime> _UpdateDate;
+		
+		private string _CreateBy;
+		
+		private string _UpdateBy;
+		
+		private string _Status;
+		
+		private string _ApprovalTemplate;
+		
+		private EntitySet<PenaltyWizard> _PenaltyWizards;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnDocEntryChanging(int value);
+    partial void OnDocEntryChanged();
+    partial void OnPenaltyDateChanging(System.Nullable<System.DateTime> value);
+    partial void OnPenaltyDateChanged();
+    partial void OnDocNumRefChanging(string value);
+    partial void OnDocNumRefChanged();
+    partial void OnRemarkChanging(string value);
+    partial void OnRemarkChanged();
+    partial void OnWaiveOptionChanging(string value);
+    partial void OnWaiveOptionChanged();
+    partial void OnApprovalStageChanging(string value);
+    partial void OnApprovalStageChanged();
+    partial void OnNextApproverChanging(string value);
+    partial void OnNextApproverChanged();
+    partial void OnCreateDateChanging(System.Nullable<System.DateTime> value);
+    partial void OnCreateDateChanged();
+    partial void OnUpdateDateChanging(System.Nullable<System.DateTime> value);
+    partial void OnUpdateDateChanged();
+    partial void OnCreateByChanging(string value);
+    partial void OnCreateByChanged();
+    partial void OnUpdateByChanging(string value);
+    partial void OnUpdateByChanged();
+    partial void OnStatusChanging(string value);
+    partial void OnStatusChanged();
+    partial void OnApprovalTemplateChanging(string value);
+    partial void OnApprovalTemplateChanged();
+    #endregion
+		
+		public PenaltyWizardH()
+		{
+			this._PenaltyWizards = new EntitySet<PenaltyWizard>(new Action<PenaltyWizard>(this.attach_PenaltyWizards), new Action<PenaltyWizard>(this.detach_PenaltyWizards));
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DocEntry", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int DocEntry
+		{
+			get
+			{
+				return this._DocEntry;
+			}
+			set
+			{
+				if ((this._DocEntry != value))
+				{
+					this.OnDocEntryChanging(value);
+					this.SendPropertyChanging();
+					this._DocEntry = value;
+					this.SendPropertyChanged("DocEntry");
+					this.OnDocEntryChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PenaltyDate", DbType="DateTime")]
+		public System.Nullable<System.DateTime> PenaltyDate
+		{
+			get
+			{
+				return this._PenaltyDate;
+			}
+			set
+			{
+				if ((this._PenaltyDate != value))
+				{
+					this.OnPenaltyDateChanging(value);
+					this.SendPropertyChanging();
+					this._PenaltyDate = value;
+					this.SendPropertyChanged("PenaltyDate");
+					this.OnPenaltyDateChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DocNumRef", DbType="NVarChar(250)")]
+		public string DocNumRef
+		{
+			get
+			{
+				return this._DocNumRef;
+			}
+			set
+			{
+				if ((this._DocNumRef != value))
+				{
+					this.OnDocNumRefChanging(value);
+					this.SendPropertyChanging();
+					this._DocNumRef = value;
+					this.SendPropertyChanged("DocNumRef");
+					this.OnDocNumRefChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Remark", DbType="NVarChar(500)")]
+		public string Remark
+		{
+			get
+			{
+				return this._Remark;
+			}
+			set
+			{
+				if ((this._Remark != value))
+				{
+					this.OnRemarkChanging(value);
+					this.SendPropertyChanging();
+					this._Remark = value;
+					this.SendPropertyChanged("Remark");
+					this.OnRemarkChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_WaiveOption", DbType="NVarChar(10)")]
+		public string WaiveOption
+		{
+			get
+			{
+				return this._WaiveOption;
+			}
+			set
+			{
+				if ((this._WaiveOption != value))
+				{
+					this.OnWaiveOptionChanging(value);
+					this.SendPropertyChanging();
+					this._WaiveOption = value;
+					this.SendPropertyChanged("WaiveOption");
+					this.OnWaiveOptionChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ApprovalStage", DbType="NVarChar(250)")]
+		public string ApprovalStage
+		{
+			get
+			{
+				return this._ApprovalStage;
+			}
+			set
+			{
+				if ((this._ApprovalStage != value))
+				{
+					this.OnApprovalStageChanging(value);
+					this.SendPropertyChanging();
+					this._ApprovalStage = value;
+					this.SendPropertyChanged("ApprovalStage");
+					this.OnApprovalStageChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_NextApprover", DbType="NVarChar(250)")]
+		public string NextApprover
+		{
+			get
+			{
+				return this._NextApprover;
+			}
+			set
+			{
+				if ((this._NextApprover != value))
+				{
+					this.OnNextApproverChanging(value);
+					this.SendPropertyChanging();
+					this._NextApprover = value;
+					this.SendPropertyChanged("NextApprover");
+					this.OnNextApproverChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CreateDate", DbType="DateTime")]
+		public System.Nullable<System.DateTime> CreateDate
+		{
+			get
+			{
+				return this._CreateDate;
+			}
+			set
+			{
+				if ((this._CreateDate != value))
+				{
+					this.OnCreateDateChanging(value);
+					this.SendPropertyChanging();
+					this._CreateDate = value;
+					this.SendPropertyChanged("CreateDate");
+					this.OnCreateDateChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UpdateDate", DbType="DateTime")]
+		public System.Nullable<System.DateTime> UpdateDate
+		{
+			get
+			{
+				return this._UpdateDate;
+			}
+			set
+			{
+				if ((this._UpdateDate != value))
+				{
+					this.OnUpdateDateChanging(value);
+					this.SendPropertyChanging();
+					this._UpdateDate = value;
+					this.SendPropertyChanged("UpdateDate");
+					this.OnUpdateDateChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CreateBy", DbType="NVarChar(250)")]
+		public string CreateBy
+		{
+			get
+			{
+				return this._CreateBy;
+			}
+			set
+			{
+				if ((this._CreateBy != value))
+				{
+					this.OnCreateByChanging(value);
+					this.SendPropertyChanging();
+					this._CreateBy = value;
+					this.SendPropertyChanged("CreateBy");
+					this.OnCreateByChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UpdateBy", DbType="NVarChar(250)")]
+		public string UpdateBy
+		{
+			get
+			{
+				return this._UpdateBy;
+			}
+			set
+			{
+				if ((this._UpdateBy != value))
+				{
+					this.OnUpdateByChanging(value);
+					this.SendPropertyChanging();
+					this._UpdateBy = value;
+					this.SendPropertyChanged("UpdateBy");
+					this.OnUpdateByChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Status", DbType="NVarChar(50)")]
+		public string Status
+		{
+			get
+			{
+				return this._Status;
+			}
+			set
+			{
+				if ((this._Status != value))
+				{
+					this.OnStatusChanging(value);
+					this.SendPropertyChanging();
+					this._Status = value;
+					this.SendPropertyChanged("Status");
+					this.OnStatusChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ApprovalTemplate", DbType="NVarChar(50)")]
+		public string ApprovalTemplate
+		{
+			get
+			{
+				return this._ApprovalTemplate;
+			}
+			set
+			{
+				if ((this._ApprovalTemplate != value))
+				{
+					this.OnApprovalTemplateChanging(value);
+					this.SendPropertyChanging();
+					this._ApprovalTemplate = value;
+					this.SendPropertyChanged("ApprovalTemplate");
+					this.OnApprovalTemplateChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="PenaltyWizardH_PenaltyWizard", Storage="_PenaltyWizards", ThisKey="DocEntry", OtherKey="DocEntry")]
+		public EntitySet<PenaltyWizard> PenaltyWizards
+		{
+			get
+			{
+				return this._PenaltyWizards;
+			}
+			set
+			{
+				this._PenaltyWizards.Assign(value);
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_PenaltyWizards(PenaltyWizard entity)
+		{
+			this.SendPropertyChanging();
+			entity.PenaltyWizardH = this;
+		}
+		
+		private void detach_PenaltyWizards(PenaltyWizard entity)
+		{
+			this.SendPropertyChanging();
+			entity.PenaltyWizardH = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.PenaltyWizard")]
+	public partial class PenaltyWizard : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _DocEntry;
+		
+		private int _VisOrder;
+		
+		private System.Nullable<System.DateTime> _FromAccDate;
+		
+		private System.Nullable<System.DateTime> _ToAccDate;
+		
+		private System.Nullable<int> _OverDay;
+		
+		private string _PenaltyRef;
+		
+		private string _BPCode;
+		
+		private string _BPName;
+		
+		private string _ItemCode;
+		
+		private string _SerialNo;
+		
+		private int _InstallmentID;
+		
+		private System.Nullable<int> _InstallmentRow;
+		
+		private string _AccraulID;
+		
+		private System.Nullable<decimal> _PrincipleAmt;
+		
+		private System.Nullable<decimal> _InterestAmt;
+		
+		private System.Nullable<decimal> _CHQAmt;
+		
+		private System.Nullable<decimal> _PenaltyPercent;
+		
+		private System.Nullable<decimal> _PenaltyAmt;
+		
+		private System.Nullable<decimal> _ApplyPercent;
+		
+		private System.Nullable<decimal> _WaiveAmt;
+		
+		private System.Nullable<decimal> _NetAmt;
+		
+		private string _Remark;
+		
+		private string _Status;
+		
+		private int _ARNo;
+		
+		private string _LastError;
+		
+		private EntityRef<PenaltyWizard> _PenaltyWizard2;
+		
+		private EntityRef<PenaltyWizard> _PenaltyWizard1;
+		
+		private EntityRef<PenaltyWizardH> _PenaltyWizardH;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnDocEntryChanging(int value);
+    partial void OnDocEntryChanged();
+    partial void OnVisOrderChanging(int value);
+    partial void OnVisOrderChanged();
+    partial void OnFromAccDateChanging(System.Nullable<System.DateTime> value);
+    partial void OnFromAccDateChanged();
+    partial void OnToAccDateChanging(System.Nullable<System.DateTime> value);
+    partial void OnToAccDateChanged();
+    partial void OnOverDayChanging(System.Nullable<int> value);
+    partial void OnOverDayChanged();
+    partial void OnPenaltyRefChanging(string value);
+    partial void OnPenaltyRefChanged();
+    partial void OnBPCodeChanging(string value);
+    partial void OnBPCodeChanged();
+    partial void OnBPNameChanging(string value);
+    partial void OnBPNameChanged();
+    partial void OnItemCodeChanging(string value);
+    partial void OnItemCodeChanged();
+    partial void OnSerialNoChanging(string value);
+    partial void OnSerialNoChanged();
+    partial void OnInstallmentIDChanging(int value);
+    partial void OnInstallmentIDChanged();
+    partial void OnInstallmentRowChanging(System.Nullable<int> value);
+    partial void OnInstallmentRowChanged();
+    partial void OnAccraulIDChanging(string value);
+    partial void OnAccraulIDChanged();
+    partial void OnPrincipleAmtChanging(System.Nullable<decimal> value);
+    partial void OnPrincipleAmtChanged();
+    partial void OnInterestAmtChanging(System.Nullable<decimal> value);
+    partial void OnInterestAmtChanged();
+    partial void OnCHQAmtChanging(System.Nullable<decimal> value);
+    partial void OnCHQAmtChanged();
+    partial void OnPenaltyPercentChanging(System.Nullable<decimal> value);
+    partial void OnPenaltyPercentChanged();
+    partial void OnPenaltyAmtChanging(System.Nullable<decimal> value);
+    partial void OnPenaltyAmtChanged();
+    partial void OnApplyPercentChanging(System.Nullable<decimal> value);
+    partial void OnApplyPercentChanged();
+    partial void OnWaiveAmtChanging(System.Nullable<decimal> value);
+    partial void OnWaiveAmtChanged();
+    partial void OnNetAmtChanging(System.Nullable<decimal> value);
+    partial void OnNetAmtChanged();
+    partial void OnRemarkChanging(string value);
+    partial void OnRemarkChanged();
+    partial void OnStatusChanging(string value);
+    partial void OnStatusChanged();
+    partial void OnARNoChanging(int value);
+    partial void OnARNoChanged();
+    partial void OnLastErrorChanging(string value);
+    partial void OnLastErrorChanged();
+    #endregion
+		
+		public PenaltyWizard()
+		{
+			this._PenaltyWizard2 = default(EntityRef<PenaltyWizard>);
+			this._PenaltyWizard1 = default(EntityRef<PenaltyWizard>);
+			this._PenaltyWizardH = default(EntityRef<PenaltyWizardH>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DocEntry", DbType="Int NOT NULL", IsPrimaryKey=true)]
+		public int DocEntry
+		{
+			get
+			{
+				return this._DocEntry;
+			}
+			set
+			{
+				if ((this._DocEntry != value))
+				{
+					if ((this._PenaltyWizard1.HasLoadedOrAssignedValue || this._PenaltyWizardH.HasLoadedOrAssignedValue))
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnDocEntryChanging(value);
+					this.SendPropertyChanging();
+					this._DocEntry = value;
+					this.SendPropertyChanged("DocEntry");
+					this.OnDocEntryChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_VisOrder", DbType="Int NOT NULL", IsPrimaryKey=true)]
+		public int VisOrder
+		{
+			get
+			{
+				return this._VisOrder;
+			}
+			set
+			{
+				if ((this._VisOrder != value))
+				{
+					if (this._PenaltyWizard1.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnVisOrderChanging(value);
+					this.SendPropertyChanging();
+					this._VisOrder = value;
+					this.SendPropertyChanged("VisOrder");
+					this.OnVisOrderChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FromAccDate", DbType="DateTime")]
+		public System.Nullable<System.DateTime> FromAccDate
+		{
+			get
+			{
+				return this._FromAccDate;
+			}
+			set
+			{
+				if ((this._FromAccDate != value))
+				{
+					this.OnFromAccDateChanging(value);
+					this.SendPropertyChanging();
+					this._FromAccDate = value;
+					this.SendPropertyChanged("FromAccDate");
+					this.OnFromAccDateChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ToAccDate", DbType="DateTime")]
+		public System.Nullable<System.DateTime> ToAccDate
+		{
+			get
+			{
+				return this._ToAccDate;
+			}
+			set
+			{
+				if ((this._ToAccDate != value))
+				{
+					this.OnToAccDateChanging(value);
+					this.SendPropertyChanging();
+					this._ToAccDate = value;
+					this.SendPropertyChanged("ToAccDate");
+					this.OnToAccDateChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_OverDay", DbType="Int")]
+		public System.Nullable<int> OverDay
+		{
+			get
+			{
+				return this._OverDay;
+			}
+			set
+			{
+				if ((this._OverDay != value))
+				{
+					this.OnOverDayChanging(value);
+					this.SendPropertyChanging();
+					this._OverDay = value;
+					this.SendPropertyChanged("OverDay");
+					this.OnOverDayChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PenaltyRef", DbType="NVarChar(250)")]
+		public string PenaltyRef
+		{
+			get
+			{
+				return this._PenaltyRef;
+			}
+			set
+			{
+				if ((this._PenaltyRef != value))
+				{
+					this.OnPenaltyRefChanging(value);
+					this.SendPropertyChanging();
+					this._PenaltyRef = value;
+					this.SendPropertyChanged("PenaltyRef");
+					this.OnPenaltyRefChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_BPCode", DbType="NVarChar(15) NOT NULL", CanBeNull=false)]
+		public string BPCode
+		{
+			get
+			{
+				return this._BPCode;
+			}
+			set
+			{
+				if ((this._BPCode != value))
+				{
+					this.OnBPCodeChanging(value);
+					this.SendPropertyChanging();
+					this._BPCode = value;
+					this.SendPropertyChanged("BPCode");
+					this.OnBPCodeChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_BPName", DbType="NVarChar(100)")]
+		public string BPName
+		{
+			get
+			{
+				return this._BPName;
+			}
+			set
+			{
+				if ((this._BPName != value))
+				{
+					this.OnBPNameChanging(value);
+					this.SendPropertyChanging();
+					this._BPName = value;
+					this.SendPropertyChanged("BPName");
+					this.OnBPNameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ItemCode", DbType="NVarChar(100)")]
+		public string ItemCode
+		{
+			get
+			{
+				return this._ItemCode;
+			}
+			set
+			{
+				if ((this._ItemCode != value))
+				{
+					this.OnItemCodeChanging(value);
+					this.SendPropertyChanging();
+					this._ItemCode = value;
+					this.SendPropertyChanged("ItemCode");
+					this.OnItemCodeChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SerialNo", DbType="NVarChar(100) NOT NULL", CanBeNull=false)]
+		public string SerialNo
+		{
+			get
+			{
+				return this._SerialNo;
+			}
+			set
+			{
+				if ((this._SerialNo != value))
+				{
+					this.OnSerialNoChanging(value);
+					this.SendPropertyChanging();
+					this._SerialNo = value;
+					this.SendPropertyChanged("SerialNo");
+					this.OnSerialNoChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_InstallmentID", DbType="Int NOT NULL")]
+		public int InstallmentID
+		{
+			get
+			{
+				return this._InstallmentID;
+			}
+			set
+			{
+				if ((this._InstallmentID != value))
+				{
+					this.OnInstallmentIDChanging(value);
+					this.SendPropertyChanging();
+					this._InstallmentID = value;
+					this.SendPropertyChanged("InstallmentID");
+					this.OnInstallmentIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_InstallmentRow", DbType="Int")]
+		public System.Nullable<int> InstallmentRow
+		{
+			get
+			{
+				return this._InstallmentRow;
+			}
+			set
+			{
+				if ((this._InstallmentRow != value))
+				{
+					this.OnInstallmentRowChanging(value);
+					this.SendPropertyChanging();
+					this._InstallmentRow = value;
+					this.SendPropertyChanged("InstallmentRow");
+					this.OnInstallmentRowChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AccraulID", DbType="NVarChar(MAX)")]
+		public string AccraulID
+		{
+			get
+			{
+				return this._AccraulID;
+			}
+			set
+			{
+				if ((this._AccraulID != value))
+				{
+					this.OnAccraulIDChanging(value);
+					this.SendPropertyChanging();
+					this._AccraulID = value;
+					this.SendPropertyChanged("AccraulID");
+					this.OnAccraulIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PrincipleAmt", DbType="Decimal(19,6)")]
+		public System.Nullable<decimal> PrincipleAmt
+		{
+			get
+			{
+				return this._PrincipleAmt;
+			}
+			set
+			{
+				if ((this._PrincipleAmt != value))
+				{
+					this.OnPrincipleAmtChanging(value);
+					this.SendPropertyChanging();
+					this._PrincipleAmt = value;
+					this.SendPropertyChanged("PrincipleAmt");
+					this.OnPrincipleAmtChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_InterestAmt", DbType="Decimal(19,6)")]
+		public System.Nullable<decimal> InterestAmt
+		{
+			get
+			{
+				return this._InterestAmt;
+			}
+			set
+			{
+				if ((this._InterestAmt != value))
+				{
+					this.OnInterestAmtChanging(value);
+					this.SendPropertyChanging();
+					this._InterestAmt = value;
+					this.SendPropertyChanged("InterestAmt");
+					this.OnInterestAmtChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CHQAmt", DbType="Decimal(19,6)")]
+		public System.Nullable<decimal> CHQAmt
+		{
+			get
+			{
+				return this._CHQAmt;
+			}
+			set
+			{
+				if ((this._CHQAmt != value))
+				{
+					this.OnCHQAmtChanging(value);
+					this.SendPropertyChanging();
+					this._CHQAmt = value;
+					this.SendPropertyChanged("CHQAmt");
+					this.OnCHQAmtChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PenaltyPercent", DbType="Decimal(19,6)")]
+		public System.Nullable<decimal> PenaltyPercent
+		{
+			get
+			{
+				return this._PenaltyPercent;
+			}
+			set
+			{
+				if ((this._PenaltyPercent != value))
+				{
+					this.OnPenaltyPercentChanging(value);
+					this.SendPropertyChanging();
+					this._PenaltyPercent = value;
+					this.SendPropertyChanged("PenaltyPercent");
+					this.OnPenaltyPercentChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PenaltyAmt", DbType="Decimal(19,6)")]
+		public System.Nullable<decimal> PenaltyAmt
+		{
+			get
+			{
+				return this._PenaltyAmt;
+			}
+			set
+			{
+				if ((this._PenaltyAmt != value))
+				{
+					this.OnPenaltyAmtChanging(value);
+					this.SendPropertyChanging();
+					this._PenaltyAmt = value;
+					this.SendPropertyChanged("PenaltyAmt");
+					this.OnPenaltyAmtChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ApplyPercent", DbType="Decimal(19,6)")]
+		public System.Nullable<decimal> ApplyPercent
+		{
+			get
+			{
+				return this._ApplyPercent;
+			}
+			set
+			{
+				if ((this._ApplyPercent != value))
+				{
+					this.OnApplyPercentChanging(value);
+					this.SendPropertyChanging();
+					this._ApplyPercent = value;
+					this.SendPropertyChanged("ApplyPercent");
+					this.OnApplyPercentChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_WaiveAmt", DbType="Decimal(19,6)")]
+		public System.Nullable<decimal> WaiveAmt
+		{
+			get
+			{
+				return this._WaiveAmt;
+			}
+			set
+			{
+				if ((this._WaiveAmt != value))
+				{
+					this.OnWaiveAmtChanging(value);
+					this.SendPropertyChanging();
+					this._WaiveAmt = value;
+					this.SendPropertyChanged("WaiveAmt");
+					this.OnWaiveAmtChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_NetAmt", DbType="Decimal(19,6)")]
+		public System.Nullable<decimal> NetAmt
+		{
+			get
+			{
+				return this._NetAmt;
+			}
+			set
+			{
+				if ((this._NetAmt != value))
+				{
+					this.OnNetAmtChanging(value);
+					this.SendPropertyChanging();
+					this._NetAmt = value;
+					this.SendPropertyChanged("NetAmt");
+					this.OnNetAmtChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Remark", DbType="NVarChar(500)")]
+		public string Remark
+		{
+			get
+			{
+				return this._Remark;
+			}
+			set
+			{
+				if ((this._Remark != value))
+				{
+					this.OnRemarkChanging(value);
+					this.SendPropertyChanging();
+					this._Remark = value;
+					this.SendPropertyChanged("Remark");
+					this.OnRemarkChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Status", DbType="NVarChar(50)")]
+		public string Status
+		{
+			get
+			{
+				return this._Status;
+			}
+			set
+			{
+				if ((this._Status != value))
+				{
+					this.OnStatusChanging(value);
+					this.SendPropertyChanging();
+					this._Status = value;
+					this.SendPropertyChanged("Status");
+					this.OnStatusChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ARNo", DbType="Int NOT NULL")]
+		public int ARNo
+		{
+			get
+			{
+				return this._ARNo;
+			}
+			set
+			{
+				if ((this._ARNo != value))
+				{
+					this.OnARNoChanging(value);
+					this.SendPropertyChanging();
+					this._ARNo = value;
+					this.SendPropertyChanged("ARNo");
+					this.OnARNoChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_LastError", DbType="NVarChar(500)")]
+		public string LastError
+		{
+			get
+			{
+				return this._LastError;
+			}
+			set
+			{
+				if ((this._LastError != value))
+				{
+					this.OnLastErrorChanging(value);
+					this.SendPropertyChanging();
+					this._LastError = value;
+					this.SendPropertyChanged("LastError");
+					this.OnLastErrorChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="PenaltyWizard_PenaltyWizard", Storage="_PenaltyWizard2", ThisKey="DocEntry,VisOrder", OtherKey="DocEntry,VisOrder", IsUnique=true, IsForeignKey=false)]
+		public PenaltyWizard PenaltyWizard2
+		{
+			get
+			{
+				return this._PenaltyWizard2.Entity;
+			}
+			set
+			{
+				PenaltyWizard previousValue = this._PenaltyWizard2.Entity;
+				if (((previousValue != value) 
+							|| (this._PenaltyWizard2.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._PenaltyWizard2.Entity = null;
+						previousValue.PenaltyWizard1 = null;
+					}
+					this._PenaltyWizard2.Entity = value;
+					if ((value != null))
+					{
+						value.PenaltyWizard1 = this;
+					}
+					this.SendPropertyChanged("PenaltyWizard2");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="PenaltyWizard_PenaltyWizard", Storage="_PenaltyWizard1", ThisKey="DocEntry,VisOrder", OtherKey="DocEntry,VisOrder", IsForeignKey=true)]
+		public PenaltyWizard PenaltyWizard1
+		{
+			get
+			{
+				return this._PenaltyWizard1.Entity;
+			}
+			set
+			{
+				PenaltyWizard previousValue = this._PenaltyWizard1.Entity;
+				if (((previousValue != value) 
+							|| (this._PenaltyWizard1.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._PenaltyWizard1.Entity = null;
+						previousValue.PenaltyWizard2 = null;
+					}
+					this._PenaltyWizard1.Entity = value;
+					if ((value != null))
+					{
+						value.PenaltyWizard2 = this;
+						this._DocEntry = value.DocEntry;
+						this._VisOrder = value.VisOrder;
+					}
+					else
+					{
+						this._DocEntry = default(int);
+						this._VisOrder = default(int);
+					}
+					this.SendPropertyChanged("PenaltyWizard1");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="PenaltyWizardH_PenaltyWizard", Storage="_PenaltyWizardH", ThisKey="DocEntry", OtherKey="DocEntry", IsForeignKey=true)]
+		public PenaltyWizardH PenaltyWizardH
+		{
+			get
+			{
+				return this._PenaltyWizardH.Entity;
+			}
+			set
+			{
+				PenaltyWizardH previousValue = this._PenaltyWizardH.Entity;
+				if (((previousValue != value) 
+							|| (this._PenaltyWizardH.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._PenaltyWizardH.Entity = null;
+						previousValue.PenaltyWizards.Remove(this);
+					}
+					this._PenaltyWizardH.Entity = value;
+					if ((value != null))
+					{
+						value.PenaltyWizards.Add(this);
+						this._DocEntry = value.DocEntry;
+					}
+					else
+					{
+						this._DocEntry = default(int);
+					}
+					this.SendPropertyChanged("PenaltyWizardH");
 				}
 			}
 		}

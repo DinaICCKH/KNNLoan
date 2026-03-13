@@ -447,6 +447,7 @@ namespace MKL_Web.Controllers
             string sqltext = "exec ICC_Get_List_Penalty_Draf '" + Customer + "','" + ToDueDate + "','" + WaiveOption + "'";
 
             List<PenaltyGenerateTable> list = new List<PenaltyGenerateTable>();
+
             list = (from x in view.getTable(sqltext, ConfigurationManager.AppSettings["sql"].ToString()).AsEnumerable()
                     select new PenaltyGenerateTable()
                     {
@@ -456,31 +457,37 @@ namespace MKL_Web.Controllers
                         ItemName = x["ItemName"] != DBNull.Value ? x["ItemName"].ToString() : "",
                         Comment = x["Comment"] != DBNull.Value ? x["Comment"].ToString() : "",
                         SerialNo = x["SerialNo"] != DBNull.Value ? x["SerialNo"].ToString() : "",
-                        ID = x["ID"] != DBNull.Value ? Convert.ToInt32(x["ID"]) : 0,
+
+                        InstallmentRow = x["InstallmentRow"] != DBNull.Value ? Convert.ToInt32(x["InstallmentRow"]) : 0,
                         InstallmentID = x["InstallmentID"] != DBNull.Value ? Convert.ToInt32(x["InstallmentID"]) : 0,
-                        DueDate = x["DueDate"] != DBNull.Value ? Convert.ToDateTime(x["DueDate"]).ToString("dd-MMM-yyyy") : "",
-                        PaymentDate = x["PaymentDate"] != DBNull.Value ? Convert.ToDateTime(x["PaymentDate"]).ToString("dd-MMM-yyyy") : "",
+
+                        FromPaymentDate = x["FromPaymentDate"] != DBNull.Value ? Convert.ToDateTime(x["FromPaymentDate"]).ToString("dd-MMM-yyyy") : "",
+                        TOPaymentDate = x["TOPaymentDate"] != DBNull.Value ? Convert.ToDateTime(x["TOPaymentDate"]).ToString("dd-MMM-yyyy") : "",
+
                         CHQAmt = x["CHQAmt"] != DBNull.Value ? Convert.ToDecimal(x["CHQAmt"]) : 0,
                         PrincipleAmt = x["PrincipleAmt"] != DBNull.Value ? Convert.ToDecimal(x["PrincipleAmt"]) : 0,
-                        InterestAmt = x["InterestAmt"] != DBNull.Value ? Convert.ToDecimal(x["InterestAmt"]) : 0,
-                        OutStandingAmt = x["OutStandingAmt"] != DBNull.Value ? Convert.ToDecimal(x["OutStandingAmt"]) : 0,
                         PenaltyPercent = x["PenaltyPercent"] != DBNull.Value ? Convert.ToDecimal(x["PenaltyPercent"]) : 0,
-                        PenaltyAmt = x["PenaltyAmt"] != DBNull.Value ? Convert.ToDecimal(x["PenaltyAmt"]) : 0,
-                        OverDay = x["OverDay"] != DBNull.Value ? Convert.ToInt32(x["OverDay"]) : 0,
-                        Remark = x["Remark"] != DBNull.Value ? x["Remark"].ToString() : "",
+
+                        TotalOverDay = x["TotalOverDay"] != DBNull.Value ? Convert.ToInt32(x["TotalOverDay"]) : 0,
+                        TotalPenalty = x["TotalPenalty"] != DBNull.Value ? Convert.ToDecimal(x["TotalPenalty"]) : 0,
+                        TotalWaiveAmt = x["TotalWaiveAmt"] != DBNull.Value ? Convert.ToDecimal(x["TotalWaiveAmt"]) : 0,
+                        TotalNetAmt = x["TotalNetAmt"] != DBNull.Value ? Convert.ToDecimal(x["TotalNetAmt"]) : 0,
                         OcrCode = x["OcrCode"] != DBNull.Value ? x["OcrCode"].ToString() : "",
                         OcrCode2 = x["OcrCode2"] != DBNull.Value ? x["OcrCode2"].ToString() : "",
                         OcrCode3 = x["OcrCode3"] != DBNull.Value ? x["OcrCode3"].ToString() : "",
                         OcrCode4 = x["OcrCode4"] != DBNull.Value ? x["OcrCode4"].ToString() : "",
                         OcrCode5 = x["OcrCode5"] != DBNull.Value ? x["OcrCode5"].ToString() : "",
+
                         Status = x["Status"] != DBNull.Value ? x["Status"].ToString() : "",
                         ApprovalTemplate = x["ApprovalTemplate"] != DBNull.Value ? x["ApprovalTemplate"].ToString() : "",
                         ApprovalDate = x["ApprovalDate"] != DBNull.Value ? Convert.ToDateTime(x["ApprovalDate"]).ToString("dd-MMM-yyyy") : "",
                         LastApproval = x["LastApproval"] != DBNull.Value ? x["LastApproval"].ToString() : "",
+
                         WaiveName = x["WaiveName"] != DBNull.Value ? x["WaiveName"].ToString() : "",
                         ApplyPercent = x["ApplyPercent"] != DBNull.Value ? Convert.ToDecimal(x["ApplyPercent"]) : 0,
-                        WaiveAmt = x["WaiveAmt"] != DBNull.Value ? Convert.ToDecimal(x["WaiveAmt"]) : 0,
-                        NetAmt = x["NetAmt"] != DBNull.Value ? Convert.ToDecimal(x["NetAmt"]) : 0,
+
+                        IDs = x["IDs"] != DBNull.Value ? x["IDs"].ToString() : "",
+                        Remark =""
                     }).ToList();
 
             var data = list.Select(x => new
@@ -491,18 +498,17 @@ namespace MKL_Web.Controllers
                 x.ItemName,
                 x.Comment,
                 x.SerialNo,
-                x.ID,
+                x.InstallmentRow,
                 x.InstallmentID,
-                x.DueDate,
-                x.PaymentDate,
+                x.FromPaymentDate,
+                x.TOPaymentDate,
                 x.CHQAmt,
                 x.PrincipleAmt,
-                x.InterestAmt,
-                x.OutStandingAmt,
                 x.PenaltyPercent,
-                x.PenaltyAmt,
-                x.OverDay,
-                x.Remark,
+                x.TotalOverDay,
+                x.TotalPenalty,
+                x.TotalWaiveAmt,
+                x.TotalNetAmt,
                 x.OcrCode,
                 x.OcrCode2,
                 x.OcrCode3,
@@ -514,11 +520,10 @@ namespace MKL_Web.Controllers
                 x.LastApproval,
                 x.WaiveName,
                 x.ApplyPercent,
-                x.WaiveAmt,
-                x.NetAmt
+                x.IDs,
+                x.Remark
             }).ToList();
 
-            // Define status before using it
             string status = "success";
 
             return Json(new
@@ -611,16 +616,23 @@ namespace MKL_Web.Controllers
                                             db.PenaltyWizards.InsertAllOnSubmit(d);
                                             db.PenaltyWizards.Context.SubmitChanges();
 
-                                            /// This will be used to update the status of Accrual penalty
-                                            var accrualIDs = rows.Select(r => r.AccraulID).ToList();
+                                            // 1. Get all semicolon-separated Accrual IDs
+                                            var accrualStrings = rows.Select(r => r.AccraulID).ToList(); // may contain "112;123;863;"
 
+                                            // 2. Split by ';', remove empty entries, convert to int
+                                            var accrualIDs = accrualStrings
+                                                .SelectMany(s => s.Split(new[] { ';' }, StringSplitOptions.RemoveEmptyEntries))
+                                                .Select(id => int.Parse(id))   // or Convert.ToInt32(id)
+                                                .ToList();
+
+                                            // 3. Fetch PenaltyDrafts matching those IDs
                                             var penaltyDrafts = db.PenaltyDrafts.Where(a => accrualIDs.Contains(a.ID)).ToList();
 
                                             if (penaltyDrafts.Any())
                                             {
                                                 foreach (var pD in penaltyDrafts)
                                                 {
-                                                    pD.ProzenforRemark = "This document is linked with pending approve penalty draft No: " + LastEntry + " -> Reference: "+ header.DocNumRef;
+                                                    pD.ProzenforRemark = "This document is linked with pending approve penalty draft No: " + LastEntry + " -> Reference: " + header.DocNumRef;
                                                     pD.Frozenfor = "Y";
                                                 }
 

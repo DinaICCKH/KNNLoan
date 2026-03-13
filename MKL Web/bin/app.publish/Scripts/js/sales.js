@@ -466,19 +466,24 @@ function check_cmd_generate_penalty_List() {
 
 }
 
-
 function check_cmd_generate_customerlist() {
 
+    let fromCard = $("#txt_card_code").val();
+    let toCard = $("#txt_tcard_code").val();
 
-    if ($("#txt_card_code").val() != "" || $("#txt_tcard_code").val() != "") {
-
-        get_customer_List();
-
-    } else {
-        
-       ShowAlertCus("Please choose from customer and to customer first.","warning");
-      
+    if (fromCard == "") {
+        ShowAlertCus("Please choose From Customer.", "warning");
+        $("#txt_card_code").focus();
+        return;
     }
+
+    if (toCard == "") {
+        ShowAlertCus("Please choose To Customer.", "warning");
+        $("#txt_tcard_code").focus();
+        return;
+    }
+
+    get_customer_List();
 }
 
 function getCustomerCodesAsString() {
@@ -569,28 +574,33 @@ function cmd_copy_from_payment_schedule(type) {
     }
 
     else {
+
         if (type == "1") {
 
             var ref = $("#txt_changeitem_ref").val();
+            var cardcode = $("#txt_card_code").val();
 
-            var EffictiveDate = $("#txt_effective_date").val();
+            // Check if effective date field exists
+            if ($("#txt_effective_date").length > 0) {
 
-            if (!EffictiveDate) {
-                ShowAlertCus("Please choose effective date first.", "danger");
-                $("#txt_effective_date").focus();   // optional: auto focus
-                return false;                       // 🔥 stop function
+                var EffictiveDate = $("#txt_effective_date").val();
+
+                if (!EffictiveDate) {
+                    ShowAlertCus("Please choose effective date first.", "danger");
+                    $("#txt_effective_date").focus();
+                    return false;
+                }
             }
 
             if (ref === "" && pageID === "ChangeItem") {
                 ShowAlertCus("Please choose Change Reference first", "danger");
-                return; // stop execution if condition is met
+                return;
             }
 
-            var cardcode = $("#txt_card_code").val();
             $("#modal-schedule-list").modal('show');
             get_payment_schedule_list(cardcode);
-
         }
+
 
         if (type == "2") {
             let PeriodM = parseInt($("#txt_period").val()) || 0;
@@ -4389,9 +4399,20 @@ function cmd_save_approval_penaltyDraf(Type) {
 }
 
 function cmd_penaltydraf_waive_generate() {
-    if ($("#cbo_waive_option").val() == "") {
-        ShowAlertCus("Please choose waive Option","warning");
-    } 
+
+    let waiveOption = parseFloat($("#txt_waive_option").val());
+
+    if (!waiveOption || waiveOption <= 0) {
+        ShowAlertCus("Please enter a valid waive % number", "warning");
+        $("#txt_waive_option").focus();
+        return;
+    }
+
+    else if ($("#table_customer_list tbody tr").length === 0) {
+        ShowAlertCus("Customer Detail Information  cannot be empty", "warning");
+        return;
+    }
+
     else {
         get_penaltydraf_waive();
     }
@@ -4547,12 +4568,8 @@ function get_penaltydraf_waive() {
     var lenRow = $("#table_penalty_list >tbody >tr").length;
 
     if (checkDate == 0) {
-
-        var FromPostingDate = $("#txt_fposting_date").val();
-        var ToPostingDate = $("#txt_tposting_date").val();
-        var FromDueDate = $("#txt_fdue_date").val();
         var ToDueDate = $("#txt_tdue_date").val();
-        var WaiveOption = $("#cbo_waive_option").val();
+        var WaiveOption = $("#txt_waive_option").val();
 
         var PenaltyDate = $("#txt_penalty_date").val();
 
@@ -4577,9 +4594,6 @@ function get_penaltydraf_waive() {
             type: 'POST',
             data: {
                 Customer: result
-                , FromPosting: FromPostingDate
-                , ToPosting: ToPostingDate
-                , FromDueDate: FromDueDate
                 , ToDueDate: ToDueDate
                 , WaiveOption: WaiveOption
             },
@@ -4602,58 +4616,89 @@ function get_penaltydraf_waive() {
 
 
                 for (i = 0; i < mydata.length; i++) {
+
                     var x = mydata[i];
 
                     var data = "<tr id='tr_payment_" + rowindex + "'>";
 
-                    // 1. Empty cell to match the first header column
+                    // 1. Empty column
                     data += "<td></td>";
 
-                    // 2. Checkbox + remove icon
+                    // 2. Remove icon + checkbox
                     data += "<td style='text-align:center; vertical-align: middle;'>"
                         + "<i class='fa fa-fw fa-remove' style='cursor:pointer; margin-right:8px; color:red;' title='Remove row' onclick='cmd_tr_payment_detail_remove_line(" + rowindex + ")'></i>"
                         + "<input type='checkbox' id='tr_payment_detail_checkbox_remove_line_" + rowindex + "' style='cursor:pointer;' onclick='checkbox_tr_payment_detail(" + rowindex + ")'>"
                         + "</td>";
 
-                    // 3. Row index
+                    // 3. Row number
                     data += "<td style='text-align:left; vertical-align: middle;'>" + rowindex + "</td>";
 
-                    // 4. Posting Date (date picker input)
-                    data += "<td style='text-align:Left; color:blue; vertical-align: middle;'>" +
-                        "<div class='form-group'>" +
-                        "<div class='input-group date'>" +
-                        "<div class='input-group-addon'><i class='fa fa-calendar'></i></div>" +
-                        "<input type='text' style='text-align:left; color:blue; vertical-align: middle;' class='form-control pull-right datetime form-control-insde' name='InstallmentDate_" + rowindex + "' id='InstallmentDate_" + rowindex + "' value='" + PenaltyDate + "' placeholder='Choose Date' />" +
-                        "</div></div></td>";
+                    //// 4. Posting Date
+                    //data += "<td style='text-align:left; color:blue; vertical-align: middle;'>"
+                    //    + "<div class='form-group'>"
+                    //    + "<div class='input-group date'>"
+                    //    + "<div class='input-group-addon'><i class='fa fa-calendar'></i></div>"
+                    //    + "<input type='text' style='text-align:left; color:blue;' class='form-control pull-right datetime form-control-insde'"
+                    //    + " name='InstallmentDate_" + rowindex + "'"
+                    //    + " id='InstallmentDate_" + rowindex + "'"
+                    //    + " value='" + PenaltyDate + "' placeholder='Choose Date' />"
+                    //    + "</div></div></td>";
 
-                    // 5–18. Regular data fields
-                    data += "<td style='text-align:left; vertical-align: middle;' id='td_paymentdate_" + rowindex + "'>" + x.PaymentDate + "</td>";
+                   
+
+                    // Customer
                     data += "<td style='text-align:left; vertical-align: middle;' id='td_cardcode_" + rowindex + "'>" + x.CardCode + "</td>";
                     data += "<td style='text-align:left; vertical-align: middle;' id='td_cardname_" + rowindex + "'>" + x.CardName + "</td>";
-                    data += "<td style='text-align:left; vertical-align: middle;' id='td_id_" + rowindex + "'>" + x.ID + "</td>";
+
+                    
+
+                    // Installment
+                    data += "<td style='text-align:left; vertical-align: middle;' id='td_installmentrow_" + rowindex + "'>" + x.InstallmentRow + "</td>";
                     data += "<td style='text-align:left; vertical-align: middle;' id='td_installmentid_" + rowindex + "'>" + x.InstallmentID + "</td>";
+
+                    // Amounts
                     data += "<td style='text-align:left; vertical-align: middle;' id='td_principle_" + rowindex + "'>" + convert2digit(x.PrincipleAmt) + "</td>";
-                    data += "<td style='text-align:left; vertical-align: middle;' id='td_interest_" + rowindex + "'>" + convert2digit(x.InterestAmt) + "</td>";
+                    data += "<td style='text-align:left; vertical-align: middle;' id='td_principle_" + rowindex + "'>" + convert2digit(x.interestAmt) + "</td>";
                     data += "<td style='text-align:left; vertical-align: middle;' id='td_chqamt_" + rowindex + "'>" + convert2digit(x.CHQAmt) + "</td>";
+
+                    // NEW: From Payment Date
+                    data += "<td style='text-align:left; vertical-align: middle;' id='td_frompaymentdate_" + rowindex + "'>" + x.FromPaymentDate + "</td>";
+
+                    // NEW: To Payment Date
+                    data += "<td style='text-align:left; vertical-align: middle;' id='td_topaymentdate_" + rowindex + "'>" + x.TOPaymentDate + "</td>";
+
+                    data += "<td style='text-align:left; vertical-align: middle;' id='td_overday_" + rowindex + "'>" + x.TotalOverDay + "</td>";
+
+                    // Penalty Percent
                     data += "<td style='text-align:left; vertical-align: middle;' id='td_penaltypercent_" + rowindex + "'>" + convert2digit(x.PenaltyPercent) + "</td>";
-                    data += "<td style='text-align:left; vertical-align: middle;' id='td_penaltyamt_" + rowindex + "'>" + convert2digit(x.PenaltyAmt) + "</td>";
+
+
+                    // NEW: Total Penalty
+                    data += "<td style='text-align:left; vertical-align: middle;' id='td_totalpenalty_" + rowindex + "'>" + convert2digit(x.TotalPenalty) + "</td>";
+
+                    // Waive
                     data += "<td style='text-align:left; vertical-align: middle;' id='td_waivename_" + rowindex + "'>" + x.WaiveName + "</td>";
                     data += "<td style='text-align:left; vertical-align: middle;' id='td_applypercent_" + rowindex + "'>" + convert2digit(x.ApplyPercent) + "</td>";
-                    data += "<td style='text-align:left; vertical-align: middle;' id='td_waiveamt_" + rowindex + "'>" + convert2digit(x.WaiveAmt) + "</td>";
-                    data += "<td style='text-align:left; vertical-align: middle;' id='td_netamt_" + rowindex + "'>" + convert2digit(x.NetAmt) + "</td>";
 
-                    // 19. Remark with textarea (already has ID)
-                    data += "<td style='text-align:left; vertical-align: middle; color:blue;' id='td_remark_" + rowindex + "'>" +
-                        "<textarea id='remark_" + rowindex + "' name='remark_" + rowindex + "' rows='1' class='form-control' style='color:blue;'>" + x.Remark + "</textarea>" +
-                        "</td>";
+                    // NEW: Total Waive Amount
+                    data += "<td style='text-align:left; vertical-align: middle;' id='td_totalwaiveamt_" + rowindex + "'>" + convert2digit(x.TotalWaiveAmt) + "</td>";
 
-                    /// Hidden Item
+                    // Net Amount
+                    data += "<td style='text-align:left; vertical-align: middle;' id='td_totalnetamt_" + rowindex + "'>" + convert2digit(x.TotalNetAmt) + "</td>";
 
-                    data += "<td style='text-align:left; vertical-align: middle; display:none;' id='td_itemcode_" + rowindex + "'>" + x.ItemCode + "</td>";
-                    data += "<td style='text-align:left; vertical-align: middle; display:none;' id='td_itemname_" + rowindex + "'>" + x.ItemName + "</td>";
-                    data += "<td style='text-align:left; vertical-align: middle; display:none;' id='td_serialno_" + rowindex + "'>" + x.SerialNo + "</td>";
+                    // Remark
+                    data += "<td style='text-align:left vertical-align: middle;; color:blue;'>"
+                        + "<textarea id='remark_" + rowindex + "' name='remark_" + rowindex + "' rows='1' class='form-control' style='color:blue;'>"
+                        + (x.Remark || "")
+                        + "</textarea></td>";
 
-                    // Close the row
+                    // IDs (hidden for processing)
+                    data += "<td style='display:none;' id='td_ids_" + rowindex + "'>" + x.IDs + "</td>";
+                    // Hidden Item Info
+                    data += "<td style='display:none;' id='td_itemcode_" + rowindex + "'>" + x.ItemCode + "</td>";
+                    data += "<td style='display:none;' id='td_itemname_" + rowindex + "'>" + x.ItemName + "</td>";
+                    data += "<td style='display:none;' id='td_serialno_" + rowindex + "'>" + x.SerialNo + "</td>";
+
                     data += "</tr>";
 
                     $("#table_penalty_list >tbody").append(data);

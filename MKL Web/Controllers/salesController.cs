@@ -268,32 +268,53 @@ namespace MKL_Web.Controllers
             });
         }
 
+
         public JsonResult get_customer_list(string fcustomer, string tcustomer)
         {
-            string sqltext = "exec ICC_GET_CustomerListRange '" + fcustomer + "','" + tcustomer + "'";
             List<Customerlist> list = new List<Customerlist>();
-            list = (from x in view.getTable(sqltext, ConfigurationManager.AppSettings["sql"].ToString()).AsEnumerable()
-                    select new Customerlist()
-                    {
-                        CardCode = x["CardCode"].ToString(),
-                        CardName = x["CardName"].ToString(),
-                        BalanceFC = Convert.ToDecimal(x["BalanceFC"]),
-                        Balance = Convert.ToDecimal(x["Balance"])
+            string connStr = ConfigurationManager.AppSettings["sql"].ToString();
 
-                    }).ToList();
-            var data = list.Select(x => new {
+            using (SqlConnection conn = new SqlConnection(connStr))
+            {
+                using (SqlCommand cmd = new SqlCommand("ICC_GET_CustomerListRange", conn))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.CommandTimeout = 300; // 5 minutes
+
+                    // Prevent empty parameters from causing full table scan
+                    cmd.Parameters.AddWithValue("@FCustomer", string.IsNullOrEmpty(fcustomer) ? "0" : fcustomer);
+                    cmd.Parameters.AddWithValue("@TCustome", string.IsNullOrEmpty(tcustomer) ? "ZZZZZZ" : tcustomer);
+
+                    using (SqlDataAdapter da = new SqlDataAdapter(cmd))
+                    {
+                        DataTable dt = new DataTable();
+                        da.Fill(dt);
+
+                        // LINQ conversion
+                        list = (from x in dt.AsEnumerable()
+                                select new Customerlist()
+                                {
+                                    CardCode = x["CardCode"].ToString(),
+                                    CardName = x["CardName"].ToString(),
+                                    BalanceFC = Convert.ToDecimal(x["BalanceFC"]),
+                                    Balance = Convert.ToDecimal(x["Balance"])
+                                }).ToList();
+                    }
+                }
+            }
+
+            // Prepare JSON result
+            var data = list.Select(x => new
+            {
                 x.CardCode,
                 x.CardName,
                 x.BalanceFC,
-                x.Balance,
-                
+                x.Balance
             }).ToList();
-            return Json(new
-            {
-                status = status,
-                data = data,
-            });
+
+            return Json(new { status = true, data = data }, JsonRequestBehavior.AllowGet);
         }
+
 
         public JsonResult get_payment_schedule_by_so(string soEntry,string rowStatus)
         {
