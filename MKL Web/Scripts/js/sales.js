@@ -2567,6 +2567,7 @@ function get_special_payment() {
         var finalRemark = "";
 
 
+
         $("#table_pop_special_payment >tbody>tr").each(function () {
             var id = $(this).attr('id').replace("tr_pop_speical_payment_", "");
             var docdate = $("#txt_pop_special_payment_date_" + id).val().split("-");
@@ -2585,6 +2586,13 @@ function get_special_payment() {
             ? cserial
             : remark;
 
+        var el = $("#txtdecimal");
+        var decimal = 0;
+
+        if (el.length) {
+            var val = parseInt(el.val());
+            decimal = isNaN(val) ? 0 : val;
+        }
 
         $.ajax({
             url: '/sales/get_special_schedule',
@@ -2592,7 +2600,7 @@ function get_special_payment() {
             data: {
                 itemcode: $("#txt_item_code").val(), installment: returnstringvalue($("#txt_installment_amount").val()), LastRowno: $("#table_payment_schedule>tbody>tr").length
                 , BaseLine: -1, method: method, paymentdate: paymentdate, amount: amount, percent: percent, anualrate: anual, period: period
-                , remark: finalRemark, decimalplace: $("#txtdecimal").val()
+                , remark: finalRemark, decimalplace: decimal
             },
             datatype: 'json',
             beforeSend: function () {

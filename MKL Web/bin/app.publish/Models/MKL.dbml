@@ -1271,36 +1271,6 @@
       <Association Name="AppStage_AppTemplate" Member="AppStage" ThisKey="AppStageCode" OtherKey="AppStageCode" Type="AppStage" IsForeignKey="true" />
     </Type>
   </Table>
-  <Table Name="dbo.PenaltyWizard" Member="PenaltyWizards">
-    <Type Name="PenaltyWizard">
-      <Column Name="DocEntry" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
-      <Column Name="VisOrder" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
-      <Column Name="PenaltyDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
-      <Column Name="DocumentDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
-      <Column Name="PenaltyRef" Type="System.String" DbType="NVarChar(250)" CanBeNull="true" />
-      <Column Name="BPCode" Type="System.String" DbType="NVarChar(15) NOT NULL" CanBeNull="false" />
-      <Column Name="BPName" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
-      <Column Name="ItemCode" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
-      <Column Name="SerialNo" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
-      <Column Name="InstallmentID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="AccraulID" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="PrincipleAmt" Type="System.Decimal" DbType="Decimal(19,6)" CanBeNull="true" />
-      <Column Name="InterestAmt" Type="System.Decimal" DbType="Decimal(19,6)" CanBeNull="true" />
-      <Column Name="CHQAmt" Type="System.Decimal" DbType="Decimal(19,6)" CanBeNull="true" />
-      <Column Name="PenaltyPercent" Type="System.Decimal" DbType="Decimal(19,6)" CanBeNull="true" />
-      <Column Name="PenaltyAmt" Type="System.Decimal" DbType="Decimal(19,6)" CanBeNull="true" />
-      <Column Name="ApplyPercent" Type="System.Decimal" DbType="Decimal(19,6)" CanBeNull="true" />
-      <Column Name="WaiveAmt" Type="System.Decimal" DbType="Decimal(19,6)" CanBeNull="true" />
-      <Column Name="NetAmt" Type="System.Decimal" DbType="Decimal(19,6)" CanBeNull="true" />
-      <Column Name="Remark" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
-      <Column Name="Status" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="ARNo" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="LastError" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
-      <Association Name="PenaltyWizard_PenaltyWizard" Member="PenaltyWizard2" ThisKey="DocEntry,VisOrder" OtherKey="DocEntry,VisOrder" Type="PenaltyWizard" Cardinality="One" />
-      <Association Name="PenaltyWizard_PenaltyWizard" Member="PenaltyWizard1" ThisKey="DocEntry,VisOrder" OtherKey="DocEntry,VisOrder" Type="PenaltyWizard" IsForeignKey="true" />
-      <Association Name="PenaltyWizardH_PenaltyWizard" Member="PenaltyWizardH" ThisKey="DocEntry" OtherKey="DocEntry" Type="PenaltyWizardH" IsForeignKey="true" />
-    </Type>
-  </Table>
   <Table Name="dbo.PenaltyDraft" Member="PenaltyDrafts">
     <Type Name="PenaltyDraft">
       <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
@@ -1328,24 +1298,6 @@
       <Column Name="PenaltyAmt" Type="System.Decimal" DbType="Decimal(18,6)" CanBeNull="true" />
       <Column Name="Frozenfor" Type="System.String" DbType="NVarChar(1)" CanBeNull="true" />
       <Column Name="ProzenforRemark" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
-    </Type>
-  </Table>
-  <Table Name="dbo.PenaltyWizardH" Member="PenaltyWizardHs">
-    <Type Name="PenaltyWizardH">
-      <Column Name="DocEntry" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="PenaltyDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
-      <Column Name="DocNumRef" Type="System.String" DbType="NVarChar(250)" CanBeNull="true" />
-      <Column Name="Remark" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
-      <Column Name="WaiveOption" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
-      <Column Name="ApprovalStage" Type="System.String" DbType="NVarChar(250)" CanBeNull="true" />
-      <Column Name="NextApprover" Type="System.String" DbType="NVarChar(250)" CanBeNull="true" />
-      <Column Name="CreateDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
-      <Column Name="UpdateDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
-      <Column Name="CreateBy" Type="System.String" DbType="NVarChar(250)" CanBeNull="true" />
-      <Column Name="UpdateBy" Type="System.String" DbType="NVarChar(250)" CanBeNull="true" />
-      <Column Name="Status" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="ApprovalTemplate" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Association Name="PenaltyWizardH_PenaltyWizard" Member="PenaltyWizards" ThisKey="DocEntry" OtherKey="DocEntry" Type="PenaltyWizard" />
     </Type>
   </Table>
   <Table Name="dbo.SO" Member="SOs">
@@ -1967,6 +1919,56 @@
       <Column Name="LastErrorARNo" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
       <Column Name="LastErrorPayNo" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
       <Association Name="InterestWizard_InterestWizard1" Member="InterestWizard" ThisKey="ID" OtherKey="ID" Type="InterestWizard" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.PenaltyWizardH" Member="PenaltyWizardHs">
+    <Type Name="PenaltyWizardH">
+      <Column Name="DocEntry" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="PenaltyDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="DocNumRef" Type="System.String" DbType="NVarChar(250)" CanBeNull="true" />
+      <Column Name="Remark" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
+      <Column Name="WaiveOption" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
+      <Column Name="ApprovalStage" Type="System.String" DbType="NVarChar(250)" CanBeNull="true" />
+      <Column Name="NextApprover" Type="System.String" DbType="NVarChar(250)" CanBeNull="true" />
+      <Column Name="CreateDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="UpdateDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="CreateBy" Type="System.String" DbType="NVarChar(250)" CanBeNull="true" />
+      <Column Name="UpdateBy" Type="System.String" DbType="NVarChar(250)" CanBeNull="true" />
+      <Column Name="Status" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="ApprovalTemplate" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Association Name="PenaltyWizardH_PenaltyWizard" Member="PenaltyWizards" ThisKey="DocEntry" OtherKey="DocEntry" Type="PenaltyWizard" />
+    </Type>
+  </Table>
+  <Table Name="dbo.PenaltyWizard" Member="PenaltyWizards">
+    <Type Name="PenaltyWizard">
+      <Column Name="DocEntry" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="VisOrder" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="FromAccDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="ToAccDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="OverDay" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="PenaltyRef" Type="System.String" DbType="NVarChar(250)" CanBeNull="true" />
+      <Column Name="BPCode" Type="System.String" DbType="NVarChar(15) NOT NULL" CanBeNull="false" />
+      <Column Name="BPName" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="ItemCode" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="SerialNo" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="InstallmentID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="InstallmentRow" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="AccraulID" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="PrincipleAmt" Type="System.Decimal" DbType="Decimal(19,6)" CanBeNull="true" />
+      <Column Name="InterestAmt" Type="System.Decimal" DbType="Decimal(19,6)" CanBeNull="true" />
+      <Column Name="CHQAmt" Type="System.Decimal" DbType="Decimal(19,6)" CanBeNull="true" />
+      <Column Name="PenaltyPercent" Type="System.Decimal" DbType="Decimal(19,6)" CanBeNull="true" />
+      <Column Name="PenaltyAmt" Type="System.Decimal" DbType="Decimal(19,6)" CanBeNull="true" />
+      <Column Name="ApplyPercent" Type="System.Decimal" DbType="Decimal(19,6)" CanBeNull="true" />
+      <Column Name="WaiveAmt" Type="System.Decimal" DbType="Decimal(19,6)" CanBeNull="true" />
+      <Column Name="NetAmt" Type="System.Decimal" DbType="Decimal(19,6)" CanBeNull="true" />
+      <Column Name="Remark" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
+      <Column Name="Status" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="ARNo" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="LastError" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
+      <Association Name="PenaltyWizard_PenaltyWizard" Member="PenaltyWizard2" ThisKey="DocEntry,VisOrder" OtherKey="DocEntry,VisOrder" Type="PenaltyWizard" Cardinality="One" />
+      <Association Name="PenaltyWizard_PenaltyWizard" Member="PenaltyWizard1" ThisKey="DocEntry,VisOrder" OtherKey="DocEntry,VisOrder" Type="PenaltyWizard" IsForeignKey="true" />
+      <Association Name="PenaltyWizardH_PenaltyWizard" Member="PenaltyWizardH" ThisKey="DocEntry" OtherKey="DocEntry" Type="PenaltyWizardH" IsForeignKey="true" />
     </Type>
   </Table>
   <Function Name="dbo.ICC_UpdateSAPDocumentStatus" Method="ICC_UpdateSAPDocumentStatus">

@@ -4727,32 +4727,34 @@ function cmd_save_penaltyDraf() {
             PenaltyDate: $("#txt_penalty_date").val(),
             DocNumRef: $("#txt_doc_num").val(),
             Remark: $("#txt_remark").val(),
-            WaiveOption: $("#cbo_waive_option").val()
+            WaiveOption: $("#txt_waive_option").val()
         };
 
         $("#table_penalty_list >tbody >tr").each(function (index) {
             index++;
-            var penaltydate = $('#InstallmentDate_' + index).val().trim().split("-");
-            var documentdate = $('#td_paymentdate_' + index).text().trim().split("-");
+            var fromAccDate = $('#td_frompaymentdate_' + index).val().trim().split("-");
+            var toAccDate = $('#td_topaymentdate_' + index).text().trim().split("-");
             var detail = {
                 VisOrder: (index - 1),
-                PenaltyDate: penaltydate[2] + "/" + penaltydate[1] + "/" + penaltydate[0],
-                DocumentDate: documentdate[2] + "/" + documentdate[1] + "/" + documentdate[0],
+                FromAccDate: fromAccDate[2] + "/" + fromAccDate[1] + "/" + fromAccDate[0],
+                ToAccDate: toAccDate[2] + "/" + toAccDate[1] + "/" + toAccDate[0],
+                OverDay: $("#td_overday_" + index).text().trim(),
                 PenaltyRef: $("#txt_doc_num").val(),
                 BPCode: $("#td_cardcode_" + index).text().trim(),
                 BPName: $("#td_cardname_" + index).text().trim(),
                 ItemCode: $("#td_itemcode_" + index).text().trim(),
                 SerialNo: $("#td_serialno_" + index).text().trim(),
                 InstallmentID: $("#td_installmentid_" + index).text().trim(),
-                AccraulID: $("#td_id_" + index).text().trim(),
+                InstallmentRow: $("#td_installmentrow_" + index).text().trim(),
+                AccraulID: $("#td_ids_" + index).text().trim(),
                 PrincipleAmt: $("#td_principle_" + index).text().trim(),
                 InterestAmt: $("#td_interest_" + index).text().trim(),
                 CHQAmt: $("#td_chqamt_" + index).text().trim(),
                 PenaltyPercent: returnstringvalue($("#td_penaltypercent_" + index).text().trim()),
-                PenaltyAmt: returnstringvalue($("#td_penaltyamt_" + index).text().trim()),
+                PenaltyAmt: returnstringvalue($("#td_totalpenalty_" + index).text().trim()),
                 ApplyPercent: returnstringvalue($("#td_applypercent_" + index).text().trim()),
-                WaiveAmt: returnstringvalue($("#td_waiveamt_" + index).text().trim()),
-                NetAmt: returnstringvalue($("#td_netamt_" + index).text().trim()),
+                WaiveAmt: returnstringvalue($("#td_totalwaiveamt_" + index).text().trim()),
+                NetAmt: returnstringvalue($("#td_totalnetamt_" + index).text().trim()),
                 Remark: $("#td_remark_" + index).text(),
                 Status: "O"
                

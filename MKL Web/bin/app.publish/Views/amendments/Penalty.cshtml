@@ -31,6 +31,22 @@
 
 
     </script>
+
+    <style>
+        #table_penalty_list td,
+        #table_penalty_list th {
+            padding: 2px 5px; /* smaller padding: top/bottom 2px, left/right 5px */
+            vertical-align: middle; /* keep text vertically centered */
+        }
+
+        #table_penalty_list tbody tr {
+            height: auto; /* let height shrink based on padding */
+        }
+
+        #table_penalty_list thead th {
+            padding: 4px 5px; /* slightly larger for header */
+        }
+    </style>
 </head>
 <div class="modal fade" id="modal-cust_list">
     <div class="modal-dialog modal-dialog-popup-filter">
@@ -321,7 +337,7 @@
                                     </legend>
 
                                     <!-- Toggleable content - shown by default -->
-                                    <div id="penalty_table_wrapper" class="row" style="margin:0px;margin-top:10px; position: relative; min-height: 30vh; height: 100%; overflow: auto">
+                                    <div id="penalty_table_wrapper" class="row" style="margin:0px;margin-top:10px; position: relative; min-height: 60vh; height: 100%; overflow: auto">
                                         <table class="table" style="margin-bottom: 0px; position: absolute; min-width: 2500px; width: 100%;" id="table_penalty_list">
                                             <thead style="position:sticky; top: 0; z-index: 1000;">
                                                 <tr class="bg-gray" role="row">
