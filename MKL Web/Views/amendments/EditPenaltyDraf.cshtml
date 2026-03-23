@@ -12,6 +12,26 @@
 <head>
     <script src="../../Scripts/js/sales.js"></script>
     <script>
+
+        function calculateTotals() {
+            let totalOverDay = 0;
+            let totalPenalty = 0;
+            let totalWaive = 0;
+            let totalInv = 0;
+
+            $("#table_penalty_list tbody tr").each(function () {
+                totalOverDay += parseFloat($(this).find(".overday").text()) || 0;
+                totalPenalty += parseFloat($(this).find(".penalty").text().replace(/,/g, '')) || 0;
+                totalWaive += parseFloat($(this).find(".waive").text().replace(/,/g, '')) || 0;
+                totalInv += parseFloat($(this).find(".inv").text().replace(/,/g, '')) || 0;
+            });
+
+            $("#total_overday").text(totalOverDay);
+            $("#total_penalty").text(totalPenalty.toLocaleString(undefined, { minimumFractionDigits: 2 }));
+            $("#total_waive").text(totalWaive.toLocaleString(undefined, { minimumFractionDigits: 2 }));
+            $("#total_inv").text(totalInv.toLocaleString(undefined, { minimumFractionDigits: 2 }));
+        }
+
         $(document).ready(function () {
 
             var checkbutton = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Checkbutton.FirstOrDefault()));
@@ -27,6 +47,7 @@
                 $('#btnReject').hide();
                 $('#btnApprove').hide();
             }
+            calculateTotals();
         });
     </script>
 </head>
@@ -254,74 +275,111 @@
                                         </span>
                                     </legend>
 
-                                    <!-- Toggleable content - shown by default -->
-                                    <div id="penalty_table_wrapper" class="row" style="position: relative; overflow: auto; height: 100%; min-height: 30vh">
-                                        <table class="table" style="margin-bottom: 0px; position: absolute; min-width: 2000px; width: 100%;" id="table_penalty_list">
+                                    <div id="penalty_table_wrapper" class="row"
+                                         style="margin:0px;margin-top:10px; position: relative; min-height: 40vh; height: 100%; overflow: auto">
+
+                                        <table class="table"
+                                               style="margin-bottom: 0px; position: absolute; min-width: 2500px; width: 100%;"
+                                               id="table_penalty_list">
+
                                             <thead style="position:sticky; top: 0; z-index: 1000;">
+                                                <tr class="bg-gray">
+                                                    <td>#</td>
+                                                    <td>Cus.Code</td>
+                                                    <td>Cus.Name</td>
+                                                    <td>LoanIDRow</td>
+                                                    <td>LoanID</td>
+                                                    <td>Principle</td>
+                                                    <td>Interest</td>
+                                                    <td>CHQ Amt</td>
+                                                    <td>From Accrual Date</td>
+                                                    <td>To Accrual Date</td>
+                                                    <td>Over Day</td>
+                                                    <td>Penalty%</td>
+                                                    <td>Penalty$</td>
+                                                    <td>Waive Name</td>
+                                                    <td>Waive%</td>
+                                                    <td>Waive$</td>
+                                                    <td>Inv Amt</td>
+                                                    <td>Remark</td>
 
-                                                <tr class="bg-gray" role="row">
-                                                    <td style="width:2%; text-align:left;">#</td>
-                                                    <td style="width: 7%; text-align: left;">Posting Date</td>
-                                                    <td style="width: 7%; text-align: left;">Accrual Date</td>
-                                                    <td style="width: 5%; text-align: left;">Cus.Code</td>
-                                                    <td style="width: 8%; text-align: left;">Cus.Name</td>
-                                                    <td style="width: 5%; text-align: left; ">Serial</td>
-                                                    <td style="width: 3%; text-align: left;">Draf ID</td>
-                                                    <td style="width: 4%; text-align: left;">Loan ID</td>
-                                                    <td style="width: 6%; text-align: left; ">Principle</td>
-                                                    <td style="width: 5%; text-align: left;">Interest</td>
-                                                    <td style="width: 5%; text-align: left;">CHQ Amt</td>
-                                                    <td style="width: 4%; text-align: left;">Penalty%</td>
-                                                    <td style="width: 6%; text-align: left;">Penalty$</td>
-                                                    <td style="width: 6%; text-align: left;">Waive Name</td>
-                                                    <td style="width: 5%; text-align: left;">Waive%</td>
-                                                    <td style="width: 5%; text-align: left;">Waive$</td>
-                                                    <td style="width: 5%; text-align: left;">Inv Amt</td>
-                                                    <td style="width: 11%; text-align: left;">Remark</td>
-
-                                                    <td style="width: 5%; text-align: left; display:none">ItemCode</td>
-                                                    <td style="width: 5%; text-align: left; display: none">ItemName</td>
-
+                                                    <td style="display:none">IDs</td>
+                                                    <td style="display:none">ItemCode</td>
+                                                    <td style="display:none">Serial</td>
                                                 </tr>
                                             </thead>
-<tbody>
+
+                                            <tbody>
                                                 @{
                                                     int index = 1;
                                                     foreach (var item in HeaderChange)
                                                     {
                                                         <tr>
                                                             <td>@index</td>
-                                                            <td>@Convert.ToDateTime(item.PenaltyDate1).ToString("dd-MMM-yyyy")</td>
-                                                            <td>@Convert.ToDateTime(item.DocumentDate).ToString("dd-MMM-yyyy")</td>
 
                                                             <td>@item.BPCode</td>
                                                             <td>@item.BPName</td>
-                                                            <td style="color:red">@item.SerialNo</td>
-                                                            <td style="color:blue">@item.AccraulID</td>
 
-                                                            <td style="color:blue;text-decoration:underline;">
-                                                                <a href="/sales/PreviewLoan?DocEntry=@item.InstallmentID">@item.InstallmentID</a>
+                                                            <td style="color:blue;" title="@item.AccraulID">
+                                                                @(item.AccraulID != null && item.AccraulID.Length > 10
+                                                                ? item.AccraulID.Substring(0, 10) + "..."
+                                                                : item.AccraulID)
                                                             </td>
 
+                                                            <td style="color:blue; text-decoration:underline;">
+                                                                <a href="/sales/PreviewLoan?DocEntry=@item.InstallmentID">
+                                                                    @item.InstallmentID
+                                                                </a>
+                                                            </td>
 
-                                                            <td class="principle">@String.Format("{0:N2}", item.PrincipleAmt)</td>
-                                                            <td class="interest">@String.Format("{0:N2}", item.InterestAmt)</td>
-                                                            <td class="monthly">@String.Format("{0:N2}", item.CHQAmt)</td>
+                                                            <td>@String.Format("{0:N2}", item.PrincipleAmt)</td>
+                                                            <td>@String.Format("{0:N2}", item.InterestAmt)</td>
+                                                            <td>@String.Format("{0:N2}", item.CHQAmt)</td>
+
+                                                            <td>@Convert.ToDateTime(item.FromAccDate).ToString("dd-MMM-yyyy")</td>
+                                                            <td>@Convert.ToDateTime(item.ToAccDate).ToString("dd-MMM-yyyy")</td>
+
+                                                            <td class="overday">@(item.OverDay ?? 0)</td>
+
                                                             <td>@String.Format("{0:N2}", item.PenaltyPercent)</td>
-
-                                                            <td>@String.Format("{0:N2}", item.PenaltyAmt)</td>
+                                                            <td class="penalty">@String.Format("{0:N2}", item.PenaltyAmt)</td>
                                                             <td>@item.WaiveName</td>
                                                             <td>@String.Format("{0:N2}", item.ApplyPercent)</td>
-                                                            <td>@String.Format("{0:N2}", item.WaiveAmt)</td>
-                                                            <td>@String.Format("{0:N2}", item.NetAmt)</td>
+                                                            <td class="waive">@String.Format("{0:N2}", item.WaiveAmt)</td>
+                                                            <td class="inv">@String.Format("{0:N2}", item.NetAmt)</td>
                                                             <td>@item.RowRemark</td>
-                                                            <td style="width: 5%; text-align: left; display:none">@item.ItemCode</td>
-                                                            <td style="width: 5%; text-align: left; display:none">@item.ItemCode</td>
+
+                                                            <!-- Hidden -->
+                                                            <td style="display:none">@item.AccraulID</td>
+                                                            <td style="display:none">@item.ItemCode</td>
+                                                            <td style="display:none">@item.SerialNo</td>
                                                         </tr>
+
                                                         index++;
                                                     }
                                                 }
                                             </tbody>
+
+                                            <!-- ✅ FOOTER TOTAL -->
+                                            <tfoot>
+                                                <tr style="font-weight:bold; background:#f5f5f5;">
+                                                    <td colspan="10" style="text-align:right;">Total:</td>
+
+                                                    <td id="total_overday">0</td>
+                                                    <td></td>
+                                                    <td id="total_penalty">0.00</td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td id="total_waive">0.00</td>
+                                                    <td id="total_inv">0.00</td>
+                                                    <td></td>
+
+                                                    <td style="display:none"></td>
+                                                    <td style="display:none"></td>
+                                                    <td style="display:none"></td>
+                                                </tr>
+                                            </tfoot>
+
                                         </table>
                                     </div>
                                 </fieldset>

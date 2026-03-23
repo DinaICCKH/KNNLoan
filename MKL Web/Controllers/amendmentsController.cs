@@ -124,24 +124,32 @@ namespace MKL_Web.Controllers
             DateTime? tdate = null,
             string Item = "",
             string Serial = "",
-            string Customer = "",string Frozen="")
-                {
-                    // Use default date if null
-                    DateTime fromDate = fdate ?? new DateTime(1999, 1, 1);
-                    DateTime toDate = tdate ?? new DateTime(1999, 1, 1);
+            string Customer = "",
+            string Frozen = "",
+            int page = 1,           // Page number for paging
+            int pageSize = 50       // Rows per page
+        )
+        {
+            // Use default date if null
+            DateTime fromDate = fdate ?? new DateTime(1999, 1, 1);
+            DateTime toDate = tdate ?? new DateTime(1999, 1, 1);
 
-                    var result = db.ICC_Get_List_PenaltyDraf_Accraul(
-                        Status ?? "D",
-                        fromDate,
-                        toDate,
-                        Item ?? "",
-                        Serial ?? "",
-                        Customer ?? "",
-                        Frozen ?? ""
-                    ).ToList();
-
+            // Call stored procedure with paging
+            var result = db.ICC_Get_List_PenaltyDraf_Accraul(
+                Status ?? "D",
+                fromDate,
+                toDate,
+                Item ?? "",
+                Serial ?? "",
+                Customer ?? "",
+                Frozen ?? "",
+                page,
+                pageSize
+            ).ToList();
 
             ViewBag.AccraulPenaltyListing = result;
+            ViewBag.PageNumber = page;
+            ViewBag.PageSize = pageSize;
 
             return View();
         }

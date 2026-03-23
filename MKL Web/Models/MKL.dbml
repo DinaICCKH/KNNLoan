@@ -2185,46 +2185,6 @@
       <Column Name="NextApprover" Type="System.String" DbType="VarChar(1) NOT NULL" CanBeNull="false" />
     </ElementType>
   </Function>
-  <Function Name="dbo.ICC_Get_List_PenaltyDraf_Accraul" Method="ICC_Get_List_PenaltyDraf_Accraul">
-    <Parameter Name="Status" Parameter="status" Type="System.String" DbType="NVarChar(50)" />
-    <Parameter Name="fdate" Type="System.DateTime" DbType="Date" />
-    <Parameter Name="tdate" Type="System.DateTime" DbType="Date" />
-    <Parameter Name="Item" Parameter="item" Type="System.String" DbType="NVarChar(1000)" />
-    <Parameter Name="Serial" Parameter="serial" Type="System.String" DbType="NVarChar(100)" />
-    <Parameter Name="Customer" Parameter="customer" Type="System.String" DbType="NVarChar(250)" />
-    <Parameter Name="Frozen" Parameter="frozen" Type="System.String" DbType="NVarChar(1)" />
-    <ElementType Name="ICC_Get_List_PenaltyDraf_AccraulResult">
-      <Column Name="CardCode" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
-      <Column Name="CardName" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
-      <Column Name="ItemCode" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="ItemName" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
-      <Column Name="Comment" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
-      <Column Name="SerialNo" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
-      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="InstallmentID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="DueDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
-      <Column Name="PaymentDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
-      <Column Name="CHQAmt" Type="System.Decimal" DbType="Decimal(18,6)" CanBeNull="true" />
-      <Column Name="PrincipleAmt" Type="System.Decimal" DbType="Decimal(18,6)" CanBeNull="true" />
-      <Column Name="InterestAmt" Type="System.Decimal" DbType="Decimal(18,6)" CanBeNull="true" />
-      <Column Name="OutStandingAmt" Type="System.Decimal" DbType="Decimal(18,6)" CanBeNull="true" />
-      <Column Name="PenaltyPercent" Type="System.Decimal" DbType="Decimal(22,6)" CanBeNull="true" />
-      <Column Name="PenaltyAmt" Type="System.Decimal" DbType="Decimal(18,6)" CanBeNull="true" />
-      <Column Name="OverDay" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="Remark" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
-      <Column Name="OcrCode" Type="System.String" DbType="NVarChar(250)" CanBeNull="true" />
-      <Column Name="OcrCode2" Type="System.String" DbType="NVarChar(250)" CanBeNull="true" />
-      <Column Name="OcrCode3" Type="System.String" DbType="NVarChar(250)" CanBeNull="true" />
-      <Column Name="OcrCode4" Type="System.String" DbType="NVarChar(250)" CanBeNull="true" />
-      <Column Name="OcrCode5" Type="System.String" DbType="NVarChar(250)" CanBeNull="true" />
-      <Column Name="Status" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="ApprovalTemplate" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="ApprovalDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
-      <Column Name="LastApproval" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="Frozenfor" Type="System.String" DbType="NVarChar(1)" CanBeNull="true" />
-      <Column Name="ProzenforRemark" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
-    </ElementType>
-  </Function>
   <Function Name="dbo.ICC_Get_List_Approval_Penalty" Method="ICC_Get_List_Approval_Penalty">
     <Parameter Name="Status" Parameter="status" Type="System.String" DbType="NVarChar(50)" />
     <Parameter Name="fdate" Type="System.DateTime" DbType="Date" />
@@ -2244,43 +2204,6 @@
       <Column Name="CreateBy" Type="System.String" DbType="NVarChar(250)" CanBeNull="true" />
       <Column Name="Status" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
       <Column Name="Remark" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
-    </ElementType>
-  </Function>
-  <Function Name="dbo.ICC_Get_List_Approval_PenaltyDraf_By_ID" Method="ICC_Get_List_Approval_PenaltyDraf_By_ID">
-    <Parameter Name="DocEntry" Parameter="docEntry" Type="System.Int32" DbType="Int" />
-    <ElementType Name="ICC_Get_List_Approval_PenaltyDraf_By_IDResult">
-      <Column Name="DocEntry" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="PenaltyDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
-      <Column Name="Remark" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
-      <Column Name="DocNumRef" Type="System.String" DbType="NVarChar(250)" CanBeNull="true" />
-      <Column Name="WaiveOption" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
-      <Column Name="WaiveName" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
-      <Column Name="RequestBy" Type="System.String" DbType="NVarChar(250)" CanBeNull="true" />
-      <Column Name="RequestDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
-      <Column Name="ApprovalTemplate" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="TemplateDesc" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
-      <Column Name="LastApprover" Type="System.String" DbType="NVarChar(250)" CanBeNull="true" />
-      <Column Name="VisOrder" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="PenaltyDate1" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
-      <Column Name="DocumentDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
-      <Column Name="BPCode" Type="System.String" DbType="NVarChar(15)" CanBeNull="true" />
-      <Column Name="BPName" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
-      <Column Name="ItemCode" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
-      <Column Name="SerialNo" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
-      <Column Name="InstallmentID" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="AccraulID" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="PrincipleAmt" Type="System.Decimal" DbType="Decimal(19,6)" CanBeNull="true" />
-      <Column Name="InterestAmt" Type="System.Decimal" DbType="Decimal(19,6)" CanBeNull="true" />
-      <Column Name="CHQAmt" Type="System.Decimal" DbType="Decimal(19,6)" CanBeNull="true" />
-      <Column Name="PenaltyPercent" Type="System.Decimal" DbType="Decimal(19,6)" CanBeNull="true" />
-      <Column Name="PenaltyAmt" Type="System.Decimal" DbType="Decimal(19,6)" CanBeNull="true" />
-      <Column Name="ApplyPercent" Type="System.Decimal" DbType="Decimal(19,6)" CanBeNull="true" />
-      <Column Name="WaiveAmt" Type="System.Decimal" DbType="Decimal(19,6)" CanBeNull="true" />
-      <Column Name="NetAmt" Type="System.Decimal" DbType="Decimal(19,6)" CanBeNull="true" />
-      <Column Name="RowRemark" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
-      <Column Name="Status" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="ARNo" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="LastError" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
     </ElementType>
   </Function>
   <Function Name="dbo.ICC_Approval_PenaltyDraf_Submit_Doc" Method="ICC_Approval_PenaltyDraf_Submit_Doc">
@@ -2993,6 +2916,88 @@
       <Column Name="ARNo" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
       <Column Name="NewPostingDate" Type="System.DateTime" DbType="Date" CanBeNull="true" />
       <Column Name="NewDueDate" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.ICC_Get_List_Approval_PenaltyDraf_By_ID" Method="ICC_Get_List_Approval_PenaltyDraf_By_ID">
+    <Parameter Name="DocEntry" Parameter="docEntry" Type="System.Int32" DbType="Int" />
+    <ElementType Name="ICC_Get_List_Approval_PenaltyDraf_By_IDResult">
+      <Column Name="DocEntry" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="PenaltyDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="Remark" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
+      <Column Name="DocNumRef" Type="System.String" DbType="NVarChar(250)" CanBeNull="true" />
+      <Column Name="WaiveOption" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
+      <Column Name="WaiveName" Type="System.String" DbType="NVarChar(11)" CanBeNull="true" />
+      <Column Name="RequestBy" Type="System.String" DbType="NVarChar(250)" CanBeNull="true" />
+      <Column Name="RequestDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="ApprovalTemplate" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="TemplateDesc" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
+      <Column Name="LastApprover" Type="System.String" DbType="NVarChar(250)" CanBeNull="true" />
+      <Column Name="VisOrder" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="PenaltyDate1" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="DocumentDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="BPCode" Type="System.String" DbType="NVarChar(15)" CanBeNull="true" />
+      <Column Name="BPName" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="ItemCode" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="SerialNo" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="InstallmentID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="AccraulID" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="PrincipleAmt" Type="System.Decimal" DbType="Decimal(19,6)" CanBeNull="true" />
+      <Column Name="InterestAmt" Type="System.Decimal" DbType="Decimal(19,6) NOT NULL" CanBeNull="false" />
+      <Column Name="CHQAmt" Type="System.Decimal" DbType="Decimal(19,6)" CanBeNull="true" />
+      <Column Name="PenaltyPercent" Type="System.Decimal" DbType="Decimal(19,6)" CanBeNull="true" />
+      <Column Name="PenaltyAmt" Type="System.Decimal" DbType="Decimal(19,6)" CanBeNull="true" />
+      <Column Name="ApplyPercent" Type="System.Decimal" DbType="Decimal(19,6)" CanBeNull="true" />
+      <Column Name="WaiveAmt" Type="System.Decimal" DbType="Decimal(19,6)" CanBeNull="true" />
+      <Column Name="NetAmt" Type="System.Decimal" DbType="Decimal(19,6)" CanBeNull="true" />
+      <Column Name="RowRemark" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
+      <Column Name="Status" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="ARNo" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="LastError" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
+      <Column Name="OverDay" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="FromAccDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="ToAccDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.ICC_Get_List_PenaltyDraf_Accraul" Method="ICC_Get_List_PenaltyDraf_Accraul">
+    <Parameter Name="Status" Parameter="status" Type="System.String" DbType="NVarChar(50)" />
+    <Parameter Name="fdate" Type="System.DateTime" DbType="Date" />
+    <Parameter Name="tdate" Type="System.DateTime" DbType="Date" />
+    <Parameter Name="Item" Parameter="item" Type="System.String" DbType="NVarChar(1000)" />
+    <Parameter Name="Serial" Parameter="serial" Type="System.String" DbType="NVarChar(100)" />
+    <Parameter Name="Customer" Parameter="customer" Type="System.String" DbType="NVarChar(250)" />
+    <Parameter Name="Frozen" Parameter="frozen" Type="System.String" DbType="NVarChar(1)" />
+    <Parameter Name="PageNumber" Parameter="pageNumber" Type="System.Int32" DbType="Int" />
+    <Parameter Name="PageSize" Parameter="pageSize" Type="System.Int32" DbType="Int" />
+    <ElementType Name="ICC_Get_List_PenaltyDraf_AccraulResult">
+      <Column Name="CardCode" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
+      <Column Name="CardName" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="ItemCode" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="ItemName" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="Comment" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
+      <Column Name="SerialNo" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="InstallmentID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="DueDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="PaymentDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="CHQAmt" Type="System.Decimal" DbType="Decimal(18,6)" CanBeNull="true" />
+      <Column Name="PrincipleAmt" Type="System.Decimal" DbType="Decimal(18,6)" CanBeNull="true" />
+      <Column Name="InterestAmt" Type="System.Decimal" DbType="Decimal(18,6)" CanBeNull="true" />
+      <Column Name="OutStandingAmt" Type="System.Decimal" DbType="Decimal(18,6)" CanBeNull="true" />
+      <Column Name="PenaltyPercent" Type="System.Decimal" DbType="Decimal(22,6)" CanBeNull="true" />
+      <Column Name="PenaltyAmt" Type="System.Decimal" DbType="Decimal(18,6)" CanBeNull="true" />
+      <Column Name="OverDay" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Remark" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
+      <Column Name="OcrCode" Type="System.String" DbType="NVarChar(250)" CanBeNull="true" />
+      <Column Name="OcrCode2" Type="System.String" DbType="NVarChar(250)" CanBeNull="true" />
+      <Column Name="OcrCode3" Type="System.String" DbType="NVarChar(250)" CanBeNull="true" />
+      <Column Name="OcrCode4" Type="System.String" DbType="NVarChar(250)" CanBeNull="true" />
+      <Column Name="OcrCode5" Type="System.String" DbType="NVarChar(250)" CanBeNull="true" />
+      <Column Name="Status" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="ApprovalTemplate" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="ApprovalDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="LastApproval" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Frozenfor" Type="System.String" DbType="NVarChar(1)" CanBeNull="true" />
+      <Column Name="ProzenforRemark" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
     </ElementType>
   </Function>
 </Database>

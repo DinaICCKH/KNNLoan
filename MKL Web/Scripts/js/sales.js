@@ -4391,9 +4391,11 @@ function cmd_save_approval_penaltyDraf(Type) {
         },
         success: function (data) {
             if (data.status == "OK") {
-                ShowAlert("Update Record  was saved", function () {
-                    window.location.assign("/amendments/PenaltyApporovalListing");
-                });
+                ShowAlertCus("Record updated successfully", "success");
+
+                setTimeout(function () {
+                    window.location.href = "/amendments/PenaltyApporovalListing";
+                }, 1500);
             }
             else {
                 ShowAlertCus("Error while saving","warning");
@@ -4666,7 +4668,7 @@ function get_penaltydraf_waive() {
 
                     // Amounts
                     data += "<td style='text-align:left; vertical-align: middle;' id='td_principle_" + rowindex + "'>" + convert2digit(x.PrincipleAmt) + "</td>";
-                    data += "<td style='text-align:left; vertical-align: middle;' id='td_principle_" + rowindex + "'>" + convert2digit(x.interestAmt) + "</td>";
+                    data += "<td style='text-align:left; vertical-align: middle;' id='td_interest_" + rowindex + "'>" + convert2digit(x.interestAmt) + "</td>";
                     data += "<td style='text-align:left; vertical-align: middle;' id='td_chqamt_" + rowindex + "'>" + convert2digit(x.CHQAmt) + "</td>";
 
                     // NEW: From Payment Date
@@ -4740,7 +4742,7 @@ function cmd_save_penaltyDraf() {
 
         $("#table_penalty_list >tbody >tr").each(function (index) {
             index++;
-            var fromAccDate = $('#td_frompaymentdate_' + index).val().trim().split("-");
+            var fromAccDate = $('#td_frompaymentdate_' + index).text().trim().split("-");
             var toAccDate = $('#td_topaymentdate_' + index).text().trim().split("-");
             var detail = {
                 VisOrder: (index - 1),
