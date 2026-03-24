@@ -454,16 +454,17 @@
                                         </button>
 
                                     </div>
-
+                                    
                                     <!-- Toggleable content - shown by default -->
-                                    <div id="table_wrapper" class="row" style="position: relative; overflow: auto; height: 100%; min-height: 35vh">
+                                    <div id="table_wrapper" class="" style="position: relative; width: 100%; overflow: auto; height: 100%; min-height: 40vh">
                                         
-                                           <table class="table" style="margin-bottom: 0px; position: absolute; width: 100%; min-width:2000px;" id="table_payment_schedule">
-                                                <thead style="position:sticky; top: 0; z-index: 1000;">
+                                           <table class="table" style="margin-bottom: 0px; position: absolute; width: 100%; min-width:2500px;" id="table_payment_schedule">
+                                                <thead  style="position:sticky; top: 0; z-index: 1000;">
                                                     <tr class="bg-gray" role="row">
 
                                                         <th style="width:1%; text-align:left;">#</th>
                                                         <th style="width: 8%; text-align: left;">DocDate</th>
+                                                        <th style="width: 7%; text-align: left;">New DueDate</th>
                                                         <th style="width: 7%; text-align: left;">DueDate</th>
                                                         <th style="width: 6%; text-align: left;">Principle</th>
                                                         <th style="width: 6%; text-align: left;">Interest</th>
@@ -498,9 +499,10 @@
                                                             if (item.VarianDay != 0)
                                                             {
                                                                 rowClass = "bg-light-green"; // override
-                                                            }
+                                                        }
                                                             <tr class="@rowClass">
                                                                 <td id="tr_visorder_@index">@(item.VisOrder+1)</td>
+                                                                <td id="NewDueDate_@index">@Convert.ToDateTime(item.PaymentDate).ToString("dd-MMM-yyyy")</td>
                                                                 <td id="InstallmentDate_@index">@Convert.ToDateTime(item.PaymentDate).ToString("dd-MMM-yyyy")</td>
                                                                 <td id="tr_payment_detail_paymentdate_line_@index">@Convert.ToDateTime(item.DueDate).ToString("dd-MMM-yyyy")</td>
                                                                 <td class="principle">@String.Format("{0:N2}", item.Principle)</td>
@@ -547,6 +549,7 @@
 
                                                 <tfoot>
                                                     <tr>
+                                                        <td class="bg-gray" style="text-align:right;"></td>
                                                         <td class="bg-gray" style="text-align:right;"></td>
                                                         <td class="bg-gray" style="text-align:right;"></td>
                                                         <td class="bg-gray" style="text-align:left;"><b>Total</b></td>

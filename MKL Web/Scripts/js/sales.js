@@ -2393,7 +2393,7 @@ function get_selected_payment_schedule_by_so_forReschedule() {
                         "</td>";
 
 
-
+                    data = data + "<td style='text-align:Left; vertical-align: middle;' id='tr_payment_detail_newduedate_line_" + index + "'>" + x.InstallmentDate + "</td>";
                     data = data + "<td style='text-align:Left; vertical-align: middle;' id='tr_payment_detail_paymentdate_line_" + index + "'>" + x.DueDate + "</td>";
                     data = data + "<td style='text-align:left; vertical-align: middle;' id='tr_payment_detail_principle_line_" + index + "'>" + convert2digit(x.Principle) + "</td>";
                     data = data + "<td style='text-align:Left; vertical-align: middle;' id='tr_payment_detail_interest_line_" + index + "'>" + convert2digit(x.Interest) + "</td>";

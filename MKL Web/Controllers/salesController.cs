@@ -2877,6 +2877,15 @@ namespace MKL_Web.Controllers
 
         public ActionResult Activity()
         {
+            var soList = db.SOs.Where(a => a.ChangeReason == "ChangingProduct").ToList();
+            //ViewBag.cust = db.v_OCRDs.Where(x => x.cardtype == 'C' && soList.Select(a => a.CardCode).Contains(x.CardCode)).ToList();
+
+            ViewBag.cust = db.v_OCRD_Penalties.ToList();
+            ViewBag.houselist = db.v_Item_Houses.ToList();
+            ViewBag.installment = db.InstallmentLists.Where(x => x.InsCode != "B").ToList();
+            ViewBag.panaltyoption = db.ICC_GET_Penalty_Option().ToList();
+
+            ViewBag.Waiveoption = db.ICC_GET_Waive_Option().ToList();
             return View();
         }
 

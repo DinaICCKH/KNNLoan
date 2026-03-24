@@ -80,9 +80,12 @@
                             .replace(/,/g, '')
                     ) || 0;
 
-                    let result = varianDay === 0
-                        ? 0
-                        : (monthlyPay * 0.0125) / 30 * varianDay;
+
+                    // ✅ Only calculate when varianDay > 7
+                    let result = varianDay > 7
+                        ? (monthlyPay * 0.0125) / 30 * varianDay
+                        : 0;
+
 
                     if (isNaN(result)) result = 0;
 
@@ -129,16 +132,34 @@
                                 let updatedDate = moment(newDate).add(monthOffset, 'months');
                                 updatedDate.date(Math.min(targetDay, updatedDate.daysInMonth()));
 
-                                $("#InstallmentDate_" + rowIndex)
-                                    .val(updatedDate.format("DD-MMM-YYYY"));
+                                let formattedDate = updatedDate.format("DD-MMM-YYYY");
+
+                                // ✅ Update InstallmentDate
+                                $("#InstallmentDate_" + rowIndex).val(formattedDate);
+
+                                // 🔥 ADD THIS: Sync New DueDate with DocDate (same as InstallmentDate now)
+                                $("#tr_payment_detail_newduedate_line_" + rowIndex)
+                                    .text(formattedDate)
+                                    .css("color", "blue"); // optional highlight
 
                                 monthOffset++;
                             }
                         });
+
+                    } else {
+                        // ❗ If user choose "No" → update only current row
+
+                        let formattedDate = newDate.format("DD-MMM-YYYY");
+
+                        // Update only this row
+                        $("#tr_payment_detail_newduedate_line_" + changedIndex)
+                            .text(formattedDate)
+                            .css("color", "blue");
                     }
 
                     updateVarianDays();
                     storeOriginalDates();
+
                 });
             });
 
@@ -708,12 +729,13 @@
                                         </div>
 
                                         <!-- Scrollable table wrapper (only this table) -->
-                                        <div class="" style="position: relative; width: 100%; overflow: auto; height: 100%; min-height: 30vh">
-                                            <table class="table" style="margin-bottom: 0px; position: absolute; width: 100%; min-width:2000px;" id="table_payment_schedule">
+                                        <div class="" style="position: relative; width: 100%; overflow: auto; height: 100%; min-height: 40vh">
+                                            <table class="table" style="margin-bottom: 0px; position: absolute; width: 100%; min-width:2500px;" id="table_payment_schedule">
                                                 <thead style="position:sticky; top: 0; z-index: 1000;">
                                                     <tr class="bg-gray" role="row">
                                                         <th style="width:1%; text-align:left;">#</th>
                                                         <th style="width: 10%; text-align: left;">DocDate</th>
+                                                        <th style="width: 7%; text-align: left;">New DueDate</th>
                                                         <th style="width: 7%; text-align: left;">DueDate</th>
                                                         <th style="width: 6%; text-align: left;">Principle</th>
                                                         <th style="width: 6%; text-align: left;">Interest</th>
@@ -736,6 +758,7 @@
                                                 <tbody></tbody>
                                                 <tfoot>
                                                     <tr>
+                                                        <td class="bg-gray" style="text-align:right;"></td>
                                                         <td class="bg-gray" style="text-align:right;"></td>
                                                         <td class="bg-gray" style="text-align:right;"></td>
                                                         <td class="bg-gray" style="text-align:left;"><b>Total</b></td>

@@ -2393,7 +2393,7 @@ function get_selected_payment_schedule_by_so_forReschedule() {
                         "</td>";
 
 
-
+                    data = data + "<td style='text-align:Left; vertical-align: middle;' id='tr_payment_detail_newduedate_line_" + index + "'>" + x.InstallmentDate + "</td>";
                     data = data + "<td style='text-align:Left; vertical-align: middle;' id='tr_payment_detail_paymentdate_line_" + index + "'>" + x.DueDate + "</td>";
                     data = data + "<td style='text-align:left; vertical-align: middle;' id='tr_payment_detail_principle_line_" + index + "'>" + convert2digit(x.Principle) + "</td>";
                     data = data + "<td style='text-align:Left; vertical-align: middle;' id='tr_payment_detail_interest_line_" + index + "'>" + convert2digit(x.Interest) + "</td>";
@@ -2567,6 +2567,7 @@ function get_special_payment() {
         var finalRemark = "";
 
 
+
         $("#table_pop_special_payment >tbody>tr").each(function () {
             var id = $(this).attr('id').replace("tr_pop_speical_payment_", "");
             var docdate = $("#txt_pop_special_payment_date_" + id).val().split("-");
@@ -2585,6 +2586,13 @@ function get_special_payment() {
             ? cserial
             : remark;
 
+        var el = $("#txtdecimal");
+        var decimal = 0;
+
+        if (el.length) {
+            var val = parseInt(el.val());
+            decimal = isNaN(val) ? 0 : val;
+        }
 
         $.ajax({
             url: '/sales/get_special_schedule',
@@ -2592,7 +2600,7 @@ function get_special_payment() {
             data: {
                 itemcode: $("#txt_item_code").val(), installment: returnstringvalue($("#txt_installment_amount").val()), LastRowno: $("#table_payment_schedule>tbody>tr").length
                 , BaseLine: -1, method: method, paymentdate: paymentdate, amount: amount, percent: percent, anualrate: anual, period: period
-                , remark: finalRemark, decimalplace: $("#txtdecimal").val()
+                , remark: finalRemark, decimalplace: decimal
             },
             datatype: 'json',
             beforeSend: function () {
@@ -4383,9 +4391,11 @@ function cmd_save_approval_penaltyDraf(Type) {
         },
         success: function (data) {
             if (data.status == "OK") {
-                ShowAlert("Update Record  was saved", function () {
-                    window.location.assign("/amendments/PenaltyApporovalListing");
-                });
+                ShowAlertCus("Record updated successfully", "success");
+
+                setTimeout(function () {
+                    window.location.href = "/amendments/PenaltyApporovalListing";
+                }, 1500);
             }
             else {
                 ShowAlertCus("Error while saving","warning");
@@ -4658,7 +4668,7 @@ function get_penaltydraf_waive() {
 
                     // Amounts
                     data += "<td style='text-align:left; vertical-align: middle;' id='td_principle_" + rowindex + "'>" + convert2digit(x.PrincipleAmt) + "</td>";
-                    data += "<td style='text-align:left; vertical-align: middle;' id='td_principle_" + rowindex + "'>" + convert2digit(x.interestAmt) + "</td>";
+                    data += "<td style='text-align:left; vertical-align: middle;' id='td_interest_" + rowindex + "'>" + convert2digit(x.interestAmt) + "</td>";
                     data += "<td style='text-align:left; vertical-align: middle;' id='td_chqamt_" + rowindex + "'>" + convert2digit(x.CHQAmt) + "</td>";
 
                     // NEW: From Payment Date
@@ -4732,7 +4742,7 @@ function cmd_save_penaltyDraf() {
 
         $("#table_penalty_list >tbody >tr").each(function (index) {
             index++;
-            var fromAccDate = $('#td_frompaymentdate_' + index).val().trim().split("-");
+            var fromAccDate = $('#td_frompaymentdate_' + index).text().trim().split("-");
             var toAccDate = $('#td_topaymentdate_' + index).text().trim().split("-");
             var detail = {
                 VisOrder: (index - 1),

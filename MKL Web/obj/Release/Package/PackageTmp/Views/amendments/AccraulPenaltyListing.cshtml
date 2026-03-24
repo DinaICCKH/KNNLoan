@@ -1,9 +1,7 @@
-﻿@using MKL_Web.Models;
+﻿@using MKL_Web.Models
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
     ViewBag.Title = "Accrual Penalty List Report";
-    List<V_ARMemo> po = ViewBag.armemoList;
-    List<ICC_Get_List_PenaltyDraf_AccraulResult> applist = ViewBag.AccraulPenaltyListing;
 }
 
 <head>
@@ -31,6 +29,11 @@
             cursor: pointer;
             font-size: 12px;
         }
+
+        tfoot td {
+            font-weight: bold;
+            background-color: #f1f1f1;
+        }
     </style>
 </head>
 
@@ -42,8 +45,7 @@
         </h5>
     </section>
 
-    <div class="form-inline d-flex align-items-center flex-wrap"
-         style="gap:10px; padding-bottom:10px !important">
+    <div class="form-inline d-flex align-items-center flex-wrap" style="gap:10px; padding-bottom:10px !important">
 
         <div class="form-group mb-2">
             <label class="mr-1">Status</label>
@@ -67,49 +69,36 @@
         <div class="form-group mb-2">
             <label class="mr-2">From Date</label>
             <div class="input-group date">
-                <div class="input-group-addon">
-                    <i class="fa fa-calendar"></i>
-                </div>
-                <input type="text" class="form-control datetime"
-                       readonly="readonly" id="fdate"
-                       placeholder="From Date">
+                <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
+                <input type="text" class="form-control datetime" id="fdate" placeholder="From Date" readonly />
             </div>
         </div>
 
         <div class="form-group mb-2">
             <label class="mr-2">To Date</label>
             <div class="input-group date">
-                <div class="input-group-addon">
-                    <i class="fa fa-calendar"></i>
-                </div>
-                <input type="text" class="form-control datetime"
-                       readonly="readonly" id="tdate"
-                       placeholder="To Date">
+                <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
+                <input type="text" class="form-control datetime" id="tdate" placeholder="To Date" readonly />
             </div>
         </div>
 
         <div class="form-group mb-2">
             <label class="mr-3">Item</label>
-            @Html.TextBox("Item", Request["Item"],
-                new { @class = "form-control form-control-sm", style = "width:120px;" })
+            @Html.TextBox("Item", Request["Item"], new { @class = "form-control form-control-sm", style = "width:120px;" })
         </div>
 
         <div class="form-group mb-2">
             <label class="mr-2">Serial</label>
-            @Html.TextBox("Serial", Request["Serial"],
-                new { @class = "form-control form-control-sm", style = "width:120px;" })
+            @Html.TextBox("Serial", Request["Serial"], new { @class = "form-control form-control-sm", style = "width:120px;" })
         </div>
 
         <div class="form-group mb-2">
             <label class="mr-2">Customer</label>
-            @Html.TextBox("Customer", Request["Customer"],
-                new { @class = "form-control form-control-sm", style = "width:140px;" })
+            @Html.TextBox("Customer", Request["Customer"], new { @class = "form-control form-control-sm", style = "width:140px;" })
         </div>
 
         <div class="form-group mb-2 ml-2">
-            <button type="submit" class="btn btn-primary btn-sm">
-                Search
-            </button>
+            <button type="submit" class="btn btn-primary btn-sm">Search</button>
         </div>
     </div>
 }
@@ -118,10 +107,7 @@
     <div class="col-md-12">
         <div class="box box-primary">
             <div class="table-responsive">
-                <table id="table_pr_assignment"
-                       class="table table-bordered table-hover display nowrap"
-                       style="width:100%">
-
+                <table id="table_pr_assignment" class="table table-bordered table-hover display nowrap" style="width:100%">
                     <thead>
                         <tr class="bg-gray">
                             <th>ID</th>
@@ -149,84 +135,16 @@
                             <th>Frozen Remark</th>
                         </tr>
                     </thead>
-
-                    <tbody>
-                        @{
-                            int rowindex = 1;
-                            foreach (var x in applist)
-                            {
-                                <tr>
-                                    <td>@x.ID</td>
-                                    <td style="color:blue;text-decoration:underline;">
-                                        <a href="/sales/PreviewLoan?DocEntry=@x.InstallmentID">
-                                            @x.InstallmentID
-                                        </a>
-                                    </td>
-                                    <td>@x.CardCode</td>
-                                    <td>@x.CardName</td>
-                                    <td>@x.ItemCode</td>
-                                    <td>@x.ItemName</td>
-                                    <td>@x.SerialNo</td>
-
-                                    <!-- Doc Comment -->
-                                    <td>
-                                        @{
-                                            var comment = x.Comment ?? "";
-                                            var shortComment = comment.Length > 20
-                                                ? comment.Substring(0, 20) + "..."
-                                                : comment;
-                                        }
-
-                                        <span class="short-text">@shortComment</span>
-
-                                        @if (comment.Length > 20)
-                                        {
-                                            <span class="full-text">@comment</span>
-                                            <a class="toggle-text text-primary">Show</a>
-                                        }
-                                    </td>
-
-                                    <td>@(x.DueDate?.ToString("dd-MMM-yyyy") ?? "-")</td>
-                                    <td>@(x.PaymentDate?.ToString("dd-MMM-yyyy") ?? "-")</td>
-
-                                    <td class="text-right">@(x.CHQAmt?.ToString("N2"))</td>
-                                    <td class="text-right">@(x.PrincipleAmt?.ToString("N2"))</td>
-                                    <td class="text-right">@(x.InterestAmt?.ToString("N2"))</td>
-                                    <td class="text-right">@(x.OutStandingAmt?.ToString("N2"))</td>
-                                    <td class="text-right">@(x.PenaltyPercent?.ToString("N2"))</td>
-                                    <td class="text-right">@(x.PenaltyAmt?.ToString("N2"))</td>
-
-                                    <td>@x.OverDay</td>
-
-                                    <!-- Remark -->
-                                    <td>
-                                        @{
-                                            var remark = x.Remark ?? "";
-                                            var shortRemark = remark.Length > 20
-                                                ? remark.Substring(0, 20) + "..."
-                                                : remark;
-                                        }
-
-                                        <span class="short-text">@shortRemark</span>
-
-                                        @if (remark.Length > 20)
-                                        {
-                                            <span class="full-text">@remark</span>
-                                            <a class="toggle-text text-primary">Show</a>
-                                        }
-                                    </td>
-
-                                    <td>@x.Status</td>
-                                    <td>@x.ApprovalTemplate</td>
-                                    <td>@x.LastApproval</td>
-                                    <td>@x.Frozenfor</td>
-                                    <td>@x.ProzenforRemark</td>
-                                </tr>
-                                rowindex++;
-                            }
-                        }
-                    </tbody>
-
+                    <tfoot>
+                        <tr>
+                            <td colspan="16" style="text-align:right">Totals:</td>
+                            <td id="totalOverDays"></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    </tfoot>
                 </table>
             </div>
         </div>
@@ -234,45 +152,59 @@
 </div>
 
 <script>
-    $(document).ready(function () {
+$(document).ready(function () {
 
-        $('.datetime').datepicker({
-            autoclose: true,
-            format: 'dd-M-yyyy'
-        });
+    $('.datetime').datepicker({ autoclose: true, format: 'dd-M-yyyy' });
 
-        $('#table_pr_assignment').DataTable({
-            scrollX: true,
-            fixedHeader: true,
-            paging: true,
-            searching: true,
-            autoWidth: false,
-            pageLength: 20,
-            lengthMenu: [[20, 50, 100, -1], [20, 50, 100, "All"]],
-            dom: 'Bfrtip',
-            buttons: ['copy', 'excel', 'print'],
-            columnDefs: [
-                { targets: '_all', className: 'dt-head-center' }
-            ]
-        });
-
-        // Toggle Show/Hide
-        $(document).on("click", ".toggle-text", function () {
-
-            var td = $(this).closest("td");
-            var shortText = td.find(".short-text");
-            var fullText = td.find(".full-text");
-
-            if (fullText.is(":visible")) {
-                fullText.hide();
-                shortText.show();
-                $(this).text("Show");
-            } else {
-                shortText.hide();
-                fullText.show();
-                $(this).text("Hide");
+    var table = $('#table_pr_assignment').DataTable({
+        processing: true,
+        serverSide: true,
+        ajax: {
+            url: '@Url.Action("GetAccrualPenaltyAjax", "amendments")',
+            type: 'GET',
+            data: function(d) {
+                d.Status = $('#Status').val();
+                d.Frozen = $('#Frozen').val();
+                d.fdate = $('#fdate').val();
+                d.tdate = $('#tdate').val();
+                d.Item = $('input[name="Item"]').val();
+                d.Serial = $('input[name="Serial"]').val();
+                d.Customer = $('input[name="Customer"]').val();
             }
-        });
-
+        },
+        scrollX: true,
+        fixedHeader: true,
+        lengthMenu: [[20, 50, 100, -1], [20, 50, 100, "All"]],
+        pageLength: 50,
+        dom: 'Bfrtip',
+        buttons: ['copy', 'excel', 'print'],
+        columnDefs: [{ targets: '_all', className: 'dt-head-center' }],
+        drawCallback: function(settings) {
+            var api = this.api();
+            var totalOver = api.column(16, { page: 'current' }).data().reduce(function(a,b){
+                return a + parseFloat(b) || 0;
+            }, 0);
+            var totalPenalty = api.column(15, { page: 'current' }).data().reduce(function(a,b){
+                return a + parseFloat(b) || 0;
+            }, 0);
+            var totalInv = api.column(13, { page: 'current' }).data().reduce(function(a,b){
+                return a + parseFloat(b) || 0;
+            }, 0);
+            $('#totalOverDays').html(totalOver);
+        }
     });
+
+    // Toggle Show/Hide
+    $(document).on("click", ".toggle-text", function () {
+        var td = $(this).closest("td");
+        var shortText = td.find(".short-text");
+        var fullText = td.find(".full-text");
+        if(fullText.is(":visible")) {
+            fullText.hide(); shortText.show(); $(this).text("Show");
+        } else {
+            shortText.hide(); fullText.show(); $(this).text("Hide");
+        }
+    });
+
+});
 </script>
