@@ -71,4 +71,39 @@ namespace MKL_Web_Borey.Models
         public string ARNoInterest { get; set; }
         public string PaymentNoInterest { get; set; }
     }
+
+    public class LoanActivityDto
+    {
+        public string Remove { get; set; }
+
+        public int? ID { get; set; }
+        public int? VisOrder { get; set; }
+
+        public string ItemCode { get; set; }
+        public string ItemName { get; set; }
+
+        public decimal? Principle { get; set; }
+        public decimal? Interest { get; set; }
+        public decimal? Monthly { get; set; }
+
+        public DateTime? PaymentDate { get; set; }
+        public DateTime? DueDate { get; set; }
+
+        public string Method { get; set; }
+        public int? ARNo { get; set; }
+
+        public decimal? ARBalance { get; set; }
+        public decimal? OpenBalanceAR { get; set; }
+
+        public int? ARNoInterest { get; set; }
+
+        public decimal? IntBalance { get; set; }
+        public decimal? OpenIntBalance { get; set; }
+        public decimal? AccrualPenalty { get; set; }
+
+        public string Remarks { get; set; }
+        public string Serial { get; set; }
+
+        public int? BaseEntry { get; set; }
+    }
 }

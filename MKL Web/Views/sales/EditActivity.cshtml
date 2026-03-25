@@ -1,0 +1,186 @@
+﻿@using MKL_Web.Models;
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Activity Listing";
+    List<ICC_Get_List_ActivityResult> applist = ViewBag.Listing;
+}
+
+<head>
+    <title>@ViewBag.Title</title>
+    <script src="~/Scripts/js/sales.js"></script>
+</head>
+
+@using (Html.BeginForm("ActivityList", "sales", FormMethod.Get))
+{
+    <section class="content-header content-header-title">
+        <h5 style="padding-top:10px !important; padding-left:0px !important;">@ViewBag.Title</h5>
+    </section>
+
+    <div class="form-inline d-flex align-items-center flex-wrap" style="gap: 10px; padding-bottom:10px !important">
+
+        <!-- Status Dropdown -->
+        <div class="form-group mb-2">
+            <label for="Status" class="mr-1">Status</label>
+            @Html.DropDownList("Status", new List<SelectListItem>
+            {
+                new SelectListItem { Text = "Pending", Value = "Pending" },
+                new SelectListItem { Text = "Completed", Value = "Completed" },
+                new SelectListItem { Text = "In-Progress", Value = "In-Progress" }
+            }, "All", new { @class = "form-control form-control-sm", style = "width: 120px;" })
+        </div>
+
+        <!-- Activity Dropdown -->
+        <div class="form-group mb-2">
+            <label for="Activity" class="mr-1">Activity</label>
+            @Html.DropDownList("Activity", new List<SelectListItem>
+            {
+                new SelectListItem { Text = "Action Plan", Value = "Action Plan" },
+                new SelectListItem { Text = "Followup", Value = "Followup" },
+                new SelectListItem { Text = "1st Site Visit", Value = "1st Site Visit" },
+                new SelectListItem { Text = "2nd Site Visit", Value = "2nd Site Visit" },
+                new SelectListItem { Text = "2nd present Cheque", Value = "2nd present Cheque" },
+                new SelectListItem { Text = "Close GPS", Value = "Close GPS" },
+                new SelectListItem { Text = "Repossess", Value = "Repossess" },
+                new SelectListItem { Text = "Legal Action", Value = "Legal Action" },
+                new SelectListItem { Text = "Other", Value = "Other" }
+            }, "All", new { @class = "form-control form-control-sm", style = "width: 200px;" })
+        </div>
+
+        <!-- Type Dropdown -->
+        <div class="form-group mb-2">
+            <label for="Type" class="mr-1">Type</label>
+            @Html.DropDownList("Type", new List<SelectListItem>
+            {
+                new SelectListItem { Text = "Follow up Payment", Value = "Follow up Payment" },
+                new SelectListItem { Text = "Repossess", Value = "Repossess" },
+                new SelectListItem { Text = "Legal Action", Value = "Legal Action" },
+                new SelectListItem { Text = "Other", Value = "Other" }
+            }, "All", new { @class = "form-control form-control-sm", style = "width: 200px;" })
+        </div>
+
+        <!-- From Date -->
+        <div class="form-group mb-2">
+            <label for="fdate" class="mr-2">From Date</label>
+            <input type="text" id="fdate" name="fdate" value="@Request["fdate"]"
+                   class="form-control pull-right datetime form-control-insde"
+                   readonly placeholder="From Date" />
+        </div>
+
+        <!-- To Date -->
+        <div class="form-group mb-2">
+            <label for="tdate" class="mr-2">To Date</label>
+            <input type="text" id="tdate" name="tdate" value="@Request["tdate"]"
+                   class="form-control pull-right datetime form-control-insde"
+                   readonly placeholder="To Date" />
+        </div>
+
+        <!-- CreateBy -->
+        <div class="form-group mb-2">
+            <label for="CreateBy" class="mr-2">Create By</label>
+            @Html.TextBox("CreateBy", Request["CreateBy"], new { @class = "form-control form-control-sm", style = "width: 140px;" })
+        </div>
+
+        <div class="form-group mb-2 ml-2">
+            <button type="submit" class="btn btn-primary btn-sm">Search</button>
+        </div>
+    </div>
+}
+
+<!-- Full-width global search -->
+<div class="form-group mb-3">
+    <input type="text" id="globalSearch" class="form-control form-control-sm" style="width:100%;" placeholder="Search all columns...">
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="box box-primary">
+            <div class="table-responsive" style="overflow-x:auto;">
+                <table id="table_activity_list" class="table table-bordered table-hover display nowrap" style="width:100%">
+                    <thead>
+                        <tr class="bg-gray">
+                            <th>No.</th>
+                            <th>HeaderID</th>
+                            <th>Activity</th>
+                            <th>Type</th>
+                            <th>Priority</th>
+                            <th>HandledBy</th>
+                            <th>AssignedBy</th>
+                            <th>Status</th>
+                            <th>CustomerCode</th>
+                            <th>CardName</th>
+                            <th>Ref</th>
+                            <th>CreatedBy</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{
+                            int rowindex = 1;
+                            foreach (var x in applist)
+                            {
+                                <tr id="tr_@rowindex">
+                                    <td style="text-align:center;">@rowindex</td>
+                                    <td style="cursor:pointer;color:blue;text-decoration:underline;">
+                                        <a href="/sales/EditActivity?headerID=@x.HeaderID">
+                                            @x.HeaderID
+                                        </a>
+                                    </td>
+
+                                    <td>@x.Activity</td>
+                                    <td>@x.Type</td>
+                                    <td>@x.Priority</td>
+                                    <td>@x.HandledBy</td>
+                                    <td>@x.AssignedBy</td>
+                                    <td>@x.Status</td>
+                                    <td>@x.CustomerCode</td>
+                                    <td>@x.CardName</td>
+                                    <td>@x.Ref</td>
+                                    <td>@x.CreatedBy</td>
+                                </tr>
+                                rowindex++;
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+
+        // Datepicker
+        $('.datetime').datepicker({
+            autoclose: true,
+            format: 'dd-M-yyyy'
+        });
+
+        // Initialize DataTable
+        var table = $('#table_activity_list').DataTable({
+            scrollX: true,
+            fixedHeader: true,
+            paging: true,
+            searching: true, // DataTable's built-in search
+            autoWidth: false,
+            pageLength: 50,
+            dom: 'Brtip',
+            buttons: ['copy', 'excel', 'print'],
+            columnDefs: [
+                { targets: '_all', className: 'dt-head-center' }
+            ],
+            language: {
+                search: "Search records:",
+                lengthMenu: "Display _MENU_ records per page",
+                zeroRecords: "No matching records found",
+                info: "Showing _START_ to _END_ of _TOTAL_ records",
+                infoEmpty: "No records available",
+                infoFiltered: "(filtered from _MAX_ total records)"
+            }
+        });
+
+        // Connect full-width global search to DataTable
+        $('#globalSearch').on('keyup', function () {
+            table.search(this.value).draw();
+        });
+    });
+</script>

@@ -47,6 +47,7 @@
     </style>
 </head>
 <div class="modal fade" id="modal-cust_list">
+    <input type="hidden" id="txt_module_id" value="ChangeSchedule" />
     <div class="modal-dialog modal-dialog-popup-filter">
         <div class="modal-content">
             <div class="modal-header">
@@ -97,7 +98,7 @@
                 </div>
             </div>
             <div class="modal-footer" style="padding:5px;">
-                <button type="button" class="btn btn-success pull-left btn-flat" onclick="cmd_pop_choose_customer_change_owner()">Choose</button>
+                <button type="button" class="btn btn-success pull-left btn-flat" onclick="cmd_pop_choose_customer_activity()">Choose</button>
                 <button type="button" class="btn btn-danger pull-left btn-flat" data-dismiss="modal">Cancel</button>
             </div>
         </div>
@@ -172,18 +173,19 @@
 
 
 
-                                                    <td style="width:30%;">
+                                                    <td style="width:30%; padding-right:15px;">
                                                         <div class="form-group">
-                                                            <label class="form-control controlLabel" style="text-align:right;">Document Number</label>
+                                                            <label class="form-control controlLabel" style="text-align:right;">
+                                                                Document Number
+                                                            </label>
                                                         </div>
                                                     </td>
-
-                                                    <td style="width:30%;">
+                                                    <td style="width:30%; padding-left:15px;">
                                                         <div class="form-group">
-                                                            <input type="text" class="form-control form-control-insde" id="txt_docNum" readonly>
+                                                            <input type="text" class="form-control form-control-insde" id="txt_docNum"
+                                                                   value="@ViewBag.LastDocEntry" readonly>
                                                         </div>
                                                     </td>
-
                                                 </tr>
 
 
@@ -208,17 +210,19 @@
 
 
 
-                                                    <td style="width:30%;">
+                                                    <td style="width:30%; padding-right:15px;">
                                                         <div class="form-group">
-                                                            <label class="form-control controlLabel" style="text-align:right;">Priority</label>
+                                                            <label class="form-control controlLabel" style="text-align:right;">
+                                                                Priority
+                                                            </label>
                                                         </div>
                                                     </td>
 
-                                                    <td style="width:30%;">
+                                                    <td style="width:30%; padding-left:15px;">
                                                         <div class="form-group">
-                                                            <select class="form-control form-control-insde" id="cbo_type">
+                                                            <select class="form-control form-control-insde" id="cbo_priority">
                                                                 <option value="High">High</option>
-                                                                <option value="Meduim">Meduim </option>
+                                                                <option value="Meduim">Meduim</option>
                                                                 <option value="Low">Low</option>
                                                             </select>
                                                         </div>
@@ -246,17 +250,19 @@
 
 
 
-                                                    <td style="width:30%;">
+                                                    <td style="width:30%; padding-right:15px;">
                                                         <div class="form-group">
-                                                            <label class="form-control controlLabel" style="text-align:right;">Status</label>
+                                                            <label class="form-control controlLabel" style="text-align:right;">
+                                                                Status
+                                                            </label>
                                                         </div>
                                                     </td>
 
-                                                    <td style="width:30%;">
+                                                    <td style="width:30%; padding-left:15px;">
                                                         <div class="form-group">
                                                             <select class="form-control form-control-insde" id="cbo_status">
                                                                 <option value="Pending">Pending</option>
-                                                                <option value="Completed">Completed </option>
+                                                                <option value="Completed">Completed</option>
                                                                 <option value="In-Progress">In-Progress</option>
                                                             </select>
                                                         </div>
@@ -282,24 +288,24 @@
                                                     </td>
 
 
-
-                                                    <td style="width:30%;">
+                                                    <td style="width:30%; padding-right:15px;">
                                                         <div class="form-group">
-                                                            <label class="form-control controlLabel" style="text-align:right;">Recurrence</label>
+                                                            <label class="form-control controlLabel" style="text-align:right;">
+                                                                Recurrence
+                                                            </label>
                                                         </div>
                                                     </td>
 
-                                                    <td style="width:30%;">
+                                                    <td style="width:30%; padding-left:15px;">
                                                         <div class="form-group">
                                                             <select class="form-control form-control-insde" id="cbo_recurrence">
                                                                 <option value="None">None</option>
-                                                                <option value="Daily">Daily </option>
+                                                                <option value="Daily">Daily</option>
                                                                 <option value="Monthly">Monthly</option>
                                                                 <option value="Yearly">Yearly</option>
                                                             </select>
                                                         </div>
                                                     </td>
-
                                                 </tr>
 
                                                 <tr>
@@ -327,13 +333,15 @@
                                                     </td>
 
                                                     <!-- End Date -->
-                                                    <td style="width:30%;">
+                                                    <td style="width:30%; padding-right:15px;">
                                                         <div class="form-group">
-                                                            <label class="form-control controlLabel" style="text-align:right">End Date</label>
+                                                            <label class="form-control controlLabel" style="text-align:right;">
+                                                                End Date
+                                                            </label>
                                                         </div>
                                                     </td>
 
-                                                    <td style="width:30%;">
+                                                    <td style="width:30%; padding-left:15px;">
                                                         <div class="form-group">
                                                             <div class="input-group date">
                                                                 <div class="input-group-addon">
@@ -369,13 +377,15 @@
                                                     </td>
 
                                                     <!-- Customer Response -->
-                                                    <td style="width:30%;">
+                                                    <td style="width:30%; padding-right:15px;">
                                                         <div class="form-group">
-                                                            <label class="form-control controlLabel" style="text-align:right;">Customer Response</label>
+                                                            <label class="form-control controlLabel" style="text-align:right;">
+                                                                Customer Response
+                                                            </label>
                                                         </div>
                                                     </td>
 
-                                                    <td style="width:30%;">
+                                                    <td style="width:30%; padding-left:15px;">
                                                         <div class="form-group">
                                                             <textarea class="form-control form-control-insde"
                                                                       id="txt_customer_response"
@@ -405,13 +415,15 @@
                                                     </td>
 
                                                     <!-- Content -->
-                                                    <td style="width:30%;">
+                                                    <td style="width:30%; padding-right:15px;">
                                                         <div class="form-group">
-                                                            <label class="form-control controlLabel" style="text-align:right;">Content</label>
+                                                            <label class="form-control controlLabel" style="text-align:right;">
+                                                                Content
+                                                            </label>
                                                         </div>
                                                     </td>
 
-                                                    <td style="width:30%;">
+                                                    <td style="width:30%; padding-left:15px;">
                                                         <div class="form-group">
                                                             <textarea class="form-control form-control-insde"
                                                                       id="txt_content"
@@ -438,7 +450,7 @@
                                                                         <div class="input-group">
                                                                             <input type="text" class="form-control form-control-insde" id="txt_customer_code" readonly="readonly" placeholder="To Customer">
                                                                             <div class="input-group-addon">
-                                                                                <i class="fa fa-user text-info" onclick="cmd_show_customer_change_house('1','2')" style="cursor:pointer"></i>
+                                                                                <i class="fa fa-user text-info" onclick="cmd_show_customer_Activity()" style="cursor:pointer"></i>
                                                                             </div>
                                                                         </div>
                                                                     </td>
@@ -448,12 +460,15 @@
                                                     </td>
 
                                                     <!-- Card Name -->
-                                                    <td style="width:30%;">
+                                                    <td style="width:30%; padding-right:15px;">
                                                         <div class="form-group">
-                                                            <label class="form-control controlLabel" style="text-align:right;">Card Name</label>
+                                                            <label class="form-control controlLabel" style="text-align:right;">
+                                                                Card Name
+                                                            </label>
                                                         </div>
                                                     </td>
-                                                    <td style="width:30%;">
+
+                                                    <td style="width:30%; padding-left:15px;">
                                                         <div class="form-group">
                                                             <input type="text" class="form-control form-control-insde" id="txt_card_name" readonly>
                                                         </div>
@@ -476,12 +491,15 @@
                                                     </td>
 
                                                     <!-- Ref -->
-                                                    <td style="width:30%;">
+                                                    <td style="width:30%; padding-right:15px;">
                                                         <div class="form-group">
-                                                            <label class="form-control controlLabel" style="text-align:right;">Ref</label>
+                                                            <label class="form-control controlLabel" style="text-align:right;">
+                                                                Ref
+                                                            </label>
                                                         </div>
                                                     </td>
-                                                    <td style="width:30%;">
+
+                                                    <td style="width:30%; padding-left:15px;">
                                                         <div class="form-group">
                                                             <input type="text" class="form-control form-control-insde" id="txt_ref" placeholder="Enter ref..." />
                                                         </div>
@@ -509,12 +527,15 @@
                                                         </div>
                                                     </td>
                                                     <!-- Total A/R Balance -->
-                                                    <td style="width:30%;">
+                                                    <td style="width:30%; padding-right:15px;">
                                                         <div class="form-group">
-                                                            <label class="form-control controlLabel" style="text-align:right;">Total A/R Balance</label>
+                                                            <label class="form-control controlLabel" style="text-align:right;">
+                                                                Total A/R Balance
+                                                            </label>
                                                         </div>
                                                     </td>
-                                                    <td style="width:30%;">
+
+                                                    <td style="width:30%; padding-left:15px;">
                                                         <div class="form-group">
                                                             <input type="text"
                                                                    class="form-control form-control-insde"
@@ -547,12 +568,15 @@
                                                     </td>
 
                                                     <!-- Serial -->
-                                                    <td style="width:30%;">
+                                                    <td style="width:30%; padding-right:15px;">
                                                         <div class="form-group">
-                                                            <label class="form-control controlLabel" style="text-align:right;">Serial</label>
+                                                            <label class="form-control controlLabel" style="text-align:right;">
+                                                                Serial
+                                                            </label>
                                                         </div>
                                                     </td>
-                                                    <td style="width:30%;">
+
+                                                    <td style="width:30%; padding-left:15px;">
                                                         <div class="form-group">
                                                             <input type="text"
                                                                    class="form-control form-control-insde"
@@ -577,47 +601,61 @@
                             <td colspan="4">
                                 <fieldset class="scheduler-border" style="padding: 5px">
                                     <legend class="scheduler-border" style="font-weight: bold;">
-                                        <span style="cursor: pointer;" onclick="togglePenaltyTable()">
+                                        <span style="cursor: pointer;" onclick="togglePenaltyTable_for_activity()">
                                             Loan Information
                                             <i id="toggle_penalty_icon" class="fa fa-chevron-up" style="margin-left: 5px;"></i>
                                         </span>
                                     </legend>
 
-                                    <!-- Toggleable content - shown by default -->
                                     <div id="penalty_table_wrapper" class="row" style="margin:0px;margin-top:10px; position: relative; min-height: 30vh; height: 100%; overflow: auto">
-                                        <table class="table" style="margin-bottom: 0px; position: absolute; min-width: 2500px; width: 100%;" id="table_penalty_list">
-                                            <thead style="position:sticky; top: 0; z-index: 1000;">
+                                        <table class="table table-bordered" style="margin-bottom: 0px; position: absolute; min-width: 2500px; width: 100%;" id="table_loan_list">
+                                            <thead style="position:sticky; top: 0; z-index: 1000; background-color:#f8f8f8;">
                                                 <tr class="bg-gray" role="row">
-                                                    <td style="width:0%; text-align:left;"></td>
-                                                    <td style="width:3%; text-align:left;">
-                                                        <i class='fa fa-circle text-yellow' id='tr_payment_detail_uncheck_all' style='cursor:pointer; display:none' onclick='uncheck_tr_payment_detail()'></i>
+                                                    <td style="width:2%; text-align:center;">
+                                                        <i class='fa fa-trash' title="Remove Selected Rows" style='cursor:pointer; color:red;' onclick="removeSelectedRows_for_activity()"></i>
                                                     </td>
-                                                    <td style="width:1%; text-align:left;">#</td>
-
-                                                    <td style="width: 5%; text-align: left;">Payment Date</td>
-                                                    <td style="width: 8%; text-align: left;">
-                                                        Due Date
+                                                    <td style="width:2%; text-align:center;">
+                                                        <input type="checkbox" id="check_all_for_activity" onclick="checkAllRows_for_activity(this)">
                                                     </td>
-                                                    <td style="width: 4%; text-align: left;">Principle</td>
-                                                    <td style="width: 4%; text-align: left;">Interest</td>
-                                                    <td style="width: 6%; text-align: left; ">Monthly</td>
-                                                    <td style="width: 5%; text-align: left;">Payment Type</td>
-                                                    <td style="width: 5%; text-align: left;">ARNo</td>
-
-                                                    <td style="width: 6%; text-align: left;">AR Balance</td>
-                                                    <td style="width: 6%; text-align: left;">Open Bal (A/R)</td>
-                                                    <td style="width: 2%; text-align: left;">Int. No</td>
-
-                                                    <td style="width: 4%; text-align: left;">Int. Balance</td>
-                                                    <td style="width: 6%; text-align: left;">Open Bal (Int)</td>
-                                                    <td style="width: 6%; text-align: left;">Accrual. Penalty</td>
-                                                    <td style="width: 5%; text-align: left;">
-                                                        Remark
-                                                    </td>
-                       
+                                                    <td style="width:2%; text-align:center;">#</td>
+                                                    <td style="width:5%; text-align:left;">Payment Date</td>
+                                                    <td style="width:5%; text-align:left;">Due Date</td>
+                                                    <td style="width:5%; text-align:right;">Principle</td>
+                                                    <td style="width:5%; text-align:right;">Interest</td>
+                                                    <td style="width:5%; text-align:right;">Monthly</td>
+                                                    <td style="width:5%; text-align:left;">Payment Type</td>
+                                                    <td style="width:5%; text-align:left;">ARNo</td>
+                                                    <td style="width:5%; text-align:right;">AR Balance</td>
+                                                    <td style="width:5%; text-align:right;">Open Bal (A/R)</td>
+                                                    <td style="width:5%; text-align:right;">Int. No</td>
+                                                    <td style="width:5%; text-align:right;">Int. Balance</td>
+                                                    <td style="width:5%; text-align:right;">Open Bal (Int)</td>
+                                                    <td style="width:5%; text-align:right;">Accrual. Penalty</td>
+                                                    <td style="text-align:left;">Remark</td> <!-- takes remaining width automatically -->
                                                 </tr>
                                             </thead>
-                                            <tbody></tbody>
+                                            <tbody id="loan_list_body">
+
+                                            </tbody>
+                                            <tfoot style="background-color:#f0f0f0; font-weight:bold;">
+                                                <tr>
+                                                    <td colspan="3" style="text-align:right;">Total:</td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td style="text-align:right;"></td>
+                                                    <td style="text-align:right;"></td>
+                                                    <td style="text-align:right;"></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td id="total_ar_balance" style="text-align:right;">0.00</td>
+                                                    <td id="total_openbalance_ar" style="text-align:right;">0.00</td>
+                                                    <td id="total_int_no" style="text-align:right;">0</td>
+                                                    <td id="total_int_balance" style="text-align:right;">0.00</td>
+                                                    <td id="total_openint_balance" style="text-align:right;">0.00</td>
+                                                    <td id="total_accrual_penalty" style="text-align:right;">0.00</td>
+                                                    <td></td>
+                                                </tr>
+                                            </tfoot>
                                         </table>
                                     </div>
                                 </fieldset>
@@ -628,45 +666,103 @@
                 </table>
             </div>
             <div class="box-footer">
-                <button type="button" class="btn btn-danger btn-flat" onclick="cmd_remove_all_row_payment_schedule()">Remove Row</button>
-                <button type="button" style="background-color:green" class="btn btn-info btn-flat" id="btn_generate_penalty_List" onclick="cmd_penaltydraf_waive_generate()">Load Loan</button>
-                <button type="button" class="btn btn-primary btn-flat" onclick="cmd_save_penaltyDraf()">Submit</button>
+                <div class="btn-group">
+                    <button type="button" class="btn btn-warning btn-flat">Copy From</button>
+                    <button type="button" class="btn btn-warning dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                        <span class="caret"></span>
+                        <span class="sr-only">Toggle Dropdown</span>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-btn">
+                        <li><button type="button" style="width:90%;" class="btn btn-warning btn-flat" onclick="cmd_copy_from_loanActivity()">Loan Schedule</button></li>
+                    </ul>
+                </div>
+
+                <button type="button" class="btn btn-primary btn-flat" onclick="cmd_save_activity()">Submit</button>
             </div>
         </div>
     </div>
 </div>
+
+
+<div class="modal fade" id="modal-schedule-list">
+    <div class="modal-dialog modal-dialog-popup-filter">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 id="pop_h5">Old Scheduled List</h5>
+            </div>
+            <div class="modal-body no-padding">
+                <div class="table-responsive" style="height:500px;overflow:auto">
+                    <table id="table_pop_schedule_list" class="table">
+                        <thead>
+                            <tr style="display:none">
+                                <td style="width:10%;">
+                                    <div class="form-group">
+                                        <label for="inputEmail3" class="form-control controlLabel">Find:</label>
+                                    </div>
+                                </td>
+                                <td colspan="2">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control form-control-insde" placeholder="House Code">
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th style="width:10%">RefNo</th>
+                                <th style="width:15%">Customer Code</th>
+                                <th style="width:20%">Customer Name</th>
+                                <th style="width:15%">Item Code</th>
+                                <th style="width:25%">Item Name</th>
+                                <th style="width:15%">Last Option</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer" style="padding:5px;">
+                <button type="button" class="btn btn-success pull-left btn-flat" onclick="get_listloan_forActivity()">Choose</button>
+                <button type="button" class="btn btn-danger pull-left btn-flat" data-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+
 <script>
     $(document).ready(function () {
-
+        // Initialize datepicker for any date fields dynamically
         $('.datetime').datepicker({
             autoclose: true,
             format: 'dd-M-yyyy'
         });
 
-        // Event delegation: Bind click event to dynamically created remove icons
-        $("#table_customer_list").on("click", ".fa-remove", function () {
-            $(this).closest("tr").remove(); // Remove the row
+        // Remove single row by clicking the "X"
+        $("#loan_list_body").on("click", ".fa-remove-row, .remove-single-row", function () {
+            $(this).closest("tr").remove();
+            calculateTotals_for_activity();
         });
+
+        // Check/Uncheck all rows
+        window.checkAllRows_for_activity = function (checkbox) {
+            $("#loan_list_body input.row_checkbox_for_activity").prop('checked', checkbox.checked);
+        };
+
+        // Remove selected rows
+        window.removeSelectedRows_for_activity = function () {
+            $("#loan_list_body input.row_checkbox_for_activity:checked").each(function () {
+                $(this).closest("tr").remove();
+            });
+            $("#check_all_for_activity").prop('checked', false);
+            calculateTotals_for_activity();
+        };
     });
 
-
-    document.getElementById("btn_generate_customerlist").addEventListener("click", function () {
-        var wrapper = document.getElementById("customer_table_wrapper");
-        var icon = document.getElementById("toggle_icon");
-
-        // Force show it again if hidden
-        if (wrapper.style.display === "none") {
-            wrapper.style.display = "block";
-            icon.classList.remove("fa-chevron-down");
-            icon.classList.add("fa-chevron-up");
-        }
-    });
-
-
-    function togglePenaltyTable() {
+    // Toggle Loan/Penalty Table
+    function togglePenaltyTable_for_activity() {
         var wrapper = document.getElementById("penalty_table_wrapper");
         var icon = document.getElementById("toggle_penalty_icon");
-
         if (wrapper.style.display === "none") {
             wrapper.style.display = "block";
             icon.classList.remove("fa-chevron-down");
@@ -678,5 +774,124 @@
         }
     }
 
-</script>
+    // Fetch loan/payment schedule and populate table
+    function get_listloan_forActivity() {
+        var row = $("#txt_payment_schedule_selected_row").val();
+        if (row == -1) {
+            ShowAlertCus("No AR Memo selected!", "warning");
+            return;
+        }
 
+        var docentry = $("#td_pop_payment_schedule_so_entry_" + row).text();
+        var serialno = $("#td_pop_payment_schedule_serial_" + row).text();
+        var itemname = $("#td_pop_payment_schedule_ocrcode_" + row).text();
+
+        $("#txt_loanID").val(docentry);
+        $("#txt_item_name").val(itemname);
+        $("#txt_serial").val(serialno);
+
+        $.ajax({
+            url: '/sales/get_payment_schedule_by_so_forActivity',
+            type: 'POST',
+            data: { soEntry: docentry, rowStatus: 'All' },
+            datatype: 'json',
+            async: false,
+            beforeSend: function () { $("#loading").show(); },
+            complete: function () { $("#loading").hide(); },
+            success: function (data) {
+                var mydata = data.data;
+                var tbody = $("#loan_list_body");
+                tbody.empty();
+
+                function formatDate(dateStr) {
+                    if (!dateStr) return "";
+                    var d = new Date(dateStr);
+                    if (isNaN(d)) return dateStr;
+                    var day = d.getDate();
+                    var monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
+                        "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+                    var month = monthNames[d.getMonth()];
+                    var year = d.getFullYear();
+                    return day + "-" + month + "-" + year;
+                }
+
+                for (var i = 0; i < mydata.length; i++) {
+                    var x = mydata[i];
+                    var index = i + 1;
+                    var trId = "tr_payment_detail_for_activity_" + index;
+
+                    var tr = "<tr id='" + trId + "'>";
+
+                    // Remove icon "X"
+                    tr += "<td id='td_remove_" + index + "' style='text-align:center; color:red; cursor:pointer;' class='remove-single-row'>X</td>";
+
+                    // Checkbox
+                    tr += "<td id='td_checkbox_" + index + "' style='text-align:center;'><input type='checkbox' class='row_checkbox_for_activity'></td>";
+
+                    // Row number
+                    tr += "<td id='td_rowno_" + index + "' style='text-align:center;'>" + index + "</td>";
+
+                    // Payment info with formatted dates
+                    tr += "<td id='td_paymentdate_" + index + "' style='text-align:left;'>" + formatDate(x.PaymentDate) + "</td>";
+                    tr += "<td id='td_duedate_" + index + "' style='text-align:left;'>" + formatDate(x.DueDate) + "</td>";
+                    tr += "<td id='td_principle_" + index + "' style='text-align:right;'>" + convert2digit(x.Principle) + "</td>";
+                    tr += "<td id='td_interest_" + index + "' style='text-align:right;'>" + convert2digit(x.Interest) + "</td>";
+                    tr += "<td id='td_monthly_" + index + "' style='text-align:right;'>" + convert2digit(x.Monthly) + "</td>";
+                    tr += "<td id='td_method_" + index + "' style='text-align:left;'>" + (x.Method || "") + "</td>";
+                    tr += "<td id='td_arno_" + index + "' style='text-align:left;'>" + (x.ARNo || "") + "</td>";
+                    tr += "<td id='td_arbalance_" + index + "' style='text-align:right;'>" + convert2digit(x.ARBalance) + "</td>";
+                    tr += "<td id='td_openbalar_" + index + "' style='text-align:right;'>" + convert2digit(x.OpenBalanceAR) + "</td>";
+                    tr += "<td id='td_intno_" + index + "' style='text-align:right;'>" + (x.ARNoInterest || "") + "</td>";
+                    tr += "<td id='td_intbalance_" + index + "' style='text-align:right;'>" + convert2digit(x.IntBalance) + "</td>";
+                    tr += "<td id='td_openbalint_" + index + "' style='text-align:right;'>" + convert2digit(x.OpenIntBalance) + "</td>";
+                    tr += "<td id='td_accrualpenalty_" + index + "' style='text-align:right;'>" + convert2digit(x.AccrualPenalty) + "</td>";
+
+                    // Editable remark
+                    tr += "<td id='td_remark_" + index + "' contenteditable='true' style='text-align:left; color:blue;'>" + (x.Remarks || "") + "</td>";
+
+                    tr += "</tr>";
+
+                    tbody.append(tr);
+                }
+
+                calculateTotals_for_activity();
+                $("#modal-schedule-list").modal('hide');
+                $("#txt_payment_schedule_selected_row").val("-1");
+            },
+            error: function (error) {
+                alert('Error while reading data => ' + error);
+            }
+        });
+    }
+
+    // Remove all rows
+    function cmd_remove_all_row_payment_schedule() {
+        $("#loan_list_body tr").remove();
+        $("#check_all_for_activity").prop('checked', false);
+        calculateTotals_for_activity();
+    }
+
+    // Recalculate totals
+    function calculateTotals_for_activity() {
+        var totalAR = 0, totalOpenAR = 0, totalInt = 0, totalOpenInt = 0, totalPenalty = 0;
+
+        $("#loan_list_body tr").each(function () {
+            totalAR += parseFloat($(this).find("td:eq(10)").text()) || 0;
+            totalOpenAR += parseFloat($(this).find("td:eq(11)").text()) || 0;
+            totalInt += parseFloat($(this).find("td:eq(13)").text()) || 0;
+            totalOpenInt += parseFloat($(this).find("td:eq(14)").text()) || 0;
+            totalPenalty += parseFloat($(this).find("td:eq(15)").text()) || 0;
+        });
+
+        $("#total_ar_balance").text(totalAR.toFixed(2));
+        $("#total_openbalance_ar").text(totalOpenAR.toFixed(2));
+        $("#total_int_balance").text(totalInt.toFixed(2));
+        $("#total_openint_balance").text(totalOpenInt.toFixed(2));
+        $("#total_accrual_penalty").text(totalPenalty.toFixed(2));
+    }
+
+    // Utility function to format numbers
+    function convert2digit(val) {
+        return parseFloat(val || 0).toFixed(2);
+    }
+</script>

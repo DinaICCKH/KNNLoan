@@ -1971,6 +1971,56 @@
       <Association Name="PenaltyWizardH_PenaltyWizard" Member="PenaltyWizardH" ThisKey="DocEntry" OtherKey="DocEntry" Type="PenaltyWizardH" IsForeignKey="true" />
     </Type>
   </Table>
+  <Table Name="dbo.ActivityHeader" Member="ActivityHeaders">
+    <Type Name="ActivityHeader">
+      <Column Name="HeaderID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Activity" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Type" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Priority" Type="System.String" DbType="NVarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="HandledBy" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="Status" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="AssignedBy" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="Recurrence" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
+      <Column Name="StartDate" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="EndDate" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="ActivityRemark" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="CustomerResponse" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="NextAction" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="Content" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="CustomerCode" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="CardName" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
+      <Column Name="Phone" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Ref" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="LoanID" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="TotalARBalance" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="CreatedBy" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
+      <Column Name="CreatedDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="UpdatedDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="UpdatedBy" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
+      <Association Name="ActivityHeader_ActivityRow" Member="ActivityRows" ThisKey="HeaderID" OtherKey="HeaderID" Type="ActivityRow" />
+    </Type>
+  </Table>
+  <Table Name="dbo.ActivityRow" Member="ActivityRows">
+    <Type Name="ActivityRow">
+      <Column Name="RowID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="HeaderID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="PaymentDate" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="DueDate" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="Principle" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="Interest" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="Monthly" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="PaymentType" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="ARNo" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="ARBalance" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="OpenBalanceAR" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="IntNo" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="IntBalance" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="OpenIntBalance" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="AccrualPenalty" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="Remarks" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Association Name="ActivityHeader_ActivityRow" Member="ActivityHeader" ThisKey="HeaderID" OtherKey="HeaderID" Type="ActivityHeader" IsForeignKey="true" />
+    </Type>
+  </Table>
   <Function Name="dbo.ICC_UpdateSAPDocumentStatus" Method="ICC_UpdateSAPDocumentStatus">
     <Parameter Name="DocType" Parameter="docType" Type="System.String" DbType="NVarChar(50)" />
     <Parameter Name="DocEntry" Parameter="docEntry" Type="System.String" DbType="NVarChar(50)" />
@@ -2998,6 +3048,27 @@
       <Column Name="LastApproval" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
       <Column Name="Frozenfor" Type="System.String" DbType="NVarChar(1)" CanBeNull="true" />
       <Column Name="ProzenforRemark" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.ICC_Get_List_Activity" Method="ICC_Get_List_Activity">
+    <Parameter Name="Status" Parameter="status" Type="System.String" DbType="NVarChar(50)" />
+    <Parameter Name="Activity" Parameter="activity" Type="System.String" DbType="NVarChar(50)" />
+    <Parameter Name="Type" Parameter="type" Type="System.String" DbType="NVarChar(50)" />
+    <Parameter Name="fdate" Type="System.DateTime" DbType="Date" />
+    <Parameter Name="tdate" Type="System.DateTime" DbType="Date" />
+    <Parameter Name="CreateBy" Parameter="createBy" Type="System.String" DbType="NVarChar(250)" />
+    <ElementType Name="ICC_Get_List_ActivityResult">
+      <Column Name="HeaderID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Activity" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Type" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Priority" Type="System.String" DbType="NVarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="HandledBy" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="AssignedBy" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="Status" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="CustomerCode" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="CardName" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
+      <Column Name="Ref" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="CreatedBy" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
     </ElementType>
   </Function>
 </Database>

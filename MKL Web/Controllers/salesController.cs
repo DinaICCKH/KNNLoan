@@ -440,7 +440,90 @@ namespace MKL_Web.Controllers
             });
         }
 
-        
+
+        public JsonResult get_payment_schedule_by_so_forActivity(string soEntry, string rowStatus)
+        {
+            string sqltext = "exec ICC_GET_LoanActivity '" + soEntry + "','" + rowStatus + "'";
+
+            List<LoanActivityDto> list = new List<LoanActivityDto>();
+
+            list = (from x in view.getTable(sqltext, ConfigurationManager.AppSettings["sql"].ToString()).AsEnumerable()
+                    select new LoanActivityDto()
+                    {
+                        // ✅ Keep Remove (not from DB)
+                        Remove = "N",
+
+                        ID = x["ID"].ToString() == "" ? (int?)null : Convert.ToInt32(x["ID"]),
+                        VisOrder = x["VisOrder"].ToString() == "" ? (int?)null : Convert.ToInt32(x["VisOrder"]),
+
+                        ItemCode = x["ItemCode"].ToString(),
+                        ItemName = x["ItemName"].ToString(),
+
+                        Principle = x["Principle"].ToString() == "" ? (decimal?)null : Convert.ToDecimal(x["Principle"]),
+                        Interest = x["Interest"].ToString() == "" ? (decimal?)null : Convert.ToDecimal(x["Interest"]),
+                        Monthly = x["Monthly"].ToString() == "" ? (decimal?)null : Convert.ToDecimal(x["Monthly"]),
+
+                        PaymentDate = x["PaymentDate"].ToString() == "" ? (DateTime?)null : Convert.ToDateTime(x["PaymentDate"]),
+                        DueDate = x["DueDate"].ToString() == "" ? (DateTime?)null : Convert.ToDateTime(x["DueDate"]),
+
+                        Method = x["Method"].ToString(),
+                        ARNo = x["ARNo"].ToString() == "" ? (int?)null : Convert.ToInt32(x["ARNo"]),
+
+                        ARBalance = x["ARBalance"].ToString() == "" ? (decimal?)null : Convert.ToDecimal(x["ARBalance"]),
+                        OpenBalanceAR = x["OpenBalanceAR"].ToString() == "" ? (decimal?)null : Convert.ToDecimal(x["OpenBalanceAR"]),
+
+                        ARNoInterest = x["ARNoInterest"].ToString() == "" ? (int?)null : Convert.ToInt32(x["ARNoInterest"]),
+
+                        IntBalance = x["IntBalance"].ToString() == "" ? (decimal?)null : Convert.ToDecimal(x["IntBalance"]),
+                        OpenIntBalance = x["OpenIntBalance"].ToString() == "" ? (decimal?)null : Convert.ToDecimal(x["OpenIntBalance"]),
+                        AccrualPenalty = x["AccrualPenalty"].ToString() == "" ? (decimal?)null : Convert.ToDecimal(x["AccrualPenalty"]),
+
+                        Remarks = x["Remarks"].ToString(),
+                        Serial = x["Serial"].ToString(),
+
+                        BaseEntry = x["BaseEntry"].ToString() == "" ? (int?)null : Convert.ToInt32(x["BaseEntry"])
+                    }).ToList();
+
+
+            var data = list.Select(x => new
+            {
+                x.ID,
+                x.Remove,
+                x.VisOrder,
+                x.ItemCode,
+                x.ItemName,
+
+                Principle = x.Principle?.ToString("N2"),
+                Interest = x.Interest?.ToString("N2"),
+                Monthly = x.Monthly?.ToString("N2"),
+
+                PaymentDate = x.PaymentDate == null ? "" : x.PaymentDate.Value.ToString("dd-MMM-yyyy"),
+                DueDate = x.DueDate == null ? "" : x.DueDate.Value.ToString("dd-MMM-yyyy"),
+
+                x.Method,
+                x.ARNo,
+
+                ARBalance = x.ARBalance?.ToString("N2"),
+                OpenBalanceAR = x.OpenBalanceAR?.ToString("N2"),
+
+                x.ARNoInterest,
+
+                IntBalance = x.IntBalance?.ToString("N2"),
+                OpenIntBalance = x.OpenIntBalance?.ToString("N2"),
+                AccrualPenalty = x.AccrualPenalty?.ToString("N2"),
+
+                x.Remarks,
+                x.Serial,
+                x.BaseEntry
+            }).ToList();
+
+            return Json(new
+            {
+                status = "success",
+                data = data,
+            }, JsonRequestBehavior.AllowGet);
+        }
+
 
         public JsonResult get_payment_schedule_list_ChangeItem(string cardcode, string status, string type)
         {
@@ -2886,12 +2969,174 @@ namespace MKL_Web.Controllers
             ViewBag.panaltyoption = db.ICC_GET_Penalty_Option().ToList();
 
             ViewBag.Waiveoption = db.ICC_GET_Waive_Option().ToList();
+
+            // Get last DocEntry from ActivityHeader (or your table)
+            var lastDoc = db.ActivityHeaders
+                            .OrderByDescending(a => a.HeaderID)  // Or DocEntry if that's the PK
+                            .Select(a => a.HeaderID)
+                            .FirstOrDefault();
+
+            ViewBag.LastDocEntry = lastDoc+1; // Pass it to view
+
             return View();
         }
 
-        public ActionResult ActivityReport()
+        public JsonResult save_activity(ActivityHeader header, List<ActivityRow> rows)
         {
+            string status = "OK";
+            int LastEntry = 0;
+
+            if (header == null || rows == null || !rows.Any())
+            {
+                status = "No data to save!";
+                return Json(new { status, LastEntry }, JsonRequestBehavior.AllowGet);
+            }
+
+            var trans = TransWithCommitted(); // Your transaction wrapper
+            try
+            {
+                using (trans)
+                {
+                    // Check if header exists for update
+                    ActivityHeader H = db.ActivityHeaders.FirstOrDefault(a => a.HeaderID == header.HeaderID);
+                    if (H == null)
+                    {
+                        // New header
+                        H = new ActivityHeader
+                        {
+                            Activity = header.Activity,
+                            Type = header.Type,
+                            Priority = header.Priority,
+                            HandledBy = header.HandledBy,
+                            Status = header.Status ?? "Open",
+                            AssignedBy = header.AssignedBy,
+                            Recurrence = header.Recurrence,
+                            StartDate = header.StartDate,
+                            EndDate = header.EndDate,
+                            ActivityRemark = header.ActivityRemark,
+                            CustomerResponse = header.CustomerResponse,
+                            NextAction = header.NextAction,
+                            Content = header.Content,
+                            CustomerCode = header.CustomerCode,
+                            CardName = header.CardName,
+                            Phone = header.Phone,
+                            Ref = header.Ref,
+                            LoanID = header.LoanID,
+                            TotalARBalance = header.TotalARBalance,
+                            CreatedBy = Session["UCode"]?.ToString(),
+                            CreatedDate = DateTime.Now,
+                            UpdatedBy = Session["UCode"]?.ToString(),
+                            UpdatedDate = DateTime.Now
+                        };
+                        db.ActivityHeaders.InsertOnSubmit(H);
+                        db.ActivityHeaders.Context.SubmitChanges();
+                        LastEntry = H.HeaderID;
+                    }
+                    else
+                    {
+                        // Update existing header
+                        H.Activity = header.Activity;
+                        H.Type = header.Type;
+                        H.Priority = header.Priority;
+                        H.HandledBy = header.HandledBy;
+                        H.Status = header.Status ?? H.Status;
+                        H.AssignedBy = header.AssignedBy;
+                        H.Recurrence = header.Recurrence;
+                        H.StartDate = header.StartDate;
+                        H.EndDate = header.EndDate;
+                        H.ActivityRemark = header.ActivityRemark;
+                        H.CustomerResponse = header.CustomerResponse;
+                        H.NextAction = header.NextAction;
+                        H.Content = header.Content;
+                        H.CustomerCode = header.CustomerCode;
+                        H.CardName = header.CardName;
+                        H.Phone = header.Phone;
+                        H.Ref = header.Ref;
+                        H.LoanID = header.LoanID;
+                        H.TotalARBalance = header.TotalARBalance;
+                        H.UpdatedBy = Session["UCode"]?.ToString();
+                        H.UpdatedDate = DateTime.Now;
+                        db.ActivityHeaders.Context.SubmitChanges();
+                        LastEntry = H.HeaderID;
+                    }
+
+                    // Remove existing rows for update
+                    var existingRows = db.ActivityRows.Where(r => r.HeaderID == H.HeaderID).ToList();
+                    if (existingRows.Any())
+                    {
+                        db.ActivityRows.DeleteAllOnSubmit(existingRows);
+                        db.ActivityRows.Context.SubmitChanges();
+                    }
+
+                    // Insert new rows
+                    rows.ForEach(r => r.HeaderID = H.HeaderID);
+                    db.ActivityRows.InsertAllOnSubmit(rows);
+                    db.ActivityRows.Context.SubmitChanges();
+
+                    trans.Complete();
+                    trans.Dispose();
+                }
+            }
+            catch (Exception ex)
+            {
+                status = "Failed: " + ex.Message;
+            }
+
+            return Json(new { status, LastEntry }, JsonRequestBehavior.AllowGet);
+        }
+
+
+        public ActionResult ActivityList(
+            string Status = "Pending",
+            string Activity = "",
+            string Type = "",
+            DateTime? fdate = null,
+            DateTime? tdate = null,
+            string CreateBy = ""
+        )
+        {
+            // Use default dates if null
+            DateTime fromDate = fdate ?? new DateTime(1999, 1, 1);
+            DateTime toDate = tdate ?? DateTime.Now;
+
+            // Call the new stored procedure
+            var result = db.ICC_Get_List_Activity(
+                Status ?? "",       // If null, pass empty string to include all
+                Activity ?? "",
+                Type ?? "",
+                fromDate,
+                toDate,
+                CreateBy ?? ""
+            ).ToList();
+
+            ViewBag.Listing = result;
             return View();
         }
+
+
+        public ActionResult EditActivity(int headerID)
+        {
+            // Load the header
+            var header = db.ActivityHeaders.FirstOrDefault(a => a.HeaderID == headerID);
+            if (header == null)
+            {
+                return HttpNotFound("Activity header not found");
+            }
+
+            // Load all related rows
+            var rows = db.ActivityRows.Where(r => r.HeaderID == headerID).ToList();
+            header.ActivityRows = new System.Data.Linq.EntitySet<ActivityRow>();
+            foreach (var row in rows)
+            {
+                header.ActivityRows.Add(row);
+            }
+
+            // Load dropdown data
+            ViewBag.cust = db.v_OCRD_Penalties.ToList();
+            ViewBag.houselist = db.v_Item_Houses.ToList();
+
+            return View(header);
+        }
+
     }
 }
