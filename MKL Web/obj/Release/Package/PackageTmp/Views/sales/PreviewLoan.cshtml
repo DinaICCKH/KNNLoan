@@ -4,7 +4,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 
     string docdate = DateTime.Now.ToString("dd-MMM-yyyy");
-    List<InstallmentRow> installment = ViewBag.installment;
+    List<ICC_GET_InstallmentByIDResult> installment = ViewBag.installment;
     List<ICC_Loan_List_By_IDResult> header = ViewBag.HeaderLoan;
 }
 <head>
@@ -305,7 +305,7 @@
                                     </button>
 
                                 </div>
-                                <div id="schedule_table_scroll" style="position: relative; overflow: auto; height: 100%; min-height: 30vh ">
+                                <div id="schedule_table_scroll" style="position: relative; overflow: auto; height: 100%; min-height: 40vh ">
                                     <table class="table" style="margin-bottom: 0px; position: absolute; min-width: 3000px; width: 100%;" id="table_payment_schedule">
                                         <thead style="position:sticky; top: 0; z-index: 1000;">
                                             <tr class="bg-gray" role="row">
@@ -348,32 +348,32 @@
                                                 {
                                                     // Determine row style
                                                     var rowStyle = item.ARNo != -1 ? "background-color: lightblue;" : "";
-                                                                                        <tr style="@rowStyle">
-                                                                                            <td>@index</td>
-                                                                                            <td>@Convert.ToDateTime(item.PaymentDate).ToString("dd-MMM-yyyy")</td>
-                                                                                            <td>@Convert.ToDateTime(item.DueDate).ToString("dd-MMM-yyyy")</td>
-                                                                                            <td class="principle">@String.Format("{0:N2}", item.Principle)</td>
-                                                                                            <td class="interest">@String.Format("{0:N2}", item.Interest)</td>
-                                                                                            <td class="monthly">@String.Format("{0:N2}", item.Monthly)</td>
-                                                                                            <td>@String.Format("{0:N2}", item.Remaining)</td>
-                                                                                            <td>@String.Format("{0:N2}", item.Remaining + item.Interest)</td>
-                                                                                            <td>@String.Format("{0:N2}", item.CuPayment)</td>
-                                                                                            <td>@String.Format("{0:N2}", item.CuInterest)</td>
-                                                                                            <td>@String.Format("{0:N2}", item.CuPayment + item.CuInterest)</td>
-                                                                                            <td>@item.Method</td>
+                                                    <tr style="@rowStyle">
+                                                        <td>@index</td>
+                                                        <td>@Convert.ToDateTime(item.PaymentDate).ToString("dd-MMM-yyyy")</td>
+                                                        <td>@Convert.ToDateTime(item.DueDate).ToString("dd-MMM-yyyy")</td>
+                                                        <td class="principle">@String.Format("{0:N2}", item.Principle)</td>
+                                                        <td class="interest">@String.Format("{0:N2}", item.Interest)</td>
+                                                        <td class="monthly">@String.Format("{0:N2}", item.Monthly)</td>
+                                                        <td>@String.Format("{0:N2}", item.Remaining)</td>
+                                                        <td>@String.Format("{0:N2}", item.Remaining + item.Interest)</td>
+                                                        <td>@String.Format("{0:N2}", item.CuPayment)</td>
+                                                        <td>@String.Format("{0:N2}", item.CuInterest)</td>
+                                                        <td>@String.Format("{0:N2}", item.CuPayment + item.CuInterest)</td>
+                                                        <td>@item.Method</td>
 
-                                                                                            <td>@item.ARNo</td>
-                                                                                            <td>@item.PaymentNo</td>
-                                                                                            <td>@item.ARNoInterest</td>
-                                                                                            <td>@item.PaymentNoInterest</td>
-                                                                                            <td>@item.ErrorLog</td>
-                                                                                            <td>@item.Remarks</td>
-                                                                                            <td>@item.ChequeNo</td>
-                                                                                            <td>@item.ChequeName</td>
-                                                                                            <td>@item.ChequeBankName</td>
-                                                                                            <td>@item.PayeeName</td>
+                                                        <td>@item.ARNo</td>
+                                                        <td>@item.PaymentNo</td>
+                                                        <td>@item.ARNoInterest</td>
+                                                        <td>@item.PaymentNoInterest</td>
+                                                        <td>@item.ErrorLog</td>
+                                                        <td>@item.Remarks</td>
+                                                        <td>@item.ChequeNo</td>
+                                                        <td>@item.ChequeName</td>
+                                                        <td>@item.ChequeBankName</td>
+                                                        <td>@item.PayeeName</td>
 
-                                                                                        </tr>
+                                                    </tr>
                                                     index++;
                                                 }
                                             }
@@ -414,10 +414,40 @@
                     </thead>
                 </table>
             </div>
-            <div class="box-footer">
-                <button type="button" class="btn btn-primary btn-flat" onclick="cmd_Print()">Preview & Print</button>
-                <button type="button" class="btn btn-success btn-flat" onclick="exportToExcel('table_payment_schedule', 'Payment_Schedule')">Export to Excel</button>
-                <button type="button" class="btn btn-primary btn-flat" onclick="cmd_ShowHistory()">Show History</button>
+            <div class="box-footer" style="display:flex; gap:10px; flex-wrap: wrap;">
+                <!-- Preview & Print -->
+                <button type="button" class="btn btn-flat"
+                        onclick="cmd_Print()"
+                        style="background-color:#1E90FF; color:white;">
+                    <i class="fa fa-print" style="margin-right:5px;"></i>
+                    Preview & Print
+                </button>
+
+                <!-- Export to Excel -->
+                <button type="button" class="btn btn-flat"
+                        onclick="exportToExcel('table_payment_schedule', 'Payment_Schedule')"
+                        style="background-color:#28a745; color:white;">
+                    <i class="fa fa-file-excel" style="margin-right:5px;"></i>
+                    Export to Excel
+                </button>
+
+                <!-- Show History -->
+                <button type="button" class="btn btn-flat"
+                        onclick="cmd_ShowHistory()"
+                        style="background-color:#FF8C00; color:white;">
+                    <i class="fa fa-history" style="margin-right:5px;"></i>
+                    Show History
+                </button>
+
+                <!-- Related Activity -->
+                <button type="button" class="btn btn-flat"
+                        id="btn_related_activity"
+                        onclick="openRelatedActivity(@DocEntry)"
+                        title="Click to view related activities"
+                        style="background-color:#6f42c1; color:white;">
+                    <i class="fa fa-tasks" style="margin-right:5px;"></i>
+                    Related Activity
+                </button>
             </div>
         </div>
     </div>
@@ -458,6 +488,11 @@
 
         // Navigate
         window.location.href = url;
+    }
+
+    function openRelatedActivity(loanID) {
+        // redirect to the new form page
+        window.location.href = '/Sales/ActivityListByLoan?LoanID=' + loanID;
     }
 </script>
 

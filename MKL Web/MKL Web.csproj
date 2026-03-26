@@ -7496,6 +7496,7 @@
     <Content Include="Views\sales\Activity.cshtml" />
     <Content Include="Views\sales\ActivityList.cshtml" />
     <Content Include="Views\sales\EditActivity.cshtml" />
+    <Content Include="Views\sales\ActivityListByLoan.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

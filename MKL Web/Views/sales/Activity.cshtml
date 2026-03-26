@@ -888,6 +888,10 @@
         $("#total_int_balance").text(totalInt.toFixed(2));
         $("#total_openint_balance").text(totalOpenInt.toFixed(2));
         $("#total_accrual_penalty").text(totalPenalty.toFixed(2));
+
+        // NEW: Sum Open AR + Open Interest and set to txt_ar_balance
+        const totalARCombined = totalOpenAR + totalOpenInt;
+        $("#txt_ar_balance").val(totalARCombined.toFixed(2));
     }
 
     // Utility function to format numbers

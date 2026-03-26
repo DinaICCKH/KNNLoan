@@ -4797,6 +4797,7 @@ function cmd_save_activity() {
 
     // Collect header info
     var head = {
+        HeaderID: $("#txt_docNum").val(),
         Activity: $("#cbo_activity").val(),
         Type: $("#cbo_type").val(),
         Priority: $("#cbo_priority").val(),
@@ -4825,6 +4826,7 @@ function cmd_save_activity() {
     tbody.each(function (index) {
         index++; // match row numbering in IDs
         var detail = {
+            HeaderID: $("#txt_docNum").val(),
             RowNo: index,
             PaymentDate: $("#td_paymentdate_" + index).text().trim(),
             DueDate: $("#td_duedate_" + index).text().trim(),

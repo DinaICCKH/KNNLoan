@@ -1835,8 +1835,8 @@ namespace MKL_Web.Controllers
         public ActionResult PreviewLoan(int DocEntry)
         {
 
-            ViewBag.installment = db.InstallmentRows.Where(x => x.BaseEntry == DocEntry).ToList();
             ViewBag.HeaderLoan = db.ICC_Loan_List_By_ID (DocEntry).ToList();
+            ViewBag.installment = db.ICC_GET_InstallmentByID(DocEntry).ToList();
 
             return View();
         }
@@ -2960,15 +2960,9 @@ namespace MKL_Web.Controllers
 
         public ActionResult Activity()
         {
-            var soList = db.SOs.Where(a => a.ChangeReason == "ChangingProduct").ToList();
-            //ViewBag.cust = db.v_OCRDs.Where(x => x.cardtype == 'C' && soList.Select(a => a.CardCode).Contains(x.CardCode)).ToList();
 
             ViewBag.cust = db.v_OCRD_Penalties.ToList();
             ViewBag.houselist = db.v_Item_Houses.ToList();
-            ViewBag.installment = db.InstallmentLists.Where(x => x.InsCode != "B").ToList();
-            ViewBag.panaltyoption = db.ICC_GET_Penalty_Option().ToList();
-
-            ViewBag.Waiveoption = db.ICC_GET_Waive_Option().ToList();
 
             // Get last DocEntry from ActivityHeader (or your table)
             var lastDoc = db.ActivityHeaders
@@ -3026,7 +3020,9 @@ namespace MKL_Web.Controllers
                             CreatedBy = Session["UCode"]?.ToString(),
                             CreatedDate = DateTime.Now,
                             UpdatedBy = Session["UCode"]?.ToString(),
-                            UpdatedDate = DateTime.Now
+                            UpdatedDate = DateTime.Now,
+                            ItemName = header.ItemName,
+                            Serial = header.Serial
                         };
                         db.ActivityHeaders.InsertOnSubmit(H);
                         db.ActivityHeaders.Context.SubmitChanges();
@@ -3056,6 +3052,8 @@ namespace MKL_Web.Controllers
                         H.TotalARBalance = header.TotalARBalance;
                         H.UpdatedBy = Session["UCode"]?.ToString();
                         H.UpdatedDate = DateTime.Now;
+                        H.ItemName = header.ItemName;
+                        H.Serial = header.Serial;
                         db.ActivityHeaders.Context.SubmitChanges();
                         LastEntry = H.HeaderID;
                     }
@@ -3116,26 +3114,33 @@ namespace MKL_Web.Controllers
 
         public ActionResult EditActivity(int headerID)
         {
-            // Load the header
+            // Load the header only
             var header = db.ActivityHeaders.FirstOrDefault(a => a.HeaderID == headerID);
             if (header == null)
             {
                 return HttpNotFound("Activity header not found");
             }
 
-            // Load all related rows
-            var rows = db.ActivityRows.Where(r => r.HeaderID == headerID).ToList();
-            header.ActivityRows = new System.Data.Linq.EntitySet<ActivityRow>();
-            foreach (var row in rows)
-            {
-                header.ActivityRows.Add(row);
-            }
-
             // Load dropdown data
             ViewBag.cust = db.v_OCRD_Penalties.ToList();
             ViewBag.houselist = db.v_Item_Houses.ToList();
 
+            // Load rows for this header only (independent of Model)
+            ViewBag.LoanRows = db.ActivityRows
+                                   .Where(r => r.HeaderID == headerID)
+                                   .ToList();
+
             return View(header);
+        }
+
+
+        public ActionResult ActivityListByLoan(int LoanID)
+        {
+            // Call the stored procedure using LINQ (EF function import or FromSql)
+            var activities = db.ICC_GET_ActivitybyID(LoanID).ToList();
+
+            // Return the list to the view
+            return View(activities);
         }
 
     }

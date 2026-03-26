@@ -620,6 +620,24 @@ function cmd_copy_from_payment_schedule(type) {
 }
 
 
+function cmd_copy_from_loanActivity() {
+
+
+    var cardcode = "";
+    cardcode = $("#txt_customer_code").val();
+
+    if (!cardcode) {
+        ShowAlertCus("Please choose customer", "danger");
+        $("#txt_customer_code").focus();
+        return false;
+    }
+
+    else {
+        $("#modal-schedule-list").modal('show');
+        get_payment_schedule_list(cardcode);
+    }
+}
+
 
 function ShowAlertCus(message, type = 'warning') {
     const alertId = 'alert_' + Date.now();
@@ -1133,6 +1151,35 @@ function get_contact_person_by_card_code_new(cardcode) {
 
 var range;
 
+
+function cmd_pop_choose_customer_activity() {
+
+    var id = $("#txt_bp_selected_row").val();
+    var cardcode = $("#td_pop_vendor_cust_code_" + id).text();
+    var cardname = $("#td_pop_vendor_cust_name_" + id).text();
+
+    $("#txt_customer_code").val(cardcode);
+    $("#txt_card_name").val(cardname);
+    $("#txt_phone").val($("#td_pop_vendor_phone_" + id).text().trim());
+    $("#modal-cust_list").modal('hide');
+
+    $("#txt_bp_selected_row").val("-1");
+
+    /// Clean Old Data 
+    $("#txt_ar_balance").val(0);  
+    $("#txt_loanID").val("");
+    $("#txt_item_name").val("");
+    $("#txt_serial").val("");
+
+    // ✅ Clear Loan Table
+    $("#table_loan_list tbody").empty();
+
+    // Optional: reset select icon
+    $("#tr_payment_detail_uncheck_all").hide();
+
+    tr_pop_customer_selected('-1');
+}
+
 function cmd_pop_choose_customer_change_owner() {
 
 
@@ -1205,6 +1252,14 @@ function cmd_show_customer_change_house(type, r) {
         $("#modal-cust_list").modal('show');
     }
 }
+
+
+
+
+function cmd_show_customer_Activity() {
+    $("#modal-cust_list").modal('show');
+}
+
 
 
 function cmd_show_customer_penaltywizard() {
@@ -2307,216 +2362,6 @@ function storeOriginalDates() {
         originalInstallmentDates.push(parsedDate);
     });
 }
-
-
-
-
-
-function get_selected_payment_schedule_by_so_forReschedule() {
-
-    var row = $("#txt_payment_schedule_selected_row").val();
-    if (row == -1) {
-        ShowAlertCus("No AR Memo selected!", "warning");
-    } else {
-        var docentry = $("#td_pop_payment_schedule_so_entry_" + row).text();
-        var serialno = $("#td_pop_payment_schedule_serial_" + row).text();
-        var linenum = $("#td_pop_payment_schedule_so_line_" + row).text();
-        $.ajax({
-            url: '/sales/get_payment_schedule_by_so',
-            type: 'POST',
-            data: {
-                soEntry: docentry,
-                rowStatus: 'All'
-            },
-            datatype: 'json',
-            async: false,
-            beforeSend: function () {
-                $("#loading").show();
-            },
-            complete: function () {
-                $("#loading").hide();
-            },
-            success: function (data) {
-                var mydata = data.data;
-                var totalPrinciple = 0.00;
-                var totalInterest = 0.00;
-                var totalMonthlyPay = 0.00;
-                var ItemPrice = 0.00;
-
-                var NewItemCode = "";
-                var NewItemName = "";
-                var BuybackAmt = 0.00;
-                var GeneratedARAmt = 0.00;
-                var OutstandingAmt = 0.00;
-                var VarianAmt = 0.00;
-                var SerialNumber = "";
-
-                $("#txt_total_principle").text('0.00');
-                $("#txt_total_interest").text('0.00');
-                $("#txt_total_monthly").text('0.00');
-                $("#txt_docentry").val(docentry);
-                $("#txt_after_serial").val(serialno);
-
-                update_info_payment(mydata[0], row);
-
-                $("#table_payment_schedule >tbody >tr").remove();
-                var index = 1;
-                for (i = 0; i < mydata.length; i++) {
-                    var x = mydata[i];
-
-                    //Assign the price to Item 
-                    ItemPrice = x.HouseAmount;
-
-                    NewItemCode = x.NewItemCode;
-                    NewItemName = x.NewItemName;
-                    BuybackAmt = x.BuybackAmt;
-                    GeneratedARAmt = x.GeneratedARAmt;
-                    OutstandingAmt = x.OutstandingAmt;
-                    VarianAmt = x.VarianAmt;
-                    SerialNumber = x.DistNumber;
-
-                    var data = "<tr id='tr_payment_" + index + "'>";
-                    data = data + "<td style='text-align:Left;'>" + index + "</td>";
-
-
-                    let isOpen = x.Status.trim() === "O";
-
-                    data += "<td style='text-align:Left; color:blue'>" +
-                        "<input type='text' " +
-                        "style='text-align:Left; color:blue' " +
-                        "class='form-control datetime form-control-insde' " +
-                        "name='InstallmentDate_" + index + "' " +
-                        "id='InstallmentDate_" + index + "' " +
-                        "value='" + x.InstallmentDate + "' " +
-                        "placeholder='Choose Date' " +
-                        (isOpen ? "" : "disabled") + " />" +
-                        "</td>";
-
-
-                    data = data + "<td style='text-align:Left; vertical-align: middle;' id='tr_payment_detail_newduedate_line_" + index + "'>" + x.InstallmentDate + "</td>";
-                    data = data + "<td style='text-align:Left; vertical-align: middle;' id='tr_payment_detail_paymentdate_line_" + index + "'>" + x.DueDate + "</td>";
-                    data = data + "<td style='text-align:left; vertical-align: middle;' id='tr_payment_detail_principle_line_" + index + "'>" + convert2digit(x.Principle) + "</td>";
-                    data = data + "<td style='text-align:Left; vertical-align: middle;' id='tr_payment_detail_interest_line_" + index + "'>" + convert2digit(x.Interest) + "</td>";
-                    data = data + "<td style='text-align:Left; vertical-align: middle;' id='tr_payment_detail_monthlypay_line_" + index + "'>" + convert2digit(x.MonthlyPay) + "</td>";
-                    data = data + "<td style='text-align:Left; vertical-align: middle;' id='tr_payment_detail_remainingamt_line_" + index + "'>" + convert2digit(x.RemainingAmt) + "</td>";
-                    data = data + "<td style='text-align:Left; vertical-align: middle;' id='tr_payment_detail_remainingamtandinterest_line_" + index + "'>" + convert2digit(parseFloat(x.RemainingAmt) + parseFloat(x.Interest)) + "</td>";
-                    data = data + "<td style='text-align:Left; vertical-align: middle;' id='tr_payment_detail_cupayment_line_" + index + "'>" + convert2digit(x.CuPayment) + "</td>";
-                    data = data + "<td style='text-align:Left; vertical-align: middle;' id='tr_payment_detail_culnterest_line_" + index + "'>" + convert2digit(x.CuInterest) + "</td>";
-                    data = data + "<td style='text-align:Left; vertical-align: middle;' id='tr_payment_detail_cupaymentandculnterest_line_" + index + "'>" + convert2digit(parseFloat(x.CuPayment) + parseFloat(x.CuInterest)) + "</td>";
-
-                    data += "<td style='text-align:left; vertical-align:middle;' id='tr_payment_detail_method_line_" + index + "'>";
-                    data += "<div class='form-group'>";
-                    data += "<select class='form-control' style='width:100%; color:blue' id='select_method_" + index + "' " + (isOpen ? "" : "disabled") + ">";
-
-                    for (let i = 0; i < methodOptions.length; i++) {
-                        const opt = methodOptions[i];
-                        const selected = (opt.code === x.HouseStatus) ? "selected" : "";
-                        data += "<option value='" + opt.code + "' " + selected + ">" + opt.code + " - " + opt.name + "</option>";
-                    }
-
-                    data += "</select>";
-                    data += "</div>";
-                    data += "</td>";
-                    data = data + "<td style='text-align:Left; vertical-align: middle; color:red' id='tr_payment_detail_arno_line_" + index + "'>" + x.ARNo + "</td>";
-                    data = data + "<td style='text-align:Left; vertical-align: middle; color:red' id='tr_payment_detail_paymentno_line_" + index + "'>" + x.PaymentNo + "</td>";
-                    data = data + "<td style='text-align:Left; vertical-align: middle; color:red' id='tr_payment_detail_arnointerest_line_" + index + "'>" + x.ARNoInterest + "</td>";
-                    data = data + "<td style='text-align:Left; vertical-align: middle; color:red' id='tr_payment_detail_paymentnointerest_line_" + index + "'>" + x.PaymentNoInterest + "</td>";
-                    data = data + "<td style='text-align:Left; vertical-align: middle; color:red' id='tr_payment_detail_varianday_line_" + index + "'>" + 0 + "</td>";
-                    data = data + "<td style='text-align:Left; vertical-align: middle; color:red' id='tr_payment_detail_interestonscheduleamt_line_" + index + "'>" + 0.00+ "</td>";
-
-                    data = data + "<td " +
-                        (isOpen ? "contenteditable='true'" : "") +
-                        " style='text-align:Left; vertical-align: middle; color:blue' " +
-                        "id='tr_payment_detail_remarks_line_" + index + "'>" + x.Remarks + "</td>";
-
-                    data = data + "<td style='display:none;' id='tr_payment_detail_status_line_" + index + "'>" + x.Status.trim() + "</td>";
-                    data = data + "<td style='display:none;' id='tr_payment_detail_itemcode_line_" + index + "'>" + x.ItemCode + "</td>";
-                    data = data + "<td style='display:none;' id='tr_payment_detail_itemname_line_" + index + "'>" + x.ItemName + "</td>";
-                    data = data + "<td style='display:none;' id='tr_payment_detail_rowno_line_" + index + "'>" + x.RowNo + "</td>";
-                    data = data + "<td style='display:none;' id='tr_payment_detail_accamt_line_" + index + "'>" + convert2digit(x.AccAmt) + "</td>";
-                    data = data + "<td style='display:none;' id='tr_payment_detail_period_line_" + index + "'>" + convert2digit(x.U_Period) + "</td>";
-                    data = data + "<td style='display:none;' id='tr_payment_detail_annulrate_line_" + index + "'>" + convert2digit(x.U_AnnulRate) + "</td>";
-                    data = data + "<td style='display:none;' id='tr_payment_detail_depositamt_line_" + index + "'>" + convert2digit(x.DepositAmt) + "</td>";
-                    data = data + "<td style='display:none;' id='tr_payment_detail_baseentry_line_" + index + "'>" + docentry + "</td>";
-                    data = data + "<td style='display:none;' id='tr_payment_detail_baseline_line_" + index + "'>" + linenum + "</td>";
-                    data = data + "<td style='display:none;' id='tr_payment_detail_fixedpayment_line_" + index + "'>" + convert2digit(x.FixedPayment) + "</td>";
-                    data = data + "<td style='display:none;' id='tr_payment_detail_housestatus_line_" + index + "'>" + x.HouseStatus + "</td>";
-                    data = data + "<td style='display:none;' id='tr_payment_detail_installmentid_line_" + index + "'>" + x.ID + "</td>";
-                    data = data + "</tr>";
-                    $("#table_payment_schedule >tbody").append(data);
-   
-
-                    totalPrinciple = parseFloat(returnstringvalue(totalPrinciple)) + parseFloat(returnstringvalue(x.Principle));
-                    totalInterest = parseFloat(returnstringvalue(totalInterest)) + parseFloat(returnstringvalue(x.Interest));
-                    totalMonthlyPay = parseFloat(returnstringvalue(totalMonthlyPay)) + parseFloat(returnstringvalue(x.MonthlyPay));
-
-                    index++;
-                }
-                storeOriginalDates();
-
-                totalPrinciple = parseFloat(returnstringvalue(totalPrinciple)) + parseFloat(returnstringvalue($("#txt_total_principle").text()));
-                $("#txt_total_principle").text(convert2digit(totalPrinciple));
-                totalInterest = parseFloat(returnstringvalue(totalInterest)) + parseFloat(returnstringvalue($("#txt_total_interest").text()));
-                $("#txt_total_interest").text(convert2digit(totalInterest));
-                totalMonthlyPay = parseFloat(returnstringvalue(totalMonthlyPay)) + parseFloat(returnstringvalue($("#txt_total_monthly").text()));
-                $("#txt_total_monthly").text(convert2digit(totalMonthlyPay));
-
-                var remainingAmt = parseFloat(ItemPrice) - parseFloat(totalPrinciple);
-
-                $("#txt_before_discount_amount").val(convert2digit(ItemPrice));
-                $("#txt_after_discount").val(convert2digit(ItemPrice));
-
-                if (NewItemCode !== "") {
-                    $("#txt_item_code").val(NewItemCode);
-                    $("#txt_item_name").val(NewItemName || "");
-                }
-                $("#txt_serial_no").val(SerialNumber);
-                //$("#txt_item_name").val(NewItemName || "");
-
-
-                $("#txt_buyback_amt").val(convert2digit(BuybackAmt));
-                $("#txt_generated_ar_amt").val(convert2digit(GeneratedARAmt));
-                $("#txt_outstanding_amount").val(convert2digit(OutstandingAmt));
-                $("#txt_varian_amount").val(convert2digit(VarianAmt));
-
-                var OldAmt = parseFloat(GeneratedARAmt) + parseFloat(OutstandingAmt);
-
-
-                $("#txt_oldafter_discount").val(convert2digit(OldAmt));
-
-                /// This is condition to put Isnull 0
-                remainingAmt = parseFloat(remainingAmt);
-
-                if (parseFloat(convert2digit(remainingAmt)) == 0) {
-                    $("#txt_installment_rate").attr('readonly', 'readonly');
-                    $("#txt_period").attr('readonly', 'readonly');
-                    $("#txt_fixed_monthly_payment").attr('readonly', 'readonly');
-                    $("#check_manual_payment").prop('checked', false);
-                    $("#check_manual_payment").attr('disabled', 'disabled');
-                    $("#cbo_payment_option").val('');
-                    $("#cbo_payment_option").attr('disabled', 'disabled');
-                    $("#btn_generate_payment_shcedule").text('Generate');
-                    $("#txt_remaining_amount").val('0.00');
-                    $("#txt_installment_amount").val('0.00');
-                } else {
-                    $("#txt_remaining_amount").val(convert2digit(remainingAmt));
-                    $("#txt_installment_amount").val(convert2digit(remainingAmt));
-                }
-
-                disable_enable_remove_by_line();
-                set_date_of_payment();
-                $("#txt_effective_date").prop("disabled", true);
-
-                $("#modal-schedule-list").modal('hide');
-                $("#txt_payment_schedule_selected_row").val("-1");
-            },
-            error: function (error) {
-                alert('Error while read data => ' + error);
-            }
-        });
-    }
-}
-
 
 function get_changeitem_information() {
     var rowi = $("#txt_payment_schedule_changeitem_selected_row").val();
@@ -4726,7 +4571,6 @@ function get_penaltydraf_waive() {
 }  
 
 
-
 function cmd_save_penaltyDraf() {
 
     if ($("#table_penalty_list >tbody >tr").length <= 0) {
@@ -4942,6 +4786,97 @@ function cmd_save_interestwizard() {
     });
 }
 
+
+function cmd_save_activity() {
+    var tbody = $("#loan_list_body > tr");
+
+    if (tbody.length <= 0) {
+        ShowAlertCus("No data to save!", "warning");
+        return;
+    }
+
+    // Collect header info
+    var head = {
+        HeaderID: $("#txt_docNum").val(),
+        Activity: $("#cbo_activity").val(),
+        Type: $("#cbo_type").val(),
+        Priority: $("#cbo_priority").val(),
+        HandledBy: $("#txt_handled_by").val(),
+        AssignedBy: $("#txt_assign_by").val(),
+        Status: $("#cbo_status").val(),
+        Recurrence: $("#cbo_recurrence").val(),
+        StartDate: $("#txt_start_date").val(),
+        EndDate: $("#txt_end_date").val(),
+        ActivityRemark: $("#txt_activity_remark").val(),
+        CustomerResponse: $("#txt_customer_response").val(),
+        NextAction: $("#txt_next_action").val(),
+        Content: $("#txt_content").val(),
+        CustomerCode: $("#txt_customer_code").val(),
+        CardName: $("#txt_card_name").val(),
+        Phone: $("#txt_phone").val(),
+        Ref: $("#txt_ref").val(),
+        LoanID: $("#txt_loanID").val(),
+        ItemName: $("#txt_item_name").val(),
+        Serial: $("#txt_serial").val(),
+        TotalARBalance: $("#txt_ar_balance").val()
+    };
+
+    // Collect loan/penalty rows
+    var rowsList = [];
+    tbody.each(function (index) {
+        index++; // match row numbering in IDs
+        var detail = {
+            HeaderID: $("#txt_docNum").val(),
+            RowNo: index,
+            PaymentDate: $("#td_paymentdate_" + index).text().trim(),
+            DueDate: $("#td_duedate_" + index).text().trim(),
+            Principle: returnstringvalue($("#td_principle_" + index).text().trim()),
+            Interest: returnstringvalue($("#td_interest_" + index).text().trim()),
+            Monthly: returnstringvalue($("#td_monthly_" + index).text().trim()),
+            PaymentType: $("#td_method_" + index).text().trim(),
+            ARNo: $("#td_arno_" + index).text().trim(),
+            ARBalance: returnstringvalue($("#td_arbalance_" + index).text().trim()),
+            OpenBalanceAR: returnstringvalue($("#td_openbalar_" + index).text().trim()),
+            IntNo: returnstringvalue($("#td_intno_" + index).text().trim()),
+            IntBalance: returnstringvalue($("#td_intbalance_" + index).text().trim()),
+            OpenIntBalance: returnstringvalue($("#td_openbalint_" + index).text().trim()),
+            AccrualPenalty: returnstringvalue($("#td_accrualpenalty_" + index).text().trim()),
+            Remarks: $("#td_remark_" + index).text().trim()
+        };
+
+        rowsList.push(detail);
+    });
+    // Send data to server
+    $.ajax({
+        contentType: 'application/json; charset=utf-8',
+        dataType: 'json',
+        type: 'POST',
+        url: '/sales/save_activity', // adjust URL if different
+        data: JSON.stringify({
+            header: head,
+            rows: rowsList
+        }),
+        beforeSend: function () {
+            $("#loading").show();
+        },
+        complete: function () {
+            $("#loading").hide();
+        },
+        success: function (data) {
+            // Show server status message
+            if (data.status === "OK") {
+                ShowAlertCus("Activity was saved successfully!", "success");
+                location.reload();
+            } else {
+                ShowAlertCus(data.status, "warning");
+            }
+        },
+        error: function (err) {
+            console.error(err);
+            ShowAlertCus("Unexpected error occurred!", "error");
+        }
+    });
+}
 
 
 function cmd_pop_choose_payment_schedule_restructure(OptionType) {

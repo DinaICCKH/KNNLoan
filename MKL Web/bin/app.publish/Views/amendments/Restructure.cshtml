@@ -536,8 +536,39 @@
                                                                             <input type="text" class="form-control pull-right datetime form-control-insde" readonly="readonly" id="txt_start_payment" placeholder="Start Payment" value="@docdate">
                                                                         </div>
                                                                     </td>
+                                    
+
                                                                     <td style="width:30%;text-align:right;padding-right:10px">Period(M)</td>
-                                                                    <td style="width:30%;"><input type="text" class="form-control form-control-insde" id="txt_period" placeholder="Period(M)" onchange="txt_period_change()" value="0"></td>
+
+                                                                    <td style="width:30%;">
+                                                                        <div class="form-group">
+                                                                            <table style="width:100%;" id="table_doc_discount">
+                                                                                <tr>
+                                                                                    <td style="width:40%;">
+
+                                                                                        <input type="text" class="form-control form-control-insde" id="txt_period" placeholder="Period(M)" onchange="txt_period_change()" value="0">
+
+                                                                                    </td>
+                                                                                    <td style="text-align:right;width:30%;">
+                                                                                        <div class="form-group">
+                                                                                            <label for="inputEmail3" style="padding-right:10px;" class="form-control controlLabel">Decimal</label>
+                                                                                        </div>
+                                                                                    </td>
+
+                                                                                    <td style="width:30%;">
+                                                                                        <select class="form-control form-control-insde"
+                                                                                                id="txtdecimal"
+                                                                                                style="width:100%;">
+                                                                                            <option value="0">0</option>
+                                                                                            <option value="1">1</option>
+                                                                                            <option value="2">2</option>
+                                                                                        </select>
+                                                                                    </td>
+                                                                                </tr>
+                                                                            </table>
+                                                                        </div>
+                                                                    </td>
+
                                                                 </tr>
                                                             </table>
                                                         </div>
