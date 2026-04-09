@@ -580,18 +580,6 @@ function cmd_copy_from_payment_schedule(type) {
             var ref = $("#txt_changeitem_ref").val();
             var cardcode = $("#txt_card_code").val();
 
-            // Check if effective date field exists
-            if ($("#txt_effective_date").length > 0) {
-
-                var EffictiveDate = $("#txt_effective_date").val();
-
-                if (!EffictiveDate) {
-                    ShowAlertCus("Please choose effective date first.", "danger");
-                    $("#txt_effective_date").focus();
-                    return false;
-                }
-            }
-
             if (ref === "" && pageID === "ChangeItem") {
                 ShowAlertCus("Please choose Change Reference first", "danger");
                 return;
@@ -5753,19 +5741,10 @@ function cmd_save_approval_Restructure(Type) {
 
 function cmd_save_approval_Reschedule(Type) {
 
-    var neweffectivedate = $("#txt_new_effective_date").val().trim();
-
-    if (Type === "Approve" && neweffectivedate === "") {
-        ShowAlertCus("Please select the new effective date", "warning");
-        $("#txt_new_effective_date").focus();
-        return false;
-    }
-
     var head = {
         DocEntry: $("#txt_draf_ID").val(),
         Comment: $("#txt_approverComment").val(),
-        DocStatus: Type,
-        DocumentDate:neweffectivedate
+        DocStatus: Type
     };
 
     // Initialize array to hold row data

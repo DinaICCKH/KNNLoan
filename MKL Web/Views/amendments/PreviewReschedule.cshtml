@@ -260,8 +260,8 @@
                                                                     </td>
 
                                                  
-                                                                    <td style="width:30%;text-align:right;padding-right:10px">Previous Effective Date</td>
-                                                                    <td style="width:30%;">
+                                                                    <td style="width:30%;text-align:right;padding-right:10px; display:none;">Previous Effective Date</td>
+                                                                    <td style="width:30%; display:none;">
                                                                         <div class="input-group date">
                                                                             <div class="input-group-addon">
                                                                                 <i class="fa fa-calendar"></i>
@@ -305,7 +305,7 @@
 
                                                     <td style="width:10%;">
                                                         <div class="form-group">
-                                                            <label for="inputEmail3" style="padding-left:2px;color:blue;" class="form-control controlLabel">New Effective Date</label>
+                                                            <label class="form-control controlLabel">Approval Template</label>
                                                         </div>
                                                     </td>
 
@@ -315,6 +315,23 @@
                                                                 <tr>
 
                                                                     <td style="width:30%;">
+                                                                        <div class="form-group">
+                                                                            <input type="text"
+                                                                                   class="form-control form-control-insde"
+                                                                                   readonly="readonly"
+                                                                                   value="@AppTemplate"
+                                                                                   id="txt_app_template"
+                                                                                   placeholder="Approval Template">
+                                                                        </div>
+                                                                    </td>
+
+                                                                    <td style="width:10%; display:none;">
+                                                                        <div class="form-group">
+                                                                            <label for="inputEmail3" style="padding-left:2px;color:blue;" class="form-control controlLabel">New Effective Date</label>
+                                                                        </div>
+                                                                    </td>
+
+                                                                    <td style="width:50%; display:none;">
                                                                         <div class="input-group date">
                                                                             <div class="input-group-addon">
                                                                                 <i class="fa fa-calendar"></i>
@@ -326,23 +343,6 @@
                                                                         </div>
                                                                     </td>
 
-                                                                    <td style="width:10%;">
-                                                                        <div class="form-group">
-                                                                            <label class="form-control controlLabel">Approval Template</label>
-                                                                        </div>
-                                                                    </td>
-
-                                                                    <td style="width:50%;">
-                                                                        <div class="form-group">
-                                                                            <input type="text"
-                                                                                   class="form-control form-control-insde"
-                                                                                   readonly="readonly"
-                                                                                   value="@AppTemplate"
-                                                                                   id="txt_app_template"
-                                                                                   placeholder="Approval Template">
-                                                                        </div>
-                                                                    </td>
-
                                                                 </tr>
                                                             </table>
                                                         </div>
@@ -350,6 +350,7 @@
 
 
                                                     
+
                                                 </tr>
 
                                                 <tr>
