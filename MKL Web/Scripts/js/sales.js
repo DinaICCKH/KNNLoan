@@ -622,7 +622,7 @@ function cmd_copy_from_loanActivity() {
 
     else {
         $("#modal-schedule-list").modal('show');
-        get_payment_schedule_list(cardcode);
+        get_payment_schedule_list_for_Activity(cardcode);
     }
 }
 
@@ -3074,6 +3074,69 @@ function get_payment_schedule_list_ChangeItem(cardcode) {
         });
     } 
 }
+
+
+function get_payment_schedule_list_for_Activity(cardcode) {
+
+    var status = "";
+    status = "ALL";
+
+
+    if ($("#txt_module_id").val() == "ChangeSchedule") {
+        status = "SLD";
+        type = "RenewLoan";
+
+    } 
+
+    $.ajax({
+        url: '/sales/get_payment_schedule_list',
+        type: 'POST',
+        data: {
+            cardcode: cardcode,
+            status: status,
+            type: type
+        },
+        datatype: 'json',
+        beforeSend: function () {
+            $("#loading").show();
+        },
+        complete: function () {
+            $("#loading").hide();
+        },
+        success: function (data) {
+            $("#table_pop_schedule_list >tbody >tr").remove();
+            var mydata = data.data;
+            for (i = 0; i < mydata.length; i++) {
+                var x = mydata[i];
+                var data = "<tr id='tr_pop_payment_schedule_" + i + "' onclick='tr_pop_payment_schedule_selected(" + i + ")'>";
+                data += "<td><input type='checkbox' id='chk_pop_payment_schedule_" + i + "'></td>";
+                data = data + "<td>" + x.DocNum + "</td>";
+                data = data + "<td>" + x.CardCode + "</td>";
+                data = data + "<td>" + x.CardName + "</td>";
+                data = data + "<td id='td_pop_payment_schedule_ocrcode3_" + i + "'>" + x.ItemCode + "</td>";
+                data = data + "<td id='td_pop_payment_schedule_ocrcode_" + i + "'>" + x.ItemName + "</td>";
+                data = data + "<td id='td_pop_payment_schedule_serial_" + i + "'>" + x.DistNumber + "</td>";
+                data = data + "<td style='display:none'>" + x.PaymentOptionName + "</td>";
+                data = data + "<td style='display:none' id='td_pop_payment_schedule_so_entry_" + i + "'>" + x.DocEntry + "</td>";
+                data = data + "<td style='display:none' id='td_pop_payment_schedule_so_line_" + i + "'>" + x.LineNum + "</td>";
+                data = data + "<td style='display:none' id='td_pop_payment_schedule_so_itemcode_" + i + "'>" + x.ItemCode + "</td>";
+                data = data + "<td style='display:none' id='td_pop_payment_schedule_so_itemname_" + i + "'>" + x.ItemName + "</td>";
+                data = data + "<td style='display:none' id='td_pop_payment_schedule_so_referral_" + i + "'>" + x.Referral + "</td>";
+                data = data + "<td style='display:none' id='td_pop_payment_schedule_so_conperiod_" + i + "'>" + x.ConPeriod + "</td>";
+                data = data + "<td style='display:none' id='td_pop_payment_schedule_so_houseamount_" + i + "'>" + x.HouseAmount + "</td>";
+                data = data + "<td style='display:none' id='td_pop_payment_schedule_so_additionalamt_" + i + "'>" + x.AdditionalAmt + "</td>";
+                data = data + "<td style='display:none' id='td_pop_payment_schedule_so_docdate_" + i + "'>" + x.DocDate + "</td>";
+                data = data + "<td style='display:none' id='td_pop_payment_schedule_so_duedate_" + i + "'>" + x.DueDate + "</td>";
+                data = data + "</tr>";
+                $("#table_pop_schedule_list >tbody").append(data);
+            }
+        },
+        error: function (error) {
+            alert('Error while read data => ' + error);
+        }
+    });
+}
+
 
 function get_payment_schedule_list(cardcode) {
 
