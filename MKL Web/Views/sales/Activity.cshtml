@@ -699,18 +699,28 @@
     // Fetch loan/payment schedule and populate table
     function get_listloan_forActivity() {
         var row = $("#txt_payment_schedule_selected_row").val();
-        if (row == -1) {
-            ShowAlertCus("No AR Memo selected!", "warning");
+
+        var docEntries = [];
+
+        $("#table_pop_schedule_list tbody tr").each(function (i) {
+            var checkbox = $(this).find("input[type='checkbox']");
+
+            if (checkbox.is(":checked")) {
+                var docEntry = $("#td_pop_payment_schedule_so_entry_" + i).text().trim();
+                if (docEntry) {
+                    docEntries.push(docEntry);
+                }
+            }
+        });
+
+        if (docEntries.length === 0) {
+            ShowAlertCus("Please select at least one schedule!", "warning");
             return;
         }
 
-        var docentry = $("#td_pop_payment_schedule_so_entry_" + row).text();
-        var serialno = $("#td_pop_payment_schedule_serial_" + row).text();
-        var itemname = $("#td_pop_payment_schedule_ocrcode_" + row).text();
+        // Combine with ;
+        var docentry = docEntries.join(";");
 
-        $("#txt_loanID").val(docentry);
-        $("#txt_item_name").val(itemname);
-        $("#txt_serial").val(serialno);
 
         $.ajax({
             url: '/sales/get_payment_schedule_by_so_forActivity',

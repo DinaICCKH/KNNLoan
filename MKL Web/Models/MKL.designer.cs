@@ -1335,13 +1335,6 @@ namespace MKL_Web.Models
 			return ((ISingleResult<ICC_Get_List_PenaltyDraf_AccraulResult>)(result.ReturnValue));
 		}
 		
-		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.ICC_Get_List_Activity")]
-		public ISingleResult<ICC_Get_List_ActivityResult> ICC_Get_List_Activity([global::System.Data.Linq.Mapping.ParameterAttribute(Name="Status", DbType="NVarChar(50)")] string status, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Activity", DbType="NVarChar(50)")] string activity, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Type", DbType="NVarChar(50)")] string type, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Date")] System.Nullable<System.DateTime> fdate, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Date")] System.Nullable<System.DateTime> tdate, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="CreateBy", DbType="NVarChar(250)")] string createBy)
-		{
-			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), status, activity, type, fdate, tdate, createBy);
-			return ((ISingleResult<ICC_Get_List_ActivityResult>)(result.ReturnValue));
-		}
-		
 		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.ICC_GET_ActivitybyID")]
 		public ISingleResult<ICC_GET_ActivitybyIDResult> ICC_GET_ActivitybyID([global::System.Data.Linq.Mapping.ParameterAttribute(Name="LoanID", DbType="Int")] System.Nullable<int> loanID)
 		{
@@ -1354,6 +1347,13 @@ namespace MKL_Web.Models
 		{
 			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), baseEntry);
 			return ((ISingleResult<ICC_GET_InstallmentByIDResult>)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.ICC_Get_List_Activity")]
+		public ISingleResult<ICC_Get_List_ActivityResult> ICC_Get_List_Activity([global::System.Data.Linq.Mapping.ParameterAttribute(Name="Status", DbType="NVarChar(50)")] string status, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Activity", DbType="NVarChar(50)")] string activity, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Type", DbType="NVarChar(50)")] string type, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Date")] System.Nullable<System.DateTime> fdate, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Date")] System.Nullable<System.DateTime> tdate, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="CreateBy", DbType="NVarChar(250)")] string createBy)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), status, activity, type, fdate, tdate, createBy);
+			return ((ISingleResult<ICC_Get_List_ActivityResult>)(result.ReturnValue));
 		}
 	}
 	
@@ -52924,212 +52924,6 @@ namespace MKL_Web.Models
 		}
 	}
 	
-	public partial class ICC_Get_List_ActivityResult
-	{
-		
-		private int _HeaderID;
-		
-		private string _Activity;
-		
-		private string _Type;
-		
-		private string _Priority;
-		
-		private string _HandledBy;
-		
-		private string _AssignedBy;
-		
-		private string _Status;
-		
-		private string _CustomerCode;
-		
-		private string _CardName;
-		
-		private string _Ref;
-		
-		private string _CreatedBy;
-		
-		public ICC_Get_List_ActivityResult()
-		{
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_HeaderID", DbType="Int NOT NULL")]
-		public int HeaderID
-		{
-			get
-			{
-				return this._HeaderID;
-			}
-			set
-			{
-				if ((this._HeaderID != value))
-				{
-					this._HeaderID = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Activity", DbType="NVarChar(50) NOT NULL", CanBeNull=false)]
-		public string Activity
-		{
-			get
-			{
-				return this._Activity;
-			}
-			set
-			{
-				if ((this._Activity != value))
-				{
-					this._Activity = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Type", DbType="NVarChar(50) NOT NULL", CanBeNull=false)]
-		public string Type
-		{
-			get
-			{
-				return this._Type;
-			}
-			set
-			{
-				if ((this._Type != value))
-				{
-					this._Type = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Priority", DbType="NVarChar(20) NOT NULL", CanBeNull=false)]
-		public string Priority
-		{
-			get
-			{
-				return this._Priority;
-			}
-			set
-			{
-				if ((this._Priority != value))
-				{
-					this._Priority = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_HandledBy", DbType="NVarChar(100)")]
-		public string HandledBy
-		{
-			get
-			{
-				return this._HandledBy;
-			}
-			set
-			{
-				if ((this._HandledBy != value))
-				{
-					this._HandledBy = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AssignedBy", DbType="NVarChar(100)")]
-		public string AssignedBy
-		{
-			get
-			{
-				return this._AssignedBy;
-			}
-			set
-			{
-				if ((this._AssignedBy != value))
-				{
-					this._AssignedBy = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Status", DbType="NVarChar(50)")]
-		public string Status
-		{
-			get
-			{
-				return this._Status;
-			}
-			set
-			{
-				if ((this._Status != value))
-				{
-					this._Status = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CustomerCode", DbType="NVarChar(50)")]
-		public string CustomerCode
-		{
-			get
-			{
-				return this._CustomerCode;
-			}
-			set
-			{
-				if ((this._CustomerCode != value))
-				{
-					this._CustomerCode = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CardName", DbType="NVarChar(200)")]
-		public string CardName
-		{
-			get
-			{
-				return this._CardName;
-			}
-			set
-			{
-				if ((this._CardName != value))
-				{
-					this._CardName = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Ref", DbType="NVarChar(50)")]
-		public string Ref
-		{
-			get
-			{
-				return this._Ref;
-			}
-			set
-			{
-				if ((this._Ref != value))
-				{
-					this._Ref = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CreatedBy", DbType="NVarChar(20)")]
-		public string CreatedBy
-		{
-			get
-			{
-				return this._CreatedBy;
-			}
-			set
-			{
-				if ((this._CreatedBy != value))
-				{
-					this._CreatedBy = value;
-				}
-			}
-		}
-	}
-	
 	public partial class ICC_GET_ActivitybyIDResult
 	{
 		
@@ -54491,6 +54285,320 @@ namespace MKL_Web.Models
 				if ((this._ApplyInterestStatus != value))
 				{
 					this._ApplyInterestStatus = value;
+				}
+			}
+		}
+	}
+	
+	public partial class ICC_Get_List_ActivityResult
+	{
+		
+		private int _HeaderID;
+		
+		private string _Activity;
+		
+		private string _Type;
+		
+		private string _Priority;
+		
+		private string _HandledBy;
+		
+		private string _AssignedBy;
+		
+		private string _Status;
+		
+		private string _CustomerCode;
+		
+		private string _CardName;
+		
+		private string _Ref;
+		
+		private string _CreatedBy;
+		
+		private System.Nullable<System.DateTime> _CreatedDate;
+		
+		private System.Nullable<System.DateTime> _StartDate;
+		
+		private System.Nullable<System.DateTime> _EndDate;
+		
+		private string _ActivityRemark;
+		
+		private string _NextAction;
+		
+		private string _CustomerResponse;
+		
+		public ICC_Get_List_ActivityResult()
+		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_HeaderID", DbType="Int NOT NULL")]
+		public int HeaderID
+		{
+			get
+			{
+				return this._HeaderID;
+			}
+			set
+			{
+				if ((this._HeaderID != value))
+				{
+					this._HeaderID = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Activity", DbType="NVarChar(50) NOT NULL", CanBeNull=false)]
+		public string Activity
+		{
+			get
+			{
+				return this._Activity;
+			}
+			set
+			{
+				if ((this._Activity != value))
+				{
+					this._Activity = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Type", DbType="NVarChar(50) NOT NULL", CanBeNull=false)]
+		public string Type
+		{
+			get
+			{
+				return this._Type;
+			}
+			set
+			{
+				if ((this._Type != value))
+				{
+					this._Type = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Priority", DbType="NVarChar(20) NOT NULL", CanBeNull=false)]
+		public string Priority
+		{
+			get
+			{
+				return this._Priority;
+			}
+			set
+			{
+				if ((this._Priority != value))
+				{
+					this._Priority = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_HandledBy", DbType="NVarChar(100)")]
+		public string HandledBy
+		{
+			get
+			{
+				return this._HandledBy;
+			}
+			set
+			{
+				if ((this._HandledBy != value))
+				{
+					this._HandledBy = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AssignedBy", DbType="NVarChar(100)")]
+		public string AssignedBy
+		{
+			get
+			{
+				return this._AssignedBy;
+			}
+			set
+			{
+				if ((this._AssignedBy != value))
+				{
+					this._AssignedBy = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Status", DbType="NVarChar(50)")]
+		public string Status
+		{
+			get
+			{
+				return this._Status;
+			}
+			set
+			{
+				if ((this._Status != value))
+				{
+					this._Status = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CustomerCode", DbType="NVarChar(50)")]
+		public string CustomerCode
+		{
+			get
+			{
+				return this._CustomerCode;
+			}
+			set
+			{
+				if ((this._CustomerCode != value))
+				{
+					this._CustomerCode = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CardName", DbType="NVarChar(200)")]
+		public string CardName
+		{
+			get
+			{
+				return this._CardName;
+			}
+			set
+			{
+				if ((this._CardName != value))
+				{
+					this._CardName = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Ref", DbType="NVarChar(50)")]
+		public string Ref
+		{
+			get
+			{
+				return this._Ref;
+			}
+			set
+			{
+				if ((this._Ref != value))
+				{
+					this._Ref = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CreatedBy", DbType="NVarChar(20)")]
+		public string CreatedBy
+		{
+			get
+			{
+				return this._CreatedBy;
+			}
+			set
+			{
+				if ((this._CreatedBy != value))
+				{
+					this._CreatedBy = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CreatedDate", DbType="DateTime")]
+		public System.Nullable<System.DateTime> CreatedDate
+		{
+			get
+			{
+				return this._CreatedDate;
+			}
+			set
+			{
+				if ((this._CreatedDate != value))
+				{
+					this._CreatedDate = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_StartDate", DbType="Date")]
+		public System.Nullable<System.DateTime> StartDate
+		{
+			get
+			{
+				return this._StartDate;
+			}
+			set
+			{
+				if ((this._StartDate != value))
+				{
+					this._StartDate = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_EndDate", DbType="Date")]
+		public System.Nullable<System.DateTime> EndDate
+		{
+			get
+			{
+				return this._EndDate;
+			}
+			set
+			{
+				if ((this._EndDate != value))
+				{
+					this._EndDate = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ActivityRemark", DbType="NVarChar(MAX)")]
+		public string ActivityRemark
+		{
+			get
+			{
+				return this._ActivityRemark;
+			}
+			set
+			{
+				if ((this._ActivityRemark != value))
+				{
+					this._ActivityRemark = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_NextAction", DbType="NVarChar(MAX)")]
+		public string NextAction
+		{
+			get
+			{
+				return this._NextAction;
+			}
+			set
+			{
+				if ((this._NextAction != value))
+				{
+					this._NextAction = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CustomerResponse", DbType="NVarChar(MAX)")]
+		public string CustomerResponse
+		{
+			get
+			{
+				return this._CustomerResponse;
+			}
+			set
+			{
+				if ((this._CustomerResponse != value))
+				{
+					this._CustomerResponse = value;
 				}
 			}
 		}

@@ -29,69 +29,54 @@
             // ===============================
             // UPDATE VARIAN DAY (ONLY OPEN ROWS)
             // ===============================
-
             function updateVarianDays() {
 
-                let effectiveDate = moment($("#txt_effective_date").val(), "DD-MMM-YYYY");
-                if (!effectiveDate.isValid()) return;
-
-                let openRowCounter = 0;
-
+                // Loop through all table rows
                 $("#table_payment_schedule tbody tr").each(function (index) {
 
                     let rowIndex = index + 1;
                     let rowStatus = $("#tr_payment_detail_status_line_" + rowIndex).text().trim();
 
+                    // Only process OPEN rows
                     if (rowStatus !== "O") return;
 
-                    openRowCounter++;
-
+                    // Get the scheduled due date
                     let dueDateText = $("#tr_payment_detail_paymentdate_line_" + rowIndex).text().trim();
                     let dueDate = moment(dueDateText, "DD-MMM-YYYY");
                     if (!dueDate.isValid()) return;
 
-                    if (dueDate.isAfter(effectiveDate)) {
-                        $("#tr_payment_detail_varianday_line_" + rowIndex).text(0).css("color", "black");
-                        $("#tr_payment_detail_interestonscheduleamt_line_" + rowIndex).text("0.00").css("color", "black");
-                        return;
-                    }
-
+                    // Get the posted installment date
                     let postDateText = $("#InstallmentDate_" + rowIndex).val();
                     let postDate = moment(postDateText, "DD-MMM-YYYY");
+                    if (!postDate.isValid()) return;
 
-                    let varianDay = 0;
-
-                    if (openRowCounter === 1) {
-                        varianDay = effectiveDate.diff(dueDate, 'days');
-                    } else {
-                        if (!postDate.isValid()) return;
-                        varianDay = postDate.diff(dueDate, 'days');
-                    }
-
+                    // Calculate varianDay for all open rows the same way
+                    let varianDay = postDate.diff(dueDate, 'days');
                     if (isNaN(varianDay) || varianDay < 0) varianDay = 0;
 
+                    // Update the table display
                     $("#tr_payment_detail_varianday_line_" + rowIndex)
                         .text(varianDay)
                         .css("color", varianDay === 0 ? "black" : "red");
 
+                    // Get the monthly payment amount
                     let monthlyPay = parseFloat(
                         $("#tr_payment_detail_monthlypay_line_" + rowIndex)
                             .text()
                             .replace(/,/g, '')
                     ) || 0;
 
-
-                    // ✅ Only calculate when varianDay > 7
-                    let result = varianDay > 7
-                        ? (monthlyPay * 0.0125) / 30 * varianDay
+                    // Calculate interest only if varianDay > 7
+                    let interestOnSchedule = varianDay > 7
+                        ? (monthlyPay * 0.0125 / 30) * varianDay
                         : 0;
 
+                    if (isNaN(interestOnSchedule)) interestOnSchedule = 0;
 
-                    if (isNaN(result)) result = 0;
-
+                    // Update interest on schedule in table
                     $("#tr_payment_detail_interestonscheduleamt_line_" + rowIndex)
-                        .text(result.toFixed(2))
-                        .css("color", result === 0 ? "black" : "red");
+                        .text(interestOnSchedule.toFixed(2))
+                        .css("color", interestOnSchedule === 0 ? "black" : "red");
                 });
             }
 
@@ -563,15 +548,15 @@
 
 
 
-                                                    <td style="width:10%;">
+                                                    <td style="width:10%; display:none">
                                                         <div class="form-group">
                                                             <label for="inputEmail3" style="padding-left:2px;" class="form-control controlLabel">Effictive Date</label>
                                                         </div>
                                                     </td>
-                                                    <td style="width:40%;">
+                                                    <td style="width: 40%; display: none">
                                                         <div class="form-group">
                                                             <div class="input-group date">
-                                                                <div class="input-group-addon"> 
+                                                                <div class="input-group-addon">
                                                                     <i class="fa fa-calendar"></i>
                                                                 </div>
                                                                 <input type="text" class="form-control pull-right datetime form-control-insde" id="txt_effective_date" placeholder="Posting Date">
@@ -579,6 +564,17 @@
                                                         </div>
                                                     </td>
 
+
+                                                    <td style="width:10%;">
+                                                        <div class="form-group">
+                                                            <label for="inputEmail3" style="padding-left:2px;" class="form-control controlLabel">Remark</label>
+                                                        </div>
+                                                    </td>
+                                                    <td style="width: 40%;">
+                                                        <div class="form-group">
+                                                            <textarea class="form-control form-control-insde" id="txt_remark" rows="1"></textarea>
+                                                        </div>
+                                                    </td>
 
                                                 </tr>
 
@@ -676,23 +672,7 @@
                                                     </td>
                                                 </tr>
 
-                                                <tr>
-                                                    <td style="width:10%;">
-                                                        <div class="form-group">
-                                                            <label for="inputEmail3" style="padding-left:2px;" class="form-control controlLabel">Remark</label>
-                                                        </div>
-                                                    </td>
-
-                                                    <td style="width:40%;">
-                                                        <div class="form-group">
-                                                            <textarea class="form-control form-control-insde" id="txt_remark" rows="3"></textarea>
-                                                        </div>
-                                                    </td>
-
-
-
-                                                </tr>
-
+                                               
                                                 <tr>
                                                     <td style="width:10%;">
                                                         <div class="form-group">

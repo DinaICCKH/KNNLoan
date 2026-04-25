@@ -110,6 +110,14 @@
                             <th>CardName</th>
                             <th>Ref</th>
                             <th>CreatedBy</th>
+
+                            <!-- ✅ NEW FIELDS -->
+                            <th>Created Date</th>
+                            <th>Start Date</th>
+                            <th>End Date</th>
+                            <th>Activity Remark</th>
+                            <th>Next Action</th>
+                            <th>Customer Response</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -119,12 +127,13 @@
                             {
                                                 <tr id="tr_@rowindex">
                                                     <td style="text-align:center;">@rowindex</td>
+
                                                     <td style="cursor:pointer;color:blue;text-decoration:underline;">
                                                         <a href="/sales/EditActivity?headerID=@x.HeaderID">
                                                             @x.HeaderID
                                                         </a>
                                                     </td>
-                                       
+
                                                     <td>@x.Activity</td>
                                                     <td>@x.Type</td>
                                                     <td>@x.Priority</td>
@@ -135,6 +144,14 @@
                                                     <td>@x.CardName</td>
                                                     <td>@x.Ref</td>
                                                     <td>@x.CreatedBy</td>
+
+                                                    <!-- ✅ NEW DATA BINDING -->
+                                                    <td>@(x.CreatedDate?.ToString("dd-MMM-yyyy") ?? "-")</td>
+                                                    <td>@(x.StartDate?.ToString("dd-MMM-yyyy") ?? "-")</td>
+                                                    <td>@(x.EndDate?.ToString("dd-MMM-yyyy") ?? "-")</td>
+                                                    <td>@x.ActivityRemark</td>
+                                                    <td>@x.NextAction</td>
+                                                    <td>@x.CustomerResponse</td>
                                                 </tr>
                                 rowindex++;
                             }
