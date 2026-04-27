@@ -192,12 +192,12 @@ namespace MKL_Web.Models
     partial void InsertPenaltyWizard(PenaltyWizard instance);
     partial void UpdatePenaltyWizard(PenaltyWizard instance);
     partial void DeletePenaltyWizard(PenaltyWizard instance);
-    partial void InsertActivityRow(ActivityRow instance);
-    partial void UpdateActivityRow(ActivityRow instance);
-    partial void DeleteActivityRow(ActivityRow instance);
     partial void InsertActivityHeader(ActivityHeader instance);
     partial void UpdateActivityHeader(ActivityHeader instance);
     partial void DeleteActivityHeader(ActivityHeader instance);
+    partial void InsertActivityRow(ActivityRow instance);
+    partial void UpdateActivityRow(ActivityRow instance);
+    partial void DeleteActivityRow(ActivityRow instance);
     #endregion
 		
 		public MKLDataContext(string connection) : 
@@ -976,19 +976,19 @@ namespace MKL_Web.Models
 			}
 		}
 		
-		public System.Data.Linq.Table<ActivityRow> ActivityRows
-		{
-			get
-			{
-				return this.GetTable<ActivityRow>();
-			}
-		}
-		
 		public System.Data.Linq.Table<ActivityHeader> ActivityHeaders
 		{
 			get
 			{
 				return this.GetTable<ActivityHeader>();
+			}
+		}
+		
+		public System.Data.Linq.Table<ActivityRow> ActivityRows
+		{
+			get
+			{
+				return this.GetTable<ActivityRow>();
 			}
 		}
 		
@@ -1354,6 +1354,13 @@ namespace MKL_Web.Models
 		{
 			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), status, activity, type, fdate, tdate, createBy);
 			return ((ISingleResult<ICC_Get_List_ActivityResult>)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.ICC_GET_AssignToActivity")]
+		public ISingleResult<ICC_GET_AssignToActivityResult> ICC_GET_AssignToActivity()
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())));
+			return ((ISingleResult<ICC_GET_AssignToActivityResult>)(result.ReturnValue));
 		}
 	}
 	
@@ -39415,6 +39422,600 @@ namespace MKL_Web.Models
 		}
 	}
 	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.ActivityHeader")]
+	public partial class ActivityHeader : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _HeaderID;
+		
+		private string _Activity;
+		
+		private string _Type;
+		
+		private string _Priority;
+		
+		private string _HandledBy;
+		
+		private string _Status;
+		
+		private string _AssignedBy;
+		
+		private string _Recurrence;
+		
+		private System.Nullable<System.DateTime> _StartDate;
+		
+		private System.Nullable<System.DateTime> _EndDate;
+		
+		private string _ActivityRemark;
+		
+		private string _CustomerResponse;
+		
+		private string _NextAction;
+		
+		private string _CustomerCode;
+		
+		private string _CardName;
+		
+		private string _Phone;
+		
+		private string _Ref;
+		
+		private System.Nullable<decimal> _TotalARBalance;
+		
+		private string _CreatedBy;
+		
+		private System.Nullable<System.DateTime> _CreatedDate;
+		
+		private System.Nullable<System.DateTime> _UpdatedDate;
+		
+		private string _UpdatedBy;
+		
+		private EntitySet<ActivityRow> _ActivityRows;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnHeaderIDChanging(int value);
+    partial void OnHeaderIDChanged();
+    partial void OnActivityChanging(string value);
+    partial void OnActivityChanged();
+    partial void OnTypeChanging(string value);
+    partial void OnTypeChanged();
+    partial void OnPriorityChanging(string value);
+    partial void OnPriorityChanged();
+    partial void OnHandledByChanging(string value);
+    partial void OnHandledByChanged();
+    partial void OnStatusChanging(string value);
+    partial void OnStatusChanged();
+    partial void OnAssignedByChanging(string value);
+    partial void OnAssignedByChanged();
+    partial void OnRecurrenceChanging(string value);
+    partial void OnRecurrenceChanged();
+    partial void OnStartDateChanging(System.Nullable<System.DateTime> value);
+    partial void OnStartDateChanged();
+    partial void OnEndDateChanging(System.Nullable<System.DateTime> value);
+    partial void OnEndDateChanged();
+    partial void OnActivityRemarkChanging(string value);
+    partial void OnActivityRemarkChanged();
+    partial void OnCustomerResponseChanging(string value);
+    partial void OnCustomerResponseChanged();
+    partial void OnNextActionChanging(string value);
+    partial void OnNextActionChanged();
+    partial void OnCustomerCodeChanging(string value);
+    partial void OnCustomerCodeChanged();
+    partial void OnCardNameChanging(string value);
+    partial void OnCardNameChanged();
+    partial void OnPhoneChanging(string value);
+    partial void OnPhoneChanged();
+    partial void OnRefChanging(string value);
+    partial void OnRefChanged();
+    partial void OnTotalARBalanceChanging(System.Nullable<decimal> value);
+    partial void OnTotalARBalanceChanged();
+    partial void OnCreatedByChanging(string value);
+    partial void OnCreatedByChanged();
+    partial void OnCreatedDateChanging(System.Nullable<System.DateTime> value);
+    partial void OnCreatedDateChanged();
+    partial void OnUpdatedDateChanging(System.Nullable<System.DateTime> value);
+    partial void OnUpdatedDateChanged();
+    partial void OnUpdatedByChanging(string value);
+    partial void OnUpdatedByChanged();
+    #endregion
+		
+		public ActivityHeader()
+		{
+			this._ActivityRows = new EntitySet<ActivityRow>(new Action<ActivityRow>(this.attach_ActivityRows), new Action<ActivityRow>(this.detach_ActivityRows));
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_HeaderID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int HeaderID
+		{
+			get
+			{
+				return this._HeaderID;
+			}
+			set
+			{
+				if ((this._HeaderID != value))
+				{
+					this.OnHeaderIDChanging(value);
+					this.SendPropertyChanging();
+					this._HeaderID = value;
+					this.SendPropertyChanged("HeaderID");
+					this.OnHeaderIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Activity", DbType="NVarChar(50) NOT NULL", CanBeNull=false)]
+		public string Activity
+		{
+			get
+			{
+				return this._Activity;
+			}
+			set
+			{
+				if ((this._Activity != value))
+				{
+					this.OnActivityChanging(value);
+					this.SendPropertyChanging();
+					this._Activity = value;
+					this.SendPropertyChanged("Activity");
+					this.OnActivityChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Type", DbType="NVarChar(50) NOT NULL", CanBeNull=false)]
+		public string Type
+		{
+			get
+			{
+				return this._Type;
+			}
+			set
+			{
+				if ((this._Type != value))
+				{
+					this.OnTypeChanging(value);
+					this.SendPropertyChanging();
+					this._Type = value;
+					this.SendPropertyChanged("Type");
+					this.OnTypeChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Priority", DbType="NVarChar(20) NOT NULL", CanBeNull=false)]
+		public string Priority
+		{
+			get
+			{
+				return this._Priority;
+			}
+			set
+			{
+				if ((this._Priority != value))
+				{
+					this.OnPriorityChanging(value);
+					this.SendPropertyChanging();
+					this._Priority = value;
+					this.SendPropertyChanged("Priority");
+					this.OnPriorityChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_HandledBy", DbType="NVarChar(100)")]
+		public string HandledBy
+		{
+			get
+			{
+				return this._HandledBy;
+			}
+			set
+			{
+				if ((this._HandledBy != value))
+				{
+					this.OnHandledByChanging(value);
+					this.SendPropertyChanging();
+					this._HandledBy = value;
+					this.SendPropertyChanged("HandledBy");
+					this.OnHandledByChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Status", DbType="NVarChar(50)")]
+		public string Status
+		{
+			get
+			{
+				return this._Status;
+			}
+			set
+			{
+				if ((this._Status != value))
+				{
+					this.OnStatusChanging(value);
+					this.SendPropertyChanging();
+					this._Status = value;
+					this.SendPropertyChanged("Status");
+					this.OnStatusChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AssignedBy", DbType="NVarChar(100)")]
+		public string AssignedBy
+		{
+			get
+			{
+				return this._AssignedBy;
+			}
+			set
+			{
+				if ((this._AssignedBy != value))
+				{
+					this.OnAssignedByChanging(value);
+					this.SendPropertyChanging();
+					this._AssignedBy = value;
+					this.SendPropertyChanged("AssignedBy");
+					this.OnAssignedByChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Recurrence", DbType="NVarChar(20)")]
+		public string Recurrence
+		{
+			get
+			{
+				return this._Recurrence;
+			}
+			set
+			{
+				if ((this._Recurrence != value))
+				{
+					this.OnRecurrenceChanging(value);
+					this.SendPropertyChanging();
+					this._Recurrence = value;
+					this.SendPropertyChanged("Recurrence");
+					this.OnRecurrenceChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_StartDate", DbType="Date")]
+		public System.Nullable<System.DateTime> StartDate
+		{
+			get
+			{
+				return this._StartDate;
+			}
+			set
+			{
+				if ((this._StartDate != value))
+				{
+					this.OnStartDateChanging(value);
+					this.SendPropertyChanging();
+					this._StartDate = value;
+					this.SendPropertyChanged("StartDate");
+					this.OnStartDateChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_EndDate", DbType="Date")]
+		public System.Nullable<System.DateTime> EndDate
+		{
+			get
+			{
+				return this._EndDate;
+			}
+			set
+			{
+				if ((this._EndDate != value))
+				{
+					this.OnEndDateChanging(value);
+					this.SendPropertyChanging();
+					this._EndDate = value;
+					this.SendPropertyChanged("EndDate");
+					this.OnEndDateChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ActivityRemark", DbType="NVarChar(MAX)")]
+		public string ActivityRemark
+		{
+			get
+			{
+				return this._ActivityRemark;
+			}
+			set
+			{
+				if ((this._ActivityRemark != value))
+				{
+					this.OnActivityRemarkChanging(value);
+					this.SendPropertyChanging();
+					this._ActivityRemark = value;
+					this.SendPropertyChanged("ActivityRemark");
+					this.OnActivityRemarkChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CustomerResponse", DbType="NVarChar(MAX)")]
+		public string CustomerResponse
+		{
+			get
+			{
+				return this._CustomerResponse;
+			}
+			set
+			{
+				if ((this._CustomerResponse != value))
+				{
+					this.OnCustomerResponseChanging(value);
+					this.SendPropertyChanging();
+					this._CustomerResponse = value;
+					this.SendPropertyChanged("CustomerResponse");
+					this.OnCustomerResponseChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_NextAction", DbType="NVarChar(MAX)")]
+		public string NextAction
+		{
+			get
+			{
+				return this._NextAction;
+			}
+			set
+			{
+				if ((this._NextAction != value))
+				{
+					this.OnNextActionChanging(value);
+					this.SendPropertyChanging();
+					this._NextAction = value;
+					this.SendPropertyChanged("NextAction");
+					this.OnNextActionChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CustomerCode", DbType="NVarChar(50)")]
+		public string CustomerCode
+		{
+			get
+			{
+				return this._CustomerCode;
+			}
+			set
+			{
+				if ((this._CustomerCode != value))
+				{
+					this.OnCustomerCodeChanging(value);
+					this.SendPropertyChanging();
+					this._CustomerCode = value;
+					this.SendPropertyChanged("CustomerCode");
+					this.OnCustomerCodeChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CardName", DbType="NVarChar(200)")]
+		public string CardName
+		{
+			get
+			{
+				return this._CardName;
+			}
+			set
+			{
+				if ((this._CardName != value))
+				{
+					this.OnCardNameChanging(value);
+					this.SendPropertyChanging();
+					this._CardName = value;
+					this.SendPropertyChanged("CardName");
+					this.OnCardNameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Phone", DbType="NVarChar(50)")]
+		public string Phone
+		{
+			get
+			{
+				return this._Phone;
+			}
+			set
+			{
+				if ((this._Phone != value))
+				{
+					this.OnPhoneChanging(value);
+					this.SendPropertyChanging();
+					this._Phone = value;
+					this.SendPropertyChanged("Phone");
+					this.OnPhoneChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Ref", DbType="NVarChar(50)")]
+		public string Ref
+		{
+			get
+			{
+				return this._Ref;
+			}
+			set
+			{
+				if ((this._Ref != value))
+				{
+					this.OnRefChanging(value);
+					this.SendPropertyChanging();
+					this._Ref = value;
+					this.SendPropertyChanged("Ref");
+					this.OnRefChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TotalARBalance", DbType="Decimal(18,2)")]
+		public System.Nullable<decimal> TotalARBalance
+		{
+			get
+			{
+				return this._TotalARBalance;
+			}
+			set
+			{
+				if ((this._TotalARBalance != value))
+				{
+					this.OnTotalARBalanceChanging(value);
+					this.SendPropertyChanging();
+					this._TotalARBalance = value;
+					this.SendPropertyChanged("TotalARBalance");
+					this.OnTotalARBalanceChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CreatedBy", DbType="NVarChar(20)")]
+		public string CreatedBy
+		{
+			get
+			{
+				return this._CreatedBy;
+			}
+			set
+			{
+				if ((this._CreatedBy != value))
+				{
+					this.OnCreatedByChanging(value);
+					this.SendPropertyChanging();
+					this._CreatedBy = value;
+					this.SendPropertyChanged("CreatedBy");
+					this.OnCreatedByChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CreatedDate", DbType="DateTime")]
+		public System.Nullable<System.DateTime> CreatedDate
+		{
+			get
+			{
+				return this._CreatedDate;
+			}
+			set
+			{
+				if ((this._CreatedDate != value))
+				{
+					this.OnCreatedDateChanging(value);
+					this.SendPropertyChanging();
+					this._CreatedDate = value;
+					this.SendPropertyChanged("CreatedDate");
+					this.OnCreatedDateChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UpdatedDate", DbType="DateTime")]
+		public System.Nullable<System.DateTime> UpdatedDate
+		{
+			get
+			{
+				return this._UpdatedDate;
+			}
+			set
+			{
+				if ((this._UpdatedDate != value))
+				{
+					this.OnUpdatedDateChanging(value);
+					this.SendPropertyChanging();
+					this._UpdatedDate = value;
+					this.SendPropertyChanged("UpdatedDate");
+					this.OnUpdatedDateChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UpdatedBy", DbType="NVarChar(20)")]
+		public string UpdatedBy
+		{
+			get
+			{
+				return this._UpdatedBy;
+			}
+			set
+			{
+				if ((this._UpdatedBy != value))
+				{
+					this.OnUpdatedByChanging(value);
+					this.SendPropertyChanging();
+					this._UpdatedBy = value;
+					this.SendPropertyChanged("UpdatedBy");
+					this.OnUpdatedByChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="ActivityHeader_ActivityRow", Storage="_ActivityRows", ThisKey="HeaderID", OtherKey="HeaderID")]
+		public EntitySet<ActivityRow> ActivityRows
+		{
+			get
+			{
+				return this._ActivityRows;
+			}
+			set
+			{
+				this._ActivityRows.Assign(value);
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_ActivityRows(ActivityRow entity)
+		{
+			this.SendPropertyChanging();
+			entity.ActivityHeader = this;
+		}
+		
+		private void detach_ActivityRows(ActivityRow entity)
+		{
+			this.SendPropertyChanging();
+			entity.ActivityHeader = null;
+		}
+	}
+	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.ActivityRow")]
 	public partial class ActivityRow : INotifyPropertyChanging, INotifyPropertyChanged
 	{
@@ -39452,6 +40053,26 @@ namespace MKL_Web.Models
 		private System.Nullable<decimal> _AccrualPenalty;
 		
 		private string _Remarks;
+		
+		private string _Model;
+		
+		private string _ItemName;
+		
+		private string _Serial;
+		
+		private string _Slp1;
+		
+		private string _Slp2;
+		
+		private System.Nullable<int> _RemainChq;
+		
+		private System.Nullable<int> _OverdueChqNo;
+		
+		private System.Nullable<decimal> _SumofOverdueChq;
+		
+		private System.Nullable<decimal> _SumofARBalance;
+		
+		private System.Nullable<int> _OverdueDays;
 		
 		private EntityRef<ActivityHeader> _ActivityHeader;
 		
@@ -39491,6 +40112,26 @@ namespace MKL_Web.Models
     partial void OnAccrualPenaltyChanged();
     partial void OnRemarksChanging(string value);
     partial void OnRemarksChanged();
+    partial void OnModelChanging(string value);
+    partial void OnModelChanged();
+    partial void OnItemNameChanging(string value);
+    partial void OnItemNameChanged();
+    partial void OnSerialChanging(string value);
+    partial void OnSerialChanged();
+    partial void OnSlp1Changing(string value);
+    partial void OnSlp1Changed();
+    partial void OnSlp2Changing(string value);
+    partial void OnSlp2Changed();
+    partial void OnRemainChqChanging(System.Nullable<int> value);
+    partial void OnRemainChqChanged();
+    partial void OnOverdueChqNoChanging(System.Nullable<int> value);
+    partial void OnOverdueChqNoChanged();
+    partial void OnSumofOverdueChqChanging(System.Nullable<decimal> value);
+    partial void OnSumofOverdueChqChanged();
+    partial void OnSumofARBalanceChanging(System.Nullable<decimal> value);
+    partial void OnSumofARBalanceChanged();
+    partial void OnOverdueDaysChanging(System.Nullable<int> value);
+    partial void OnOverdueDaysChanged();
     #endregion
 		
 		public ActivityRow()
@@ -39823,6 +40464,206 @@ namespace MKL_Web.Models
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Model", DbType="NVarChar(250)")]
+		public string Model
+		{
+			get
+			{
+				return this._Model;
+			}
+			set
+			{
+				if ((this._Model != value))
+				{
+					this.OnModelChanging(value);
+					this.SendPropertyChanging();
+					this._Model = value;
+					this.SendPropertyChanged("Model");
+					this.OnModelChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ItemName", DbType="NVarChar(500)")]
+		public string ItemName
+		{
+			get
+			{
+				return this._ItemName;
+			}
+			set
+			{
+				if ((this._ItemName != value))
+				{
+					this.OnItemNameChanging(value);
+					this.SendPropertyChanging();
+					this._ItemName = value;
+					this.SendPropertyChanged("ItemName");
+					this.OnItemNameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Serial", DbType="NVarChar(250)")]
+		public string Serial
+		{
+			get
+			{
+				return this._Serial;
+			}
+			set
+			{
+				if ((this._Serial != value))
+				{
+					this.OnSerialChanging(value);
+					this.SendPropertyChanging();
+					this._Serial = value;
+					this.SendPropertyChanged("Serial");
+					this.OnSerialChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Slp1", DbType="NVarChar(100)")]
+		public string Slp1
+		{
+			get
+			{
+				return this._Slp1;
+			}
+			set
+			{
+				if ((this._Slp1 != value))
+				{
+					this.OnSlp1Changing(value);
+					this.SendPropertyChanging();
+					this._Slp1 = value;
+					this.SendPropertyChanged("Slp1");
+					this.OnSlp1Changed();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Slp2", DbType="NVarChar(100)")]
+		public string Slp2
+		{
+			get
+			{
+				return this._Slp2;
+			}
+			set
+			{
+				if ((this._Slp2 != value))
+				{
+					this.OnSlp2Changing(value);
+					this.SendPropertyChanging();
+					this._Slp2 = value;
+					this.SendPropertyChanged("Slp2");
+					this.OnSlp2Changed();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_RemainChq", DbType="Int")]
+		public System.Nullable<int> RemainChq
+		{
+			get
+			{
+				return this._RemainChq;
+			}
+			set
+			{
+				if ((this._RemainChq != value))
+				{
+					this.OnRemainChqChanging(value);
+					this.SendPropertyChanging();
+					this._RemainChq = value;
+					this.SendPropertyChanged("RemainChq");
+					this.OnRemainChqChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_OverdueChqNo", DbType="Int")]
+		public System.Nullable<int> OverdueChqNo
+		{
+			get
+			{
+				return this._OverdueChqNo;
+			}
+			set
+			{
+				if ((this._OverdueChqNo != value))
+				{
+					this.OnOverdueChqNoChanging(value);
+					this.SendPropertyChanging();
+					this._OverdueChqNo = value;
+					this.SendPropertyChanged("OverdueChqNo");
+					this.OnOverdueChqNoChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SumofOverdueChq", DbType="Decimal(18,2)")]
+		public System.Nullable<decimal> SumofOverdueChq
+		{
+			get
+			{
+				return this._SumofOverdueChq;
+			}
+			set
+			{
+				if ((this._SumofOverdueChq != value))
+				{
+					this.OnSumofOverdueChqChanging(value);
+					this.SendPropertyChanging();
+					this._SumofOverdueChq = value;
+					this.SendPropertyChanged("SumofOverdueChq");
+					this.OnSumofOverdueChqChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SumofARBalance", DbType="Decimal(18,2)")]
+		public System.Nullable<decimal> SumofARBalance
+		{
+			get
+			{
+				return this._SumofARBalance;
+			}
+			set
+			{
+				if ((this._SumofARBalance != value))
+				{
+					this.OnSumofARBalanceChanging(value);
+					this.SendPropertyChanging();
+					this._SumofARBalance = value;
+					this.SendPropertyChanged("SumofARBalance");
+					this.OnSumofARBalanceChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_OverdueDays", DbType="Int")]
+		public System.Nullable<int> OverdueDays
+		{
+			get
+			{
+				return this._OverdueDays;
+			}
+			set
+			{
+				if ((this._OverdueDays != value))
+				{
+					this.OnOverdueDaysChanging(value);
+					this.SendPropertyChanging();
+					this._OverdueDays = value;
+					this.SendPropertyChanged("OverdueDays");
+					this.OnOverdueDaysChanged();
+				}
+			}
+		}
+		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="ActivityHeader_ActivityRow", Storage="_ActivityHeader", ThisKey="HeaderID", OtherKey="HeaderID", IsForeignKey=true)]
 		public ActivityHeader ActivityHeader
 		{
@@ -39875,696 +40716,6 @@ namespace MKL_Web.Models
 			{
 				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.ActivityHeader")]
-	public partial class ActivityHeader : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _HeaderID;
-		
-		private string _Activity;
-		
-		private string _Type;
-		
-		private string _Priority;
-		
-		private string _HandledBy;
-		
-		private string _Status;
-		
-		private string _AssignedBy;
-		
-		private string _Recurrence;
-		
-		private System.Nullable<System.DateTime> _StartDate;
-		
-		private System.Nullable<System.DateTime> _EndDate;
-		
-		private string _ActivityRemark;
-		
-		private string _CustomerResponse;
-		
-		private string _NextAction;
-		
-		private string _Content;
-		
-		private string _CustomerCode;
-		
-		private string _CardName;
-		
-		private string _Phone;
-		
-		private string _Ref;
-		
-		private string _LoanID;
-		
-		private System.Nullable<decimal> _TotalARBalance;
-		
-		private string _CreatedBy;
-		
-		private System.Nullable<System.DateTime> _CreatedDate;
-		
-		private System.Nullable<System.DateTime> _UpdatedDate;
-		
-		private string _UpdatedBy;
-		
-		private string _ItemName;
-		
-		private string _Serial;
-		
-		private EntitySet<ActivityRow> _ActivityRows;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnHeaderIDChanging(int value);
-    partial void OnHeaderIDChanged();
-    partial void OnActivityChanging(string value);
-    partial void OnActivityChanged();
-    partial void OnTypeChanging(string value);
-    partial void OnTypeChanged();
-    partial void OnPriorityChanging(string value);
-    partial void OnPriorityChanged();
-    partial void OnHandledByChanging(string value);
-    partial void OnHandledByChanged();
-    partial void OnStatusChanging(string value);
-    partial void OnStatusChanged();
-    partial void OnAssignedByChanging(string value);
-    partial void OnAssignedByChanged();
-    partial void OnRecurrenceChanging(string value);
-    partial void OnRecurrenceChanged();
-    partial void OnStartDateChanging(System.Nullable<System.DateTime> value);
-    partial void OnStartDateChanged();
-    partial void OnEndDateChanging(System.Nullable<System.DateTime> value);
-    partial void OnEndDateChanged();
-    partial void OnActivityRemarkChanging(string value);
-    partial void OnActivityRemarkChanged();
-    partial void OnCustomerResponseChanging(string value);
-    partial void OnCustomerResponseChanged();
-    partial void OnNextActionChanging(string value);
-    partial void OnNextActionChanged();
-    partial void OnContentChanging(string value);
-    partial void OnContentChanged();
-    partial void OnCustomerCodeChanging(string value);
-    partial void OnCustomerCodeChanged();
-    partial void OnCardNameChanging(string value);
-    partial void OnCardNameChanged();
-    partial void OnPhoneChanging(string value);
-    partial void OnPhoneChanged();
-    partial void OnRefChanging(string value);
-    partial void OnRefChanged();
-    partial void OnLoanIDChanging(string value);
-    partial void OnLoanIDChanged();
-    partial void OnTotalARBalanceChanging(System.Nullable<decimal> value);
-    partial void OnTotalARBalanceChanged();
-    partial void OnCreatedByChanging(string value);
-    partial void OnCreatedByChanged();
-    partial void OnCreatedDateChanging(System.Nullable<System.DateTime> value);
-    partial void OnCreatedDateChanged();
-    partial void OnUpdatedDateChanging(System.Nullable<System.DateTime> value);
-    partial void OnUpdatedDateChanged();
-    partial void OnUpdatedByChanging(string value);
-    partial void OnUpdatedByChanged();
-    partial void OnItemNameChanging(string value);
-    partial void OnItemNameChanged();
-    partial void OnSerialChanging(string value);
-    partial void OnSerialChanged();
-    #endregion
-		
-		public ActivityHeader()
-		{
-			this._ActivityRows = new EntitySet<ActivityRow>(new Action<ActivityRow>(this.attach_ActivityRows), new Action<ActivityRow>(this.detach_ActivityRows));
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_HeaderID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public int HeaderID
-		{
-			get
-			{
-				return this._HeaderID;
-			}
-			set
-			{
-				if ((this._HeaderID != value))
-				{
-					this.OnHeaderIDChanging(value);
-					this.SendPropertyChanging();
-					this._HeaderID = value;
-					this.SendPropertyChanged("HeaderID");
-					this.OnHeaderIDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Activity", DbType="NVarChar(50) NOT NULL", CanBeNull=false)]
-		public string Activity
-		{
-			get
-			{
-				return this._Activity;
-			}
-			set
-			{
-				if ((this._Activity != value))
-				{
-					this.OnActivityChanging(value);
-					this.SendPropertyChanging();
-					this._Activity = value;
-					this.SendPropertyChanged("Activity");
-					this.OnActivityChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Type", DbType="NVarChar(50) NOT NULL", CanBeNull=false)]
-		public string Type
-		{
-			get
-			{
-				return this._Type;
-			}
-			set
-			{
-				if ((this._Type != value))
-				{
-					this.OnTypeChanging(value);
-					this.SendPropertyChanging();
-					this._Type = value;
-					this.SendPropertyChanged("Type");
-					this.OnTypeChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Priority", DbType="NVarChar(20) NOT NULL", CanBeNull=false)]
-		public string Priority
-		{
-			get
-			{
-				return this._Priority;
-			}
-			set
-			{
-				if ((this._Priority != value))
-				{
-					this.OnPriorityChanging(value);
-					this.SendPropertyChanging();
-					this._Priority = value;
-					this.SendPropertyChanged("Priority");
-					this.OnPriorityChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_HandledBy", DbType="NVarChar(100)")]
-		public string HandledBy
-		{
-			get
-			{
-				return this._HandledBy;
-			}
-			set
-			{
-				if ((this._HandledBy != value))
-				{
-					this.OnHandledByChanging(value);
-					this.SendPropertyChanging();
-					this._HandledBy = value;
-					this.SendPropertyChanged("HandledBy");
-					this.OnHandledByChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Status", DbType="NVarChar(50)")]
-		public string Status
-		{
-			get
-			{
-				return this._Status;
-			}
-			set
-			{
-				if ((this._Status != value))
-				{
-					this.OnStatusChanging(value);
-					this.SendPropertyChanging();
-					this._Status = value;
-					this.SendPropertyChanged("Status");
-					this.OnStatusChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AssignedBy", DbType="NVarChar(100)")]
-		public string AssignedBy
-		{
-			get
-			{
-				return this._AssignedBy;
-			}
-			set
-			{
-				if ((this._AssignedBy != value))
-				{
-					this.OnAssignedByChanging(value);
-					this.SendPropertyChanging();
-					this._AssignedBy = value;
-					this.SendPropertyChanged("AssignedBy");
-					this.OnAssignedByChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Recurrence", DbType="NVarChar(20)")]
-		public string Recurrence
-		{
-			get
-			{
-				return this._Recurrence;
-			}
-			set
-			{
-				if ((this._Recurrence != value))
-				{
-					this.OnRecurrenceChanging(value);
-					this.SendPropertyChanging();
-					this._Recurrence = value;
-					this.SendPropertyChanged("Recurrence");
-					this.OnRecurrenceChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_StartDate", DbType="Date")]
-		public System.Nullable<System.DateTime> StartDate
-		{
-			get
-			{
-				return this._StartDate;
-			}
-			set
-			{
-				if ((this._StartDate != value))
-				{
-					this.OnStartDateChanging(value);
-					this.SendPropertyChanging();
-					this._StartDate = value;
-					this.SendPropertyChanged("StartDate");
-					this.OnStartDateChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_EndDate", DbType="Date")]
-		public System.Nullable<System.DateTime> EndDate
-		{
-			get
-			{
-				return this._EndDate;
-			}
-			set
-			{
-				if ((this._EndDate != value))
-				{
-					this.OnEndDateChanging(value);
-					this.SendPropertyChanging();
-					this._EndDate = value;
-					this.SendPropertyChanged("EndDate");
-					this.OnEndDateChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ActivityRemark", DbType="NVarChar(MAX)")]
-		public string ActivityRemark
-		{
-			get
-			{
-				return this._ActivityRemark;
-			}
-			set
-			{
-				if ((this._ActivityRemark != value))
-				{
-					this.OnActivityRemarkChanging(value);
-					this.SendPropertyChanging();
-					this._ActivityRemark = value;
-					this.SendPropertyChanged("ActivityRemark");
-					this.OnActivityRemarkChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CustomerResponse", DbType="NVarChar(MAX)")]
-		public string CustomerResponse
-		{
-			get
-			{
-				return this._CustomerResponse;
-			}
-			set
-			{
-				if ((this._CustomerResponse != value))
-				{
-					this.OnCustomerResponseChanging(value);
-					this.SendPropertyChanging();
-					this._CustomerResponse = value;
-					this.SendPropertyChanged("CustomerResponse");
-					this.OnCustomerResponseChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_NextAction", DbType="NVarChar(MAX)")]
-		public string NextAction
-		{
-			get
-			{
-				return this._NextAction;
-			}
-			set
-			{
-				if ((this._NextAction != value))
-				{
-					this.OnNextActionChanging(value);
-					this.SendPropertyChanging();
-					this._NextAction = value;
-					this.SendPropertyChanged("NextAction");
-					this.OnNextActionChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Content", DbType="NVarChar(MAX)")]
-		public string Content
-		{
-			get
-			{
-				return this._Content;
-			}
-			set
-			{
-				if ((this._Content != value))
-				{
-					this.OnContentChanging(value);
-					this.SendPropertyChanging();
-					this._Content = value;
-					this.SendPropertyChanged("Content");
-					this.OnContentChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CustomerCode", DbType="NVarChar(50)")]
-		public string CustomerCode
-		{
-			get
-			{
-				return this._CustomerCode;
-			}
-			set
-			{
-				if ((this._CustomerCode != value))
-				{
-					this.OnCustomerCodeChanging(value);
-					this.SendPropertyChanging();
-					this._CustomerCode = value;
-					this.SendPropertyChanged("CustomerCode");
-					this.OnCustomerCodeChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CardName", DbType="NVarChar(200)")]
-		public string CardName
-		{
-			get
-			{
-				return this._CardName;
-			}
-			set
-			{
-				if ((this._CardName != value))
-				{
-					this.OnCardNameChanging(value);
-					this.SendPropertyChanging();
-					this._CardName = value;
-					this.SendPropertyChanged("CardName");
-					this.OnCardNameChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Phone", DbType="NVarChar(50)")]
-		public string Phone
-		{
-			get
-			{
-				return this._Phone;
-			}
-			set
-			{
-				if ((this._Phone != value))
-				{
-					this.OnPhoneChanging(value);
-					this.SendPropertyChanging();
-					this._Phone = value;
-					this.SendPropertyChanged("Phone");
-					this.OnPhoneChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Ref", DbType="NVarChar(50)")]
-		public string Ref
-		{
-			get
-			{
-				return this._Ref;
-			}
-			set
-			{
-				if ((this._Ref != value))
-				{
-					this.OnRefChanging(value);
-					this.SendPropertyChanging();
-					this._Ref = value;
-					this.SendPropertyChanged("Ref");
-					this.OnRefChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_LoanID", DbType="NVarChar(50)")]
-		public string LoanID
-		{
-			get
-			{
-				return this._LoanID;
-			}
-			set
-			{
-				if ((this._LoanID != value))
-				{
-					this.OnLoanIDChanging(value);
-					this.SendPropertyChanging();
-					this._LoanID = value;
-					this.SendPropertyChanged("LoanID");
-					this.OnLoanIDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TotalARBalance", DbType="Decimal(18,2)")]
-		public System.Nullable<decimal> TotalARBalance
-		{
-			get
-			{
-				return this._TotalARBalance;
-			}
-			set
-			{
-				if ((this._TotalARBalance != value))
-				{
-					this.OnTotalARBalanceChanging(value);
-					this.SendPropertyChanging();
-					this._TotalARBalance = value;
-					this.SendPropertyChanged("TotalARBalance");
-					this.OnTotalARBalanceChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CreatedBy", DbType="NVarChar(20)")]
-		public string CreatedBy
-		{
-			get
-			{
-				return this._CreatedBy;
-			}
-			set
-			{
-				if ((this._CreatedBy != value))
-				{
-					this.OnCreatedByChanging(value);
-					this.SendPropertyChanging();
-					this._CreatedBy = value;
-					this.SendPropertyChanged("CreatedBy");
-					this.OnCreatedByChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CreatedDate", DbType="DateTime")]
-		public System.Nullable<System.DateTime> CreatedDate
-		{
-			get
-			{
-				return this._CreatedDate;
-			}
-			set
-			{
-				if ((this._CreatedDate != value))
-				{
-					this.OnCreatedDateChanging(value);
-					this.SendPropertyChanging();
-					this._CreatedDate = value;
-					this.SendPropertyChanged("CreatedDate");
-					this.OnCreatedDateChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UpdatedDate", DbType="DateTime")]
-		public System.Nullable<System.DateTime> UpdatedDate
-		{
-			get
-			{
-				return this._UpdatedDate;
-			}
-			set
-			{
-				if ((this._UpdatedDate != value))
-				{
-					this.OnUpdatedDateChanging(value);
-					this.SendPropertyChanging();
-					this._UpdatedDate = value;
-					this.SendPropertyChanged("UpdatedDate");
-					this.OnUpdatedDateChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UpdatedBy", DbType="NVarChar(20)")]
-		public string UpdatedBy
-		{
-			get
-			{
-				return this._UpdatedBy;
-			}
-			set
-			{
-				if ((this._UpdatedBy != value))
-				{
-					this.OnUpdatedByChanging(value);
-					this.SendPropertyChanging();
-					this._UpdatedBy = value;
-					this.SendPropertyChanged("UpdatedBy");
-					this.OnUpdatedByChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ItemName", DbType="NVarChar(MAX)")]
-		public string ItemName
-		{
-			get
-			{
-				return this._ItemName;
-			}
-			set
-			{
-				if ((this._ItemName != value))
-				{
-					this.OnItemNameChanging(value);
-					this.SendPropertyChanging();
-					this._ItemName = value;
-					this.SendPropertyChanged("ItemName");
-					this.OnItemNameChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Serial", DbType="NVarChar(MAX)")]
-		public string Serial
-		{
-			get
-			{
-				return this._Serial;
-			}
-			set
-			{
-				if ((this._Serial != value))
-				{
-					this.OnSerialChanging(value);
-					this.SendPropertyChanging();
-					this._Serial = value;
-					this.SendPropertyChanged("Serial");
-					this.OnSerialChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="ActivityHeader_ActivityRow", Storage="_ActivityRows", ThisKey="HeaderID", OtherKey="HeaderID")]
-		public EntitySet<ActivityRow> ActivityRows
-		{
-			get
-			{
-				return this._ActivityRows;
-			}
-			set
-			{
-				this._ActivityRows.Assign(value);
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-		
-		private void attach_ActivityRows(ActivityRow entity)
-		{
-			this.SendPropertyChanging();
-			entity.ActivityHeader = this;
-		}
-		
-		private void detach_ActivityRows(ActivityRow entity)
-		{
-			this.SendPropertyChanging();
-			entity.ActivityHeader = null;
 		}
 	}
 	
@@ -54599,6 +54750,50 @@ namespace MKL_Web.Models
 				if ((this._CustomerResponse != value))
 				{
 					this._CustomerResponse = value;
+				}
+			}
+		}
+	}
+	
+	public partial class ICC_GET_AssignToActivityResult
+	{
+		
+		private string _UserCode;
+		
+		private string _UserName;
+		
+		public ICC_GET_AssignToActivityResult()
+		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UserCode", DbType="NVarChar(20) NOT NULL", CanBeNull=false)]
+		public string UserCode
+		{
+			get
+			{
+				return this._UserCode;
+			}
+			set
+			{
+				if ((this._UserCode != value))
+				{
+					this._UserCode = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UserName", DbType="NVarChar(100)")]
+		public string UserName
+		{
+			get
+			{
+				return this._UserName;
+			}
+			set
+			{
+				if ((this._UserName != value))
+				{
+					this._UserName = value;
 				}
 			}
 		}

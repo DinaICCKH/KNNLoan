@@ -481,7 +481,18 @@ namespace MKL_Web.Controllers
                         Remarks = x["Remarks"].ToString(),
                         Serial = x["Serial"].ToString(),
 
-                        BaseEntry = x["BaseEntry"].ToString() == "" ? (int?)null : Convert.ToInt32(x["BaseEntry"])
+                        BaseEntry = x["BaseEntry"].ToString() == "" ? (int?)null : Convert.ToInt32(x["BaseEntry"]),
+                        Model = x["Model"].ToString(),
+                        SaleEmp1 = x["SaleEmp1"].ToString(),
+                        SaleEmp2 = x["SaleEmp2"].ToString(),
+
+                        RemaincheqQty = x["RemaincheqQty"].ToString() == "" ? (int?)null : Convert.ToInt32(x["RemaincheqQty"]),
+                        OverDuecheqQty = x["OverDuecheqQty"].ToString() == "" ? (int?)null : Convert.ToInt32(x["OverDuecheqQty"]),
+
+                        SumOverDuecheq = x["SumOverDuecheq"].ToString() == "" ? (decimal?)null : Convert.ToDecimal(x["SumOverDuecheq"]),
+                        SumOpenAR = x["SumOpenAR"].ToString() == "" ? (decimal?)null : Convert.ToDecimal(x["SumOpenAR"]),
+                        OverDueDay = x["OverDueDay"].ToString() == "" ? (int?)null : Convert.ToInt32(x["OverDueDay"])
+
                     }).ToList();
 
 
@@ -514,7 +525,17 @@ namespace MKL_Web.Controllers
 
                 x.Remarks,
                 x.Serial,
-                x.BaseEntry
+                x.BaseEntry,
+                x.Model,
+                x.SaleEmp1,
+                x.SaleEmp2,
+                x.RemaincheqQty,
+                x.OverDuecheqQty,
+                x.SumOverDuecheq,
+                x.SumOpenAR,
+                x.OverDueDay
+
+
             }).ToList();
 
             return Json(new
@@ -2971,6 +2992,7 @@ namespace MKL_Web.Controllers
                             .FirstOrDefault();
 
             ViewBag.LastDocEntry = lastDoc+1; // Pass it to view
+            ViewBag.assignTo = db.ICC_GET_AssignToActivity().ToList();
 
             return View();
         }
@@ -3010,19 +3032,16 @@ namespace MKL_Web.Controllers
                             ActivityRemark = header.ActivityRemark,
                             CustomerResponse = header.CustomerResponse,
                             NextAction = header.NextAction,
-                            Content = header.Content,
                             CustomerCode = header.CustomerCode,
                             CardName = header.CardName,
                             Phone = header.Phone,
                             Ref = header.Ref,
-                            LoanID = header.LoanID,
                             TotalARBalance = header.TotalARBalance,
                             CreatedBy = Session["UCode"]?.ToString(),
                             CreatedDate = DateTime.Now,
                             UpdatedBy = Session["UCode"]?.ToString(),
-                            UpdatedDate = DateTime.Now,
-                            ItemName = header.ItemName,
-                            Serial = header.Serial
+                            UpdatedDate = DateTime.Now
+                           
                         };
                         db.ActivityHeaders.InsertOnSubmit(H);
                         db.ActivityHeaders.Context.SubmitChanges();
@@ -3043,17 +3062,13 @@ namespace MKL_Web.Controllers
                         H.ActivityRemark = header.ActivityRemark;
                         H.CustomerResponse = header.CustomerResponse;
                         H.NextAction = header.NextAction;
-                        H.Content = header.Content;
                         H.CustomerCode = header.CustomerCode;
                         H.CardName = header.CardName;
                         H.Phone = header.Phone;
                         H.Ref = header.Ref;
-                        H.LoanID = header.LoanID;
                         H.TotalARBalance = header.TotalARBalance;
                         H.UpdatedBy = Session["UCode"]?.ToString();
                         H.UpdatedDate = DateTime.Now;
-                        H.ItemName = header.ItemName;
-                        H.Serial = header.Serial;
                         db.ActivityHeaders.Context.SubmitChanges();
                         LastEntry = H.HeaderID;
                     }

@@ -105,5 +105,15 @@ namespace MKL_Web_Borey.Models
         public string Serial { get; set; }
 
         public int? BaseEntry { get; set; }
+
+        public string Model { get; set; }
+        public string SaleEmp1 { get; set; }
+        public string SaleEmp2 { get; set; }
+        public int? RemaincheqQty { get; set; }
+        public int? OverDuecheqQty { get; set; }
+        public decimal? SumOverDuecheq { get; set; }
+        public decimal? SumOpenAR { get; set; }
+        public int? OverDueDay { get; set; }
+
     }
 }

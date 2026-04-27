@@ -26,7 +26,7 @@
         <elementListCompartment Id="2d39c8e5-9d4b-4483-9a55-e537bfe7bd8d" absoluteBounds="0.51500000000000012, 3.46, 1.9700000000000002, 0.8262939453125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <associationConnector edgePoints="[(1.5 : 3.45); (1.5 : 3.5)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+    <associationConnector edgePoints="[(1.5 : 3.45); (1.5 : 3.5)]" fixedFrom="Algorithm" fixedTo="Algorithm">
       <AssociationMoniker Name="/MKLDataContext/PermissionRole/PermissionRole_PermissionRole1" />
       <nodes>
         <classShapeMoniker Id="4172d034-a8b3-4dad-aaef-7f5e474efa63" />
@@ -399,14 +399,14 @@
         <elementListCompartment Id="ce172879-677a-4372-a285-941348c50d90" absoluteBounds="0.51500000000000012, 4.46, 1.9700000000000002, 4.4800211588541661" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <associationConnector edgePoints="[(1.5 : 4.45); (1.5 : 4.5)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+    <associationConnector edgePoints="[(1.5 : 4.45); (1.5 : 4.5)]" fixedFrom="Algorithm" fixedTo="Algorithm">
       <AssociationMoniker Name="/MKLDataContext/USR/USR_USR1" />
       <nodes>
         <classShapeMoniker Id="ef5e3af1-77eb-421e-8ff9-7982e5e6a7b4" />
         <classShapeMoniker Id="c576299d-e63c-41f9-829c-9f9450706735" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(2.031252 : 3.45); (2.031252 : 3.484375); (2.515625 : 3.484375); (2.515625 : 4.225); (2.5 : 4.225)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+    <associationConnector edgePoints="[(2.031252 : 3.45); (2.031252 : 3.484375); (2.515625 : 3.484375); (2.515625 : 4.225); (2.5 : 4.225)]" fixedFrom="Algorithm" fixedTo="Algorithm">
       <AssociationMoniker Name="/MKLDataContext/PermissionRole/PermissionRole_USR" />
       <nodes>
         <classShapeMoniker Id="4172d034-a8b3-4dad-aaef-7f5e474efa63" />
@@ -734,23 +734,23 @@
         <classShapeMoniker Id="191eeb5d-2345-41ea-9462-be519083d292" />
       </nodes>
     </associationConnector>
-    <classShape Id="ce550975-4e10-4564-9c6f-01fe1a53d3ca" isExpanded="false" absoluteBounds="2.875, 11.375, 2, 0.45">
-      <DataClassMoniker Name="/MKLDataContext/ActivityRow" />
-      <nestedChildShapes>
-        <elementListCompartment Id="8afefc77-6b0f-4f35-8abf-e8730d9aeba9" absoluteBounds="2.89, 11.835, 1.9700000000000002, 3.3262125651041665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
-      </nestedChildShapes>
-    </classShape>
-    <classShape Id="37848d09-f8dd-45f0-bba3-4001ea814480" isExpanded="false" absoluteBounds="0.5, 11.375, 2, 0.45">
+    <classShape Id="d40ec093-c20d-48b3-8b0b-ca13546d87d4" isExpanded="false" absoluteBounds="0.5, 11.375, 2, 0.45">
       <DataClassMoniker Name="/MKLDataContext/ActivityHeader" />
       <nestedChildShapes>
-        <elementListCompartment Id="cd903c01-d962-40b7-b341-cbe6e79eb6d7" absoluteBounds="0.51500000000000012, 11.835, 1.9700000000000002, 5.249226888020833" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="bb16b715-cb03-4908-9035-36890715dc7d" absoluteBounds="0.515, 11.835, 1.9700000000000002, 4.4800211588541661" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <associationConnector edgePoints="[(2.5 : 11.6); (2.875 : 11.6)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+    <classShape Id="253f58e8-24e0-415d-9199-d0681fc615fa" isExpanded="false" absoluteBounds="2.875, 11.375, 2, 0.45">
+      <DataClassMoniker Name="/MKLDataContext/ActivityRow" />
+      <nestedChildShapes>
+        <elementListCompartment Id="563736a2-2732-4a4d-a3a9-45e6a5ac4026" absoluteBounds="2.89, 11.835, 1.9700000000000002, 5.249226888020833" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(2.5 : 11.6); (2.875 : 11.6)]" fixedFrom="Algorithm" fixedTo="Algorithm">
       <AssociationMoniker Name="/MKLDataContext/ActivityHeader/ActivityHeader_ActivityRow" />
       <nodes>
-        <classShapeMoniker Id="37848d09-f8dd-45f0-bba3-4001ea814480" />
-        <classShapeMoniker Id="ce550975-4e10-4564-9c6f-01fe1a53d3ca" />
+        <classShapeMoniker Id="d40ec093-c20d-48b3-8b0b-ca13546d87d4" />
+        <classShapeMoniker Id="253f58e8-24e0-415d-9199-d0681fc615fa" />
       </nodes>
     </associationConnector>
   </nestedChildShapes>

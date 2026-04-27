@@ -5066,14 +5066,10 @@ function cmd_save_activity() {
         ActivityRemark: $("#txt_activity_remark").val(),
         CustomerResponse: $("#txt_customer_response").val(),
         NextAction: $("#txt_next_action").val(),
-        Content: $("#txt_content").val(),
         CustomerCode: $("#txt_customer_code").val(),
         CardName: $("#txt_card_name").val(),
         Phone: $("#txt_phone").val(),
         Ref: $("#txt_ref").val(),
-        LoanID: $("#txt_loanID").val(),
-        ItemName: $("#txt_item_name").val(),
-        Serial: $("#txt_serial").val(),
         TotalARBalance: $("#txt_ar_balance").val()
     };
 
@@ -5084,8 +5080,22 @@ function cmd_save_activity() {
         var detail = {
             HeaderID: $("#txt_docNum").val(),
             RowNo: index,
+            Model: $("#td_model_" + index).text().trim(),
+            ItemName: $("#td_itemName_" + index).text().trim(),
+            Serial: $("#td_serial_" + index).text().trim(),
+            Slp1: $("#td_saleemp1_" + index).text().trim(),
+            Slp2: $("#td_saleemp2_" + index).text().trim(),
+
+            RemainChq: returnstringvalue($("#td_RemaincheqQty_" + index).text().trim()),
+            OverdueChqNo: returnstringvalue($("#td_OverDuecheqQty_" + index).text().trim()),
+            SumofOverdueChq: returnstringvalue($("#td_sumOverDuecheq_" + index).text().trim()),
+            SumofARBalance: returnstringvalue($("#td_sumOpenAR_" + index).text().trim()),
+
             PaymentDate: $("#td_paymentdate_" + index).text().trim(),
             DueDate: $("#td_duedate_" + index).text().trim(),
+
+            OverdueDays: returnstringvalue($("#td_overDueDay_" + index).text().trim()),
+
             Principle: returnstringvalue($("#td_principle_" + index).text().trim()),
             Interest: returnstringvalue($("#td_interest_" + index).text().trim()),
             Monthly: returnstringvalue($("#td_monthly_" + index).text().trim()),

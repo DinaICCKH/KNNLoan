@@ -439,15 +439,29 @@
                     Show History
                 </button>
 
-                <!-- Related Activity -->
-                <button type="button" class="btn btn-flat"
-                        id="btn_related_activity"
-                        onclick="openRelatedActivity(@DocEntry)"
-                        title="Click to view related activities"
-                        style="background-color:#6f42c1; color:white;">
-                    <i class="fa fa-tasks" style="margin-right:5px;"></i>
-                    Related Activity
-                </button>
+                <div class="btn-group">
+                    <button type="button"
+                            class="btn btn-flat dropdown-toggle"
+                            data-toggle="dropdown"
+                            style="background-color:#6f42c1; color:white;">
+                        <i class="fa fa-tasks" style="margin-right:5px;"></i>
+                        Activity
+                        <span class="caret"></span>
+                    </button>
+
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a href="javascript:void(0);" onclick="openNewActivity()">
+                                <i class="fa fa-plus"></i> New Activity
+                            </a>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0);" onclick="openRelatedActivity(@DocEntry)">
+                                <i class="fa fa-list"></i> Related Activity
+                            </a>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </div>
     </div>
@@ -493,6 +507,11 @@
     function openRelatedActivity(loanID) {
         // redirect to the new form page
         window.location.href = '/Sales/ActivityListByLoan?LoanID=' + loanID;
+    }
+
+    function openNewActivity() {
+        // redirect to the new form page
+        window.location.href = '/Sales/Activity';
     }
 </script>
 

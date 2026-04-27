@@ -9,6 +9,8 @@
     //List<v_Item> houselist = ViewBag.houselist;
     string docdate = DateTime.Now.ToString("dd-MMM-yyyy"); // Capital 'MMM' for month name
     List<InstallmentList> installment = ViewBag.installment;
+    MKL_Web.Models.USR usr = (MKL_Web.Models.USR)Session["USR"];
+    List<ICC_GET_AssignToActivityResult> assignto = ViewBag.assignTo;
 }
 <head>
     <script src="../../Scripts/js/sales.js"></script>
@@ -239,14 +241,24 @@
                                                         </div>
                                                     </td>
 
+                                           
+
                                                     <td style="width:30%;">
                                                         <div class="form-group">
-                                                            <input type="text"
-                                                                   class="form-control form-control-insde"
-                                                                   id="txt_handled_by"
-                                                                   placeholder="Enter name...">
+                                                            <select class="form-control form-control-insde" id="txt_handled_by">
+                                                                <option value="">-- Select Handler --</option>
+
+                                                                @if (assignto != null)
+                                                                {
+                                                                    foreach (var item in assignto)
+                                                                    {
+                                                                        <option value="@item.UserCode">@item.UserName</option>
+                                                                    }
+                                                                }
+                                                            </select>
                                                         </div>
                                                     </td>
+
 
 
 
@@ -283,7 +295,8 @@
                                                             <input type="text"
                                                                    class="form-control form-control-insde"
                                                                    id="txt_assign_by"
-                                                                   placeholder="Enter name...">
+                                                                   readonly 
+                                                                   value="@Session["UCode"]">
                                                         </div>
                                                     </td>
 
@@ -436,45 +449,6 @@
 
                                                 <tr>
 
-                                                    <!-- Activity Remark -->
-                                                    <td style="width:10%;">
-                                                        <div class="form-group">
-                                                            <label class="form-control controlLabel">Activity Remark</label>
-                                                        </div>
-                                                    </td>
-
-                                                    <td style="width:30%;">
-                                                        <div class="form-group">
-                                                            <textarea class="form-control form-control-insde"
-                                                                      id="txt_activity_remark"
-                                                                      rows="2"
-                                                                      placeholder="Enter activity remark..."></textarea>
-                                                        </div>
-                                                    </td>
-
-                                                    <!-- Customer Response -->
-                                                    <td style="width:30%; padding-right:15px;">
-                                                        <div class="form-group">
-                                                            <label class="form-control controlLabel" style="text-align:right;">
-                                                                Customer Response
-                                                            </label>
-                                                        </div>
-                                                    </td>
-
-                                                    <td style="width:30%; padding-left:15px;">
-                                                        <div class="form-group">
-                                                            <textarea class="form-control form-control-insde"
-                                                                      id="txt_customer_response"
-                                                                      rows="2"
-                                                                      placeholder="Enter customer response..."></textarea>
-                                                        </div>
-                                                    </td>
-
-                                                </tr>
-
-                                                <tr>
-
-                                                    <!-- Next Action -->
                                                     <td style="width:10%;">
                                                         <div class="form-group">
                                                             <label class="form-control controlLabel">Next Action</label>
@@ -483,13 +457,16 @@
 
                                                     <td style="width:30%;">
                                                         <div class="form-group">
-                                                            <textarea class="form-control form-control-insde"
-                                                                      id="txt_next_action"
-                                                                      rows="2"
-                                                                      placeholder="Enter next action..."></textarea>
+                                                            <select class="form-control form-control-insde" id="txt_next_action">
+                                                                <option value="">-- Select Next Action --</option>
+                                                                <option value="call">Call Customer</option>
+                                                                <option value="email">Send Email</option>
+                                                                <option value="follow_up">Follow Up</option>
+                                                                <option value="meeting">Schedule Meeting</option>
+                                                                <option value="close">Close Case</option>
+                                                            </select>
                                                         </div>
                                                     </td>
-
                                                     <!-- Total A/R Balance -->
                                                     <td style="width:30%; padding-right:15px;">
                                                         <div class="form-group">
@@ -511,6 +488,47 @@
 
                                                 </tr>
 
+
+                                                <tr>
+
+                                                    <!-- Activity Remark -->
+                                                    <td style="width:10%;">
+                                                        <div class="form-group">
+                                                            <label class="form-control controlLabel">Activity Remark</label>
+                                                        </div>
+                                                    </td>
+
+                                                    <td style="width:30%;">
+                                                        <div class="form-group">
+                                                            <textarea class="form-control form-control-insde"
+                                                                      id="txt_activity_remark"
+                                                                      rows="3"
+                                                                      placeholder="Enter activity remark..."></textarea>
+                                                        </div>
+                                                    </td>
+
+                                                    <!-- Customer Response -->
+                                                    <td style="width:30%; padding-right:15px;">
+                                                        <div class="form-group">
+                                                            <label class="form-control controlLabel" style="text-align:right;">
+                                                                Customer Response
+                                                            </label>
+                                                        </div>
+                                                    </td>
+
+                                                    <td style="width:30%; padding-left:15px;">
+                                                        <div class="form-group">
+                                                            <textarea class="form-control form-control-insde"
+                                                                      id="txt_customer_response"
+                                                                      rows="3"
+                                                                      placeholder="Enter customer response..."></textarea>
+                                                        </div>
+                                                    </td>
+
+                                                </tr>
+
+
+
                                             </thead>
                                         </table>
                                     </div>
@@ -528,31 +546,43 @@
                                         </span>
                                     </legend>
 
-                                    <div id="penalty_table_wrapper" class="row" style="margin:0px;margin-top:10px; position: relative; min-height: 30vh; height: 100%; overflow: auto">
-                                        <table class="table table-bordered" style="margin-bottom: 0px; position: absolute; min-width: 2500px; width: 100%;" id="table_loan_list">
+                                    <div id="penalty_table_wrapper" class="row" style="margin:0px;margin-top:10px; position: relative; min-height: 40vh; height: 100%; overflow: auto">
+                                        <table class="table table-bordered" style="margin-bottom: 0px; position: absolute; min-width: 3100px; width: 100%;" id="table_loan_list">
                                             <thead style="position:sticky; top: 0; z-index: 1000; background-color:#f8f8f8;">
                                                 <tr class="bg-gray" role="row">
-                                                    <td style="width:2%; text-align:center;">
-                                                        <i class='fa fa-trash' title="Remove Selected Rows" style='cursor:pointer; color:red;' onclick="removeSelectedRows_for_activity()"></i>
-                                                    </td>
-                                                    <td style="width:2%; text-align:center;">
+                                                    <th style="width:1%; text-align:center;">
+                                                        <i class='fa fa-trash text-danger' title="Remove Selected Rows" style='cursor:pointer;' onclick="removeSelectedRows_for_activity()"></i>
+                                                    </th>
+                                                    <th style="width:1%; text-align:center;">
                                                         <input type="checkbox" id="check_all_for_activity" onclick="checkAllRows_for_activity(this)">
-                                                    </td>
-                                                    <td style="width:2%; text-align:center;">#</td>
-                                                    <td style="width:5%; text-align:left;">Payment Date</td>
-                                                    <td style="width:5%; text-align:left;">Due Date</td>
-                                                    <td style="width:5%; text-align:right;">Principle</td>
-                                                    <td style="width:5%; text-align:right;">Interest</td>
-                                                    <td style="width:5%; text-align:right;">Monthly</td>
-                                                    <td style="width:5%; text-align:left;">Payment Type</td>
-                                                    <td style="width:5%; text-align:left;">ARNo</td>
-                                                    <td style="width:5%; text-align:right;">AR Balance</td>
-                                                    <td style="width:5%; text-align:right;">Open Bal (A/R)</td>
-                                                    <td style="width:5%; text-align:right;">Int. No</td>
-                                                    <td style="width:5%; text-align:right;">Int. Balance</td>
-                                                    <td style="width:5%; text-align:right;">Open Bal (Int)</td>
-                                                    <td style="width:5%; text-align:right;">Accrual. Penalty</td>
-                                                    <td style="text-align:left;">Remark</td> <!-- takes remaining width automatically -->
+                                                    </th>
+                                                    <th style="width:1%; text-align:center;">#</th>
+                                                    <th style="width:4%; text-align:left;">Model</th>
+                                                    <th style="width:6%; text-align:left;">ItemName</th>
+                                                    <th style="width: 4%; text-align: left;">Serial</th>
+                                                    <th style="width: 3%; text-align: left;">Sale Emp1</th>
+                                                    <th style="width: 3%; text-align: left;">Sale Emp2</th>
+                                                    <th style="width:2%; text-align:left;">Re.Chqs</th>
+                                                    <th style="width:2%; text-align:left;">Over.Chq#</th>
+                                                    <th style="width:4%; text-align:right;">Total Over.Chq</th>
+                                                    <th style="width:4%; text-align:right;">Total ARBalance</th>
+                                                    <th style="width:4%; text-align:left;">Payment Date</th>
+                                                    <th style="width:4%; text-align:left;">Due Date</th>
+                                                    <th style="width:2%; text-align:right;">Over.Days</th>
+                                                    <th style="width:4%; text-align:right;">Principle</th>
+                                                    <th style="width:4%; text-align:right;">Interest</th>
+                                                    <th style="width:4%; text-align:right;">Monthly</th>
+                                                    <th style="width:4%; text-align:left;">Payment Type</th>
+                                                    <th style="width:4%; text-align:left;">ARNo</th>
+                                                    <th style="width:4%; text-align:right;">AR Balance</th>
+                                                    <th style="width:4%; text-align:right;">Open Bal (A/R)</th>
+                                                    <th style="width:4%; text-align:right;">Int. No</th>
+                                                    <th style="width:4%; text-align:right;">Int. Balance</th>
+                                                    <th style="width:4%; text-align:right;">Open Bal (Int)</th>
+                                                    <th style="width:4%; text-align:right;">Accrual. Penalty</th>
+                                                    <th style="width:19%; text-align:left;">Remark</th>
+
+
                                                 </tr>
                                             </thead>
                                             <tbody id="loan_list_body">
@@ -560,7 +590,7 @@
                                             </tbody>
                                             <tfoot style="background-color:#f0f0f0; font-weight:bold;">
                                                 <tr>
-                                                    <td colspan="3" style="text-align:right;">Total:</td>
+                                                    <td colspan="13" style="text-align:right;">Total:</td>
                                                     <td></td>
                                                     <td></td>
                                                     <td style="text-align:right;"></td>
@@ -763,9 +793,22 @@
                     // Row number
                     tr += "<td id='td_rowno_" + index + "' style='text-align:center;'>" + index + "</td>";
 
+
+                    tr += "<td id='td_model_" + index + "' style='text-align:left;'>" + (x.Model || "") + "</td>";
+                    tr += "<td id='td_itemName_" + index + "' style='text-align:left;'>" + (x.ItemName || "") + "</td>";
+                    tr += "<td id='td_serial_" + index + "' style='text-align:left;'>" + (x.Serial || "") + "</td>";
+                    tr += "<td id='td_saleemp1_" + index + "' style='text-align:left;'>" + (x.SaleEmp1 || "") + "</td>";
+                    tr += "<td id='td_saleemp2_" + index + "' style='text-align:left;'>" + (x.SaleEmp2 || "") + "</td>";
+
+                    tr += "<td id='td_RemaincheqQty_" + index + "' style='text-align:left;'>" + (x.RemaincheqQty || 0) + "</td>";
+                    tr += "<td id='td_OverDuecheqQty_" + index + "' style='text-align:left;'>" + (x.OverDuecheqQty || 0) + "</td>";
+                    tr += "<td id='td_sumOverDuecheq_" + index + "' style='text-align:right;'>" + convert2digit(x.SumOverDuecheq) + "</td>";
+                    tr += "<td id='td_sumOpenAR_" + index + "' style='text-align:right;'>" + convert2digit(x.SumOpenAR) + "</td>";
+
                     // Payment info with formatted dates
                     tr += "<td id='td_paymentdate_" + index + "' style='text-align:left;'>" + formatDate(x.PaymentDate) + "</td>";
                     tr += "<td id='td_duedate_" + index + "' style='text-align:left;'>" + formatDate(x.DueDate) + "</td>";
+                    tr += "<td id='td_overDueDay_" + index + "' style='text-align:left;'>" + (x.OverDueDay || 0) + "</td>";
                     tr += "<td id='td_principle_" + index + "' style='text-align:right;'>" + convert2digit(x.Principle) + "</td>";
                     tr += "<td id='td_interest_" + index + "' style='text-align:right;'>" + convert2digit(x.Interest) + "</td>";
                     tr += "<td id='td_monthly_" + index + "' style='text-align:right;'>" + convert2digit(x.Monthly) + "</td>";
@@ -808,11 +851,11 @@
         var totalAR = 0, totalOpenAR = 0, totalInt = 0, totalOpenInt = 0, totalPenalty = 0;
 
         $("#loan_list_body tr").each(function () {
-            totalAR += parseFloat($(this).find("td:eq(10)").text()) || 0;
-            totalOpenAR += parseFloat($(this).find("td:eq(11)").text()) || 0;
-            totalInt += parseFloat($(this).find("td:eq(13)").text()) || 0;
-            totalOpenInt += parseFloat($(this).find("td:eq(14)").text()) || 0;
-            totalPenalty += parseFloat($(this).find("td:eq(15)").text()) || 0;
+            totalAR += parseFloat($(this).find("td:eq(20)").text()) || 0;
+            totalOpenAR += parseFloat($(this).find("td:eq(21)").text()) || 0;
+            totalInt += parseFloat($(this).find("td:eq(23)").text()) || 0;
+            totalOpenInt += parseFloat($(this).find("td:eq(24)").text()) || 0;
+            totalPenalty += parseFloat($(this).find("td:eq(25)").text()) || 0;
         });
 
         $("#total_ar_balance").text(totalAR.toFixed(2));
