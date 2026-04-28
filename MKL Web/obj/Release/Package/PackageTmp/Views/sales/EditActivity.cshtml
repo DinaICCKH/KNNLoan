@@ -9,6 +9,8 @@
     //List<v_Item> houselist = ViewBag.houselist;
     string docdate = DateTime.Now.ToString("dd-MMM-yyyy"); // Capital 'MMM' for month name
     List<InstallmentList> installment = ViewBag.installment;
+    MKL_Web.Models.USR usr = (MKL_Web.Models.USR)Session["USR"];
+    List<ICC_GET_AssignToActivityResult> assignto = ViewBag.assignTo;
 }
 <head>
     <script src="../../Scripts/js/sales.js"></script>
@@ -136,8 +138,8 @@
             <div class="box-header with-border">
                 <table class="table" role="none">
                     <thead>
+
                         <tr>
-                            <!-- General Parameter (75% width) -->
                             <td colspan="3" style="width: 100%;">
                                 <fieldset class="scheduler-border">
                                     <legend class="scheduler-border" style="width: 80%; font-weight:bold;">General Information</legend>
@@ -145,20 +147,16 @@
                                         <table class="table" style="margin-bottom:0px;">
                                             <thead>
 
-
+                                                <!-- Activity & Document Number -->
                                                 <tr>
-
                                                     <td style="width:10%;">
                                                         <div class="form-group">
                                                             <label class="form-control controlLabel">Activity</label>
                                                         </div>
                                                     </td>
-
-
                                                     <td style="width:30%;">
                                                         <div class="form-group">
                                                             <select class="form-control form-control-insde" id="cbo_activity" name="Activity">
-
                                                                 <option value="Action Plan" @(Model.Activity == "Action Plan" ? "selected" : "")>Action Plan</option>
                                                                 <option value="Followup" @(Model.Activity == "Followup" ? "selected" : "")>Followup</option>
                                                                 <option value="1st Site Visit" @(Model.Activity == "1st Site Visit" ? "selected" : "")>1st Site Visit</option>
@@ -168,294 +166,153 @@
                                                                 <option value="Repossess" @(Model.Activity == "Repossess" ? "selected" : "")>Repossess</option>
                                                                 <option value="Legal Action" @(Model.Activity == "Legal Action" ? "selected" : "")>Legal Action</option>
                                                                 <option value="Other" @(Model.Activity == "Other" ? "selected" : "")>Other</option>
-
                                                             </select>
                                                         </div>
                                                     </td>
-
-
                                                     <td style="width:30%; padding-right:15px;">
                                                         <div class="form-group">
-                                                            <label class="form-control controlLabel" style="text-align:right;">
-                                                                Document Number
-                                                            </label>
+                                                            <label class="form-control controlLabel" style="text-align:right;">Document Number</label>
                                                         </div>
                                                     </td>
-                                                    <td style="width:30%; padding-left:15px;">
-                                                        <div class="form-group">
-                                                            <input type="text"
-                                                                   class="form-control form-control-insde"
-                                                                   id="txt_docNum"
-                                                                   name="HeaderID"
-                                                                   value="@Model.HeaderID"
-                                                                   readonly>
-                                                        </div>
+          
+
+                                                    <td 
+                                                        style="width:30%; padding-left:15px;"> <div class="form-group"> <input type="text" class="form-control form-control-insde" id="txt_docNum" name="HeaderID" value="@Model.HeaderID" readonly> </div> 
                                                     </td>
+
                                                 </tr>
 
-
+                                                <!-- Type & Priority -->
                                                 <tr>
-
                                                     <td style="width:10%;">
                                                         <div class="form-group">
                                                             <label class="form-control controlLabel">Type</label>
                                                         </div>
                                                     </td>
-
                                                     <td style="width:30%;">
                                                         <div class="form-group">
                                                             <select class="form-control form-control-insde" id="cbo_type" name="Type">
-
                                                                 <option value="Follow up Payment" @(Model.Type == "Follow up Payment" ? "selected" : "")>Follow up Payment</option>
                                                                 <option value="Repossess" @(Model.Type == "Repossess" ? "selected" : "")>Repossess</option>
-                                                                <option value="Lagal Action" @(Model.Type == "Lagal Action" ? "selected" : "")>Lagal Action</option>
+                                                                <option value="Legal Action" @(Model.Type == "Legal Action" ? "selected" : "")>Legal Action</option>
                                                                 <option value="Other" @(Model.Type == "Other" ? "selected" : "")>Other</option>
-
                                                             </select>
                                                         </div>
                                                     </td>
-
-
-
                                                     <td style="width:30%; padding-right:15px;">
                                                         <div class="form-group">
-                                                            <label class="form-control controlLabel" style="text-align:right;">
-                                                                Priority
-                                                            </label>
+                                                            <label class="form-control controlLabel" style="text-align:right;">Priority</label>
                                                         </div>
                                                     </td>
-
                                                     <td style="width:30%; padding-left:15px;">
                                                         <div class="form-group">
                                                             <select class="form-control form-control-insde" id="cbo_priority" name="Priority">
-
                                                                 <option value="High" @(Model.Priority == "High" ? "selected" : "")>High</option>
-                                                                <option value="Meduim" @(Model.Priority == "Meduim" ? "selected" : "")>Meduim</option>
+                                                                <option value="Medium" @(Model.Priority == "Medium" ? "selected" : "")>Medium</option>
                                                                 <option value="Low" @(Model.Priority == "Low" ? "selected" : "")>Low</option>
-
                                                             </select>
                                                         </div>
                                                     </td>
-
                                                 </tr>
 
-
+                                                <!-- Handled By & Status -->
                                                 <tr>
-
                                                     <td style="width:10%;">
                                                         <div class="form-group">
                                                             <label class="form-control controlLabel">Handled By</label>
                                                         </div>
                                                     </td>
-
                                                     <td style="width:30%;">
                                                         <div class="form-group">
-                                                            <input type="text"
-                                                                   class="form-control form-control-insde"
-                                                                   id="txt_handled_by"
-                                                                   name="HandledBy"
-                                                                   value="@Model.HandledBy"
-                                                                   placeholder="Enter name...">
-                                                        </div>
-                                                    </td>
-
-
-
-                                                    <td style="width:30%; padding-right:15px;">
-                                                        <div class="form-group">
-                                                            <label class="form-control controlLabel" style="text-align:right;">
-                                                                Status
-                                                            </label>
-                                                        </div>
-                                                    </td>
-
-                                                    <td style="width:30%; padding-left:15px;">
-                                                        <div class="form-group">
-                                                            <select class="form-control form-control-insde" id="cbo_status" name="Status">
-
-                                                                <option value="Pending" @(Model.Status == "Pending" ? "selected" : "")>Pending</option>
-                                                                <option value="Completed" @(Model.Status == "Completed" ? "selected" : "")>Completed</option>
-                                                                <option value="In-Progress" @(Model.Status == "In-Progress" ? "selected" : "")>In-Progress</option>
-
+                                                            <select class="form-control form-control-insde" id="txt_handled_by" name="HandledBy">
+                                                                <option value="">-- Select Handler --</option>
+                                                                @if (assignto != null)
+                                                                {
+                                                                    foreach (var item in assignto)
+                                                                    {
+                                                                        <option value="@item.UserCode" @(Model.HandledBy == item.UserCode ? "selected" : "")>@item.UserName</option>
+                                                                    }
+                                                                }
                                                             </select>
                                                         </div>
                                                     </td>
-
+                                                    <td style="width:30%; padding-right:15px;">
+                                                        <div class="form-group">
+                                                            <label class="form-control controlLabel" style="text-align:right;">Status</label>
+                                                        </div>
+                                                    </td>
+                                                    <td style="width:30%; padding-left:15px;">
+                                                        <div class="form-group">
+                                                            <select class="form-control form-control-insde" id="cbo_status" name="Status">
+                                                                <option value="Pending" @(Model.Status == "Pending" ? "selected" : "")>Pending</option>
+                                                                <option value="Completed" @(Model.Status == "Completed" ? "selected" : "")>Completed</option>
+                                                                <option value="In-Progress" @(Model.Status == "In-Progress" ? "selected" : "")>In-Progress</option>
+                                                            </select>
+                                                        </div>
+                                                    </td>
                                                 </tr>
 
+                                                <!-- Assigned By & Recurrence -->
                                                 <tr>
-
                                                     <td style="width:10%;">
                                                         <div class="form-group">
                                                             <label class="form-control controlLabel">Assigned by</label>
                                                         </div>
                                                     </td>
-
                                                     <td style="width:30%;">
                                                         <div class="form-group">
-                                                            <input type="text"
-                                                                   class="form-control form-control-insde"
-                                                                   id="txt_assign_by"
-                                                                   name="AssignedBy"
-                                                                   value="@Model.AssignedBy"
-                                                                   readonly>
+                                                            <input type="text" class="form-control form-control-insde" id="txt_assign_by" name="AssignedBy" value="@Session["UCode"]" readonly>
                                                         </div>
                                                     </td>
-
                                                     <td style="width:30%; padding-right:15px;">
                                                         <div class="form-group">
-                                                            <label class="form-control controlLabel" style="text-align:right;">
-                                                                Recurrence
-                                                            </label>
+                                                            <label class="form-control controlLabel" style="text-align:right;">Recurrence</label>
                                                         </div>
                                                     </td>
-
                                                     <td style="width:30%; padding-left:15px;">
                                                         <div class="form-group">
                                                             <select class="form-control form-control-insde" id="cbo_recurrence" name="Recurrence">
-
                                                                 <option value="None" @(Model.Recurrence == "None" ? "selected" : "")>None</option>
                                                                 <option value="Daily" @(Model.Recurrence == "Daily" ? "selected" : "")>Daily</option>
                                                                 <option value="Monthly" @(Model.Recurrence == "Monthly" ? "selected" : "")>Monthly</option>
                                                                 <option value="Yearly" @(Model.Recurrence == "Yearly" ? "selected" : "")>Yearly</option>
-
                                                             </select>
                                                         </div>
                                                     </td>
                                                 </tr>
 
+                                                <!-- Start & End Dates -->
                                                 <tr>
-
-                                                    <!-- Start Date -->
                                                     <td style="width:10%;">
                                                         <div class="form-group">
                                                             <label class="form-control controlLabel">Start Date</label>
                                                         </div>
                                                     </td>
-
                                                     <td style="width:30%;">
                                                         <div class="form-group">
                                                             <div class="input-group date">
-                                                                <div class="input-group-addon">
-                                                                    <i class="fa fa-calendar"></i>
-                                                                </div>
-                                                                <input type="text"
-                                                                       class="form-control pull-right datetime form-control-insde"
-                                                                       readonly="readonly"
-                                                                       id="txt_start_date"
-                                                                       value="@(Model?.StartDate != null ? ((DateTime)Model.StartDate).ToString("dd-MMM-yyyy") : "")">
+                                                                <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
+                                                                <input type="text" class="form-control pull-right datetime form-control-insde" id="txt_start_date" name="StartDate" value="@(Model?.StartDate?.ToString("dd-MMM-yyyy") ?? docdate)" readonly>
                                                             </div>
                                                         </div>
                                                     </td>
-
-                                                    <!-- End Date -->
                                                     <td style="width:30%; padding-right:15px;">
                                                         <div class="form-group">
-                                                            <label class="form-control controlLabel" style="text-align:right;">
-                                                                End Date
-                                                            </label>
+                                                            <label class="form-control controlLabel" style="text-align:right;">End Date</label>
                                                         </div>
                                                     </td>
-
                                                     <td style="width:30%; padding-left:15px;">
                                                         <div class="form-group">
                                                             <div class="input-group date">
-                                                                <div class="input-group-addon">
-                                                                    <i class="fa fa-calendar"></i>
-                                                                </div>
-                                                                <input type="text"
-                                                                       class="form-control pull-right datetime form-control-insde"
-                                                                       readonly="readonly"
-                                                                       id="txt_end_date"
-                                                                       value="@(Model?.EndDate != null ? ((DateTime)Model.EndDate).ToString("dd-MMM-yyyy") : "")">
+                                                                <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
+                                                                <input type="text" class="form-control pull-right datetime form-control-insde" id="txt_end_date" name="EndDate" value="@(Model?.EndDate?.ToString("dd-MMM-yyyy") ?? docdate)" readonly>
                                                             </div>
                                                         </div>
                                                     </td>
-
                                                 </tr>
 
+                                                <!-- Customer Info & A/R Balance -->
                                                 <tr>
-
-                                                    <!-- Activity Remark -->
-                                                    <td style="width:10%;">
-                                                        <div class="form-group">
-                                                            <label class="form-control controlLabel">Activity Remark</label>
-                                                        </div>
-                                                    </td>
-                                                    <td style="width:30%;">
-                                                        <div class="form-group">
-                                                            <textarea class="form-control form-control-insde"
-                                                                      id="txt_activity_remark"
-                                                                      name="ActivityRemark"
-                                                                      rows="2"
-                                                                      placeholder="Enter activity remark...">@Model.ActivityRemark</textarea>
-                                                        </div>
-                                                    </td>
-
-                                                    <!-- Customer Response -->
-                                                    <td style="width:30%; padding-right:15px;">
-                                                        <div class="form-group">
-                                                            <label class="form-control controlLabel" style="text-align:right;">
-                                                                Customer Response
-                                                            </label>
-                                                        </div>
-                                                    </td>
-
-                                                    <td style="width:30%; padding-left:15px;">
-                                                        <div class="form-group">
-                                                            <textarea class="form-control form-control-insde"
-                                                                      id="txt_customer_response"
-                                                                      name="CustomerResponse"
-                                                                      rows="2"
-                                                                      placeholder="Enter customer response...">@Model.CustomerResponse</textarea>
-                                                        </div>
-                                                    </td>
-
-                                                </tr>
-
-                                                <tr>
-
-                                                    <!-- Next Action -->
-                                                    <td style="width:10%;">
-                                                        <div class="form-group">
-                                                            <label class="form-control controlLabel">Next Action</label>
-                                                        </div>
-                                                    </td>
-
-                                                    <td style="width:30%;">
-                                                        <div class="form-group">
-                                                            <textarea class="form-control form-control-insde"
-                                                                      id="txt_next_action"
-                                                                      name="NextAction"
-                                                                      rows="2"
-                                                                      placeholder="Enter next action...">@Model.NextAction</textarea>
-                                                        </div>
-                                                    </td>
-
-                                                    <!-- Content -->
-                                                    <td style="width:30%; padding-right:15px;">
-                                                        <div class="form-group">
-                                                            <label class="form-control controlLabel" style="text-align:right;">
-                                                                Content
-                                                            </label>
-                                                        </div>
-                                                    </td>
-
-                                                    <td style="width:30%; padding-left:15px;">
-                                                        <div class="form-group">
-                                                            <textarea class="form-control form-control-insde"
-                                                                      id="txt_content"
-                                                                      name="Content"
-                                                                      rows="2"
-                                                                      placeholder="Enter content...">@Model.Content</textarea>
-                                                        </div>
-                                                    </td>
-
-                                                </tr>
-
-
-                                                <tr>
-                                                    <!-- Customer Code -->
                                                     <td style="width:10%;">
                                                         <div class="form-group">
                                                             <label class="form-control controlLabel">Customer Code</label>
@@ -463,53 +320,27 @@
                                                     </td>
                                                     <td style="width:30%;">
                                                         <div class="form-group">
-                                                            <table style="width:100%;">
-                                                                <tr>
-                                                                    <td>
-                                                                        <div class="input-group">
-                                                                            <input type="text"
-                                                                                   class="form-control form-control-insde"
-                                                                                   id="txt_customer_code"
-                                                                                   name="CustomerCode"
-                                                                                   value="@Model.CustomerCode"
-                                                                                   readonly="readonly"
-                                                                                   placeholder="To Customer">
-                                                                            <div class="input-group-addon">
-                                                                                <i class="fa fa-user text-info"
-                                                                                   onclick="cmd_show_customer_Activity()"
-                                                                                   style="cursor:pointer"></i>
-                                                                            </div>
-                                                                        </div>
-                                                                    </td>
-                                                                </tr>
-                                                            </table>
+                                                            <div class="input-group">
+                                                                <input type="text" class="form-control form-control-insde" id="txt_customer_code" name="CustomerCode" value="@Model.CustomerCode" readonly placeholder="Customer">
+                                                                <div class="input-group-addon">
+                                                                    <i class="fa fa-user text-info" onclick="cmd_show_customer_Activity()" style="cursor:pointer"></i>
+                                                                </div>
+                                                            </div>
                                                         </div>
                                                     </td>
-
-                                                    <!-- Card Name -->
                                                     <td style="width:30%; padding-right:15px;">
                                                         <div class="form-group">
-                                                            <label class="form-control controlLabel" style="text-align:right;">
-                                                                Card Name
-                                                            </label>
+                                                            <label class="form-control controlLabel" style="text-align:right;">Card Name</label>
                                                         </div>
                                                     </td>
                                                     <td style="width:30%; padding-left:15px;">
                                                         <div class="form-group">
-                                                            <input type="text"
-                                                                   class="form-control form-control-insde"
-                                                                   id="txt_card_name"
-                                                                   name="CardName"
-                                                                   value="@Model.CardName"
-                                                                   readonly>
+                                                            <input type="text" class="form-control form-control-insde" id="txt_card_name" name="CardName" value="@Model.CardName" readonly>
                                                         </div>
                                                     </td>
                                                 </tr>
 
-
                                                 <tr>
-
-                                                    <!-- Phone -->
                                                     <td style="width:10%;">
                                                         <div class="form-group">
                                                             <label class="form-control controlLabel">Phone</label>
@@ -517,123 +348,75 @@
                                                     </td>
                                                     <td style="width:30%;">
                                                         <div class="form-group">
-                                                            <input type="text"
-                                                                   class="form-control form-control-insde"
-                                                                   id="txt_phone"
-                                                                   name="Phone"
-                                                                   value="@Model.Phone"
-                                                                   placeholder="Enter phone..." />
+                                                            <input type="text" class="form-control form-control-insde" id="txt_phone" name="Phone" value="@Model.Phone" placeholder="Enter phone..." />
                                                         </div>
                                                     </td>
-
-                                                    <!-- Ref -->
                                                     <td style="width:30%; padding-right:15px;">
                                                         <div class="form-group">
-                                                            <label class="form-control controlLabel" style="text-align:right;">
-                                                                Ref
-                                                            </label>
+                                                            <label class="form-control controlLabel" style="text-align:right;">Ref</label>
                                                         </div>
                                                     </td>
-
                                                     <td style="width:30%; padding-left:15px;">
                                                         <div class="form-group">
-                                                            <input type="text"
-                                                                   class="form-control form-control-insde"
-                                                                   id="txt_ref"
-                                                                   name="Ref"
-                                                                   value="@Model.Ref"
-                                                                   placeholder="Enter ref..." />
+                                                            <input type="text" class="form-control form-control-insde" id="txt_ref" name="Ref" value="@Model.Ref" placeholder="Enter ref..." />
                                                         </div>
                                                     </td>
-
                                                 </tr>
 
-
+                                                <!-- Next Action & A/R Balance -->
                                                 <tr>
-
-                                                    <!-- Loan ID -->
                                                     <td style="width:10%;">
                                                         <div class="form-group">
-                                                            <label class="form-control controlLabel">Loan ID</label>
+                                                            <label class="form-control controlLabel">Next Action</label>
                                                         </div>
                                                     </td>
                                                     <td style="width:30%;">
                                                         <div class="form-group">
-                                                            <input type="text"
-                                                                   class="form-control form-control-insde"
-                                                                   id="txt_loanID"
-                                                                   name="LoanID"
-                                                                   value="@Model.LoanID"
-                                                                   readonly
-                                                                   placeholder="Loan ID will appear here" />
+                                                            <select class="form-control form-control-insde" id="txt_next_action" name="NextAction">
+                                                                <option value="">-- Select Next Action --</option>
+                                                                <option value="call" @(Model.NextAction == "call" ? "selected" : "")>Call Customer</option>
+                                                                <option value="email" @(Model.NextAction == "email" ? "selected" : "")>Send Email</option>
+                                                                <option value="follow_up" @(Model.NextAction == "follow_up" ? "selected" : "")>Follow Up</option>
+                                                                <option value="meeting" @(Model.NextAction == "meeting" ? "selected" : "")>Schedule Meeting</option>
+                                                                <option value="close" @(Model.NextAction == "close" ? "selected" : "")>Close Case</option>
+                                                            </select>
                                                         </div>
                                                     </td>
-                                                    <!-- Total A/R Balance -->
                                                     <td style="width:30%; padding-right:15px;">
                                                         <div class="form-group">
-                                                            <label class="form-control controlLabel" style="text-align:right;">
-                                                                Total A/R Balance
-                                                            </label>
+                                                            <label class="form-control controlLabel" style="text-align:right;">Total A/R Balance</label>
                                                         </div>
                                                     </td>
-
                                                     <td style="width:30%; padding-left:15px;">
                                                         <div class="form-group">
-                                                            <input type="text"
-                                                                   class="form-control form-control-insde"
-                                                                   id="txt_ar_balance"
-                                                                   name="ARBalance"
-                                                                   value="@Model.TotalARBalance"
-                                                                   readonly />
+                                                            <input type="text" class="form-control form-control-insde" id="txt_ar_balance" name="ARBalance" value="@Model.TotalARBalance" readonly />
                                                         </div>
                                                     </td>
-
                                                 </tr>
 
-
+                                                <!-- Activity Remark & Customer Response -->
                                                 <tr>
-
-                                                    <!-- Item Name -->
                                                     <td style="width:10%;">
                                                         <div class="form-group">
-                                                            <label class="form-control controlLabel">Item Name</label>
+                                                            <label class="form-control controlLabel">Activity Remark</label>
                                                         </div>
                                                     </td>
                                                     <td style="width:30%;">
                                                         <div class="form-group">
-                                                            <input type="text"
-                                                                   class="form-control form-control-insde"
-                                                                   id="txt_item_name"
-                                                                   name="ItemName"
-                                                                   value="@Model.ItemName"
-                                                                   readonly
-                                                                   placeholder="Item Name will appear here" />
+                                                            <textarea class="form-control form-control-insde" id="txt_activity_remark" name="ActivityRemark" rows="3" placeholder="Enter activity remark...">@Model.ActivityRemark</textarea>
                                                         </div>
                                                     </td>
-
-                                                    <!-- Serial -->
                                                     <td style="width:30%; padding-right:15px;">
                                                         <div class="form-group">
-                                                            <label class="form-control controlLabel" style="text-align:right;">
-                                                                Serial
-                                                            </label>
+                                                            <label class="form-control controlLabel" style="text-align:right;">Customer Response</label>
                                                         </div>
                                                     </td>
-
                                                     <td style="width:30%; padding-left:15px;">
                                                         <div class="form-group">
-                                                            <input type="text"
-                                                                   class="form-control form-control-insde"
-                                                                   id="txt_serial"
-                                                                   name="Serial"
-                                                                   value="@Model.Serial"
-                                                                   readonly
-                                                                   placeholder="Serial will appear here" />
+                                                            <textarea class="form-control form-control-insde" id="txt_customer_response" name="CustomerResponse" rows="3" placeholder="Enter customer response...">@Model.CustomerResponse</textarea>
                                                         </div>
                                                     </td>
-
                                                 </tr>
-
 
                                             </thead>
                                         </table>
@@ -652,35 +435,51 @@
                                         </span>
                                     </legend>
 
-                                    <div id="penalty_table_wrapper" class="row" style="margin:0px; margin-top:10px; position: relative; min-height: 30vh; height: 100%; overflow: auto">
-                                        <table class="table table-bordered" style="margin-bottom: 0px; position: absolute; min-width: 2500px; width: 100%;" id="table_loan_list">
+                                    <div id="penalty_table_wrapper" class="row" style="margin:0px; margin-top:10px; position: relative; min-height: 40vh; height: 100%; overflow: auto">
+                                        <table class="table table-bordered" style="margin-bottom: 0px; position: absolute; min-width: 3100px; width: 100%;" id="table_loan_list">
                                             <thead style="position:sticky; top: 0; z-index: 1000; background-color:#f8f8f8;">
-                                                <tr class="bg-gray" role="row">
-                                                    <td style="width:2%; text-align:center;">
-                                                        <i class='fa fa-trash' title="Remove Selected Rows" style='cursor:pointer; color:red;' onclick="removeSelectedRows_for_activity()"></i>
-                                                    </td>
-                                                    <td style="width:2%; text-align:center;">
+                                                <tr class="bg-gray">
+
+                                                    <th style="width:1%; text-align:center;">
+                                                        <i class='fa fa-trash text-danger' title="Remove Selected Rows" style='cursor:pointer;' onclick="removeSelectedRows_for_activity()"></i>
+                                                    </th>
+                                                    <th style="width:1%; text-align:center;">
                                                         <input type="checkbox" id="check_all_for_activity" onclick="checkAllRows_for_activity(this)">
-                                                    </td>
-                                                    <td style="width:2%; text-align:center;">#</td>
-                                                    <td style="width:5%; text-align:left;">Payment Date</td>
-                                                    <td style="width:5%; text-align:left;">Due Date</td>
-                                                    <td style="width:5%; text-align:right;">Principle</td>
-                                                    <td style="width:5%; text-align:right;">Interest</td>
-                                                    <td style="width:5%; text-align:right;">Monthly</td>
-                                                    <td style="width:5%; text-align:left;">Payment Type</td>
-                                                    <td style="width:5%; text-align:left;">ARNo</td>
-                                                    <td style="width:5%; text-align:right;">AR Balance</td>
-                                                    <td style="width:5%; text-align:right;">Open Bal (A/R)</td>
-                                                    <td style="width:5%; text-align:right;">Int. No</td>
-                                                    <td style="width:5%; text-align:right;">Int. Balance</td>
-                                                    <td style="width:5%; text-align:right;">Open Bal (Int)</td>
-                                                    <td style="width:5%; text-align:right;">Accrual. Penalty</td>
-                                                    <td style="text-align:left;">Remark</td>
+                                                    </th>
+                                                    <th style="width:1%; text-align:center;">#</th>
+
+                                                    <th style="width:4%; text-align:left;">Model</th>
+                                                    <th style="width:6%; text-align:left;">ItemName</th>
+                                                    <th style="width:4%; text-align:left;">Serial</th>
+                                                    <th style="width:3%; text-align:left;">Sale Emp1</th>
+                                                    <th style="width:3%; text-align:left;">Sale Emp2</th>
+                                                    <th style="width:2%; text-align:left;">Re.Chqs</th>
+                                                    <th style="width:2%; text-align:left;">Over.Chq#</th>
+                                                    <th style="width:4%; text-align:right;">Total Over.Chq</th>
+                                                    <th style="width:4%; text-align:right;">Total ARBalance</th>
+
+                                                    <th style="width:4%; text-align:left;">Payment Date</th>
+                                                    <th style="width:4%; text-align:left;">Due Date</th>
+
+                                                    <th style="width:2%; text-align:right;">Over.Days</th>
+
+                                                    <th style="width:4%; text-align:right;">Principle</th>
+                                                    <th style="width:4%; text-align:right;">Interest</th>
+                                                    <th style="width:4%; text-align:right;">Monthly</th>
+                                                    <th style="width:4%; text-align:left;">Payment Type</th>
+                                                    <th style="width:4%; text-align:left;">ARNo</th>
+                                                    <th style="width:4%; text-align:right;">AR Balance</th>
+                                                    <th style="width:4%; text-align:right;">Open Bal (A/R)</th>
+                                                    <th style="width:4%; text-align:right;">Int. No</th>
+                                                    <th style="width:4%; text-align:right;">Int. Balance</th>
+                                                    <th style="width:4%; text-align:right;">Open Bal (Int)</th>
+                                                    <th style="width:4%; text-align:right;">Accrual. Penalty</th>
+                                                    <th style="width:19%; text-align:left;">Remark</th>
                                                 </tr>
                                             </thead>
 
                                             <tbody id="loan_list_body">
+                                                @* Razor loop for existing rows with full IDs *@
                                                 @{
                                                     int rowNumber = 1;
                                                     var loanRows = ViewBag.LoanRows as List<ActivityRow>;
@@ -688,44 +487,41 @@
                                                     {
                                                         foreach (var row in loanRows)
                                                         {
-                                                            <tr id="tr_payment_detail_for_activity_@rowNumber">
-                                                                <!-- Delete icon "X" -->
-                                                                <td id="td_remove_@rowNumber" style="text-align:center; color:red; cursor:pointer;" class="remove-single-row">X</td>
+                                                                                                <tr id="tr_payment_detail_for_activity_@rowNumber">
+                                                                                                    <td id="td_remove_@rowNumber" style="text-align:center; color:red; cursor:pointer;" class="remove-single-row">X</td>
+                                                                                                    <td id="td_checkbox_@rowNumber" style="text-align:center;">
+                                                                                                        <input type="checkbox" class="row_checkbox_for_activity">
+                                                                                                    </td>
+                                                                                                    <td id="td_rowno_@rowNumber" style="text-align:center;">@rowNumber</td>
 
-                                                                <!-- Checkbox -->
-                                                                <td id="td_checkbox_@rowNumber" style="text-align:center;">
-                                                                    <input type="checkbox" class="row_checkbox_for_activity">
-                                                                </td>
+                                                                                                    <td id="td_model_@rowNumber">@row.Model</td>
+                                                                                                    <td id="td_itemName_@rowNumber">@row.ItemName</td>
+                                                                                                    <td id="td_serial_@rowNumber">@row.Serial</td>
+                                                                                                    <td id="td_saleemp1_@rowNumber">@row.Slp1</td>
+                                                                                                    <td id="td_saleemp2_@rowNumber">@row.Slp2</td>
+                                                                                                    <td id="td_RemaincheqQty_@rowNumber">@row.RemainChq</td>
+                                                                                                    <td id="td_OverDuecheqQty_@rowNumber">@row.OverdueChqNo</td>
+                                                                                                    <td id="td_sumOverDuecheq_@rowNumber" style="text-align:right;">@string.Format("{0:N2}", row.SumofOverdueChq)</td>
+                                                                                                    <td id="td_sumOpenAR_@rowNumber" style="text-align:right;">@string.Format("{0:N2}", row.SumofARBalance)</td>
 
-                                                                <!-- Row number -->
-                                                                <td id="td_rowno_@rowNumber" style="text-align:center;">@rowNumber</td>
+                                                                                                    <td id="td_paymentdate_@rowNumber">@(!string.IsNullOrEmpty(row.PaymentDate?.ToString()) ? ((DateTime)row.PaymentDate).ToString("dd-MMM-yyyy") : "")</td>
+                                                                                                    <td id="td_duedate_@rowNumber">@(!string.IsNullOrEmpty(row.DueDate?.ToString()) ? ((DateTime)row.DueDate).ToString("dd-MMM-yyyy") : "")</td>
 
-                                                                <!-- Payment info with formatted dates -->
-                                                                <td id="td_paymentdate_@rowNumber" style="text-align:left;">
-                                                                    @(!string.IsNullOrEmpty(row.PaymentDate?.ToString())
-                          ? ((DateTime)row.PaymentDate).ToString("dd-MMM-yyyy") : "")
-                                                                </td>
-                                                                <td id="td_duedate_@rowNumber" style="text-align:left;">
-                                                                    @(!string.IsNullOrEmpty(row.DueDate?.ToString())
-                          ? ((DateTime)row.DueDate).ToString("dd-MMM-yyyy") : "")
-                                                                </td>
-                                                                <td id="td_principle_@rowNumber" style="text-align:right;">@string.Format("{0:N2}", row.Principle)</td>
-                                                                <td id="td_interest_@rowNumber" style="text-align:right;">@string.Format("{0:N2}", row.Interest)</td>
-                                                                <td id="td_monthly_@rowNumber" style="text-align:right;">@string.Format("{0:N2}", row.Monthly)</td>
-                                                                <td id="td_method_@rowNumber" style="text-align:left;">@row.PaymentType</td>
-                                                                <td id="td_arno_@rowNumber" style="text-align:left;">@row.ARNo</td>
-                                                                <td id="td_arbalance_@rowNumber" style="text-align:right;">@string.Format("{0:N2}", row.ARBalance)</td>
-                                                                <td id="td_openbalar_@rowNumber" style="text-align:right;">@string.Format("{0:N2}", row.OpenBalanceAR)</td>
-                                                                <td id="td_intno_@rowNumber" style="text-align:right;">@row.IntNo</td>
-                                                                <td id="td_intbalance_@rowNumber" style="text-align:right;">@string.Format("{0:N2}", row.IntBalance)</td>
-                                                                <td id="td_openbalint_@rowNumber" style="text-align:right;">@string.Format("{0:N2}", row.OpenIntBalance)</td>
-                                                                <td id="td_accrualpenalty_@rowNumber" style="text-align:right;">@string.Format("{0:N2}", row.AccrualPenalty)</td>
+                                                                                                    <td id="td_overDueDay_@rowNumber">@row.OverdueDays</td>
 
-                                                                <!-- Editable remark -->
-                                                                <td id="td_remark_@rowNumber" contenteditable="true" style="text-align:left; color:blue;">
-                                                                    @row.Remarks
-                                                                </td>
-                                                            </tr>
+                                                                                                    <td id="td_principle_@rowNumber" style="text-align:right;">@string.Format("{0:N2}", row.Principle)</td>
+                                                                                                    <td id="td_interest_@rowNumber" style="text-align:right;">@string.Format("{0:N2}", row.Interest)</td>
+                                                                                                    <td id="td_monthly_@rowNumber" style="text-align:right;">@string.Format("{0:N2}", row.Monthly)</td>
+                                                                                                    <td id="td_method_@rowNumber">@row.PaymentType</td>
+                                                                                                    <td id="td_arno_@rowNumber">@row.ARNo</td>
+                                                                                                    <td id="td_arbalance_@rowNumber" style="text-align:right;">@string.Format("{0:N2}", row.ARBalance)</td>
+                                                                                                    <td id="td_openbalar_@rowNumber" style="text-align:right;">@string.Format("{0:N2}", row.OpenBalanceAR)</td>
+                                                                                                    <td id="td_intno_@rowNumber" style="text-align:right;">@row.IntNo</td>
+                                                                                                    <td id="td_intbalance_@rowNumber" style="text-align:right;">@string.Format("{0:N2}", row.IntBalance)</td>
+                                                                                                    <td id="td_openbalint_@rowNumber" style="text-align:right;">@string.Format("{0:N2}", row.OpenIntBalance)</td>
+                                                                                                    <td id="td_accrualpenalty_@rowNumber" style="text-align:right;">@string.Format("{0:N2}", row.AccrualPenalty)</td>
+                                                                                                    <td id="td_remark_@rowNumber" contenteditable="true" style="text-align:left; color:blue;">@row.Remarks</td>
+                                                                                                </tr>
                                                             rowNumber++;
                                                         }
                                                     }
@@ -734,7 +530,7 @@
 
                                             <tfoot style="background-color:#f0f0f0; font-weight:bold;">
                                                 <tr>
-                                                    <td colspan="3" style="text-align:right;">Total:</td>
+                                                    <td colspan="13" style="text-align:right;">Total:</td>
                                                     <td></td>
                                                     <td></td>
                                                     <td style="text-align:right;"></td>
@@ -871,18 +667,28 @@
     // Fetch loan/payment schedule and populate table
     function get_listloan_forActivity() {
         var row = $("#txt_payment_schedule_selected_row").val();
-        if (row == -1) {
-            ShowAlertCus("No AR Memo selected!", "warning");
+
+        var docEntries = [];
+
+        $("#table_pop_schedule_list tbody tr").each(function (i) {
+            var checkbox = $(this).find("input[type='checkbox']");
+
+            if (checkbox.is(":checked")) {
+                var docEntry = $("#td_pop_payment_schedule_so_entry_" + i).text().trim();
+                if (docEntry) {
+                    docEntries.push(docEntry);
+                }
+            }
+        });
+
+        if (docEntries.length === 0) {
+            ShowAlertCus("Please select at least one schedule!", "warning");
             return;
         }
 
-        var docentry = $("#td_pop_payment_schedule_so_entry_" + row).text();
-        var serialno = $("#td_pop_payment_schedule_serial_" + row).text();
-        var itemname = $("#td_pop_payment_schedule_ocrcode_" + row).text();
+        // Combine with ;
+        var docentry = docEntries.join(";");
 
-        $("#txt_loanID").val(docentry);
-        $("#txt_item_name").val(itemname);
-        $("#txt_serial").val(serialno);
 
         $.ajax({
             url: '/sales/get_payment_schedule_by_so_forActivity',
@@ -925,9 +731,22 @@
                     // Row number
                     tr += "<td id='td_rowno_" + index + "' style='text-align:center;'>" + index + "</td>";
 
+
+                    tr += "<td id='td_model_" + index + "' style='text-align:left;'>" + (x.Model || "") + "</td>";
+                    tr += "<td id='td_itemName_" + index + "' style='text-align:left;'>" + (x.ItemName || "") + "</td>";
+                    tr += "<td id='td_serial_" + index + "' style='text-align:left;'>" + (x.Serial || "") + "</td>";
+                    tr += "<td id='td_saleemp1_" + index + "' style='text-align:left;'>" + (x.SaleEmp1 || "") + "</td>";
+                    tr += "<td id='td_saleemp2_" + index + "' style='text-align:left;'>" + (x.SaleEmp2 || "") + "</td>";
+
+                    tr += "<td id='td_RemaincheqQty_" + index + "' style='text-align:left;'>" + (x.RemaincheqQty || 0) + "</td>";
+                    tr += "<td id='td_OverDuecheqQty_" + index + "' style='text-align:left;'>" + (x.OverDuecheqQty || 0) + "</td>";
+                    tr += "<td id='td_sumOverDuecheq_" + index + "' style='text-align:right;'>" + convert2digit(x.SumOverDuecheq) + "</td>";
+                    tr += "<td id='td_sumOpenAR_" + index + "' style='text-align:right;'>" + convert2digit(x.SumOpenAR) + "</td>";
+
                     // Payment info with formatted dates
                     tr += "<td id='td_paymentdate_" + index + "' style='text-align:left;'>" + formatDate(x.PaymentDate) + "</td>";
                     tr += "<td id='td_duedate_" + index + "' style='text-align:left;'>" + formatDate(x.DueDate) + "</td>";
+                    tr += "<td id='td_overDueDay_" + index + "' style='text-align:left;'>" + (x.OverDueDay || 0) + "</td>";
                     tr += "<td id='td_principle_" + index + "' style='text-align:right;'>" + convert2digit(x.Principle) + "</td>";
                     tr += "<td id='td_interest_" + index + "' style='text-align:right;'>" + convert2digit(x.Interest) + "</td>";
                     tr += "<td id='td_monthly_" + index + "' style='text-align:right;'>" + convert2digit(x.Monthly) + "</td>";
@@ -971,11 +790,11 @@
 
         $("#loan_list_body tr").each(function () {
             var cells = $(this).find("td");
-            totalAR += parseFloat(cells.eq(10).text()) || 0;
-            totalOpenAR += parseFloat(cells.eq(11).text()) || 0;
-            totalInt += parseFloat(cells.eq(13).text()) || 0;
-            totalOpenInt += parseFloat(cells.eq(14).text()) || 0;
-            totalPenalty += parseFloat(cells.eq(15).text()) || 0;
+            totalAR += parseFloat(cells.eq(20).text()) || 0;
+            totalOpenAR += parseFloat(cells.eq(21).text()) || 0;
+            totalInt += parseFloat(cells.eq(23).text()) || 0;
+            totalOpenInt += parseFloat(cells.eq(24).text()) || 0;
+            totalPenalty += parseFloat(cells.eq(25).text()) || 0;
         });
 
         $("#total_ar_balance").text(totalAR.toFixed(2));

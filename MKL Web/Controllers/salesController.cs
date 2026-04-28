@@ -3145,6 +3145,9 @@ namespace MKL_Web.Controllers
                                    .Where(r => r.HeaderID == headerID)
                                    .ToList();
 
+
+            ViewBag.assignTo = db.ICC_GET_AssignToActivity().ToList();
+
             return View(header);
         }
 
