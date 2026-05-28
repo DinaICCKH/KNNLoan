@@ -771,16 +771,15 @@ function cmd_save_user(type) {
         });
 
         $.ajax({
+            url: '/admin/cmd_save_user',
+            type: 'POST',
             contentType: 'application/json; charset=utf-8',
             dataType: 'json',
-            type: 'POST',
-            url: '/admin/cmd_save_user',
-            data: JSON.stringify(
-                {
-                    'header': d,
-                    'detail': list,
-                    'usrBoqs': usrboq
-                }),
+            data: JSON.stringify({
+                'header': d,
+                'detail': list,
+                'usrBoqs': usrboq
+            }),
             beforeSend: function () {
                 $("#loading").show();
             },
@@ -788,16 +787,25 @@ function cmd_save_user(type) {
                 $("#loading").hide();
             },
             success: function (data) {
-                if (data.status == "OK") {
+                if (data.status === "OK") {
                     save_signature($("#txt_admin_usercode").val());
-                    location.reload();
-                }
-                else {
-                    ShowAlert(data.Message);
+
+                    // Fixed typo "succes" -> "success"
+                    ShowAlert("Data Submit success.");
+
+                    // NOTE: If ShowAlertCus is a custom popup, 
+                    // wrap the reload inside its closed/callback function instead!
+                    setTimeout(function () {
+                        location.reload();
+                    }, 1500); // Gives the user 1.5 seconds to see the message
+                } else {
+                    // Using template literals or standard messaging
+                    ShowAlert(data.Message || "An unknown error occurred.");
                 }
             },
-            failure: function (response) {
-                $('#result').html(response);
+            error: function (xhr, status, error) {
+                // Changed 'failure' to 'error' to properly catch HTTP server errors
+                $('#result').html("Error: " + xhr.status + " " + error);
             }
         });
     }
