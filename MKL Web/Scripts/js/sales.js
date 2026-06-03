@@ -5132,7 +5132,10 @@ function cmd_save_activity() {
             IntBalance: returnstringvalue($("#td_intbalance_" + index).text().trim()),
             OpenIntBalance: returnstringvalue($("#td_openbalint_" + index).text().trim()),
             AccrualPenalty: returnstringvalue($("#td_accrualpenalty_" + index).text().trim()),
-            Remarks: $("#td_remark_" + index).text().trim()
+            Remarks: $("#td_remark_" + index).text().trim(),
+
+            BaseEntry: returnstringvalue($("#td_baseEntry_" + index).text().trim()),
+            BaseID: returnstringvalue($("#td_baseID_" + index).text().trim()),
         };
 
         rowsList.push(detail);

@@ -984,6 +984,14 @@ namespace MKL_Web.Models
 			}
 		}
 		
+		public System.Data.Linq.Table<v_OCRD_Penalty_AllCustomer> v_OCRD_Penalty_AllCustomers
+		{
+			get
+			{
+				return this.GetTable<v_OCRD_Penalty_AllCustomer>();
+			}
+		}
+		
 		public System.Data.Linq.Table<ActivityRow> ActivityRows
 		{
 			get
@@ -40016,6 +40024,213 @@ namespace MKL_Web.Models
 		}
 	}
 	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.v_OCRD_Penalty_AllCustomer")]
+	public partial class v_OCRD_Penalty_AllCustomer
+	{
+		
+		private string _CardCode;
+		
+		private string _CardName;
+		
+		private string _CardFName;
+		
+		private string _Phone1;
+		
+		private string _Phone2;
+		
+		private System.Nullable<char> _CardType;
+		
+		private string _U_Gender;
+		
+		private string _AddID;
+		
+		private string _Currency;
+		
+		private System.Nullable<System.DateTime> _U_IssuedDate;
+		
+		private System.Nullable<System.DateTime> _U_BOD;
+		
+		public v_OCRD_Penalty_AllCustomer()
+		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CardCode", DbType="NVarChar(15) NOT NULL", CanBeNull=false)]
+		public string CardCode
+		{
+			get
+			{
+				return this._CardCode;
+			}
+			set
+			{
+				if ((this._CardCode != value))
+				{
+					this._CardCode = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CardName", DbType="NVarChar(100)")]
+		public string CardName
+		{
+			get
+			{
+				return this._CardName;
+			}
+			set
+			{
+				if ((this._CardName != value))
+				{
+					this._CardName = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CardFName", DbType="NVarChar(100)")]
+		public string CardFName
+		{
+			get
+			{
+				return this._CardFName;
+			}
+			set
+			{
+				if ((this._CardFName != value))
+				{
+					this._CardFName = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Phone1", DbType="NVarChar(20)")]
+		public string Phone1
+		{
+			get
+			{
+				return this._Phone1;
+			}
+			set
+			{
+				if ((this._Phone1 != value))
+				{
+					this._Phone1 = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Phone2", DbType="NVarChar(20)")]
+		public string Phone2
+		{
+			get
+			{
+				return this._Phone2;
+			}
+			set
+			{
+				if ((this._Phone2 != value))
+				{
+					this._Phone2 = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CardType", DbType="Char(1)")]
+		public System.Nullable<char> CardType
+		{
+			get
+			{
+				return this._CardType;
+			}
+			set
+			{
+				if ((this._CardType != value))
+				{
+					this._CardType = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_U_Gender", DbType="VarChar(1) NOT NULL", CanBeNull=false)]
+		public string U_Gender
+		{
+			get
+			{
+				return this._U_Gender;
+			}
+			set
+			{
+				if ((this._U_Gender != value))
+				{
+					this._U_Gender = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AddID", DbType="NVarChar(64)")]
+		public string AddID
+		{
+			get
+			{
+				return this._AddID;
+			}
+			set
+			{
+				if ((this._AddID != value))
+				{
+					this._AddID = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Currency", DbType="NVarChar(3)")]
+		public string Currency
+		{
+			get
+			{
+				return this._Currency;
+			}
+			set
+			{
+				if ((this._Currency != value))
+				{
+					this._Currency = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_U_IssuedDate", DbType="DateTime")]
+		public System.Nullable<System.DateTime> U_IssuedDate
+		{
+			get
+			{
+				return this._U_IssuedDate;
+			}
+			set
+			{
+				if ((this._U_IssuedDate != value))
+				{
+					this._U_IssuedDate = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_U_BOD", DbType="DateTime")]
+		public System.Nullable<System.DateTime> U_BOD
+		{
+			get
+			{
+				return this._U_BOD;
+			}
+			set
+			{
+				if ((this._U_BOD != value))
+				{
+					this._U_BOD = value;
+				}
+			}
+		}
+	}
+	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.ActivityRow")]
 	public partial class ActivityRow : INotifyPropertyChanging, INotifyPropertyChanged
 	{
@@ -40073,6 +40288,10 @@ namespace MKL_Web.Models
 		private System.Nullable<decimal> _SumofARBalance;
 		
 		private System.Nullable<int> _OverdueDays;
+		
+		private System.Nullable<int> _BaseEntry;
+		
+		private System.Nullable<int> _BaseID;
 		
 		private EntityRef<ActivityHeader> _ActivityHeader;
 		
@@ -40132,6 +40351,10 @@ namespace MKL_Web.Models
     partial void OnSumofARBalanceChanged();
     partial void OnOverdueDaysChanging(System.Nullable<int> value);
     partial void OnOverdueDaysChanged();
+    partial void OnBaseEntryChanging(System.Nullable<int> value);
+    partial void OnBaseEntryChanged();
+    partial void OnBaseIDChanging(System.Nullable<int> value);
+    partial void OnBaseIDChanged();
     #endregion
 		
 		public ActivityRow()
@@ -40660,6 +40883,46 @@ namespace MKL_Web.Models
 					this._OverdueDays = value;
 					this.SendPropertyChanged("OverdueDays");
 					this.OnOverdueDaysChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_BaseEntry", DbType="Int")]
+		public System.Nullable<int> BaseEntry
+		{
+			get
+			{
+				return this._BaseEntry;
+			}
+			set
+			{
+				if ((this._BaseEntry != value))
+				{
+					this.OnBaseEntryChanging(value);
+					this.SendPropertyChanging();
+					this._BaseEntry = value;
+					this.SendPropertyChanged("BaseEntry");
+					this.OnBaseEntryChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_BaseID", DbType="Int")]
+		public System.Nullable<int> BaseID
+		{
+			get
+			{
+				return this._BaseID;
+			}
+			set
+			{
+				if ((this._BaseID != value))
+				{
+					this.OnBaseIDChanging(value);
+					this.SendPropertyChanging();
+					this._BaseID = value;
+					this.SendPropertyChanged("BaseID");
+					this.OnBaseIDChanged();
 				}
 			}
 		}

@@ -481,7 +481,7 @@ namespace MKL_Web.Controllers
                         Remarks = x["Remarks"].ToString(),
                         Serial = x["Serial"].ToString(),
 
-                        BaseEntry = x["BaseEntry"].ToString() == "" ? (int?)null : Convert.ToInt32(x["BaseEntry"]),
+                        
                         Model = x["Model"].ToString(),
                         SaleEmp1 = x["SaleEmp1"].ToString(),
                         SaleEmp2 = x["SaleEmp2"].ToString(),
@@ -491,7 +491,10 @@ namespace MKL_Web.Controllers
 
                         SumOverDuecheq = x["SumOverDuecheq"].ToString() == "" ? (decimal?)null : Convert.ToDecimal(x["SumOverDuecheq"]),
                         SumOpenAR = x["SumOpenAR"].ToString() == "" ? (decimal?)null : Convert.ToDecimal(x["SumOpenAR"]),
-                        OverDueDay = x["OverDueDay"].ToString() == "" ? (int?)null : Convert.ToInt32(x["OverDueDay"])
+                        OverDueDay = x["OverDueDay"].ToString() == "" ? (int?)null : Convert.ToInt32(x["OverDueDay"]),
+
+                        BaseEntry = x["BaseEntry"].ToString() == "" ? (int?)null : Convert.ToInt32(x["BaseEntry"]),
+                        BaseID = x["BaseID"].ToString() == "" ? (int?)null : Convert.ToInt32(x["BaseID"])
 
                     }).ToList();
 
@@ -525,7 +528,7 @@ namespace MKL_Web.Controllers
 
                 x.Remarks,
                 x.Serial,
-                x.BaseEntry,
+                
                 x.Model,
                 x.SaleEmp1,
                 x.SaleEmp2,
@@ -533,8 +536,9 @@ namespace MKL_Web.Controllers
                 x.OverDuecheqQty,
                 x.SumOverDuecheq,
                 x.SumOpenAR,
-                x.OverDueDay
-
+                x.OverDueDay,
+                x.BaseEntry,
+                x.BaseID
 
             }).ToList();
 
@@ -2983,6 +2987,8 @@ namespace MKL_Web.Controllers
         {
 
             ViewBag.cust = db.v_OCRD_Penalties.ToList();
+
+            ViewBag.custAll = db.v_OCRD_Penalty_AllCustomers.ToList();
             ViewBag.houselist = db.v_Item_Houses.ToList();
 
             // Get last DocEntry from ActivityHeader (or your table)
@@ -3138,6 +3144,7 @@ namespace MKL_Web.Controllers
 
             // Load dropdown data
             ViewBag.cust = db.v_OCRD_Penalties.ToList();
+            ViewBag.custAll = db.v_OCRD_Penalty_AllCustomers.ToList();
             ViewBag.houselist = db.v_Item_Houses.ToList();
 
             // Load rows for this header only (independent of Model)

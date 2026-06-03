@@ -818,9 +818,35 @@ function set_date_of_payment() {
         if (rows.length > 0) {
             const firstIndex = rows.first().attr("id")?.replace("tr_payment_", "");
             const lastIndex = rows.last().attr("id")?.replace("tr_payment_", "");
+
             if (firstIndex && lastIndex) {
-                $("#txt_start_payment").val($(`#tr_payment_detail_paymentdate_line_${firstIndex}`).text().trim());
-                $("#txt_maturity_payment").val($(`#tr_payment_detail_paymentdate_line_${lastIndex}`).text().trim());
+                const firstDateText = $(`#tr_payment_detail_paymentdate_line_${firstIndex}`).text().trim();
+                const lastDateText = $(`#tr_payment_detail_paymentdate_line_${lastIndex}`).text().trim();
+
+                $("#txt_start_payment").val(firstDateText);
+
+
+                console.log("Firt", firstDateText);
+                console.log("Last", firstDateText);
+
+                // This condition add by dina request b chomnan 28-04-2026
+                if (firstIndex === lastIndex) {
+                    // 👉 Only one row → add 1 month
+                    let date = new Date(firstDateText);
+                    date.setMonth(date.getMonth() + 1);
+
+                    // format back to dd-M-yyyy
+                    const formatted = date.toLocaleDateString('en-GB', {
+                        day: '2-digit',
+                        month: 'short',
+                        year: 'numeric'
+                    }).replace(/ /g, '-');
+
+                    $("#txt_maturity_payment").val(formatted);
+                } else {
+                    // 👉 Normal case
+                    $("#txt_maturity_payment").val(lastDateText);
+                }
             }
         }
     };
@@ -828,7 +854,6 @@ function set_date_of_payment() {
     setStartMaturity("#table_payment_schedule");
     setStartMaturity("#table_penalty_list");
 
-    // Reinitialize datepicker
     $('.datetime').datepicker('destroy').datepicker({
         autoclose: true,
         format: 'dd-M-yyyy'
@@ -5107,7 +5132,10 @@ function cmd_save_activity() {
             IntBalance: returnstringvalue($("#td_intbalance_" + index).text().trim()),
             OpenIntBalance: returnstringvalue($("#td_openbalint_" + index).text().trim()),
             AccrualPenalty: returnstringvalue($("#td_accrualpenalty_" + index).text().trim()),
-            Remarks: $("#td_remark_" + index).text().trim()
+            Remarks: $("#td_remark_" + index).text().trim(),
+
+            BaseEntry: returnstringvalue($("#td_baseEntry_" + index).text().trim()),
+            BaseID: returnstringvalue($("#td_baseID_" + index).text().trim()),
         };
 
         rowsList.push(detail);

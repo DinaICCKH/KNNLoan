@@ -5,6 +5,7 @@
     //List<v_CostCenter> project = ViewBag.project;
     //List<v_CostCenter> block = ViewBag.block;
     List<v_OCRD_Penalty> cust = ViewBag.cust;
+    List<v_OCRD_Penalty_AllCustomer> custAll = ViewBag.custAll;
     List<v_OCRD_Penalty> custNew = ViewBag.custNew;
     //List<v_Item> houselist = ViewBag.houselist;
     string docdate = DateTime.Now.ToString("dd-MMM-yyyy"); // Capital 'MMM' for month name
@@ -50,7 +51,7 @@
 </head>
 <div class="modal fade" id="modal-cust_list">
     <input type="hidden" id="txt_module_id" value="ChangeSchedule" />
-    <div class="modal-dialog modal-dialog-popup-filter">
+    <div class="modal-dialog modal-xl modal-dialog-popup-filter">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 id="pop_h5">Customer Filter</h5>
@@ -65,34 +66,67 @@
                                         <label for="inputEmail3" class="form-control controlLabel">Find:</label>
                                     </div>
                                 </td>
-                                <td colspan="2">
+                                <td style="width:50%;">
                                     <div class="form-group">
                                         <input type="text" class="form-control form-control-insde" id="txt_pop_filter_vendor_name" placeholder="Customer Code or Customer Name">
+                                    </div>
+                                </td>
+                                <td colspan="4" style="vertical-align: middle;">
+                                    <div class="form-check" style="margin-bottom: 15px;">
+                                        <label class="form-check-label">
+                                            <input type="checkbox" id="chk_display_all_customers" class="form-check-input" onchange="toggleCustomerListView()"> Display all customers
+                                        </label>
                                     </div>
                                 </td>
                             </tr>
                             <tr>
                                 <th style="width:15%">Customer Code</th>
-                                <th style="width:25%">Customer Name</th>
+                                <th style="width:30%">Customer Name</th>
                                 <th style="width:25%">Customer KH</th>
                                 <th style="width:10%">Gender</th>
                                 <th style="width:15%">Phone</th>
+                                <th style="width:5%"></th>
                             </tr>
                         </thead>
-                        <tbody>
+
+                        <tbody id="tbody_penalty_customers">
                             @{
                                 int rowindex = 1;
-                                foreach (var x in cust)
+                                if (cust != null)
                                 {
-                                    <tr id="tr_pop_customer_@rowindex" onclick="tr_pop_customer_selected(@rowindex)">
-                                        <td id="td_pop_vendor_cust_code_@rowindex">@x.CardCode</td>
-                                        <td id="td_pop_vendor_cust_name_@rowindex">@x.CardName</td>
-                                        <td id="td_pop_vendor_cust_fname_@rowindex">@x.CardFName</td>
-                                        <td id="td_pop_vendor_cust_gender_@rowindex">@x.U_Gender</td>
-                                        <td id="td_pop_vendor_phone_@rowindex">@x.Phone1</td>
-                                        <td></td>
-                                    </tr>
-                                    rowindex++;
+                                    foreach (var x in cust)
+                                    {
+                                        <tr id="tr_pop_customer_@rowindex" onclick="tr_pop_customer_selected(@rowindex)">
+                                            <td id="td_pop_vendor_cust_code_@rowindex">@x.CardCode</td>
+                                            <td id="td_pop_vendor_cust_name_@rowindex">@x.CardName</td>
+                                            <td id="td_pop_vendor_cust_fname_@rowindex">@x.CardFName</td>
+                                            <td id="td_pop_vendor_cust_gender_@rowindex">@x.U_Gender</td>
+                                            <td id="td_pop_vendor_phone_@rowindex">@x.Phone1</td>
+                                            <td></td>
+                                        </tr>
+                                        rowindex++;
+                                    }
+                                }
+                            }
+                        </tbody>
+
+                        <tbody id="tbody_all_customers" style="display: none;">
+                            @{
+                                int allRowIndex = 1;
+                                if (custAll != null)
+                                {
+                                    foreach (var x in custAll)
+                                    {
+                                        <tr id="tr_pop_customer_all_@allRowIndex" onclick="tr_pop_customer_all_selected(@allRowIndex)">
+                                            <td id="td_pop_vendor_cust_code_all_@allRowIndex">@x.CardCode</td>
+                                            <td id="td_pop_vendor_cust_name_all_@allRowIndex">@x.CardName</td>
+                                            <td id="td_pop_vendor_cust_fname_all_@allRowIndex">@x.CardFName</td>
+                                            <td id="td_pop_vendor_cust_gender_all_@allRowIndex">@x.U_Gender</td>
+                                            <td id="td_pop_vendor_phone_all_@allRowIndex">@x.Phone1</td>
+                                            <td></td>
+                                        </tr>
+                                        allRowIndex++;
+                                    }
                                 }
                             }
                         </tbody>
@@ -104,7 +138,6 @@
                 <button type="button" class="btn btn-danger pull-left btn-flat" data-dismiss="modal">Cancel</button>
             </div>
         </div>
-        <!-- /.modal-content -->
     </div>
     <!-- /.modal-dialog -->
 </div>
@@ -557,6 +590,8 @@
                                                         <input type="checkbox" id="check_all_for_activity" onclick="checkAllRows_for_activity(this)">
                                                     </th>
                                                     <th style="width:1%; text-align:center;">#</th>
+                                                    <th style="width:3%; text-align:left;">BaseEntry</th>
+                                                    <th style="width:2%; text-align:left;">BaseID</th>
                                                     <th style="width:4%; text-align:left;">Model</th>
                                                     <th style="width:6%; text-align:left;">ItemName</th>
                                                     <th style="width: 4%; text-align: left;">Serial</th>
@@ -580,7 +615,7 @@
                                                     <th style="width:4%; text-align:right;">Int. Balance</th>
                                                     <th style="width:4%; text-align:right;">Open Bal (Int)</th>
                                                     <th style="width:4%; text-align:right;">Accrual. Penalty</th>
-                                                    <th style="width:19%; text-align:left;">Remark</th>
+                                                    <th style="width:14%; text-align:left;">Remark</th>
 
 
                                                 </tr>
@@ -590,7 +625,7 @@
                                             </tbody>
                                             <tfoot style="background-color:#f0f0f0; font-weight:bold;">
                                                 <tr>
-                                                    <td colspan="13" style="text-align:right;">Total:</td>
+                                                    <td colspan="15" style="text-align:right;">Total:</td>
                                                     <td></td>
                                                     <td></td>
                                                     <td style="text-align:right;"></td>
@@ -683,6 +718,25 @@
 </div>
 
 <script>
+
+    function toggleCustomerListView() {
+        var isChecked = document.getElementById("chk_display_all_customers").checked;
+        var penaltyBody = document.getElementById("tbody_penalty_customers");
+        var allBody = document.getElementById("tbody_all_customers");
+
+        if (isChecked) {
+            penaltyBody.style.display = "none";
+            allBody.style.display = "table-row-group";
+        } else {
+            penaltyBody.style.display = "table-row-group";
+            allBody.style.display = "none";
+        }
+    }
+
+    function tr_pop_customer_all_selected(index) {
+        console.log("All Customer list row selected index: " + index);
+    }
+
     $(document).ready(function () {
         // Initialize datepicker for any date fields dynamically
         $('.datetime').datepicker({
@@ -793,7 +847,8 @@
                     // Row number
                     tr += "<td id='td_rowno_" + index + "' style='text-align:center;'>" + index + "</td>";
 
-
+                    tr += "<td id='td_baseEntry_" + index + "' style='text-align:left;'>" + (x.BaseEntry || "") + "</td>";
+                    tr += "<td id='td_baseID_" + index + "' style='text-align:left;'>" + (x.BaseID || "") + "</td>";
                     tr += "<td id='td_model_" + index + "' style='text-align:left;'>" + (x.Model || "") + "</td>";
                     tr += "<td id='td_itemName_" + index + "' style='text-align:left;'>" + (x.ItemName || "") + "</td>";
                     tr += "<td id='td_serial_" + index + "' style='text-align:left;'>" + (x.Serial || "") + "</td>";
