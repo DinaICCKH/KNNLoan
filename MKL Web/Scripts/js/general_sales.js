@@ -8,6 +8,30 @@ function tr_pop_customer_selected(selectedindex) {
     $("#tr_pop_customer_" + selectedindex).css("background-color", "#e6f0ff");
     $("#txt_bp_selected_row").val(selectedindex);
 }
+
+function tr_pop_customer1_selected(selectedindex) {
+    // Clear ALL rows in the table (both groups), not just the penalty group
+    $("#table_pop_customer_list > tbody > tr").css("background-color", "white");
+
+    // Highlight the clicked row
+    $("#tr_pop_customer_" + selectedindex).css("background-color", "#e6f0ff");
+
+    // Prefix the index so we know which group was selected
+    $("#txt_bp_selected_row").val(selectedindex);
+}
+
+function tr_pop_customerAll_selected(selectedindex) {
+    // Clear ALL rows in the table (both groups), not just the all-customer group
+    $("#table_pop_customer_list > tbody > tr").css("background-color", "white");
+
+    // Highlight the clicked row
+    $("#tr_pop_customer_all_" + selectedindex).css("background-color", "#e6f0ff");
+
+    // Prefix the index so we know which group was selected
+    $("#txt_bp_selected_row").val("all_" + selectedindex);
+}
+
+
 function tr_pop_customer_new_selected(selectedindex) {
     $("#table_pop_customer_new_list > tbody > tr").each(function (index) {
         $("#tr_pop_customer_new_" + (index + 1)).css("background-color", "white");

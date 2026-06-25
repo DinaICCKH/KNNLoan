@@ -301,7 +301,7 @@ function cmd_choose_template() {
     $("#txt_template_name").val($("#td_template_name_" + index).text());
     $("#cbo_doc_id").val($("#td_template_doc_id_" + index).text());
     $("#cbo_boq_type").val($("#td_template_boq_type_" + index).text());
-    $("#cbo_type").val($("#td_template_boq_type_" + index).text());
+    $("#cbo_type").val($("#td_template_type_" + index).text());
     $("#cbo_is_boq").val($("#td_template_is_boq_" + index).text());
     $("#txt_from_amount").val(convert2digit($("#td_template_from_amt_" + index).text()));
     $("#txt_to_amount").val(convert2digit($("#td_template_to_amt_" + index).text()));

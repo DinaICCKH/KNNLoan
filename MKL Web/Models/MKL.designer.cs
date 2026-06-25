@@ -1301,13 +1301,6 @@ namespace MKL_Web.Models
 			return ((ISingleResult<ICC_GET_InterestWizardListResult>)(result.ReturnValue));
 		}
 		
-		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.ICC_Get_List_Approval_interestWizard")]
-		public ISingleResult<ICC_Get_List_Approval_interestWizardResult> ICC_Get_List_Approval_interestWizard([global::System.Data.Linq.Mapping.ParameterAttribute(Name="Status", DbType="NVarChar(50)")] string status, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Date")] System.Nullable<System.DateTime> fdate, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Date")] System.Nullable<System.DateTime> tdate, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="CreateBy", DbType="NVarChar(250)")] string createBy)
-		{
-			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), status, fdate, tdate, createBy);
-			return ((ISingleResult<ICC_Get_List_Approval_interestWizardResult>)(result.ReturnValue));
-		}
-		
 		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.ICC_Get_List_InterestWizard_By_ID")]
 		public ISingleResult<ICC_Get_List_InterestWizard_By_IDResult> ICC_Get_List_InterestWizard_By_ID([global::System.Data.Linq.Mapping.ParameterAttribute(Name="DocEntry", DbType="Int")] System.Nullable<int> docEntry)
 		{
@@ -1369,6 +1362,20 @@ namespace MKL_Web.Models
 		{
 			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())));
 			return ((ISingleResult<ICC_GET_AssignToActivityResult>)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.ICC_Get_List_Approval_interestWizard")]
+		public ISingleResult<ICC_Get_List_Approval_interestWizardResult> ICC_Get_List_Approval_interestWizard([global::System.Data.Linq.Mapping.ParameterAttribute(Name="Status", DbType="NVarChar(50)")] string status, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Date")] System.Nullable<System.DateTime> fdate, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Date")] System.Nullable<System.DateTime> tdate, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="CreateBy", DbType="NVarChar(250)")] string createBy)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), status, fdate, tdate, createBy);
+			return ((ISingleResult<ICC_Get_List_Approval_interestWizardResult>)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.ICC_Approval_CheckRequester")]
+		public ISingleResult<ICC_Approval_CheckRequesterResult> ICC_Approval_CheckRequester([global::System.Data.Linq.Mapping.ParameterAttribute(Name="TemplateID", DbType="Int")] System.Nullable<int> templateID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="User", DbType="NVarChar(100)")] string user)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), templateID, user);
+			return ((ISingleResult<ICC_Approval_CheckRequesterResult>)(result.ReturnValue));
 		}
 	}
 	
@@ -51490,194 +51497,6 @@ namespace MKL_Web.Models
 		}
 	}
 	
-	public partial class ICC_Get_List_Approval_interestWizardResult
-	{
-		
-		private int _DocEntry;
-		
-		private System.DateTime _PostingDate;
-		
-		private string _DocNumRef;
-		
-		private string _ApprovalStage;
-		
-		private string _TemplateDesc;
-		
-		private string _NextApprover;
-		
-		private System.Nullable<System.DateTime> _CreateDate;
-		
-		private string _CreateBy;
-		
-		private string _Status;
-		
-		private string _Remark;
-		
-		public ICC_Get_List_Approval_interestWizardResult()
-		{
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DocEntry", DbType="Int NOT NULL")]
-		public int DocEntry
-		{
-			get
-			{
-				return this._DocEntry;
-			}
-			set
-			{
-				if ((this._DocEntry != value))
-				{
-					this._DocEntry = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PostingDate", DbType="Date NOT NULL")]
-		public System.DateTime PostingDate
-		{
-			get
-			{
-				return this._PostingDate;
-			}
-			set
-			{
-				if ((this._PostingDate != value))
-				{
-					this._PostingDate = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DocNumRef", DbType="NVarChar(250)")]
-		public string DocNumRef
-		{
-			get
-			{
-				return this._DocNumRef;
-			}
-			set
-			{
-				if ((this._DocNumRef != value))
-				{
-					this._DocNumRef = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ApprovalStage", DbType="NVarChar(50)")]
-		public string ApprovalStage
-		{
-			get
-			{
-				return this._ApprovalStage;
-			}
-			set
-			{
-				if ((this._ApprovalStage != value))
-				{
-					this._ApprovalStage = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TemplateDesc", DbType="NVarChar(200)")]
-		public string TemplateDesc
-		{
-			get
-			{
-				return this._TemplateDesc;
-			}
-			set
-			{
-				if ((this._TemplateDesc != value))
-				{
-					this._TemplateDesc = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_NextApprover", DbType="NVarChar(250)")]
-		public string NextApprover
-		{
-			get
-			{
-				return this._NextApprover;
-			}
-			set
-			{
-				if ((this._NextApprover != value))
-				{
-					this._NextApprover = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CreateDate", DbType="Date")]
-		public System.Nullable<System.DateTime> CreateDate
-		{
-			get
-			{
-				return this._CreateDate;
-			}
-			set
-			{
-				if ((this._CreateDate != value))
-				{
-					this._CreateDate = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CreateBy", DbType="NVarChar(50)")]
-		public string CreateBy
-		{
-			get
-			{
-				return this._CreateBy;
-			}
-			set
-			{
-				if ((this._CreateBy != value))
-				{
-					this._CreateBy = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Status", DbType="NVarChar(50)")]
-		public string Status
-		{
-			get
-			{
-				return this._Status;
-			}
-			set
-			{
-				if ((this._Status != value))
-				{
-					this._Status = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Remark", DbType="NVarChar(500)")]
-		public string Remark
-		{
-			get
-			{
-				return this._Remark;
-			}
-			set
-			{
-				if ((this._Remark != value))
-				{
-					this._Remark = value;
-				}
-			}
-		}
-	}
-	
 	public partial class ICC_Get_List_InterestWizard_By_IDResult
 	{
 		
@@ -55057,6 +54876,256 @@ namespace MKL_Web.Models
 				if ((this._UserName != value))
 				{
 					this._UserName = value;
+				}
+			}
+		}
+	}
+	
+	public partial class ICC_Get_List_Approval_interestWizardResult
+	{
+		
+		private int _DocEntry;
+		
+		private System.DateTime _PostingDate;
+		
+		private string _DocNumRef;
+		
+		private string _ApprovalStage;
+		
+		private string _TemplateDesc;
+		
+		private string _NextApprover;
+		
+		private System.Nullable<System.DateTime> _CreateDate;
+		
+		private string _CreateBy;
+		
+		private string _Status;
+		
+		private string _Remark;
+		
+		private string _SapDocNum;
+		
+		private string _LastError;
+		
+		public ICC_Get_List_Approval_interestWizardResult()
+		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DocEntry", DbType="Int NOT NULL")]
+		public int DocEntry
+		{
+			get
+			{
+				return this._DocEntry;
+			}
+			set
+			{
+				if ((this._DocEntry != value))
+				{
+					this._DocEntry = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PostingDate", DbType="Date NOT NULL")]
+		public System.DateTime PostingDate
+		{
+			get
+			{
+				return this._PostingDate;
+			}
+			set
+			{
+				if ((this._PostingDate != value))
+				{
+					this._PostingDate = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DocNumRef", DbType="NVarChar(250)")]
+		public string DocNumRef
+		{
+			get
+			{
+				return this._DocNumRef;
+			}
+			set
+			{
+				if ((this._DocNumRef != value))
+				{
+					this._DocNumRef = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ApprovalStage", DbType="NVarChar(50)")]
+		public string ApprovalStage
+		{
+			get
+			{
+				return this._ApprovalStage;
+			}
+			set
+			{
+				if ((this._ApprovalStage != value))
+				{
+					this._ApprovalStage = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TemplateDesc", DbType="NVarChar(200)")]
+		public string TemplateDesc
+		{
+			get
+			{
+				return this._TemplateDesc;
+			}
+			set
+			{
+				if ((this._TemplateDesc != value))
+				{
+					this._TemplateDesc = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_NextApprover", DbType="NVarChar(250)")]
+		public string NextApprover
+		{
+			get
+			{
+				return this._NextApprover;
+			}
+			set
+			{
+				if ((this._NextApprover != value))
+				{
+					this._NextApprover = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CreateDate", DbType="Date")]
+		public System.Nullable<System.DateTime> CreateDate
+		{
+			get
+			{
+				return this._CreateDate;
+			}
+			set
+			{
+				if ((this._CreateDate != value))
+				{
+					this._CreateDate = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CreateBy", DbType="NVarChar(50)")]
+		public string CreateBy
+		{
+			get
+			{
+				return this._CreateBy;
+			}
+			set
+			{
+				if ((this._CreateBy != value))
+				{
+					this._CreateBy = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Status", DbType="NVarChar(50)")]
+		public string Status
+		{
+			get
+			{
+				return this._Status;
+			}
+			set
+			{
+				if ((this._Status != value))
+				{
+					this._Status = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Remark", DbType="NVarChar(500)")]
+		public string Remark
+		{
+			get
+			{
+				return this._Remark;
+			}
+			set
+			{
+				if ((this._Remark != value))
+				{
+					this._Remark = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SapDocNum", DbType="NVarChar(50)")]
+		public string SapDocNum
+		{
+			get
+			{
+				return this._SapDocNum;
+			}
+			set
+			{
+				if ((this._SapDocNum != value))
+				{
+					this._SapDocNum = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_LastError", DbType="NVarChar(250)")]
+		public string LastError
+		{
+			get
+			{
+				return this._LastError;
+			}
+			set
+			{
+				if ((this._LastError != value))
+				{
+					this._LastError = value;
+				}
+			}
+		}
+	}
+	
+	public partial class ICC_Approval_CheckRequesterResult
+	{
+		
+		private int _IsApproved;
+		
+		public ICC_Approval_CheckRequesterResult()
+		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IsApproved", DbType="Int NOT NULL")]
+		public int IsApproved
+		{
+			get
+			{
+				return this._IsApproved;
+			}
+			set
+			{
+				if ((this._IsApproved != value))
+				{
+					this._IsApproved = value;
 				}
 			}
 		}

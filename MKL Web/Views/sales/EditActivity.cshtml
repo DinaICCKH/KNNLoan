@@ -89,14 +89,19 @@
                             </tr>
                         </thead>
 
-                        <tbody id="tbody_penalty_customers">
+                        <tbody id="tbody_customer">
+
                             @{
                                 int rowindex = 1;
+
                                 if (cust != null)
                                 {
                                     foreach (var x in cust)
                                     {
-                                        <tr id="tr_pop_customer_@rowindex" onclick="tr_pop_customer_selected(@rowindex)">
+                                        <tr class="penalty-customer"
+                                            id="tr_pop_customer_@rowindex"
+                                            onclick="tr_pop_customer1_selected(@rowindex)">
+
                                             <td id="td_pop_vendor_cust_code_@rowindex">@x.CardCode</td>
                                             <td id="td_pop_vendor_cust_name_@rowindex">@x.CardName</td>
                                             <td id="td_pop_vendor_cust_fname_@rowindex">@x.CardFName</td>
@@ -104,20 +109,24 @@
                                             <td id="td_pop_vendor_phone_@rowindex">@x.Phone1</td>
                                             <td></td>
                                         </tr>
+
                                         rowindex++;
                                     }
                                 }
                             }
-                        </tbody>
 
-                        <tbody id="tbody_all_customers" style="display: none;">
                             @{
                                 int allRowIndex = 1;
+
                                 if (custAll != null)
                                 {
                                     foreach (var x in custAll)
                                     {
-                                        <tr id="tr_pop_customer_all_@allRowIndex" onclick="tr_pop_customer_all_selected(@allRowIndex)">
+                                        <tr class="all-customer"
+                                            style="display:none"
+                                            id="tr_pop_customer_all_@allRowIndex"
+                                            onclick="tr_pop_customerAll_selected(@allRowIndex)">
+
                                             <td id="td_pop_vendor_cust_code_all_@allRowIndex">@x.CardCode</td>
                                             <td id="td_pop_vendor_cust_name_all_@allRowIndex">@x.CardName</td>
                                             <td id="td_pop_vendor_cust_fname_all_@allRowIndex">@x.CardFName</td>
@@ -125,10 +134,12 @@
                                             <td id="td_pop_vendor_phone_all_@allRowIndex">@x.Phone1</td>
                                             <td></td>
                                         </tr>
+
                                         allRowIndex++;
                                     }
                                 }
                             }
+
                         </tbody>
                     </table>
                 </div>
@@ -147,18 +158,24 @@
 
 <script>
     function toggleCustomerListView() {
-        var isChecked = document.getElementById("chk_display_all_customers").checked;
-        var penaltyBody = document.getElementById("tbody_penalty_customers");
-        var allBody = document.getElementById("tbody_all_customers");
+        var isChecked = $("#chk_display_all_customers").prop("checked");
+
+        $("#txt_pop_filter_vendor_name").val("").trigger("keyup");
+
+        // Clear highlight on BOTH groups
+        $("#table_pop_customer_list > tbody > tr").css("background-color", "white");
+
+        $("#txt_bp_selected_row").val("");
 
         if (isChecked) {
-            penaltyBody.style.display = "none";
-            allBody.style.display = "table-row-group";
+            $(".penalty-customer").hide();
+            $(".all-customer").show();
         } else {
-            penaltyBody.style.display = "table-row-group";
-            allBody.style.display = "none";
+            $(".all-customer").hide();
+            $(".penalty-customer").show();
         }
     }
+
 
     function tr_pop_customer_all_selected(index) {
         console.log("All Customer list row selected index: " + index);
@@ -551,7 +568,9 @@
                                                                                                     <td id="td_checkbox_@rowNumber" style="text-align:center;">
                                                                                                         <input type="checkbox" class="row_checkbox_for_activity">
                                                                                                     </td>
-                                                                                                    <td id="td_rowno_@rowNumber" style="text-align:center;">@rowNumber</td>
+                                                                                                    <td id="td_rowno_@rowNumber" style="text-align:center;" class='td-rowno'>@rowNumber</td>
+
+                                                                                               
                                                                                                     <td id="td_baseEntry_@rowNumber">@row.BaseEntry</td>
                                                                                                     <td id="td_baseID_@rowNumber">@row.BaseID</td>
                                                                                                     <td id="td_model_@rowNumber">@row.Model</td>
@@ -575,12 +594,13 @@
                                                                                                     <td id="td_monthly_@rowNumber" style="text-align:right;">@string.Format("{0:N2}", row.Monthly)</td>
                                                                                                     <td id="td_method_@rowNumber">@row.PaymentType</td>
                                                                                                     <td id="td_arno_@rowNumber">@row.ARNo</td>
-                                                                                                    <td id="td_arbalance_@rowNumber" style="text-align:right;">@string.Format("{0:N2}", row.ARBalance)</td>
-                                                                                                    <td id="td_openbalar_@rowNumber" style="text-align:right;">@string.Format("{0:N2}", row.OpenBalanceAR)</td>
+
+                                                                                                    <td id="td_arbalance_@rowNumber" style="text-align:right;" class="sum-ar-balance">@string.Format("{0:N2}", row.ARBalance)</td>
+                                                                                                    <td id="td_openbalar_@rowNumber" style="text-align:right;" class="sum-open-ar">@string.Format("{0:N2}", row.OpenBalanceAR)</td>
                                                                                                     <td id="td_intno_@rowNumber" style="text-align:right;">@row.IntNo</td>
-                                                                                                    <td id="td_intbalance_@rowNumber" style="text-align:right;">@string.Format("{0:N2}", row.IntBalance)</td>
-                                                                                                    <td id="td_openbalint_@rowNumber" style="text-align:right;">@string.Format("{0:N2}", row.OpenIntBalance)</td>
-                                                                                                    <td id="td_accrualpenalty_@rowNumber" style="text-align:right;">@string.Format("{0:N2}", row.AccrualPenalty)</td>
+                                                                                                    <td id="td_intbalance_@rowNumber" style="text-align:right;" class="sum-int-balance">@string.Format("{0:N2}", row.IntBalance)</td>
+                                                                                                    <td id="td_openbalint_@rowNumber" style="text-align:right;" class="sum-open-int">@string.Format("{0:N2}", row.OpenIntBalance)</td>
+                                                                                                    <td id="td_accrualpenalty_@rowNumber" style="text-align:right;" class="sum-accrual-penalty">@string.Format("{0:N2}", row.AccrualPenalty)</td>
                                                                                                     <td id="td_remark_@rowNumber" contenteditable="true" style="text-align:left; color:blue;">@row.Remarks</td>
                                                                                                 </tr>
                                                             rowNumber++;
@@ -608,6 +628,7 @@
                                                     <td></td>
                                                 </tr>
                                             </tfoot>
+
                                         </table>
                                     </div>
                                 </fieldset>
@@ -684,6 +705,8 @@
 
 <script>
     $(document).ready(function () {
+
+        calculateTotals_for_activity();
         // Initialize datepicker for any date fields dynamically
         $('.datetime').datepicker({
             autoclose: true,
@@ -691,11 +714,35 @@
             todayHighlight: true
         });
 
+
         // Remove single row by clicking the "X"
-        $("#loan_list_body").on("click", ".remove-single-row", function () {
+        $("#loan_list_body").on("click", ".fa-remove-row, .remove-single-row", function () {
             $(this).closest("tr").remove();
+
+            // --- RENUMBERING LOGIC: Keeps your Save Script working ---
+            $("#loan_list_body tr").each(function (index) {
+                var newIndex = index + 1;
+
+                // 1. Update Row ID
+                $(this).attr("id", "tr_payment_detail_for_activity_" + newIndex);
+
+                // 2. Update all cell IDs to match the new index
+                $(this).find("td").each(function () {
+                    var id = $(this).attr("id");
+                    if (id) {
+                        // Splits the ID (e.g., "td_model_5") and replaces the number
+                        var prefix = id.substring(0, id.lastIndexOf('_') + 1);
+                        $(this).attr("id", prefix + newIndex);
+                    }
+                });
+
+                // 3. Update the displayed row number
+                $(this).find(".td-rowno").text(newIndex);
+            });
+
             calculateTotals_for_activity();
         });
+
 
         // Check/Uncheck all rows
         window.checkAllRows_for_activity = function (checkbox) {
@@ -707,6 +754,21 @@
             $("#loan_list_body input.row_checkbox_for_activity:checked").each(function () {
                 $(this).closest("tr").remove();
             });
+
+            // Run the same re-indexing logic as above
+            $("#loan_list_body tr").each(function (index) {
+                var newIndex = index + 1;
+                $(this).attr("id", "tr_payment_detail_for_activity_" + newIndex);
+                $(this).find("td").each(function () {
+                    var id = $(this).attr("id");
+                    if (id) {
+                        var prefix = id.substring(0, id.lastIndexOf('_') + 1);
+                        $(this).attr("id", prefix + newIndex);
+                    }
+                });
+                $(this).find(".td-rowno").text(newIndex);
+            });
+
             $("#check_all_for_activity").prop('checked', false);
             calculateTotals_for_activity();
         };
@@ -790,7 +852,7 @@
                     tr += "<td id='td_checkbox_" + index + "' style='text-align:center;'><input type='checkbox' class='row_checkbox_for_activity'></td>";
 
                     // Row number
-                    tr += "<td id='td_rowno_" + index + "' style='text-align:center;'>" + index + "</td>";
+                    tr += "<td id='td_rowno_" + index + "' class='td-rowno' style='text-align:center;'>" + index + "</td>";
 
 
                     tr += "<td id='td_model_" + index + "' style='text-align:left;'>" + (x.Model || "") + "</td>";
@@ -813,12 +875,17 @@
                     tr += "<td id='td_monthly_" + index + "' style='text-align:right;'>" + convert2digit(x.Monthly) + "</td>";
                     tr += "<td id='td_method_" + index + "' style='text-align:left;'>" + (x.Method || "") + "</td>";
                     tr += "<td id='td_arno_" + index + "' style='text-align:left;'>" + (x.ARNo || "") + "</td>";
-                    tr += "<td id='td_arbalance_" + index + "' style='text-align:right;'>" + convert2digit(x.ARBalance) + "</td>";
-                    tr += "<td id='td_openbalar_" + index + "' style='text-align:right;'>" + convert2digit(x.OpenBalanceAR) + "</td>";
+
+
+
+                    // ⭐ Cells used by totals — classes are required
+                    tr += "<td id='td_arbalance_" + index + "' class='sum-ar-balance' style='text-align:right;'>" + convert2digit(x.ARBalance) + "</td>";
+                    tr += "<td id='td_openbalar_" + index + "' class='sum-open-ar' style='text-align:right;'>" + convert2digit(x.OpenBalanceAR) + "</td>";
                     tr += "<td id='td_intno_" + index + "' style='text-align:right;'>" + (x.ARNoInterest || "") + "</td>";
-                    tr += "<td id='td_intbalance_" + index + "' style='text-align:right;'>" + convert2digit(x.IntBalance) + "</td>";
-                    tr += "<td id='td_openbalint_" + index + "' style='text-align:right;'>" + convert2digit(x.OpenIntBalance) + "</td>";
-                    tr += "<td id='td_accrualpenalty_" + index + "' style='text-align:right;'>" + convert2digit(x.AccrualPenalty) + "</td>";
+                    tr += "<td id='td_intbalance_" + index + "' class='sum-int-balance' style='text-align:right;'>" + convert2digit(x.IntBalance) + "</td>";
+                    tr += "<td id='td_openbalint_" + index + "' class='sum-open-int' style='text-align:right;'>" + convert2digit(x.OpenIntBalance) + "</td>";
+                    tr += "<td id='td_accrualpenalty_" + index + "' class='sum-accrual-penalty' style='text-align:right;'>" + convert2digit(x.AccrualPenalty) + "</td>";
+
 
                     // Editable remark
                     tr += "<td id='td_remark_" + index + "' contenteditable='true' style='text-align:left; color:blue;'>" + (x.Remarks || "") + "</td>";
@@ -845,17 +912,16 @@
         calculateTotals_for_activity();
     }
 
-    // Recalculate totals
     function calculateTotals_for_activity() {
         var totalAR = 0, totalOpenAR = 0, totalInt = 0, totalOpenInt = 0, totalPenalty = 0;
 
         $("#loan_list_body tr").each(function () {
-            var cells = $(this).find("td");
-            totalAR += parseFloat(cells.eq(20).text()) || 0;
-            totalOpenAR += parseFloat(cells.eq(21).text()) || 0;
-            totalInt += parseFloat(cells.eq(23).text()) || 0;
-            totalOpenInt += parseFloat(cells.eq(24).text()) || 0;
-            totalPenalty += parseFloat(cells.eq(25).text()) || 0;
+            // Strip commas (in case values were formatted with thousands separators)
+            totalAR += parseFloat($(this).find(".sum-ar-balance").text().replace(/,/g, '')) || 0;
+            totalOpenAR += parseFloat($(this).find(".sum-open-ar").text().replace(/,/g, '')) || 0;
+            totalInt += parseFloat($(this).find(".sum-int-balance").text().replace(/,/g, '')) || 0;
+            totalOpenInt += parseFloat($(this).find(".sum-open-int").text().replace(/,/g, '')) || 0;
+            totalPenalty += parseFloat($(this).find(".sum-accrual-penalty").text().replace(/,/g, '')) || 0;
         });
 
         $("#total_ar_balance").text(totalAR.toFixed(2));
@@ -864,7 +930,7 @@
         $("#total_openint_balance").text(totalOpenInt.toFixed(2));
         $("#total_accrual_penalty").text(totalPenalty.toFixed(2));
 
-        // NEW: Sum Open AR + Open Interest and set to txt_ar_balance
+        // Combined: Open Balance (A/R) + Open Balance (Int)
         const totalARCombined = totalOpenAR + totalOpenInt;
         $("#txt_ar_balance").val(totalARCombined.toFixed(2));
     }
