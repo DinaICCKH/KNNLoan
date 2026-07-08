@@ -1942,12 +1942,46 @@ namespace MKL_Web.Controllers
                                         {
                                             status = "blank";
                                             Message = "Row Blank";
+                                            return Json(new { status, LastEntry, Message }, JsonRequestBehavior.AllowGet);
                                         }
                                         else
                                         {
                                             InterestWizard H = new InterestWizard();
+                                            var checkamount = 0;
                                             H = db.InterestWizards.Where(a => a.ID == header.ID).FirstOrDefault();
-                                            if (H == null)
+
+
+                                            var incomingLoanIDs = rows.Select(r => r.LoanID).Distinct().ToList();
+
+                                            // Sum historical applied amounts (ignoring 'Reject' statuses)
+                                            var existingApplied = db.InterestWizard1s
+                                                .Where(x => incomingLoanIDs.Contains(x.LoanID) && x.InterestWizard.DocStatus != "Reject")
+                                                .GroupBy(x => x.LoanID)
+                                                .Select(g => new { LoanID = g.Key, TotalApplied = g.Sum(x => x.ApplyAmt) })
+                                                .ToList();
+
+                                            // Group current batch for validation
+                                            var currentBatchTotals = rows
+                                                .GroupBy(r => r.LoanID)
+                                                .Select(g => new { LoanID = g.Key, NewTotal = g.Sum(r => r.ApplyAmt) })
+                                                .ToList();
+
+                                            foreach (var item in currentBatchTotals)
+                                            {
+                                                var dbTotal = existingApplied.FirstOrDefault(x => x.LoanID == item.LoanID)?.TotalApplied ?? 0;
+                                                var interestAmt = rows.FirstOrDefault(r => r.LoanID == item.LoanID)?.InterestAmt ?? 0;
+
+                                                if ((dbTotal + item.NewTotal) > interestAmt)
+                                                {
+                                                    checkamount = 1;
+                                                    status = "Error";
+                                                    Message = "Validation Error: The cumulative Apply Amount for Loan ID " + item.LoanID + " exceeds the allowed Interest Amount. please reload data again or check your draft document";
+                                                    return Json(new { status, LastEntry, Message }, JsonRequestBehavior.AllowGet);
+                                                }
+                                            }
+
+
+                                            if (checkamount == 0)
                                             {
                                                 H = header;
 
@@ -2004,6 +2038,7 @@ namespace MKL_Web.Controllers
                                                 {
                                                     status = "Error";
                                                     Message = "Fail to Save";
+                                                    return Json(new { status, LastEntry, Message }, JsonRequestBehavior.AllowGet);
                                                 }
 
                                                 /// Freez each row 
@@ -2025,42 +2060,46 @@ namespace MKL_Web.Controllers
                                                 {
                                                     status = "Error";
                                                     Message = "Fail to Save";
+                                                    return Json(new { status, LastEntry, Message }, JsonRequestBehavior.AllowGet);
+
                                                 }
 
+                                                // For Update Generate approval Document Generate
+                                                var resut = db.ICC_ApprovalDocument_Generate(AppStageCode, LastEntry, "InterestWizard");
 
+                                                var list2 = resut.Select(x => new ExcecResult
+                                                {
+                                                    Result = x.Result
+
+                                                }).ToList();
+                                                var resultvalue = list2.FirstOrDefault();
+                                                if (resultvalue.Result != "Success")
+                                                {
+                                                    status = "Fail";
+                                                    Message = "Fail to Save";
+                                                    return Json(new { status, LastEntry, Message }, JsonRequestBehavior.AllowGet);
+                                                }
+
+                                                var link = "/sales/PreviewInterestwizard?DocEntry=" + LastEntry;
+
+                                                // For Update Generate approval ALERT Document Generate
+                                                var resut3 = db.ICC_ApprovalDocumentAlert_Generate(AppStageCode, LastEntry, "InterestWizard", AppTemplateID.ToString(), Session["UCode"].ToString(), link, NextApprover);
+
+                                                var list3 = resut3.Select(x => new ExcecResult
+                                                {
+                                                    Result = x.Result
+
+                                                }).ToList();
+                                                var resultvalue3 = list3.FirstOrDefault();
+                                                if (resultvalue3.Result != "Success")
+                                                {
+                                                    status = "Fail";
+                                                    Message = "Fail to Save";
+                                                    return Json(new { status, LastEntry, Message }, JsonRequestBehavior.AllowGet);
+                                                }
                                             }
 
-                                            // For Update Generate approval Document Generate
-                                            var resut = db.ICC_ApprovalDocument_Generate(AppStageCode, LastEntry, "InterestWizard");
-
-                                            var list2 = resut.Select(x => new ExcecResult
-                                            {
-                                                Result = x.Result
-
-                                            }).ToList();
-                                            var resultvalue = list2.FirstOrDefault();
-                                            if (resultvalue.Result != "Success")
-                                            {
-                                                status = "Fail";
-                                                Message = "Fail to Save";
-                                            }
-
-                                            var link = "/sales/PreviewInterestwizard?DocEntry=" + LastEntry;
-
-                                            // For Update Generate approval ALERT Document Generate
-                                            var resut3 = db.ICC_ApprovalDocumentAlert_Generate(AppStageCode, LastEntry, "InterestWizard", AppTemplateID.ToString(), Session["UCode"].ToString(), link, NextApprover);
-
-                                            var list3 = resut3.Select(x => new ExcecResult
-                                            {
-                                                Result = x.Result
-
-                                            }).ToList();
-                                            var resultvalue3 = list3.FirstOrDefault();
-                                            if (resultvalue3.Result != "Success")
-                                            {
-                                                status = "Fail";
-                                                Message = "Fail to Save";
-                                            }
+                                           
                                         }
 
 
@@ -2073,6 +2112,7 @@ namespace MKL_Web.Controllers
                                         {
                                             status = "Error";
                                             Message = "Fail to Save";
+                                            return Json(new { status, LastEntry, Message }, JsonRequestBehavior.AllowGet);
                                         }
 
                                     }
@@ -2084,6 +2124,7 @@ namespace MKL_Web.Controllers
                     {
                         status = "Error";
                         Message = "Fail to Save";
+                        return Json(new { status, LastEntry, Message }, JsonRequestBehavior.AllowGet);
                     }
                 }
                 catch (Exception ex)

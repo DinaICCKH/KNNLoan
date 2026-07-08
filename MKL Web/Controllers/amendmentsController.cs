@@ -1196,6 +1196,7 @@ namespace MKL_Web.Controllers
         {
             status = "OK";
             int LastEntry = 0;
+            string Message = "Success";
             if (status == "OK")
             {
                 var trans = TransWithCommitted();
@@ -1226,8 +1227,9 @@ namespace MKL_Web.Controllers
 
                             if (!list.Any())
                             {
-                                status = "Error: No approval template found.";
-                                return Json(new { status, LastEntry }, JsonRequestBehavior.AllowGet);
+                                status = "Error";
+                                Message = "Error: No approval template found.";
+                                return Json(new { status, LastEntry, Message }, JsonRequestBehavior.AllowGet);
                             }
                             else
                             {
@@ -1246,7 +1248,9 @@ namespace MKL_Web.Controllers
 
                                     if (header == null || installment_row == null)
                                     {
-                                        status = "blank";
+                                        status = "Error";
+                                        Message = "blank";
+                                        return Json(new { status, LastEntry, Message }, JsonRequestBehavior.AllowGet);
                                     }
                                     else
                                     {
@@ -1294,6 +1298,8 @@ namespace MKL_Web.Controllers
                                             else
                                             {
                                                 status = "Error";
+                                                Message = "Can not save data.";
+                                                return Json(new { status, LastEntry, Message }, JsonRequestBehavior.AllowGet);
                                             }
                                         }
 
@@ -1308,7 +1314,9 @@ namespace MKL_Web.Controllers
                                         var resultvalue = list2.FirstOrDefault();
                                         if (resultvalue.Result != "Success")
                                         {
-                                            status = "Fail";
+                                            status = "Error";
+                                            Message = "Update generate approval not work.";
+                                            return Json(new { status, LastEntry, Message }, JsonRequestBehavior.AllowGet);
                                         }
 
                                         var link = "/amendments/PreviewReschedule?DocEntry="+LastEntry;
@@ -1324,7 +1332,9 @@ namespace MKL_Web.Controllers
                                         var resultvalue3 = list3.FirstOrDefault();
                                         if (resultvalue3.Result != "Success")
                                         {
-                                            status = "Fail";
+                                            status = "Error";
+                                            Message = "Gemerate alert document fail";
+                                            return Json(new { status, LastEntry, Message }, JsonRequestBehavior.AllowGet);
                                         }
                                     }
 
@@ -1337,6 +1347,8 @@ namespace MKL_Web.Controllers
                                     else
                                     {
                                         status = "Error";
+                                        Message = "Fail to save Data";
+                                        return Json(new { status, LastEntry, Message }, JsonRequestBehavior.AllowGet);
                                     }
                                 }
                             }
@@ -1345,15 +1357,19 @@ namespace MKL_Web.Controllers
                     else
                     {
                         status = "Error";
+                        Message = "Fail to save data";
+                        return Json(new { status, LastEntry, Message }, JsonRequestBehavior.AllowGet);
                     }
                 }
                 catch (Exception ex)
                 {
-                    status = "Failed";
+                    status = "Error";
                     //ErrorDes = ex.Message;
+                    Message = ex.Message.ToString();
+                    return Json(new { status, LastEntry, Message }, JsonRequestBehavior.AllowGet);
                 }
             }
-            return Json(new { status = status, LastEntry = LastEntry }, JsonRequestBehavior.AllowGet);
+            return Json(new { status = status, LastEntry = LastEntry , message = Message.ToString() }, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult RescheduleApporovalListing(string Status = "Draf", DateTime? fdate = null, DateTime? tdate = null, string CreateBy = "")

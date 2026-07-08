@@ -5052,12 +5052,11 @@ function cmd_save_interestwizard() {
             $("#loading").hide();
         },
         success: function (data) {
-
             if (data.status === "OK") {
                 ShowAlertCus("Interest wizard was saved", "success");
                 location.reload();
             } else {
-                ShowAlertCus("Error while saving Interest Wizard!", "warning");
+                ShowAlertCus(data.Message, "warning");
             }
         },
         error: function (error) {
@@ -5069,7 +5068,11 @@ function cmd_save_interestwizard() {
 
 
 function cmd_save_activity() {
+
+
     var tbody = $("#loan_list_body > tr");
+
+    console.log(tbody);
 
     if (tbody.length <= 0) {
         ShowAlertCus("No data to save!", "warning");

@@ -2931,24 +2931,6 @@
       <Column Name="CardName" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
     </ElementType>
   </Function>
-  <Function Name="dbo.ICC_Get_List_Approval_interestWizard" Method="ICC_Get_List_Approval_interestWizard">
-    <Parameter Name="Status" Parameter="status" Type="System.String" DbType="NVarChar(50)" />
-    <Parameter Name="fdate" Type="System.DateTime" DbType="Date" />
-    <Parameter Name="tdate" Type="System.DateTime" DbType="Date" />
-    <Parameter Name="CreateBy" Parameter="createBy" Type="System.String" DbType="NVarChar(250)" />
-    <ElementType Name="ICC_Get_List_Approval_interestWizardResult">
-      <Column Name="DocEntry" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="PostingDate" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
-      <Column Name="DocNumRef" Type="System.String" DbType="NVarChar(250)" CanBeNull="true" />
-      <Column Name="ApprovalStage" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="TemplateDesc" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
-      <Column Name="NextApprover" Type="System.String" DbType="NVarChar(250)" CanBeNull="true" />
-      <Column Name="CreateDate" Type="System.DateTime" DbType="Date" CanBeNull="true" />
-      <Column Name="CreateBy" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="Status" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="Remark" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
-    </ElementType>
-  </Function>
   <Function Name="dbo.ICC_Get_List_InterestWizard_By_ID" Method="ICC_Get_List_InterestWizard_By_ID">
     <Parameter Name="DocEntry" Parameter="docEntry" Type="System.Int32" DbType="Int" />
     <ElementType Name="ICC_Get_List_InterestWizard_By_IDResult">
@@ -3191,6 +3173,33 @@
     <ElementType Name="ICC_GET_AssignToActivityResult">
       <Column Name="UserCode" Type="System.String" DbType="NVarChar(20) NOT NULL" CanBeNull="false" />
       <Column Name="UserName" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.ICC_Get_List_Approval_interestWizard" Method="ICC_Get_List_Approval_interestWizard">
+    <Parameter Name="Status" Parameter="status" Type="System.String" DbType="NVarChar(50)" />
+    <Parameter Name="fdate" Type="System.DateTime" DbType="Date" />
+    <Parameter Name="tdate" Type="System.DateTime" DbType="Date" />
+    <Parameter Name="CreateBy" Parameter="createBy" Type="System.String" DbType="NVarChar(250)" />
+    <ElementType Name="ICC_Get_List_Approval_interestWizardResult">
+      <Column Name="DocEntry" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="PostingDate" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
+      <Column Name="DocNumRef" Type="System.String" DbType="NVarChar(250)" CanBeNull="true" />
+      <Column Name="ApprovalStage" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="TemplateDesc" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
+      <Column Name="NextApprover" Type="System.String" DbType="NVarChar(250)" CanBeNull="true" />
+      <Column Name="CreateDate" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="CreateBy" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Status" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Remark" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
+      <Column Name="SapDocNum" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="LastError" Type="System.String" DbType="NVarChar(250)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.ICC_Approval_CheckRequester" Method="ICC_Approval_CheckRequester">
+    <Parameter Name="TemplateID" Parameter="templateID" Type="System.Int32" DbType="Int" />
+    <Parameter Name="User" Parameter="user" Type="System.String" DbType="NVarChar(100)" />
+    <ElementType Name="ICC_Approval_CheckRequesterResult">
+      <Column Name="IsApproved" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
     </ElementType>
   </Function>
 </Database>

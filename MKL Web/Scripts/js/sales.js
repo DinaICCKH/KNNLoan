@@ -3973,7 +3973,7 @@ function cmd_save_change_schedule() {
                     ShowAlertCus("Payment Shcedule was saved", "success");
                     location.reload();
                 } else {
-                    ShowAlertCus("Error while saving Change Payment Shcedule!","warning");
+                    ShowAlertCus(data.message,"warning");
                 }
             },
             failure: function (response) {

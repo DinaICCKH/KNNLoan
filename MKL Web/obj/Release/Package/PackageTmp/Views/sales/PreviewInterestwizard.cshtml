@@ -425,8 +425,8 @@ function toggle() {
                                                             <td style="text-align:left;" class="loanid-cell" data-loanid="@item.LoanID">
                                                                 @item.LoanID
                                                             </td>
-                                                            <td style="text-align:left;">@Convert.ToDateTime(item.NewPostingDate).ToString("dd-MMM-yyyy")</td>
-                                                            <td style="text-align:left;">@Convert.ToDateTime(item.NewDueDate).ToString("dd-MMM-yyyy")</td>
+                                                            <td style="text-align:left;">@Convert.ToDateTime(item.OldPostingDate).ToString("dd-MMM-yyyy")</td>
+                                                            <td style="text-align:left;">@Convert.ToDateTime(item.OldDueDate).ToString("dd-MMM-yyyy")</td>
                                                             <td style="text-align:left;">@item.ItemCode</td>
                                                             <td style="text-align:left;">@item.ItemName</td>
                                                             <td style="text-align:left;">@item.Serial</td>

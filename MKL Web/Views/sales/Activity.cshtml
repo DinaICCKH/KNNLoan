@@ -16,20 +16,40 @@
 <head>
     <script src="../../Scripts/js/sales.js"></script>
     <script>
+
         $(document).ready(function () {
             $("#txt_pop_filter_vendor_name").keyup(function () {
-                $("#table_pop_customer_list >tbody >tr").each(function () {
-                    var id = $(this).attr('id').replace("tr_pop_customer_", "");
+                var searchTerm = $(this).val().toLowerCase().replace(/\s+/g, '');
 
-                    var text = $("#td_pop_vendor_cust_code_" + id).text().toLowerCase() + $("#td_pop_vendor_cust_name_" + id).text().toLowerCase() + $("#td_pop_vendor_phone_" + id).text().toLowerCase();
-                    if (text.replace(/\s+/g, '').indexOf($("#txt_pop_filter_vendor_name").val().replace(/\s+/g, '').toLowerCase()) == -1)
+                // 1. Identify which group should be visible based on the checkbox
+                var activeClass = $("#chk_display_all_customers").is(":checked") ? ".all-customer" : ".penalty-customer";
+
+                // 2. If the search box is empty, reset everything to the active group and exit
+                if (searchTerm === "") {
+                    // Hide all, then show only the active group
+                    $("#table_pop_customer_list > tbody > tr").hide();
+                    $(activeClass).show();
+                    return;
+                }
+
+                // 3. Otherwise, search only within the currently active group
+                $("#table_pop_customer_list > tbody > tr").each(function () {
+                    // Check if this row belongs to the active group
+                    if ($(this).is(activeClass)) {
+                        var rowText = $(this).text().toLowerCase().replace(/\s+/g, '');
+
+                        if (rowText.indexOf(searchTerm) === -1) {
+                            $(this).hide();
+                        } else {
+                            $(this).show();
+                        }
+                    } else {
+                        // Keep non-active group hidden
                         $(this).hide();
-                    else
-                        $(this).show();
+                    }
                 });
             });
         });
-
 
     </script>
 
