@@ -765,6 +765,7 @@ namespace MKL_Web.Controllers
         public ActionResult Restructure()
         {
             var soList = db.SOs.Where(a => a.DocStatus == "Sold").ToList();
+            ViewBag.BankList = db.ICC_BankLists.ToList();   // change table name if different
             ViewBag.cust = db.v_OCRDs.Where(x => x.cardtype == 'C' && soList.Select(a => a.CardCode).Contains(x.CardCode)).ToList();
             ViewBag.project = db.v_CostCenters.Where(x => x.DimCode == 1).ToList();
             ViewBag.block = db.v_CostCenters.Where(x => x.DimCode == 2).ToList();
@@ -776,10 +777,11 @@ namespace MKL_Web.Controllers
         public JsonResult save_RestructurePeriod(InstallmentRowDrafH header, List<InstallmentRowDraf> installment_row)
         {
             string status = "OK";
+            string message = "OK";
             int LastEntry = 0;
 
             if (header == null)
-                return Json(new { status = "Error: Header is null.", LastEntry }, JsonRequestBehavior.AllowGet);
+                return Json(new { status = "Error: Header is null.", LastEntry ,message="Error"}, JsonRequestBehavior.AllowGet);
 
             var trans = TransWithCommitted();
 
@@ -808,8 +810,9 @@ namespace MKL_Web.Controllers
 
                     if (!list.Any())
                     {
-                        status = "Error: No approval template found.";
-                        return Json(new { status, LastEntry }, JsonRequestBehavior.AllowGet);
+                        status = "Error";
+                        message = "Error: No approval template found.";
+                        return Json(new { status, LastEntry,message }, JsonRequestBehavior.AllowGet);
                     }
                     else
                     {
@@ -875,6 +878,7 @@ namespace MKL_Web.Controllers
                                     else
                                     {
                                         status = "Error";
+                                        message = "Save to Draft Fail.";
                                     }
                                 }
 
@@ -891,6 +895,7 @@ namespace MKL_Web.Controllers
                                 if (resultvalue.Result != "Success")
                                 {
                                     status = "Fail";
+                                    message = "Save to approval step Fail.";
                                 }
 
                                 var link = "/amendments/PreviewRestructure?DocEntry=" + LastEntry;
@@ -907,6 +912,7 @@ namespace MKL_Web.Controllers
                                 if (resultvalue3.Result != "Success")
                                 {
                                     status = "Fail";
+                                    message = "Save to alert Fail.";
                                 }
 
                             }
@@ -920,6 +926,7 @@ namespace MKL_Web.Controllers
                             else
                             {
                                 status = "Error";
+                                message = "Error while saving the record";
                             }
 
                         }
@@ -930,10 +937,11 @@ namespace MKL_Web.Controllers
             catch (Exception ex)
             {
                 status = "Failed";
+                message = ex.Message;
                 // Optionally log ex.Message or ex.ToString() to file or database
             }
 
-            return Json(new { status, LastEntry }, JsonRequestBehavior.AllowGet);
+            return Json(new { status, LastEntry,message }, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult RestructureApporovalListing(string Status = "Draf",DateTime? fdate = null,DateTime? tdate = null,string CreateBy = "")

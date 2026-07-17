@@ -5526,6 +5526,24 @@ function get_selected_payment_schedule_by_so_restructure() {
                         " style='text-align:Left; vertical-align: middle; color:blue' " +
                         "id='tr_payment_detail_remarks_line_" + index + "'>" + x.Remarks + "</td>";
 
+
+                    data = data + "<td contenteditable='true' style='text-align:Left; vertical-align: middle; color:blue' id='tr_chequeno_line_" + rowindex + "'></td>";
+
+                    data = data + "<td contenteditable='true' style='text-align:Left; vertical-align: middle; color:blue' id='tr_nameoncheque_line_" + rowindex + "'></td>";
+
+                    var bankOptions = "<option value=''></option>";
+                    $.each(window.bankList, function (i, bank) {
+                        bankOptions += "<option value='" + bank.Code + "'>" + bank.Name + "</option>";
+                    });
+
+                    data += "<td style='vertical-align: middle;'>" +
+                        "<select class='form-control' id='tr_bank_line_" + rowindex + "'>" +
+                        bankOptions +
+                        "</select>" +
+                        "</td>";
+                    data = data + "<td contenteditable='true' style='text-align:Left; vertical-align: middle; color:blue' id='tr_payee_line_" + rowindex + "'></td>";
+
+
                     data = data + "<td style='display:none;' id='tr_payment_detail_status_line_" + index + "'>" + x.Status.trim() + "</td>";
                     data = data + "<td style='display:none;' id='tr_payment_detail_itemcode_line_" + index + "'>" + x.ItemCode + "</td>";
                     data = data + "<td style='display:none;' id='tr_payment_detail_itemname_line_" + index + "'>" + x.ItemName + "</td>";
@@ -5590,13 +5608,47 @@ function get_selected_payment_schedule_by_so_restructure() {
 
 function cmd_save_RestructurePeriod() {
 
+    
+
     var remainingAmt = returnstringvalue($("#txt_remaining_amount").val());
+
+
+
 
     if ($("#table_payment_schedule >tbody >tr").length <= 0) {
         ShowAlertCus("No data to save!","danger");
-    } else if (parseFloat(remainingAmt) < 0) {
+    }
+    else if (parseFloat(remainingAmt) < 0) {
         ShowAlertCus("Remaining amount less than zero!", "danger");
-    } else {
+    }
+    else if (parseFloat(remainingAmt) !== 0) {
+        ShowAlertCus("Remaining amount must zero!", "danger");
+    }
+    else {
+
+
+        var invalidRow = 0;
+
+        $("#table_payment_schedule > tbody > tr").each(function (index) {
+            index++;
+
+            var arNo = $("#tr_payment_detail_arno_line_" + index).text().trim();
+            var paymentNo = $("#tr_payment_detail_paymentno_line_" + index).text().trim();
+
+            if (arNo !== "-1" && paymentNo === "-1") {
+                invalidRow = index;
+                return false;
+            }
+        });
+
+        if (invalidRow > 0) {
+            ShowAlertCus(
+                "Row " + invalidRow + " contains an AR that has not yet generated the payment. Saving is not allowed.",
+                "danger"
+            );
+            return;
+        }
+
 
         var docdate = $('#txt_doc_date').val();
         var installmentRow_List = [];
@@ -5681,7 +5733,7 @@ function cmd_save_RestructurePeriod() {
                     location.reload();
                     
                 } else {
-                    ShowAlertCus("Error while saving Shcedule!", "danger");
+                    ShowAlertCus(data.message, "danger");
                 }
             },
             failure: function (response) {
@@ -5693,13 +5745,47 @@ function cmd_save_RestructurePeriod() {
 
 function cmd_save_RestructureAmt() {
 
+    /// Change Amount 
+
     var remainingAmt = returnstringvalue($("#txt_remaining_amount").val());
+
+
 
     if ($("#table_payment_schedule_restructureAmt >tbody >tr").length <= 0) {
         ShowAlertCus("No data to save!", "danger");
-    } else if (parseFloat(remainingAmt) < 0) {
+    }
+    else if (parseFloat(remainingAmt) < 0) {
         ShowAlertCus("Remaining amount less than zero!", "danger");
-    } else {
+    }
+    else if (parseFloat(remainingAmt) !== 0) {
+        ShowAlertCus("Remaining amount must be zero!", "danger");
+    }
+    else {
+
+
+
+        var invalidRow = 0;
+
+        $("#table_payment_schedule_restructureAmt > tbody > tr").each(function (index) {
+            index++;
+
+            var arNo = $("#tr_payment_detail_arno_line_" + index).text().trim();
+            var paymentNo = $("#tr_payment_detail_paymentno_line_" + index).text().trim();
+
+            if (arNo !== "-1" && paymentNo === "-1") {
+                invalidRow = index;
+                return false;
+            }
+        });
+
+        if (invalidRow > 0) {
+            ShowAlertCus(
+                "Row " + invalidRow + " contains an AR that has not yet generated the payment. Saving is not allowed.",
+                "danger"
+            );
+            return;
+        }
+
 
         var docdate = $('#txt_doc_date').val();
         var installmentRow_List = [];
@@ -5792,7 +5878,7 @@ function cmd_save_RestructureAmt() {
                     location.reload();
                     
                 } else {
-                    ShowAlertCus("Error while saving Shcedule!", "danger");
+                    ShowAlertCus(data.message, "danger");
                 }
             },
             failure: function (response) {

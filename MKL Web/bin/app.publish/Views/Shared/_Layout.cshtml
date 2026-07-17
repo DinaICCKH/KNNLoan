@@ -249,13 +249,13 @@
 
                 <div class="navbar-custom-menu">
 
-                    <ul class="nav navbar-nav navbar-left" style="text-align:left !important;">
+                    @*<ul class="nav navbar-nav navbar-left" style="text-align:left !important;">
                         <li><a href="#" title="First Record"><i class="fa fa-step-backward fa-lg"></i></a></li>
                         <li><a href="#" title="Previous Record"><i class="fa fa-backward fa-lg"></i></a></li>
                         <li><a href="#" title="Next Record"><i class="fa fa-forward fa-lg"></i></a></li>
                         <li><a href="#" title="Last Record"><i class="fa fa-step-forward fa-lg"></i></a></li>
                         <li><a href="/querymanager/list" title="Query Manager"><i class="fa fa-database fa-lg"></i></a></li>
-                    </ul>
+                    </ul>*@
 
                     <ul class="nav navbar-nav">
                         <!-- Search box -->
@@ -292,12 +292,15 @@
 
                         <!-- Approval Button -->
                         <li>
-                            <a href="/approval/list" title="Pending Approvals">
+                            <a href="/approval/list" id="approval-link" title="Pending Approvals">
                                 <i class="fa fa-check-square-o fa-lg"></i>
                                 <span class="label label-warning"
                                       style="position: absolute; top: 8px; right: 10px; font-size: 10px;">5</span>
                             </a>
                         </li>
+
+
+
 
                         <!-- Optional Admin Tools -->
                         <li style="display:none">
@@ -436,6 +439,12 @@
 <script>
 
     $(document).ready(function () {
+
+
+        document.getElementById('approval-link').addEventListener('click', function (event) {
+            event.preventDefault(); // Prevents the link from navigating
+            alert('Coming Soon!');
+        });
 
         $("#toggleSidebar").click(function () {
             $("body").toggleClass("sidebar-hidden");
