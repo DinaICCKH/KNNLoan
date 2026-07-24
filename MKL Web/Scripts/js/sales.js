@@ -3968,12 +3968,17 @@ function cmd_save_change_schedule() {
             complete: function () {
                 $("#loading").hide();
             },
+
+
             success: function (data) {
+
+                console.log(data);
+
                 if (data.status == "OK") {
                     ShowAlertCus("Payment Shcedule was saved", "success");
                     location.reload();
                 } else {
-                    ShowAlertCus(data.message,"warning");
+                    ShowAlertCus(data.Message,"warning");
                 }
             },
             failure: function (response) {

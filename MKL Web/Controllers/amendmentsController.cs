@@ -1241,124 +1241,141 @@ namespace MKL_Web.Controllers
                             }
                             else
                             {
-
                                 var AppTemplate = list.FirstOrDefault();
-                                if (AppTemplate != null)
+
+                                // 1. Get the result (this returns an object with an 'IsApproved' property)
+                                var result = db.ICC_Approval_CheckRequester(AppTemplate.AppTemplateID, Session["UCode"].ToString())
+                                               .FirstOrDefault();
+
+                                // 2. Check if the result is not null and if the property is 0
+                                if (result == null || result.IsApproved == 0)
                                 {
-                                    int AppStageCode = AppTemplate.AppStageCode;
-                                    int AppTemplateID = AppTemplate.AppTemplateID;
-                                    string TemplateDesc = AppTemplate.TemplateDesc;
-                                    string Type = AppTemplate.Type;
-                                    decimal FromAmt = AppTemplate.FromAmt;
-                                    decimal ToAmt = AppTemplate.ToAmt;
-                                    string DocID = AppTemplate.DocID;
-                                    string NextApprover = AppTemplate.NextApprover;
+                                    status = "Error";
+                                    Message = "Error: Not allow to submit, User not setup as requester in approval.";
+                                    return Json(new { status, LastEntry, Message }, JsonRequestBehavior.AllowGet);
+                                }
 
-                                    if (header == null || installment_row == null)
+                                else
+                                {
+                                    if (AppTemplate != null)
                                     {
-                                        status = "Error";
-                                        Message = "blank";
-                                        return Json(new { status, LastEntry, Message }, JsonRequestBehavior.AllowGet);
-                                    }
-                                    else
-                                    {
-                                        InstallmentRowDrafH H = new InstallmentRowDrafH();
-                                        H = db.InstallmentRowDrafHs.Where(a => a.DocEntry == header.DocEntry).FirstOrDefault();
-                                        if (H == null)
+                                        int AppStageCode = AppTemplate.AppStageCode;
+                                        int AppTemplateID = AppTemplate.AppTemplateID;
+                                        string TemplateDesc = AppTemplate.TemplateDesc;
+                                        string Type = AppTemplate.Type;
+                                        decimal FromAmt = AppTemplate.FromAmt;
+                                        decimal ToAmt = AppTemplate.ToAmt;
+                                        string DocID = AppTemplate.DocID;
+                                        string NextApprover = AppTemplate.NextApprover;
+
+                                        if (header == null || installment_row == null)
                                         {
-                                            H = header;
-                                            H.PostingDate = header.PostingDate;
-                                            H.CreateDate = DateTime.Now;
-                                            H.UpdateDate = DateTime.Now;
-                                            H.CreateBy = Session["UCode"].ToString();
-                                            H.DocNumRef = header.DocNumRef;
-                                            H.Remark = header.Remark;
-                                            H.RestructureOption = header.RestructureOption;
-                                            H.ApprovalStage = AppStageCode.ToString();
-                                            H.NextApprover = NextApprover;
-                                            H.Status = "Draf";
-                                            H.ApprovalTemplate = AppTemplateID.ToString();
-                                            H.DocType = "RE";
-                                            H.EffictiveDate = header.EffictiveDate;
-                                            db.InstallmentRowDrafHs.InsertOnSubmit(H);
-                                            db.InstallmentRowDrafHs.Context.SubmitChanges();
-
-                                            LastEntry = H.DocEntry;
-
-                                            List<InstallmentRowDraf> d = new List<InstallmentRowDraf>();
-                                            installment_row.ForEach(a => a.DocEntry = H.DocEntry);
-                                            d = installment_row;
-                                            db.InstallmentRowDrafs.InsertAllOnSubmit(d);
-                                            db.InstallmentRowDrafs.Context.SubmitChanges();
-
-                                            /// This will be used to update the status of Accrual penalty
-                                            var accrualIDs = installment_row.Select(r => r.BaseEntry).ToList();
-
-                                            var sO = db.SOs.FirstOrDefault(a => accrualIDs.Contains(a.DocEntry));
-
-                                            if (sO != null)
+                                            status = "Error";
+                                            Message = "blank";
+                                            return Json(new { status, LastEntry, Message }, JsonRequestBehavior.AllowGet);
+                                        }
+                                        else
+                                        {
+                                            InstallmentRowDrafH H = new InstallmentRowDrafH();
+                                            H = db.InstallmentRowDrafHs.Where(a => a.DocEntry == header.DocEntry).FirstOrDefault();
+                                            if (H == null)
                                             {
-                                                sO.LastError = "This document is linked with pending approve Reschedule draft No: " + LastEntry + " -> Reference: " + header.DocNumRef;
-                                                sO.Frozenfor = "Y";
+                                                H = header;
+                                                H.PostingDate = header.PostingDate;
+                                                H.CreateDate = DateTime.Now;
+                                                H.UpdateDate = DateTime.Now;
+                                                H.CreateBy = Session["UCode"].ToString();
+                                                H.DocNumRef = header.DocNumRef;
+                                                H.Remark = header.Remark;
+                                                H.RestructureOption = header.RestructureOption;
+                                                H.ApprovalStage = AppStageCode.ToString();
+                                                H.NextApprover = NextApprover;
+                                                H.Status = "Draf";
+                                                H.ApprovalTemplate = AppTemplateID.ToString();
+                                                H.DocType = "RE";
+                                                H.EffictiveDate = header.EffictiveDate;
+                                                db.InstallmentRowDrafHs.InsertOnSubmit(H);
+                                                db.InstallmentRowDrafHs.Context.SubmitChanges();
 
-                                                db.SOs.Context.SubmitChanges(); // Commit change
+                                                LastEntry = H.DocEntry;
+
+                                                List<InstallmentRowDraf> d = new List<InstallmentRowDraf>();
+                                                installment_row.ForEach(a => a.DocEntry = H.DocEntry);
+                                                d = installment_row;
+                                                db.InstallmentRowDrafs.InsertAllOnSubmit(d);
+                                                db.InstallmentRowDrafs.Context.SubmitChanges();
+
+                                                /// This will be used to update the status of Accrual penalty
+                                                var accrualIDs = installment_row.Select(r => r.BaseEntry).ToList();
+
+                                                var sO = db.SOs.FirstOrDefault(a => accrualIDs.Contains(a.DocEntry));
+
+                                                if (sO != null)
+                                                {
+                                                    sO.LastError = "This document is linked with pending approve Reschedule draft No: " + LastEntry + " -> Reference: " + header.DocNumRef;
+                                                    sO.Frozenfor = "Y";
+
+                                                    db.SOs.Context.SubmitChanges(); // Commit change
+                                                }
+                                                else
+                                                {
+                                                    status = "Error";
+                                                    Message = "Can not save data.";
+                                                    return Json(new { status, LastEntry, Message }, JsonRequestBehavior.AllowGet);
+                                                }
                                             }
-                                            else
+
+                                            // For Update Generate approval Document Generate
+                                            var resut = db.ICC_ApprovalDocument_Generate(AppStageCode, LastEntry, "Reschedule");
+
+                                            var list2 = resut.Select(x => new ExcecResult
+                                            {
+                                                Result = x.Result
+
+                                            }).ToList();
+                                            var resultvalue = list2.FirstOrDefault();
+                                            if (resultvalue.Result != "Success")
                                             {
                                                 status = "Error";
-                                                Message = "Can not save data.";
+                                                Message = "Update generate approval not work.";
+                                                return Json(new { status, LastEntry, Message }, JsonRequestBehavior.AllowGet);
+                                            }
+
+                                            var link = "/amendments/PreviewReschedule?DocEntry=" + LastEntry;
+
+                                            // For Update Generate approval ALERT Document Generate
+                                            var resut3 = db.ICC_ApprovalDocumentAlert_Generate(AppStageCode, LastEntry, "Reschedule", AppTemplateID.ToString(), Session["UCode"].ToString(), link, NextApprover);
+
+                                            var list3 = resut3.Select(x => new ExcecResult
+                                            {
+                                                Result = x.Result
+
+                                            }).ToList();
+                                            var resultvalue3 = list3.FirstOrDefault();
+                                            if (resultvalue3.Result != "Success")
+                                            {
+                                                status = "Error";
+                                                Message = "Gemerate alert document fail";
                                                 return Json(new { status, LastEntry, Message }, JsonRequestBehavior.AllowGet);
                                             }
                                         }
 
-                                        // For Update Generate approval Document Generate
-                                        var resut = db.ICC_ApprovalDocument_Generate(AppStageCode, LastEntry, "Reschedule");
 
-                                        var list2 = resut.Select(x => new ExcecResult
+                                        if (status == "OK")
                                         {
-                                            Result = x.Result
-
-                                        }).ToList();
-                                        var resultvalue = list2.FirstOrDefault();
-                                        if (resultvalue.Result != "Success")
-                                        {
-                                            status = "Error";
-                                            Message = "Update generate approval not work.";
-                                            return Json(new { status, LastEntry, Message }, JsonRequestBehavior.AllowGet);
+                                            trans.Complete();
+                                            trans.Dispose();
                                         }
-
-                                        var link = "/amendments/PreviewReschedule?DocEntry="+LastEntry;
-
-                                        // For Update Generate approval ALERT Document Generate
-                                        var resut3 = db.ICC_ApprovalDocumentAlert_Generate(AppStageCode, LastEntry, "Reschedule", AppTemplateID.ToString(), Session["UCode"].ToString(),link,NextApprover);
-
-                                        var list3 = resut3.Select(x => new ExcecResult
-                                        {
-                                            Result = x.Result
-
-                                        }).ToList();
-                                        var resultvalue3 = list3.FirstOrDefault();
-                                        if (resultvalue3.Result != "Success")
+                                        else
                                         {
                                             status = "Error";
-                                            Message = "Gemerate alert document fail";
+                                            Message = "Fail to save Data";
                                             return Json(new { status, LastEntry, Message }, JsonRequestBehavior.AllowGet);
                                         }
                                     }
 
-
-                                    if (status == "OK")
-                                    {
-                                        trans.Complete();
-                                        trans.Dispose();
-                                    }
-                                    else
-                                    {
-                                        status = "Error";
-                                        Message = "Fail to save Data";
-                                        return Json(new { status, LastEntry, Message }, JsonRequestBehavior.AllowGet);
-                                    }
                                 }
+                                
                             }
                         }
                     }
