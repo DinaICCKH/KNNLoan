@@ -41,7 +41,7 @@ function cmd_pop_special_payment_add_row() {
         }
         if (rowindex != 0) {
             if ($("#txt_pop_special_payment_amount_" + rowindex).val() == 0) {
-                ShowAlertCus("Payment amount cannot be zero!","warning");
+                ShowAlertCus("Payment amount cannot be zero for sepcail payment!","warning");
             } else {
                 disable_enable_element(rowindex, '0');
                 rowindex++;
@@ -2412,7 +2412,7 @@ function get_special_payment() {
     var index = 0;
     var checkDate = check_special_payment_date();
     if (checkDate == 2) {
-        ShowAlertCus("Payment amount cannot be zero!", "warning")
+        ShowAlertCus("Payment amount cannot be zero for sepcial payment *!", "warning")
     } else if (checkDate == 1) {
         ShowAlertCus("Invalid selected payment date!", "warning")
     } else {
@@ -3518,13 +3518,21 @@ function cmd_pop_choose_AR_Memo_ChangeItem() {
 }
 
 function check_special_payment_date() {
+
+
+
     var checkDate = 0;
     var lenpopRow = $("#table_pop_special_payment >tbody >tr").length;
     if (lenpopRow > 0) {
         var lasttr = $("#table_pop_special_payment >tbody >tr:last");
         lenpopRow = lasttr.attr('id').replace("tr_pop_speical_payment_", "");
         var lastAmt = returnstringvalue($("#txt_pop_special_payment_amount_" + lenpopRow).val());
-        if (lastAmt == 0) {
+
+        var Method = $("#cbo_pop_special_payment_payment_option_" + lenpopRow).val(); 
+
+
+        // PTP : the reason is payment with interest (Period)
+        if (lastAmt == 0 && Method !="PIP") {
             return 2;
         }
     }
