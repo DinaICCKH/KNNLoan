@@ -790,6 +790,20 @@ namespace MKL_Web.Controllers
                 using (trans)
                 {
 
+                    int baseEntry = installment_row.FirstOrDefault()?.BaseEntry ?? 0;
+
+                    var result = db.ICC_NOTIFICATION_FOR_CHANGE_SCHEDULE(baseEntry).FirstOrDefault();
+
+                    if (result != null)
+                    {
+                        return Json(new
+                        {
+                            status = "Warning",
+                            message = $"Loan {header.DocEntry} cannot be restructured because there are still open invoices: {result.DocNums}"
+                        }, JsonRequestBehavior.AllowGet);
+                    }
+                    
+
                     // For Get Approval Template 
                     var monthlyTotal = installment_row.Sum(x => x.Monthly);
                     // Get approval template
@@ -1042,6 +1056,21 @@ namespace MKL_Web.Controllers
             {
                 using (trans)
                 {
+                    // For check notification clean all related document from loan before can change it 
+
+                    int baseEntry = installment_row.FirstOrDefault()?.BaseEntry ?? 0;
+
+                    var result = db.ICC_NOTIFICATION_FOR_CHANGE_SCHEDULE(baseEntry).FirstOrDefault();
+
+                    if (result != null)
+                    {
+                        return Json(new
+                        {
+                            status = "Warning",
+                            message = $"Loan {header.DocEntry} cannot be restructured because there are still open invoices: {result.DocNums}"
+                        }, JsonRequestBehavior.AllowGet);
+                    }
+
                     // For Get Approval Template 
                     var monthlyTotal = installment_row.Sum(x => x.Monthly);
                     // Get approval template
@@ -1214,6 +1243,21 @@ namespace MKL_Web.Controllers
                     {
                         using (trans)
                         {
+
+
+
+                            int baseEntry = installment_row.FirstOrDefault()?.BaseEntry ?? 0;
+
+                            var result1 = db.ICC_NOTIFICATION_FOR_CHANGE_SCHEDULE(baseEntry).FirstOrDefault();
+
+                            if (result1 != null)
+                            {
+                                return Json(new
+                                {
+                                    status = "Warning",
+                                    message = $"Loan {header.DocEntry} cannot be restructured because there are still open invoices: {result1.DocNums}"
+                                }, JsonRequestBehavior.AllowGet);
+                            }
 
                             // For Get Approval Template 
                             var monthlyTotal = installment_row.Sum(x => x.Monthly);
@@ -1547,6 +1591,19 @@ namespace MKL_Web.Controllers
                     {
                         using (trans)
                         {
+
+                            int baseEntry = installment_row.FirstOrDefault()?.BaseEntry ?? 0;
+
+                            var result = db.ICC_NOTIFICATION_FOR_CHANGE_SCHEDULE(baseEntry).FirstOrDefault();
+
+                            if (result != null)
+                            {
+                                return Json(new
+                                {
+                                    status = "Warning",
+                                    message = $"Loan {header.DocEntry} cannot be restructured because there are still open invoices: {result.DocNums}"
+                                }, JsonRequestBehavior.AllowGet);
+                            }
 
                             // For Get Approval Template 
                             var monthlyTotal = installment_row.Sum(x => x.Monthly);

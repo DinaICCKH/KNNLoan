@@ -1377,6 +1377,13 @@ namespace MKL_Web.Models
 			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), templateID, user);
 			return ((ISingleResult<ICC_Approval_CheckRequesterResult>)(result.ReturnValue));
 		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.ICC_NOTIFICATION_FOR_CHANGE_SCHEDULE")]
+		public ISingleResult<ICC_NOTIFICATION_FOR_CHANGE_SCHEDULEResult> ICC_NOTIFICATION_FOR_CHANGE_SCHEDULE([global::System.Data.Linq.Mapping.ParameterAttribute(Name="ID", DbType="Int")] System.Nullable<int> iD)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), iD);
+			return ((ISingleResult<ICC_NOTIFICATION_FOR_CHANGE_SCHEDULEResult>)(result.ReturnValue));
+		}
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Controller")]
@@ -55126,6 +55133,50 @@ namespace MKL_Web.Models
 				if ((this._IsApproved != value))
 				{
 					this._IsApproved = value;
+				}
+			}
+		}
+	}
+	
+	public partial class ICC_NOTIFICATION_FOR_CHANGE_SCHEDULEResult
+	{
+		
+		private System.Nullable<int> _U_InstallKey;
+		
+		private string _DocNums;
+		
+		public ICC_NOTIFICATION_FOR_CHANGE_SCHEDULEResult()
+		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_U_InstallKey", DbType="Int")]
+		public System.Nullable<int> U_InstallKey
+		{
+			get
+			{
+				return this._U_InstallKey;
+			}
+			set
+			{
+				if ((this._U_InstallKey != value))
+				{
+					this._U_InstallKey = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DocNums", DbType="VarChar(8000)")]
+		public string DocNums
+		{
+			get
+			{
+				return this._DocNums;
+			}
+			set
+			{
+				if ((this._DocNums != value))
+				{
+					this._DocNums = value;
 				}
 			}
 		}
