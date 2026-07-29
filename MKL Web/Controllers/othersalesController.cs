@@ -22,6 +22,7 @@ namespace MKL_Web.Controllers
             ViewBag.cust = db.V_Customers.Where(x => x.CardType.ToString() == "C").ToList();
             ViewBag.houselist = db.v_Items.Where(x => x.ItemGroupCode == "101").ToList();
             ViewBag.installment = db.InstallmentLists.Where(x => x.InsCode != "B").ToList();
+            ViewBag.BankList = db.ICC_BankLists.ToList();   // change table name if different
             return View();
         }
         public ActionResult InvoiceList()

@@ -495,8 +495,38 @@
                                                                             <input type="text" class="form-control pull-right datetime form-control-insde" readonly="readonly" id="txt_start_payment" placeholder="Start Payment" value="@docdate">
                                                                         </div>
                                                                     </td>
+                          
                                                                     <td style="width:30%;text-align:right;padding-right:10px">Period(M)</td>
-                                                                    <td style="width:30%;"><input type="text" class="form-control form-control-insde" id="txt_period" placeholder="Period(M)" onchange="txt_period_change()" value="0" readonly></td>
+
+                                                                    <td style="width:30%;">
+                                                                        <div class="form-group">
+                                                                            <table style="width:100%;" id="table_doc_discount">
+                                                                                <tr>
+                                                                                    <td style="width:40%;">
+
+                                                                                        <input type="text" class="form-control form-control-insde" id="txt_period" placeholder="Period(M)" onchange="txt_period_change()" value="0">
+
+                                                                                    </td>
+                                                                                    <td style="text-align:right;width:30%;">
+                                                                                        <div class="form-group">
+                                                                                            <label for="inputEmail3" style="padding-right:10px;" class="form-control controlLabel">Decimal</label>
+                                                                                        </div>
+                                                                                    </td>
+
+                                                                                    <td style="width:30%;">
+                                                                                        <select class="form-control form-control-insde"
+                                                                                                id="txtdecimal"
+                                                                                                style="width:100%;">
+                                                                                            <option value="0">0</option>
+                                                                                            <option value="1">1</option>
+                                                                                            <option value="2">2</option>
+                                                                                        </select>
+                                                                                    </td>
+                                                                                </tr>
+                                                                            </table>
+                                                                        </div>
+                                                                    </td>
+
                                                                 </tr>
                                                             </table>
                                                         </div>
@@ -649,6 +679,8 @@
                                                                 <td style="width: 4%; text-align: left;">ARNo.Int</td>
                                                                 <td style="width: 4%; text-align: left;">PayNo.Int</td>
                                                                 <td style="width: 10%; text-align: left;">Remark</td>
+
+
                                                             </tr>
                                                         </thead>
                                                         <tbody style="vertical-align: middle;"></tbody>
@@ -673,6 +705,7 @@
                                                                 <td class="bg-gray" style="text-align:right;"></td>
                                                                 <td class="bg-gray" style="text-align:right;"></td>
                                                                 <td class="bg-gray" style="text-align:right;"></td>
+
                                                             </tr>
                                                         </tfoot>
                                                     </table>
@@ -713,6 +746,12 @@
                                                                 <td style="width:4%; text-align:left;">APNo.Int</td>
                                                                 <td style="width:4%; text-align:left;">PayNo.Int</td>
                                                                 <td style="width:10%; text-align:left;">Remark</td>
+
+                                                                <td style="width:5.6%; text-align:left;">Cheque No.#</td>
+                                                                <td style="width:5.6%; text-align:left;">Name on Cheque</td>
+                                                                <td style="width:6.4%; text-align:left;">Bank Name</td>
+                                                                <td style="width:4.7%; text-align:left;">Payee Name</td>
+
                                                             </tr>
 
                                                         </thead>
@@ -734,6 +773,12 @@
                                                                 <td class="bg-gray" style="text-align:right;"></td>
                                                                 <td class="bg-gray" style="text-align:right;"></td>
                                                                 <td class="bg-gray" style="text-align:right;"></td>
+                                                                <td class="bg-gray" style="text-align:right;"></td>
+                                                                <td class="bg-gray" style="text-align:right;"></td>
+                                                                <td class="bg-gray" style="text-align:right;"></td>
+                                                                <td class="bg-gray" style="text-align:right;"></td>
+
+
                                                                 <td class="bg-gray" style="text-align:right;"></td>
                                                                 <td class="bg-gray" style="text-align:right;"></td>
                                                                 <td class="bg-gray" style="text-align:right;"></td>
@@ -807,4 +852,152 @@
         });
 
     });
+</script>
+
+<script>
+    // ======= Make bank list available to JS =======
+    window.bankList = @Html.Raw(Json.Encode(ViewBag.BankList));
+
+    let isFocused = false;
+    let startIndex = 0;
+    let startField = ""; // Which column user clicked
+    let manualBankChange = false; // Flag to detect manual change
+
+    // ======= Focus detection =======
+    $(document).on("focus",
+        "[id^='tr_chequeno_line_'], [id^='tr_nameoncheque_line_'], [id^='tr_bank_line_'], [id^='tr_payee_line_']",
+        function () {
+            isFocused = true;
+
+            let id = $(this).attr("id");
+            startIndex = parseInt(id.split("_").pop());
+
+            if (id.includes("tr_chequeno_line_")) startField = "cheque";
+            else if (id.includes("tr_nameoncheque_line_")) startField = "name";
+            else if (id.includes("tr_bank_line_")) startField = "bank";
+            else if (id.includes("tr_payee_line_")) startField = "payee";
+        });
+
+    $(document).on("blur",
+        "[id^='tr_chequeno_line_'], [id^='tr_nameoncheque_line_'], [id^='tr_bank_line_'], [id^='tr_payee_line_']",
+        function () {
+            isFocused = false;
+        });
+
+    // ======= Manual bank change detection =======
+    $(document).on("mousedown focus", "[id^='tr_bank_line_']", function () {
+        manualBankChange = true;
+    });
+
+    // ======= Helpers =======
+    function setValue(target, value) {
+        if (target.length > 0) {
+            if (target.is("input") || target.is("textarea")) {
+                target.val(value).trigger("input").trigger("change");
+            } else {
+                target.text(value);
+            }
+            target[0].offsetHeight; // Force repaint
+        }
+    }
+
+    function setDropdownValue(target, textValue) {
+        if (target.length === 0 || !textValue) return;
+
+        let found = false;
+        target.find("option").each(function () {
+            if ($(this).text().trim().toLowerCase() === textValue.toLowerCase()) {
+                target.val($(this).val());
+                found = true;
+                return false;
+            }
+        });
+
+        if (found) target.trigger("change");
+    }
+
+    // ======= Paste logic =======
+    document.addEventListener("paste", function (e) {
+
+        if (!isFocused) return;
+
+        let pastedData = (e.clipboardData || window.clipboardData).getData("Text");
+        if (!pastedData) return;
+
+        let rowsData = pastedData
+            .split(/\r?\n/)
+            .map(r => r.trim())
+            .filter(r => r !== "");
+
+        for (let i = 0; i < rowsData.length; i++) {
+
+            let currentIndex = startIndex + i;
+            let cols = rowsData[i].split("\t");
+
+            let chequeTarget = $("#tr_chequeno_line_" + currentIndex);
+            let nameTarget   = $("#tr_nameoncheque_line_" + currentIndex);
+            let bankTarget   = $("#tr_bank_line_" + currentIndex);
+            let payeeTarget  = $("#tr_payee_line_" + currentIndex);
+
+            if (chequeTarget.length === 0 &&
+                nameTarget.length === 0 &&
+                bankTarget.length === 0 &&
+                payeeTarget.length === 0) break;
+
+            // 🔥 Mapping based on clicked column
+            switch (startField) {
+
+                case "cheque":
+                    setValue(chequeTarget, cols[0] || "");
+                    setValue(nameTarget,   cols[1] || "");
+                    setDropdownValue(bankTarget, cols[2] || "");
+                    setValue(payeeTarget,  cols[3] || "");
+                    break;
+
+                case "name":
+                    setValue(nameTarget,   cols[0] || "");
+                    setDropdownValue(bankTarget, cols[1] || "");
+                    setValue(payeeTarget,  cols[2] || "");
+                    break;
+
+                case "bank":
+                    setDropdownValue(bankTarget, cols[0] || "");
+                    setValue(payeeTarget, cols[1] || "");
+                    break;
+
+                case "payee":
+                    setValue(payeeTarget, cols[0] || "");
+                    break;
+            }
+        }
+
+        ShowAlertCus("Paste applied based on selected column!", "success");
+
+        e.preventDefault();
+    });
+
+    // ======= Apply Bank to Remaining Rows on Manual Change =======
+    $(document).on("change", "[id^='tr_bank_line_']", function () {
+
+        if (!manualBankChange) return; // ignore programmatic changes
+        manualBankChange = false;
+
+        let selectedValue = $(this).val();
+        let id = $(this).attr("id");
+        let currentIndex = parseInt(id.split("_").pop());
+
+        let applyAll = confirm("Apply this bank to all remaining rows?");
+        if (!applyAll) return;
+
+        let index = currentIndex + 1;
+
+        while (true) {
+            let next = $("#tr_bank_line_" + index);
+            if (next.length === 0) break;
+
+            next.val(selectedValue).trigger("change"); // no confirm because flag = false
+            index++;
+        }
+    });
+
 </script>

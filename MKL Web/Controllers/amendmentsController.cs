@@ -50,6 +50,7 @@ namespace MKL_Web.Controllers
             ViewBag.cust = db.v_OCRDs.Where(x => x.cardtype == 'C' && soList.Select(a => a.CardCode).Contains(x.CardCode)).ToList();
             ViewBag.houselist = db.v_Item_Houses.ToList();
             ViewBag.installment = db.InstallmentLists.Where(x => x.InsCode != "B").ToList();
+            ViewBag.BankList = db.ICC_BankLists.ToList();   // change table name if different
             return View();
         }
 
@@ -178,188 +179,168 @@ namespace MKL_Web.Controllers
             return View();
         }
 
-        
+
         public JsonResult save_change_owner(SO header, List<InstallmentRow> installment_row, List<InstallmentRow> del_list)
         {
-            status = "OK";
+            string status = "OK";
+            string message = "Success";
             int LastEntry = 0;
 
-            if (status == "OK")
+            if (header == null)
             {
-                var trans = TransWithCommitted();
-                try
+                return Json(new { status = "Error", LastEntry, message = "Error while saving: Header is null" }, JsonRequestBehavior.AllowGet);
+            }
+
+            try
+            {
+                using (var trans = TransWithCommitted())
                 {
-                    if (header != null)
+                    using (trans)
                     {
-                        using (trans)
+                        // 1. Get Monthly Total & Approval Template
+                        var monthlyTotal = installment_row?.Sum(x => x.Monthly) ?? 0;
+                        var rawResult = db.ICC_ApprovalTempate_Check("CO", "A", monthlyTotal);
+
+                        var list = rawResult.Select(x => new ApprovalTemplate
                         {
+                            AppStageCode = Convert.ToInt32(x.AppStageCode),
+                            AppTemplateID = x.AppTemplateID,
+                            TemplateDesc = x.TemplateDesc,
+                            Type = x.Type.ToString(),
+                            FromAmt = Convert.ToDecimal(x.FromAmt),
+                            ToAmt = Convert.ToDecimal(x.ToAmt),
+                            DocID = x.DocID
+                        }).ToList();
 
-                            // For Get Approval Template 
-                            var monthlyTotal = installment_row.Sum(x => x.Monthly);
+                        // 2. Check Unpaid Principal AR
+                        var unpaidInvoices = db.InstallmentRows
+                            .Where(x => ((x.ARNo != -1 && x.PaymentNo == -1) || (x.ARNo == -1 && x.PaymentNo != -1))
+                                        && x.BaseEntry == header.DocEntry)
+                            .ToList();
 
-                            var rawResult = db.ICC_ApprovalTempate_Check("CO", "A", monthlyTotal);
-
-                            var list = rawResult.Select(x => new ApprovalTemplate
+                        if (unpaidInvoices.Any())
+                        {
+                            return Json(new
                             {
-                                AppStageCode = Convert.ToInt32( x.AppStageCode),
-                                AppTemplateID = x.AppTemplateID,
-                                TemplateDesc = x.TemplateDesc,
-                                Type = x.Type.ToString(),
-                                FromAmt =Convert.ToDecimal(x.FromAmt),
-                                ToAmt = Convert.ToDecimal(x.ToAmt),
-                                DocID = x.DocID
-                            }).ToList();
-
-
-                            var result = db.InstallmentRows
-                                .Where(x =>
-                                    (
-                                        (x.ARNo != -1 && x.PaymentNo == -1) ||
-                                        (x.ARNo == -1 && x.PaymentNo != -1)
-                                    )
-                                    && x.BaseEntry == header.DocEntry
-                                )
-                                .ToList();
-
-                            // Check unpaid interest AR
-                            var checkInterest = db.InstallmentRows
-                                .Where(x =>
-                                    (
-                                        (x.ARNoInterest != -1 && x.PaymentNoInterest == -1) ||
-                                        (x.ARNoInterest == -1 && x.PaymentNoInterest != -1)
-                                    )
-                                    && x.BaseEntry == header.DocEntry
-                                )
-                                .ToList();
-
-                            if (result.Any())
-                            {
-                                status = "Error: Cancel Generated AR Invoice that not yet paid in SAP first before change owner.";
-                                return Json(new { status, LastEntry }, JsonRequestBehavior.AllowGet);
-                            }
-                            if (checkInterest.Any())
-                            {
-                                status = "Error: Cancel Generated AR Invoice interest that not yet paid  in SAP first before change owner.";
-                                return Json(new { status, LastEntry }, JsonRequestBehavior.AllowGet);
-                            }
-
-                            if (!list.Any() || result.Any())
-                            {
-                                status = "Error: No approval template found.";
-                                return Json(new { status, LastEntry }, JsonRequestBehavior.AllowGet);
-                            }
-                            else
-                            {
-
-                                var AppTemplate = list.FirstOrDefault();
-                                if (AppTemplate != null)
-                                {
-                                    int AppStageCode = AppTemplate.AppStageCode;
-                                    int AppTemplateID = AppTemplate.AppTemplateID;
-                                    string TemplateDesc = AppTemplate.TemplateDesc;
-                                    string Type = AppTemplate.Type;
-                                    decimal FromAmt = AppTemplate.FromAmt;
-                                    decimal ToAmt = AppTemplate.ToAmt;
-                                    string DocID = AppTemplate.DocID;
-
-                                    // For Generate draft document 
-
-                                    var result3 = db.ICC_ApprovalAddtoDrafChangeOwner(
-                                        "ChangeOwner",
-                                        header.DocEntry,
-                                        header.OldCardCode,
-                                        header.OldCardName,
-                                        header.CardCode,
-                                        header.CardName,
-                                        AppStageCode,
-                                        AppTemplateID,
-                                        header.CreatedBy,
-                                        header.Comment?.ToString() ?? "",
-                                        header.PhoneNo?.ToString() ?? "",
-                                        header.ContactPerson?.ToString() ?? "",
-                                        header.ItemCode,
-                                        header.ItemName,
-                                        header.Serial
-                                    );
-                                    var list3 = result3.Select(x => new ExcecResult
-                                    {
-                                        Result = x.Result,
-                                        AutoGenerateID= Convert.ToInt32(x.AutoGenerateID)
-                                    }).ToList();
-                                    var resultvalue3 = list3.FirstOrDefault();
-
-                                    if (resultvalue3.Result != "Success")
-                                    {
-                                        status = "Fail";
-                                    }
-
-                                    else
-                                    {
-                                        // For Update Generate approval Document Generate
-                                        var resut = db.ICC_ApprovalDocument_Generate(AppStageCode, resultvalue3.AutoGenerateID, "ChangeOwner");
-
-                                        var list2 = resut.Select(x => new ExcecResult
-                                        {
-                                            Result = x.Result
-
-                                        }).ToList();
-                                        var resultvalue = list2.FirstOrDefault();
-                                        if (resultvalue.Result != "Success")
-                                        {
-                                            status = "Fail";
-                                        }
-                                        else
-                                        {
-                                            var sO = db.SOs.FirstOrDefault(a => a.DocEntry == header.DocEntry);
-
-
-                                            if (sO != null)
-                                            {
-                                                sO.LastError = "This document is linked with pending approve Changer Owner draft No: " + resultvalue.AutoGenerateID + " -> Reference: " + header.DocEntry;
-                                                sO.Frozenfor = "Y";
-
-                                                db.SOs.Context.SubmitChanges(); // Commit change
-                                            }
-                                            else
-                                            {
-                                                status = "Error";
-                                            }
-                                        }
-
-                                        
-
-                                    }
-
-                                    if (status == "OK")
-                                    {
-                                        trans.Complete();
-                                        trans.Dispose();
-                                    }
-                                    else
-                                    {
-                                        status = "Error";
-                                    }
-
-                                }
-
-                                
-
-                            }
+                                status = "Error",
+                                LastEntry,
+                                message = "Error: Cancel Generated AR Invoice that not yet paid in SAP first before change owner."
+                            }, JsonRequestBehavior.AllowGet);
                         }
+
+                        // 3. Check Unpaid Interest AR
+                        var checkInterest = db.InstallmentRows
+                            .Where(x => ((x.ARNoInterest != -1 && x.PaymentNoInterest == -1) || (x.ARNoInterest == -1 && x.PaymentNoInterest != -1))
+                                        && x.BaseEntry == header.DocEntry)
+                            .ToList();
+
+                        if (checkInterest.Any())
+                        {
+                            return Json(new
+                            {
+                                status = "Error",
+                                LastEntry,
+                                message = "Error: Cancel Generated AR Invoice interest that not yet paid in SAP first before change owner."
+                            }, JsonRequestBehavior.AllowGet);
+                        }
+
+                        // 4. Check if Template Exists
+                        if (!list.Any())
+                        {
+                            return Json(new
+                            {
+                                status = "Error",
+                                LastEntry,
+                                message = "Error: No approval template found."
+                            }, JsonRequestBehavior.AllowGet);
+                        }
+
+                        var appTemplate = list.First();
+
+                        // 5. Generate Draft Document
+                        var result3 = db.ICC_ApprovalAddtoDrafChangeOwner(
+                            "ChangeOwner",
+                            header.DocEntry,
+                            header.OldCardCode,
+                            header.OldCardName,
+                            header.CardCode,
+                            header.CardName,
+                            appTemplate.AppStageCode,
+                            appTemplate.AppTemplateID,
+                            header.CreatedBy,
+                            header.Comment?.ToString() ?? "",
+                            header.PhoneNo?.ToString() ?? "",
+                            header.ContactPerson?.ToString() ?? "",
+                            header.ItemCode,
+                            header.ItemName,
+                            header.Serial
+                        );
+
+                        var list3 = result3.Select(x => new ExcecResult
+                        {
+                            Result = x.Result,
+                            AutoGenerateID = Convert.ToInt32(x.AutoGenerateID)
+                        }).ToList();
+
+                        var resultValue3 = list3.FirstOrDefault();
+
+                        if (resultValue3 == null || resultValue3.Result != "Success")
+                        {
+                            return Json(new
+                            {
+                                status = "Fail",
+                                LastEntry,
+                                message = resultValue3?.Result ?? "Error during draft generation."
+                            }, JsonRequestBehavior.AllowGet);
+                        }
+
+                        // 6. Update Approval Document Generation
+                        var resut = db.ICC_ApprovalDocument_Generate(appTemplate.AppStageCode, resultValue3.AutoGenerateID, "ChangeOwner");
+                        var list2 = resut.Select(x => new ExcecResult { Result = x.Result }).ToList();
+                        var resultValue = list2.FirstOrDefault();
+
+                        if (resultValue == null || resultValue.Result != "Success")
+                        {
+                            return Json(new
+                            {
+                                status = "Fail",
+                                LastEntry,
+                                message = resultValue?.Result ?? "Error during approval document generation."
+                            }, JsonRequestBehavior.AllowGet);
+                        }
+
+                        // 7. Update SO Record
+                        var sO = db.SOs.FirstOrDefault(a => a.DocEntry == header.DocEntry);
+                        if (sO != null)
+                        {
+                            sO.LastError = $"This document is linked with pending approve Changer Owner draft No: {resultValue3.AutoGenerateID} -> Reference: {header.DocEntry}";
+                            sO.Frozenfor = "Y";
+
+                            db.SOs.Context.SubmitChanges();
+                        }
+                        else
+                        {
+                            return Json(new
+                            {
+                                status = "Error",
+                                LastEntry,
+                                message = "Error while saving data: SO document not found."
+                            }, JsonRequestBehavior.AllowGet);
+                        }
+
+                        // 8. Commit Transaction
+                        trans.Complete();
                     }
-                    else
-                    {
-                        status = "Error";
-                    }
-                }
-                catch (Exception ex)
-                {
-                    status = "Failed";
-                    //ErrorDes = ex.Message;
                 }
             }
-            return Json(new { status = status, LastEntry = LastEntry }, JsonRequestBehavior.AllowGet);
-        }       
+            catch (Exception ex)
+            {
+                status = "Failed";
+                message = ex.Message;
+            }
+
+            return Json(new { status, LastEntry, message }, JsonRequestBehavior.AllowGet);
+        }
         public JsonResult save_change_price(List<ChangePrice> pr_List)
         {
             status = "OK";
@@ -1802,6 +1783,7 @@ namespace MKL_Web.Controllers
         public JsonResult save_approval_ChangeItemDraf(SO header)
         {
             string status = "OK";
+            string message = "success";
             int lastEntry = 0;
 
             try
@@ -1823,11 +1805,13 @@ namespace MKL_Web.Controllers
                             if (resultvalue.Result != "Success")
                             {
                                 status = "Fail";
+                                message = resultvalue.Result;
                             }
                         }
                         catch (Exception ex)
                         {
                             status = "Error";
+                            message = ex.Message.ToString();
                         }
 
 
@@ -1840,17 +1824,18 @@ namespace MKL_Web.Controllers
                     catch (Exception ex)
                     {
                         status = "Error";
-                        return Json(new { status, error = ex.Message });
+                        message = ex.Message.ToString();
+                        return Json(new { status, error = ex.Message,message=message });
                     }
                 }
             }
             catch (Exception ex)
             {
                 status = "Error";
-                return Json(new { status, error = ex.Message });
+                return Json(new { status, error = ex.Message,message=message });
             }
 
-            return Json(new { status, lastEntry });
+            return Json(new { status, lastEntry,message });
         }
 
         //public JsonResult save_change_house(SO header, List<InstallmentRow> installment_row, List<InstallmentRow> del_list)

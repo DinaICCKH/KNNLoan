@@ -2564,13 +2564,14 @@ namespace MKL_Web.Controllers
         public JsonResult save_buyback(CNDraf header, List<CN1Draf> cn_inList, List<CNInstallmentRowDraf> detail, List<CNInstallmentRowDraf> ar_inList)
         {
             string status = "OK";
+            string message = "Success";
             int LastEntry = 0;
 
             try
             {
                 if (header == null || detail == null || cn_inList == null || ar_inList == null)
                 {
-                    return Json(new { status = "Please Generate Schedule before submit.", LastEntry }, JsonRequestBehavior.AllowGet);
+                    return Json(new { status = "Please Generate Schedule before submit.", LastEntry,message= "Please Generate Schedule before submit." }, JsonRequestBehavior.AllowGet);
                 }
 
                 var monthlyTotal = detail.Sum(x => x.Monthly);
@@ -2580,8 +2581,9 @@ namespace MKL_Web.Controllers
 
                 if (rawResultConnectBP.Any())
                 {
-                    status = "Error: Please update connect Vendor in SAP first.";
-                    return Json(new { status, LastEntry }, JsonRequestBehavior.AllowGet);
+                    status = "Error";
+                    message = "Please update connect Vendor in SAP first.";
+                    return Json(new { status, LastEntry ,message}, JsonRequestBehavior.AllowGet);
                 }
 
                 // Get Approval Template
@@ -2622,19 +2624,21 @@ namespace MKL_Web.Controllers
 
                 if (result.Any())
                 {
-                    status = "Error: Cancel Generated AR Invoice that not yet paid in SAP first before submit.";
-                    return Json(new { status, LastEntry }, JsonRequestBehavior.AllowGet);
+                    status = "Error";
+                    message = "Error: Cancel Generated AR Invoice that not yet paid in SAP first before submit.";
+                    return Json(new { status, LastEntry,message }, JsonRequestBehavior.AllowGet);
                 }
                 if (checkInterest.Any())
                 {
-                    status = "Error: Cancel Generated AR Invoice that not yet paid interest in SAP first before submit.";
-                    return Json(new { status, LastEntry }, JsonRequestBehavior.AllowGet);
+                    status = "Error";
+                    message = "Error: Cancel Generated AR Invoice that not yet paid interest in SAP first before submit.";
+                    return Json(new { status, LastEntry,message}, JsonRequestBehavior.AllowGet);
                 }
 
 
                 if (!list.Any())
                 {
-                    return Json(new { status = "Error: No approval template found.", LastEntry }, JsonRequestBehavior.AllowGet);
+                    return Json(new { status = "Error: No approval template found.", LastEntry , message = "Error: No approval template found." }, JsonRequestBehavior.AllowGet);
                 }
 
                 var AppTemplate = list.First();
@@ -2691,6 +2695,7 @@ namespace MKL_Web.Controllers
                         else
                         {
                             status = "Error: SO not found.";
+                            message = "Error: SO not found.";
                         }
 
                         // Generate Approval Document
@@ -2700,6 +2705,7 @@ namespace MKL_Web.Controllers
                         if (resultValue != "Success")
                         {
                             status = "Fail";
+                            message = "Error: Save Fail";
                         }
 
 
@@ -2717,6 +2723,7 @@ namespace MKL_Web.Controllers
                         if (resultvalue3.Result != "Success")
                         {
                             status = "Fail";
+                            message = resultvalue3.Result;
                         }
 
                     }
@@ -2729,14 +2736,14 @@ namespace MKL_Web.Controllers
                     }
                 }
 
-                return Json(new { status, LastEntry }, JsonRequestBehavior.AllowGet);
+                return Json(new { status, LastEntry,message }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
             {
                 status = "Failed";
-                //ErrorDes = ex.Message;
+                message = ex.Message;
             }
-            return Json(new { status = status, LastEntry = LastEntry }, JsonRequestBehavior.AllowGet);
+            return Json(new { status = status, LastEntry = LastEntry,message}, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult PreviewReprocessing(int DocEntry)

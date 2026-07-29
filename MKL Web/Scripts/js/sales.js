@@ -1258,7 +1258,7 @@ function cmd_show_customer_change_house(type, r) {
 
     $("#txt_cardtype").val(type);
     if (type == '2' && ($("#txt_card_code").val() == '' || $("#table_payment_schedule >tbody >tr").length == 0)) {
-        ShowAlertCus("Please choose old customer and house infomation first!", "warning");
+        ShowAlertCus("Please choose old customer and item infomation first!", "warning");
     } else if (type == '2') {
         $("#modal-cust_new_list").modal('show');
     } else {
@@ -1647,7 +1647,8 @@ function txt_change_buyback_amt() {
 
 function cmd_save_buyback() {
 
-    if ($("#txt_card_code").val() == "" || convert2digit(returnstringvalue($("#txt_buyback_amt").val())) == '0.00' || convert2digit(returnstringvalue($("#txt_ar_amt").val())) == '0.00') {
+    if (
+        $("#txt_card_code").val() == "" || convert2digit(returnstringvalue($("#txt_buyback_amt").val())) == '0.00') {
         ShowAlertCus("Data not enough!", "warning");
     } else {
         var cn_list = [];
@@ -1822,7 +1823,7 @@ function cmd_save_buyback() {
                     ShowAlertCus("Buyback was saved", "success");
                     location.reload();
                 } else {
-                    ShowAlertCus(data.status, "warning"); // 👈 show server message
+                    ShowAlertCus(data.message, "warning"); // 👈 show server message
                 }
             },
             failure: function (response) {
@@ -2619,6 +2620,10 @@ function get_special_payment() {
 
 
 
+                console.log(`remainingAmt: ${remainingAmt}`);
+                console.log(`newremainingAmt: ${newremainingAmt}`);
+
+
                 if (parseFloat(convert2digit(remainingAmt)) == 0) {
 
                     
@@ -2635,21 +2640,6 @@ function get_special_payment() {
                     $("#txt_installment_amount").val('0.00');
                 }
 
-                //// 🔧 FIX 1: move reprocess condition UP
-                //else if (parseFloat(convert2digit(newremainingAmt)) <= 0) {
-
-                //    $("#txt_installment_rate").attr('readonly', 'readonly');
-                //    $("#txt_period").attr('readonly', 'readonly');
-                //    $("#txt_fixed_monthly_payment").attr('readonly', 'readonly');
-                //    $("#check_manual_payment").prop('checked', false);
-                //    $("#check_manual_payment").attr('disabled', 'disabled');
-                //    $("#cbo_payment_option").val('');
-                //    $("#cbo_payment_option").attr('disabled', 'disabled');
-                //    $("#btn_generate_payment_shcedule").text('Generate');
-                //    $("#txt_remaining_amount").val('0.00');
-                //    $("#txt_installment_amount").val('0.00');
-                //}
-
                 // 🔧 FIX 2: change || → &&
                 else if (parseFloat(convert2digit(remainingAmt)) != 0
                     && parseFloat(convert2digit(newremainingAmt)) != 0) {
@@ -2657,6 +2647,26 @@ function get_special_payment() {
                     $("#txt_remaining_amount").val(convert2digit(remainingAmt));
                     $("#txt_installment_amount").val(convert2digit(remainingAmt));
                 }
+
+
+
+                // This condition is put for the calculation of reprocess 
+                else if (parseFloat(convert2digit(remainingAmt)) != 0 && parseFloat(convert2digit(newremainingAmt)) <= 0) {
+
+                    $("#txt_remaining_amount").val('0.00');
+                    $("#txt_installment_amount").val('0.00');
+                    $("#txt_buyback_amt").attr('disabled', 'disabled');
+                    $("#txt_installment_rate").attr('readonly', 'readonly');
+                    $("#txt_period").attr('readonly', 'readonly');
+                    $("#txt_fixed_monthly_payment").attr('readonly', 'readonly');
+                    $("#check_manual_payment").prop('checked', false);
+                    $("#check_manual_payment").attr('disabled', 'disabled');
+                    $("#cbo_payment_option").val('');
+                    $("#cbo_payment_option").attr('disabled', 'disabled');
+                    $("#btn_generate_payment_shcedule").text('Generate');
+                }
+
+
 
                 disable_enable_remove_by_line();
                 set_date_of_payment();
@@ -2673,6 +2683,9 @@ function get_special_payment() {
 function get_payment_schedule() {
 
     var moduleId = document.getElementById("txt_module_id").value;
+
+
+    console.log(moduleId);
 
 
     var el = document.getElementById("txt_new_serail");
@@ -2899,6 +2912,9 @@ function get_payment_schedule() {
                 var newremainingAmt = parseFloat(returnstringvalue($("#txt_remaining_amount").val())) - parseFloat(totalPrinciple);
 
 
+                console.log(`remainingAmt: ${remainingAmt}`);
+                console.log(`newremainingAmt: ${newremainingAmt}`);
+
 
                 if (parseFloat(convert2digit(remainingAmt)) == 0) {
                     $("#txt_installment_rate").attr('readonly', 'readonly');
@@ -2916,6 +2932,8 @@ function get_payment_schedule() {
                     $("#txt_remaining_amount").val(convert2digit(remainingAmt));
                     $("#txt_installment_amount").val(convert2digit(remainingAmt));
                 }
+
+              
                 // This condition is put for the calculation of reprocess 
                 else if (parseFloat(convert2digit(remainingAmt)) != 0 && parseFloat(convert2digit(newremainingAmt)) <= 0) {
 
@@ -4100,7 +4118,7 @@ function cmd_save_change_owner() {
                     ShowAlertCus("Changing owner was saved", "success");
                     location.reload();
                 } else {
-                    ShowAlertCus(data.status, "warning");
+                    ShowAlertCus(data.message, "warning");
                 }
             },
             error: function (xhr) {
@@ -6244,7 +6262,7 @@ function cmd_save_approval_ChangeItem(Type) {
                     window.location.href = "/amendments/ChangeproductApporovalListing";
                 }, 1500); // Wait 1.5 seconds before redirect
             } else {
-                ShowAlertCus("Error while saving", "danger");
+                ShowAlertCus(data.message, "danger");
             }
         },
 
