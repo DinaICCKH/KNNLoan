@@ -1563,6 +1563,7 @@ namespace MKL_Web.Controllers
         {
             status = "OK";
             int LastEntry = 0;
+            string message = "success";
             if (status == "OK")
             {
                 var trans = TransWithCommitted();
@@ -1593,8 +1594,9 @@ namespace MKL_Web.Controllers
 
                             if (rawResultConnectBP.Any())
                             {
-                                status = "Error: Please update connect Vendor in SAP first.";
-                                return Json(new { status, LastEntry }, JsonRequestBehavior.AllowGet);
+                                status = "Error";
+                                message = "Please update connect Vendor in SAP first.";
+                                return Json(new { status, LastEntry,message}, JsonRequestBehavior.AllowGet);
                             }
 
                             var rawResult = db.ICC_ApprovalTempate_Check("CP", "A", monthlyTotal);
@@ -1614,8 +1616,9 @@ namespace MKL_Web.Controllers
 
                             if (!list.Any())
                             {
-                                status = "Error: No approval template found.";
-                                return Json(new { status, LastEntry }, JsonRequestBehavior.AllowGet);
+                                status = "Error";
+                                message = "Error: No approval template found.";
+                                return Json(new { status, LastEntry,message }, JsonRequestBehavior.AllowGet);
                             }
                             else
                             {
@@ -1702,6 +1705,7 @@ namespace MKL_Web.Controllers
                                                 else
                                                 {
                                                     status = "Error";
+                                                    message = "Error while saving data to draft";
                                                 }
                                             }
 
@@ -1719,6 +1723,7 @@ namespace MKL_Web.Controllers
                                         if (resultvalue.Result != "Success")
                                         {
                                             status = "Fail";
+                                            message = resultvalue.Result;
                                         }
                                     }
 
@@ -1731,6 +1736,7 @@ namespace MKL_Web.Controllers
                                     else
                                     {
                                         status = "Error";
+                                        message = "Error while saving data";
                                     }
                                 }
                             }
@@ -1739,15 +1745,16 @@ namespace MKL_Web.Controllers
                     else
                     {
                         status = "Error";
+                        message = "Error while saving data";
                     }
                 }
                 catch (Exception ex)
                 {
                     status = "Failed";
-                    //ErrorDes = ex.Message;
+                    message = ex.Message;
                 }
             }
-            return Json(new { status = status, LastEntry = LastEntry }, JsonRequestBehavior.AllowGet);
+            return Json(new { status = status, LastEntry = LastEntry,message }, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult ChangeproductApporovalListing(string Status = "Draf", DateTime? fdate = null, DateTime? tdate = null, string CreateBy = "")
