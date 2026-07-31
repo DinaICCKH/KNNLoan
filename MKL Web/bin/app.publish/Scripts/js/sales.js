@@ -1961,9 +1961,7 @@ function get_selected_payment_schedule_changeitem_by_so() {
                 var SerialNumber = "";
 
 
-                BuybackAmt = $("#txt_buyback_amt").text('0.00'); +
-
-                    $("#txt_total_principle").text('0.00');
+                BuybackAmt = $("#txt_buyback_amt").text('0.00'); + $("#txt_total_principle").text('0.00');
                 $("#txt_total_interest").text('0.00');
                 $("#txt_total_monthly").text('0.00');
                 $("#txt_docentry").val(docentry);
@@ -2047,7 +2045,27 @@ function get_selected_payment_schedule_changeitem_by_so() {
                     data += `<td style='text-align:Left; vertical-align: middle; color:red' id='tr_payment_detail_paymentno_line_${index}'>${x.PaymentNo}</td>`;
                     data += `<td style='text-align:Left; vertical-align: middle; color:red' id='tr_payment_detail_arnointerest_line_${index}'>${x.ARNoInterest}</td>`;
                     data += `<td style='text-align:Left; vertical-align: middle; color:red' id='tr_payment_detail_paymentnointerest_line_${index}'>${x.PaymentNoInterest}</td>`;
-                    data += `<td ${(isOpen ? "contenteditable='true'" : "")} style='text-align:Left; vertical-align: middle; color:blue' id='tr_payment_detail_remarks_line_${index}'>${x.Remarks}</td>`;
+
+                    data = data + "<td " +
+                        (isOpen ? "contenteditable='true'" : "") +
+                        " style='text-align:Left; vertical-align: middle; color:blue' " +
+                        "id='tr_payment_detail_remarks_line_" + index + "'>" + x.Remarks + "</td>";
+
+                    data = data + "<td contenteditable='true' style='text-align:Left; vertical-align: middle; color:blue' id='tr_chequeno_line_" + index + "'></td>";
+
+                    data = data + "<td contenteditable='true' style='text-align:Left; vertical-align: middle; color:blue' id='tr_nameoncheque_line_" + index + "'></td>";
+
+                    var bankOptions = "<option value=''></option>";
+                    $.each(window.bankList, function (i, bank) {
+                        bankOptions += "<option value='" + bank.Code + "'>" + bank.Name + "</option>";
+                    });
+
+                    data += "<td style='vertical-align: middle;'>" +
+                        "<select class='form-control' id='tr_bank_line_" + index + "'>" +
+                        bankOptions +
+                        "</select>" +
+                        "</td>";
+                    data = data + "<td contenteditable='true' style='text-align:Left; vertical-align: middle; color:blue' id='tr_payee_line_" + index + "'></td>";
 
                     // Hidden fields
                     data += `<td style='display:none;' id='tr_payment_detail_status_line_${index}'>${x.Status.trim()}</td>`;
@@ -2402,6 +2420,10 @@ function get_changeitem_information() {
 }
 
 function get_special_payment() {
+
+
+    var moduleId = document.getElementById("txt_module_id").value;
+
     var method = "";
     var paymentdate = "";
     var amount = "";
@@ -2613,15 +2635,22 @@ function get_special_payment() {
 
 
                 var beforedis = returnstringvalue($("#txt_before_discount_amount").val());
-            /*    var afterdis = returnstringvalue($("#txt_after_discount").val());*/
+                /*    var afterdis = returnstringvalue($("#txt_after_discount").val());*/
+
 
                 var remainingAmt = parseFloat(beforedis) - parseFloat(totalPrinciple);
                 var newremainingAmt = parseFloat(returnstringvalue($("#txt_remaining_amount").val())) - parseFloat(totalPrinciple);
 
+                if (moduleId = "ChangeHouse") {
 
 
-                console.log(`remainingAmt: ${remainingAmt}`);
-                console.log(`newremainingAmt: ${newremainingAmt}`);
+                    var generatedAR = returnstringvalue($("#txt_generated_ar_amt").val());
+                    var outoldamount = returnstringvalue($("#txt_outstanding_amount").val());
+                    var newaramount = returnstringvalue($("#txt_before_discount_amount").val());
+
+                    remainingAmt = parseFloat(newaramount - outoldamount - generatedAR) - parseFloat(totalPrinciple);
+                }
+
 
 
                 if (parseFloat(convert2digit(remainingAmt)) == 0) {
@@ -3425,7 +3454,7 @@ function insert_to_remove_table(installment_id) {
 
 function cmd_tr_payment_detail_remove_line(index) {
 
-
+    var moduleId = document.getElementById("txt_module_id").value;
 
     var in_id = $("#tr_payment_detail_installmentid_line_" + index).text().trim();
     if (in_id != '-1') {
@@ -3440,7 +3469,6 @@ function cmd_tr_payment_detail_remove_line(index) {
         }
         $("#txt_maturity_payment").val($("#tr_payment_detail_paymentdate_line_" + rowindex).text().trim());
     }
-
     // 🔒 SAFE moduleId check
     if (typeof moduleId !== "undefined" && moduleId === "ChangeHouse") {
         recalculate_total_remaining_ChangeProduct();
@@ -3470,8 +3498,22 @@ function recalculate_total_remaining_ChangeProduct() {
     $("#txt_total_interest").text(convert2digit(totalInterest));
     $("#txt_total_monthly").text(convert2digit(totalMonthlyPay));
 
-    var afterdis = returnstringvalue($("#txt_after_discount").val());
-    var remainingAmt = parseFloat(afterdis) - parseFloat(totalPrinciple);
+    var afterdis = returnstringvalue($("#txt_oldafter_discount").val());
+
+    var generatedAR = returnstringvalue($("#txt_generated_ar_amt").val());
+    var outoldamount = returnstringvalue($("#txt_outstanding_amount").val());
+    var newaramount = returnstringvalue($("#txt_before_discount_amount").val());
+
+
+    // Debug values
+    console.log("afterdis:", afterdis);
+    console.log("generatedAR:", generatedAR);
+    console.log("outoldamount:", outoldamount);
+    console.log("newaramount:", newaramount);
+    console.log("totalPrinciple:", totalPrinciple);
+
+
+    var remainingAmt = parseFloat(newaramount - outoldamount - generatedAR) - parseFloat(totalPrinciple);
 
 
     if (parseFloat(convert2digit(remainingAmt)) == 0) {
@@ -6222,7 +6264,7 @@ function cmd_save_change_item() {
                     location.reload();
 
                 } else {
-                    ShowAlertCus("Error while saving record!", "warning");
+                    ShowAlertCus(data.message, "warning");
                 }
             },
             failure: function (response) {

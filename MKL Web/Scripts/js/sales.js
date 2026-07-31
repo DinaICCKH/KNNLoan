@@ -1961,9 +1961,7 @@ function get_selected_payment_schedule_changeitem_by_so() {
                 var SerialNumber = "";
 
 
-                BuybackAmt = $("#txt_buyback_amt").text('0.00'); +
-
-                    $("#txt_total_principle").text('0.00');
+                BuybackAmt = $("#txt_buyback_amt").text('0.00'); + $("#txt_total_principle").text('0.00');
                 $("#txt_total_interest").text('0.00');
                 $("#txt_total_monthly").text('0.00');
                 $("#txt_docentry").val(docentry);
