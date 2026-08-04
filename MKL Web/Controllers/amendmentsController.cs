@@ -771,6 +771,43 @@ namespace MKL_Web.Controllers
                 using (trans)
                 {
 
+                    // For check the posting period 
+                    // Check Posting Period
+
+                    var resultHeader = db.ICC_Notification_PostingPeriod(header.PostingDate, "Header");
+
+                    var checkHeader = resultHeader.FirstOrDefault();
+
+                    if (checkHeader != null && checkHeader.Code == 0)
+                    {
+                        return Json(new
+                        {
+                            status = checkHeader.Message,
+                            LastEntry = 0,
+                            message = checkHeader.Message,
+                        }, JsonRequestBehavior.AllowGet);
+                    }
+
+                    foreach (var item in installment_row.Where(x => x.ARNo == -1))
+                    {
+                        if (!item.PaymentDate.HasValue)
+                            continue;
+
+                        var resultRow = db.ICC_Notification_PostingPeriod(item.PaymentDate.Value, "Row");
+
+                        var check = resultRow.FirstOrDefault();
+
+                        if (check != null && check.Code == 0)
+                        {
+                            return Json(new
+                            {
+                                status = check.Message,
+                                LastEntry = 0,
+                                message = check.Message,
+                            }, JsonRequestBehavior.AllowGet);
+                        }
+                    }
+
                     int baseEntry = installment_row.FirstOrDefault()?.BaseEntry ?? 0;
 
                     var result = db.ICC_NOTIFICATION_FOR_CHANGE_SCHEDULE(baseEntry).FirstOrDefault();
@@ -1037,6 +1074,44 @@ namespace MKL_Web.Controllers
             {
                 using (trans)
                 {
+
+
+                    // For check the posting period 
+                    // Check Posting Period
+
+                    var resultHeader = db.ICC_Notification_PostingPeriod(header.PostingDate, "Header");
+
+                    var checkHeader = resultHeader.FirstOrDefault();
+
+                    if (checkHeader != null && checkHeader.Code == 0)
+                    {
+                        return Json(new
+                        {
+                            status = checkHeader.Message,
+                            LastEntry = 0,
+                            message = checkHeader.Message,
+                        }, JsonRequestBehavior.AllowGet);
+                    }
+
+                    foreach (var item in installment_row.Where(x => x.ARNo == -1))
+                    {
+                        if (!item.PaymentDate.HasValue)
+                            continue;
+
+                        var resultrow = db.ICC_Notification_PostingPeriod(item.PaymentDate.Value, "Row");
+
+                        var check = resultrow.FirstOrDefault();
+
+                        if (check != null && check.Code == 0)
+                        {
+                            return Json(new
+                            {
+                                status = check.Message,
+                                LastEntry = 0,
+                                message = check.Message,
+                            }, JsonRequestBehavior.AllowGet);
+                        }
+                    }
                     // For check notification clean all related document from loan before can change it 
 
                     int baseEntry = installment_row.FirstOrDefault()?.BaseEntry ?? 0;
@@ -1225,6 +1300,43 @@ namespace MKL_Web.Controllers
                         using (trans)
                         {
 
+
+                            // For check the posting period 
+                            // Check Posting Period
+
+                            var resultHeader = db.ICC_Notification_PostingPeriod(header.PostingDate, "Header");
+
+                            var checkHeader = resultHeader.FirstOrDefault();
+
+                            if (checkHeader != null && checkHeader.Code == 0)
+                            {
+                                return Json(new
+                                {
+                                    status = checkHeader.Message,
+                                    LastEntry = 0,
+                                    message = checkHeader.Message,
+                                }, JsonRequestBehavior.AllowGet);
+                            }
+
+                            foreach (var item in installment_row.Where(x => x.ARNo == -1))
+                            {
+                                if (!item.PaymentDate.HasValue)
+                                    continue;
+
+                                var result = db.ICC_Notification_PostingPeriod(item.PaymentDate.Value, "Row");
+
+                                var check = result.FirstOrDefault();
+
+                                if (check != null && check.Code == 0)
+                                {
+                                    return Json(new
+                                    {
+                                        status = check.Message,
+                                        LastEntry = 0,
+                                        message = check.Message,
+                                    }, JsonRequestBehavior.AllowGet);
+                                }
+                            }
 
 
                             int baseEntry = installment_row.FirstOrDefault()?.BaseEntry ?? 0;
@@ -1573,6 +1685,44 @@ namespace MKL_Web.Controllers
                     {
                         using (trans)
                         {
+
+                            // For check the posting period 
+                            // Check Posting Period
+
+                            var resultHeader = db.ICC_Notification_PostingPeriod(header.PostingDate, "Header");
+
+                            var checkHeader = resultHeader.FirstOrDefault();
+
+                            if (checkHeader != null && checkHeader.Code == 0)
+                            {
+                                return Json(new
+                                {
+                                    status = checkHeader.Message,
+                                    LastEntry = 0,
+                                    message = checkHeader.Message,
+                                }, JsonRequestBehavior.AllowGet);
+                            }
+
+                            foreach (var item in installment_row.Where(x => x.ARNo == -1))
+                            {
+                                if (!item.PaymentDate.HasValue)
+                                    continue;
+
+                                var resultRow = db.ICC_Notification_PostingPeriod(item.PaymentDate.Value, "Row");
+
+                                var check = resultRow.FirstOrDefault();
+
+                                if (check != null && check.Code == 0)
+                                {
+                                    return Json(new
+                                    {
+                                        status = check.Message,
+                                        LastEntry = 0,
+                                        message = check.Message,
+                                    }, JsonRequestBehavior.AllowGet);
+                                }
+                            }
+
 
                             int baseEntry = installment_row.FirstOrDefault()?.BaseEntry ?? 0;
 

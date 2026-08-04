@@ -3915,7 +3915,7 @@ function cmd_save_payment_shcedule() {
                     location.reload();
                     
                 } else {
-                    ShowAlertCus("Error while saving Payment Shcedule!","warning");
+                    ShowAlertCus(data.message,"warning");
                 }
 
             },
@@ -4046,7 +4046,7 @@ function cmd_save_change_schedule() {
                     ShowAlertCus("Payment Shcedule was saved", "success");
                     location.reload();
                 } else {
-                    ShowAlertCus(data.Message,"warning");
+                    ShowAlertCus(data.message,"warning");
                 }
             },
             failure: function (response) {

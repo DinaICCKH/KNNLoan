@@ -3209,4 +3209,12 @@
       <Column Name="DocNums" Type="System.String" DbType="VarChar(8000)" CanBeNull="true" />
     </ElementType>
   </Function>
+  <Function Name="dbo.ICC_Notification_PostingPeriod" Method="ICC_Notification_PostingPeriod">
+    <Parameter Name="DocDate" Parameter="docDate" Type="System.DateTime" DbType="Date" />
+    <Parameter Name="Type" Parameter="type" Type="System.String" DbType="NVarChar(10)" />
+    <ElementType Name="ICC_Notification_PostingPeriodResult">
+      <Column Name="Code" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Message" Type="System.String" DbType="VarChar(25) NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
 </Database>

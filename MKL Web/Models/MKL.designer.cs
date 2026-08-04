@@ -1384,6 +1384,13 @@ namespace MKL_Web.Models
 			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), iD);
 			return ((ISingleResult<ICC_NOTIFICATION_FOR_CHANGE_SCHEDULEResult>)(result.ReturnValue));
 		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.ICC_Notification_PostingPeriod")]
+		public ISingleResult<ICC_Notification_PostingPeriodResult> ICC_Notification_PostingPeriod([global::System.Data.Linq.Mapping.ParameterAttribute(Name="DocDate", DbType="Date")] System.Nullable<System.DateTime> docDate, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Type", DbType="NVarChar(10)")] string type)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), docDate, type);
+			return ((ISingleResult<ICC_Notification_PostingPeriodResult>)(result.ReturnValue));
+		}
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Controller")]
@@ -55177,6 +55184,50 @@ namespace MKL_Web.Models
 				if ((this._DocNums != value))
 				{
 					this._DocNums = value;
+				}
+			}
+		}
+	}
+	
+	public partial class ICC_Notification_PostingPeriodResult
+	{
+		
+		private int _Code;
+		
+		private string _Message;
+		
+		public ICC_Notification_PostingPeriodResult()
+		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Code", DbType="Int NOT NULL")]
+		public int Code
+		{
+			get
+			{
+				return this._Code;
+			}
+			set
+			{
+				if ((this._Code != value))
+				{
+					this._Code = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Message", DbType="VarChar(25) NOT NULL", CanBeNull=false)]
+		public string Message
+		{
+			get
+			{
+				return this._Message;
+			}
+			set
+			{
+				if ((this._Message != value))
+				{
+					this._Message = value;
 				}
 			}
 		}

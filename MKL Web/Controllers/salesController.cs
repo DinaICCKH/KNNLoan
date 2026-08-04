@@ -963,6 +963,8 @@ namespace MKL_Web.Controllers
         {
             status = "OK";
             int LastEntry = 0;
+            string message = "Success";
+
             if (status == "OK")
             {
                 var trans = TransWithCommitted();
@@ -972,6 +974,29 @@ namespace MKL_Web.Controllers
                     {
                         using (trans)
                         {
+
+                            // For check the posting period 
+                            // Check Posting Period
+                            foreach (var item in installment_row.Where(x => x.ARNo == -1))
+                            {
+                                if (!item.PaymentDate.HasValue)
+                                    continue;
+
+                                var result = db.ICC_Notification_PostingPeriod(item.PaymentDate.Value, "Row");
+
+                                var check = result.FirstOrDefault();
+
+                                if (check != null && check.Code == 0)
+                                {
+                                    return Json(new
+                                    {
+                                        status = check.Message,
+                                        LastEntry = 0,
+                                        message = check.Message,
+                                    }, JsonRequestBehavior.AllowGet);
+                                }
+                            }
+
 
                             // For Get Approval Template 
                             var monthlyTotal = installment_row.Sum(x => x.Monthly);
@@ -993,8 +1018,9 @@ namespace MKL_Web.Controllers
 
                             if (!list.Any())
                             {
-                                status = "Error: No approval template found.";
-                                return Json(new { status, LastEntry}, JsonRequestBehavior.AllowGet);
+                                status = "Error";
+                                message = "No approval template found.";
+                                return Json(new { status, LastEntry,message}, JsonRequestBehavior.AllowGet);
                             }
                             else
                             {
@@ -1065,6 +1091,7 @@ namespace MKL_Web.Controllers
                                             else
                                             {
                                                 status = "Error";
+                                                message = "Error while saving data.";
                                             }
                                         }
 
@@ -1080,6 +1107,7 @@ namespace MKL_Web.Controllers
                                         if (resultvalue.Result != "Success")
                                         {
                                             status = "Fail";
+                                            message = "Error while saving data.";
                                         }
 
                                         var link = "/sales/PreviewLoanDraf?DocEntry=" + LastEntry;
@@ -1096,6 +1124,7 @@ namespace MKL_Web.Controllers
                                         if (resultvalue3.Result != "Success")
                                         {
                                             status = "Fail";
+                                            message = "Error while saving data.";
                                         }
                                     }
 
@@ -1108,6 +1137,7 @@ namespace MKL_Web.Controllers
                                     else
                                     {
                                         status = "Error";
+                                        message = "Error while saving data.";
                                     }
                                 }
                             }
@@ -1116,15 +1146,16 @@ namespace MKL_Web.Controllers
                     else
                     {
                         status = "Error";
+                        message = "Error while saving data.";
                     }
                 }
                 catch (Exception ex)
                 {
                     status = "Failed";
-                    //ErrorDes = ex.Message;
+                    message = ex.Message;
                 }
             }
-            return Json(new { status = status, LastEntry = LastEntry }, JsonRequestBehavior.AllowGet);
+            return Json(new { status = status, LastEntry = LastEntry, message=message }, JsonRequestBehavior.AllowGet);
         }
 
 
@@ -1888,6 +1919,27 @@ namespace MKL_Web.Controllers
                     {
                         using (trans)
                         {
+
+
+                            // For check the posting period 
+                            // Check Posting Period
+                           
+                            var resultPosting = db.ICC_Notification_PostingPeriod(header.PostingDate, "Header");
+
+                            var check = resultPosting.FirstOrDefault();
+
+                            if (check != null && check.Code == 0)
+                            {
+                                return Json(new
+                                {
+                                    status = check.Message,
+                                    LastEntry = 0,
+                                    Message = check.Message,
+                                }, JsonRequestBehavior.AllowGet);
+                            }
+                           
+
+
                             var rawResult = db.ICC_ApprovalTempate_Check("LI", "", header.TotalApplyAmt);
 
                             var list = rawResult.Select(x => new ApprovalTemplate
@@ -2569,6 +2621,46 @@ namespace MKL_Web.Controllers
 
             try
             {
+
+
+                // For check the posting period 
+                // Check Posting Period
+
+                var resultHeader = db.ICC_Notification_PostingPeriod(header.DocDate, "Header");
+
+                var checkHeader = resultHeader.FirstOrDefault();
+
+                if (checkHeader != null && checkHeader.Code == 0)
+                {
+                    return Json(new
+                    {
+                        status = checkHeader.Message,
+                        LastEntry = 0,
+                        Message = checkHeader.Message,
+                    }, JsonRequestBehavior.AllowGet);
+                }
+
+                foreach (var item in detail.Where(x => x.ARNo == -1))
+                {
+                    if (!item.PaymentDate.HasValue)
+                        continue;
+
+                    var resultRow = db.ICC_Notification_PostingPeriod(item.PaymentDate.Value, "Row");
+
+                    var check = resultRow.FirstOrDefault();
+
+                    if (check != null && check.Code == 0)
+                    {
+                        return Json(new
+                        {
+                            status = check.Message,
+                            LastEntry = 0,
+                            Message = check.Message,
+                        }, JsonRequestBehavior.AllowGet);
+                    }
+                }
+
+
                 if (header == null || detail == null || cn_inList == null || ar_inList == null)
                 {
                     return Json(new { status = "Please Generate Schedule before submit.", LastEntry,message= "Please Generate Schedule before submit." }, JsonRequestBehavior.AllowGet);
