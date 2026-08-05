@@ -2260,27 +2260,6 @@
       <Column Name="NextApprover" Type="System.String" DbType="VarChar(1) NOT NULL" CanBeNull="false" />
     </ElementType>
   </Function>
-  <Function Name="dbo.ICC_Get_List_Approval_Penalty" Method="ICC_Get_List_Approval_Penalty">
-    <Parameter Name="Status" Parameter="status" Type="System.String" DbType="NVarChar(50)" />
-    <Parameter Name="fdate" Type="System.DateTime" DbType="Date" />
-    <Parameter Name="tdate" Type="System.DateTime" DbType="Date" />
-    <Parameter Name="CreateBy" Parameter="createBy" Type="System.String" DbType="NVarChar(250)" />
-    <ElementType Name="ICC_Get_List_Approval_PenaltyResult">
-      <Column Name="DocEntry" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="PenaltyDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
-      <Column Name="DocNumRef" Type="System.String" DbType="NVarChar(250)" CanBeNull="true" />
-      <Column Name="WaiveOption" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
-      <Column Name="Name" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
-      <Column Name="U_Percentage" Type="System.Decimal" DbType="Decimal(19,6)" CanBeNull="true" />
-      <Column Name="ApprovalStage" Type="System.String" DbType="NVarChar(250)" CanBeNull="true" />
-      <Column Name="TemplateDesc" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
-      <Column Name="NextApprover" Type="System.String" DbType="NVarChar(250)" CanBeNull="true" />
-      <Column Name="CreateDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
-      <Column Name="CreateBy" Type="System.String" DbType="NVarChar(250)" CanBeNull="true" />
-      <Column Name="Status" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="Remark" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
-    </ElementType>
-  </Function>
   <Function Name="dbo.ICC_Approval_PenaltyDraf_Submit_Doc" Method="ICC_Approval_PenaltyDraf_Submit_Doc">
     <Parameter Name="AppStatus" Parameter="appStatus" Type="System.String" DbType="NVarChar(50)" />
     <Parameter Name="Approver" Parameter="approver" Type="System.String" DbType="NVarChar(50)" />
@@ -2288,25 +2267,6 @@
     <Parameter Name="Comment" Parameter="comment" Type="System.String" DbType="NVarChar(MAX)" />
     <ElementType Name="ICC_Approval_PenaltyDraf_Submit_DocResult">
       <Column Name="Result" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
-    </ElementType>
-  </Function>
-  <Function Name="dbo.ICC_Get_List_Approval_Restructure" Method="ICC_Get_List_Approval_Restructure">
-    <Parameter Name="Status" Parameter="status" Type="System.String" DbType="NVarChar(50)" />
-    <Parameter Name="fdate" Type="System.DateTime" DbType="Date" />
-    <Parameter Name="tdate" Type="System.DateTime" DbType="Date" />
-    <Parameter Name="CreateBy" Parameter="createBy" Type="System.String" DbType="NVarChar(250)" />
-    <ElementType Name="ICC_Get_List_Approval_RestructureResult">
-      <Column Name="DocEntry" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="PostingDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
-      <Column Name="DocNumRef" Type="System.String" DbType="NVarChar(250)" CanBeNull="true" />
-      <Column Name="RestructureOption" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
-      <Column Name="ApprovalStage" Type="System.String" DbType="NVarChar(250)" CanBeNull="true" />
-      <Column Name="TemplateDesc" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
-      <Column Name="NextApprover" Type="System.String" DbType="NVarChar(250)" CanBeNull="true" />
-      <Column Name="CreateDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
-      <Column Name="CreateBy" Type="System.String" DbType="NVarChar(250)" CanBeNull="true" />
-      <Column Name="Status" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="Remark" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
     </ElementType>
   </Function>
   <Function Name="dbo.ICC_Approval_RestructureDraf_Submit_Doc" Method="ICC_Approval_RestructureDraf_Submit_Doc">
@@ -2464,24 +2424,6 @@
       <Column Name="OldCardName" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
     </ElementType>
   </Function>
-  <Function Name="dbo.ICC_Get_List_Approval_Reschedule" Method="ICC_Get_List_Approval_Reschedule">
-    <Parameter Name="Status" Parameter="status" Type="System.String" DbType="NVarChar(50)" />
-    <Parameter Name="fdate" Type="System.DateTime" DbType="Date" />
-    <Parameter Name="tdate" Type="System.DateTime" DbType="Date" />
-    <Parameter Name="CreateBy" Parameter="createBy" Type="System.String" DbType="NVarChar(250)" />
-    <ElementType Name="ICC_Get_List_Approval_RescheduleResult">
-      <Column Name="DocEntry" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="PostingDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
-      <Column Name="DocNumRef" Type="System.String" DbType="NVarChar(250)" CanBeNull="true" />
-      <Column Name="ApprovalStage" Type="System.String" DbType="NVarChar(250)" CanBeNull="true" />
-      <Column Name="TemplateDesc" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
-      <Column Name="NextApprover" Type="System.String" DbType="NVarChar(250)" CanBeNull="true" />
-      <Column Name="CreateDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
-      <Column Name="CreateBy" Type="System.String" DbType="NVarChar(250)" CanBeNull="true" />
-      <Column Name="Status" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="Remark" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
-    </ElementType>
-  </Function>
   <Function Name="dbo.ICC_Approval_RescheduleDraf_Submit_Doc" Method="ICC_Approval_RescheduleDraf_Submit_Doc">
     <Parameter Name="AppStatus" Parameter="appStatus" Type="System.String" DbType="NVarChar(50)" />
     <Parameter Name="Approver" Parameter="approver" Type="System.String" DbType="NVarChar(50)" />
@@ -2489,25 +2431,6 @@
     <Parameter Name="Comment" Parameter="comment" Type="System.String" DbType="NVarChar(MAX)" />
     <ElementType Name="ICC_Approval_RescheduleDraf_Submit_DocResult">
       <Column Name="Result" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
-    </ElementType>
-  </Function>
-  <Function Name="dbo.ICC_Get_List_Approval_Reprocessing" Method="ICC_Get_List_Approval_Reprocessing">
-    <Parameter Name="Status" Parameter="status" Type="System.String" DbType="NVarChar(50)" />
-    <Parameter Name="fdate" Type="System.DateTime" DbType="Date" />
-    <Parameter Name="tdate" Type="System.DateTime" DbType="Date" />
-    <Parameter Name="CreateBy" Parameter="createBy" Type="System.String" DbType="NVarChar(250)" />
-    <ElementType Name="ICC_Get_List_Approval_ReprocessingResult">
-      <Column Name="DocEntry" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="PostingDate" Type="System.DateTime" DbType="Date" CanBeNull="true" />
-      <Column Name="DocNumRef" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
-      <Column Name="DocNum" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="ApprovalStage" Type="System.String" DbType="NVarChar(250)" CanBeNull="true" />
-      <Column Name="TemplateDesc" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
-      <Column Name="NextApprover" Type="System.String" DbType="NVarChar(250)" CanBeNull="true" />
-      <Column Name="CreateDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
-      <Column Name="CreateBy" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
-      <Column Name="Status" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
-      <Column Name="Remark" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
     </ElementType>
   </Function>
   <Function Name="dbo.ICC_Get_List_Reprocessing_By_ID" Method="ICC_Get_List_Reprocessing_By_ID">
@@ -2571,45 +2494,6 @@
       <Column Name="TemplateDesc" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
       <Column Name="ApprovalTemplate" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
       <Column Name="LastApprover" Type="System.String" DbType="NVarChar(250)" CanBeNull="true" />
-      <Column Name="CreateDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
-      <Column Name="CreateBy" Type="System.String" DbType="NVarChar(250)" CanBeNull="true" />
-      <Column Name="Status" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="Remark" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
-      <Column Name="OldItemCode" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="OldSerial" Type="System.String" DbType="NVarChar(250)" CanBeNull="true" />
-      <Column Name="OldItemName" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
-      <Column Name="ChangeRef" Type="System.String" DbType="NVarChar(250)" CanBeNull="true" />
-      <Column Name="NewItemCode" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="NewItemName" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
-      <Column Name="NewSerial" Type="System.String" DbType="NVarChar(250)" CanBeNull="true" />
-      <Column Name="OldAR" Type="System.Decimal" DbType="Decimal(19,6)" CanBeNull="true" />
-      <Column Name="NewAR" Type="System.Decimal" DbType="Decimal(19,6)" CanBeNull="true" />
-      <Column Name="GeneratedAR" Type="System.Decimal" DbType="Decimal(19,6)" CanBeNull="true" />
-      <Column Name="OutstandingAmt" Type="System.Decimal" DbType="Decimal(19,6)" CanBeNull="true" />
-      <Column Name="InstallmentAmt" Type="System.Decimal" DbType="Decimal(19,6)" CanBeNull="true" />
-      <Column Name="BuyBackAmt" Type="System.Decimal" DbType="Decimal(19,6)" CanBeNull="true" />
-      <Column Name="VarainAmt" Type="System.Decimal" DbType="Decimal(19,6)" CanBeNull="true" />
-      <Column Name="CardCode" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="CardName" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
-      <Column Name="CntCode" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="PhoneNumber" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
-    </ElementType>
-  </Function>
-  <Function Name="dbo.ICC_Get_List_Approval_ChangeItem" Method="ICC_Get_List_Approval_ChangeItem">
-    <Parameter Name="Status" Parameter="status" Type="System.String" DbType="NVarChar(50)" />
-    <Parameter Name="fdate" Type="System.DateTime" DbType="Date" />
-    <Parameter Name="tdate" Type="System.DateTime" DbType="Date" />
-    <Parameter Name="CreateBy" Parameter="createBy" Type="System.String" DbType="NVarChar(250)" />
-    <ElementType Name="ICC_Get_List_Approval_ChangeItemResult">
-      <Column Name="DocEntry" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="PostingDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
-      <Column Name="DeliveryDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
-      <Column Name="StartPayDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
-      <Column Name="MaturityDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
-      <Column Name="DocNumRef" Type="System.String" DbType="NVarChar(250)" CanBeNull="true" />
-      <Column Name="ApprovalStage" Type="System.String" DbType="NVarChar(250)" CanBeNull="true" />
-      <Column Name="TemplateDesc" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
-      <Column Name="NextApprover" Type="System.String" DbType="NVarChar(250)" CanBeNull="true" />
       <Column Name="CreateDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
       <Column Name="CreateBy" Type="System.String" DbType="NVarChar(250)" CanBeNull="true" />
       <Column Name="Status" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
@@ -2711,24 +2595,6 @@
       <Column Name="Remark" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
     </ElementType>
   </Function>
-  <Function Name="dbo.ICC_Get_RepocessingList_Approved" Method="ICC_Get_RepocessingList_Approved">
-    <Parameter Name="fdate" Type="System.DateTime" DbType="Date" />
-    <Parameter Name="tdate" Type="System.DateTime" DbType="Date" />
-    <Parameter Name="CreateBy" Parameter="createBy" Type="System.String" DbType="NVarChar(250)" />
-    <ElementType Name="ICC_Get_RepocessingList_ApprovedResult">
-      <Column Name="DocEntry" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="PostingDate" Type="System.DateTime" DbType="Date" CanBeNull="true" />
-      <Column Name="DocNumRef" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="RestructureOption" Type="System.String" DbType="VarChar(3) NOT NULL" CanBeNull="false" />
-      <Column Name="ApprovalStage" Type="System.String" DbType="NVarChar(250)" CanBeNull="true" />
-      <Column Name="TemplateDesc" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
-      <Column Name="NextApprover" Type="System.String" DbType="NVarChar(250)" CanBeNull="true" />
-      <Column Name="CreateDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
-      <Column Name="CreateBy" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
-      <Column Name="Status" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
-      <Column Name="Remark" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
-    </ElementType>
-  </Function>
   <Function Name="dbo.ICC_Get_List_Repocessing_By_ID_Approved" Method="ICC_Get_List_Repocessing_By_ID_Approved">
     <Parameter Name="DocEntry" Parameter="docEntry" Type="System.Int32" DbType="Int" />
     <ElementType Name="ICC_Get_List_Repocessing_By_ID_ApprovedResult">
@@ -2768,24 +2634,6 @@
       <Column Name="LoanBalance" Type="System.Decimal" DbType="Decimal(23,6)" CanBeNull="true" />
       <Column Name="RowType" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
       <Column Name="RowType1" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-    </ElementType>
-  </Function>
-  <Function Name="dbo.ICC_Get_List_Approval_LoanInstallment" Method="ICC_Get_List_Approval_LoanInstallment">
-    <Parameter Name="Status" Parameter="status" Type="System.String" DbType="NVarChar(50)" />
-    <Parameter Name="fdate" Type="System.DateTime" DbType="Date" />
-    <Parameter Name="tdate" Type="System.DateTime" DbType="Date" />
-    <Parameter Name="CreateBy" Parameter="createBy" Type="System.String" DbType="NVarChar(250)" />
-    <ElementType Name="ICC_Get_List_Approval_LoanInstallmentResult">
-      <Column Name="DocEntry" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="PostingDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
-      <Column Name="DocNumRef" Type="System.String" DbType="NVarChar(250)" CanBeNull="true" />
-      <Column Name="ApprovalStage" Type="System.String" DbType="NVarChar(250)" CanBeNull="true" />
-      <Column Name="TemplateDesc" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
-      <Column Name="NextApprover" Type="System.String" DbType="NVarChar(250)" CanBeNull="true" />
-      <Column Name="CreateDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
-      <Column Name="CreateBy" Type="System.String" DbType="NVarChar(250)" CanBeNull="true" />
-      <Column Name="Status" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="Remark" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
     </ElementType>
   </Function>
   <Function Name="dbo.ICC_Approval_LoanDraf_Submit_Doc" Method="ICC_Approval_LoanDraf_Submit_Doc">
@@ -3175,26 +3023,6 @@
       <Column Name="UserName" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
     </ElementType>
   </Function>
-  <Function Name="dbo.ICC_Get_List_Approval_interestWizard" Method="ICC_Get_List_Approval_interestWizard">
-    <Parameter Name="Status" Parameter="status" Type="System.String" DbType="NVarChar(50)" />
-    <Parameter Name="fdate" Type="System.DateTime" DbType="Date" />
-    <Parameter Name="tdate" Type="System.DateTime" DbType="Date" />
-    <Parameter Name="CreateBy" Parameter="createBy" Type="System.String" DbType="NVarChar(250)" />
-    <ElementType Name="ICC_Get_List_Approval_interestWizardResult">
-      <Column Name="DocEntry" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="PostingDate" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
-      <Column Name="DocNumRef" Type="System.String" DbType="NVarChar(250)" CanBeNull="true" />
-      <Column Name="ApprovalStage" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="TemplateDesc" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
-      <Column Name="NextApprover" Type="System.String" DbType="NVarChar(250)" CanBeNull="true" />
-      <Column Name="CreateDate" Type="System.DateTime" DbType="Date" CanBeNull="true" />
-      <Column Name="CreateBy" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="Status" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="Remark" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
-      <Column Name="SapDocNum" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="LastError" Type="System.String" DbType="NVarChar(250)" CanBeNull="true" />
-    </ElementType>
-  </Function>
   <Function Name="dbo.ICC_Approval_CheckRequester" Method="ICC_Approval_CheckRequester">
     <Parameter Name="TemplateID" Parameter="templateID" Type="System.Int32" DbType="Int" />
     <Parameter Name="User" Parameter="user" Type="System.String" DbType="NVarChar(100)" />
@@ -3215,6 +3043,228 @@
     <ElementType Name="ICC_Notification_PostingPeriodResult">
       <Column Name="Code" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="Message" Type="System.String" DbType="VarChar(25) NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.ICC_Get_List_Approval_interestWizard" Method="ICC_Get_List_Approval_interestWizard">
+    <Parameter Name="Status" Parameter="status" Type="System.String" DbType="NVarChar(50)" />
+    <Parameter Name="fdate" Type="System.DateTime" DbType="Date" />
+    <Parameter Name="tdate" Type="System.DateTime" DbType="Date" />
+    <Parameter Name="CreateBy" Parameter="createBy" Type="System.String" DbType="NVarChar(250)" />
+    <Parameter Name="Serial" Parameter="serial" Type="System.String" DbType="NVarChar(100)" />
+    <Parameter Name="Customer" Parameter="customer" Type="System.String" DbType="NVarChar(250)" />
+    <ElementType Name="ICC_Get_List_Approval_interestWizardResult">
+      <Column Name="DocEntry" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="PostingDate" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
+      <Column Name="DocNumRef" Type="System.String" DbType="NVarChar(250)" CanBeNull="true" />
+      <Column Name="ApprovalStage" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="TemplateDesc" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
+      <Column Name="NextApprover" Type="System.String" DbType="NVarChar(250)" CanBeNull="true" />
+      <Column Name="CreateDate" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="CreateBy" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Status" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Remark" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
+      <Column Name="SapDocNum" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="LastError" Type="System.String" DbType="NVarChar(250)" CanBeNull="true" />
+      <Column Name="CardCode" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="CardName" Type="System.String" DbType="NVarChar(250)" CanBeNull="true" />
+      <Column Name="Serial" Type="System.String" DbType="NVarChar(250)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.ICC_Get_List_Approval_LoanInstallment" Method="ICC_Get_List_Approval_LoanInstallment">
+    <Parameter Name="Status" Parameter="status" Type="System.String" DbType="NVarChar(50)" />
+    <Parameter Name="fdate" Type="System.DateTime" DbType="Date" />
+    <Parameter Name="tdate" Type="System.DateTime" DbType="Date" />
+    <Parameter Name="CreateBy" Parameter="createBy" Type="System.String" DbType="NVarChar(250)" />
+    <Parameter Name="Item" Parameter="item" Type="System.String" DbType="NVarChar(1000)" />
+    <Parameter Name="Serial" Parameter="serial" Type="System.String" DbType="NVarChar(100)" />
+    <Parameter Name="Customer" Parameter="customer" Type="System.String" DbType="NVarChar(250)" />
+    <ElementType Name="ICC_Get_List_Approval_LoanInstallmentResult">
+      <Column Name="DocEntry" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="PostingDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="DocNumRef" Type="System.String" DbType="NVarChar(250)" CanBeNull="true" />
+      <Column Name="ApprovalStage" Type="System.String" DbType="NVarChar(250)" CanBeNull="true" />
+      <Column Name="TemplateDesc" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
+      <Column Name="NextApprover" Type="System.String" DbType="NVarChar(250)" CanBeNull="true" />
+      <Column Name="CreateDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="CreateBy" Type="System.String" DbType="NVarChar(250)" CanBeNull="true" />
+      <Column Name="Status" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Remark" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
+      <Column Name="ItemCode" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="ItemName" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
+      <Column Name="Serial" Type="System.String" DbType="NVarChar(250)" CanBeNull="true" />
+      <Column Name="CardCode" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="CardName" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.ICC_Get_List_Approval_Reschedule" Method="ICC_Get_List_Approval_Reschedule">
+    <Parameter Name="Status" Parameter="status" Type="System.String" DbType="NVarChar(50)" />
+    <Parameter Name="fdate" Type="System.DateTime" DbType="Date" />
+    <Parameter Name="tdate" Type="System.DateTime" DbType="Date" />
+    <Parameter Name="CreateBy" Parameter="createBy" Type="System.String" DbType="NVarChar(250)" />
+    <Parameter Name="Item" Parameter="item" Type="System.String" DbType="NVarChar(1000)" />
+    <Parameter Name="Serial" Parameter="serial" Type="System.String" DbType="NVarChar(100)" />
+    <Parameter Name="Customer" Parameter="customer" Type="System.String" DbType="NVarChar(250)" />
+    <ElementType Name="ICC_Get_List_Approval_RescheduleResult">
+      <Column Name="DocEntry" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="PostingDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="DocNumRef" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="ApprovalStage" Type="System.String" DbType="NVarChar(250)" CanBeNull="true" />
+      <Column Name="TemplateDesc" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
+      <Column Name="NextApprover" Type="System.String" DbType="NVarChar(250)" CanBeNull="true" />
+      <Column Name="CreateDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="CreateBy" Type="System.String" DbType="NVarChar(250)" CanBeNull="true" />
+      <Column Name="Status" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Remark" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
+      <Column Name="ItemCode" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="ItemName" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
+      <Column Name="Serial" Type="System.String" DbType="NVarChar(250)" CanBeNull="true" />
+      <Column Name="CardCode" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="CardName" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.ICC_Get_RepocessingList_Approved" Method="ICC_Get_RepocessingList_Approved">
+    <Parameter Name="fdate" Type="System.DateTime" DbType="Date" />
+    <Parameter Name="tdate" Type="System.DateTime" DbType="Date" />
+    <Parameter Name="CreateBy" Parameter="createBy" Type="System.String" DbType="NVarChar(250)" />
+    <Parameter Name="Customer" Parameter="customer" Type="System.String" DbType="NVarChar(250)" />
+    <Parameter Name="Serial" Parameter="serial" Type="System.String" DbType="NVarChar(100)" />
+    <ElementType Name="ICC_Get_RepocessingList_ApprovedResult">
+      <Column Name="DocEntry" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="PostingDate" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="DocNumRef" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="RestructureOption" Type="System.String" DbType="VarChar(3) NOT NULL" CanBeNull="false" />
+      <Column Name="ApprovalStage" Type="System.String" DbType="NVarChar(250)" CanBeNull="true" />
+      <Column Name="TemplateDesc" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
+      <Column Name="NextApprover" Type="System.String" DbType="NVarChar(250)" CanBeNull="true" />
+      <Column Name="CreateDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="CreateBy" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
+      <Column Name="Status" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
+      <Column Name="Remark" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
+      <Column Name="CardCode" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="CardName" Type="System.String" DbType="NVarChar(250)" CanBeNull="true" />
+      <Column Name="Serail" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.ICC_Get_List_Approval_Reprocessing" Method="ICC_Get_List_Approval_Reprocessing">
+    <Parameter Name="Status" Parameter="status" Type="System.String" DbType="NVarChar(50)" />
+    <Parameter Name="fdate" Type="System.DateTime" DbType="Date" />
+    <Parameter Name="tdate" Type="System.DateTime" DbType="Date" />
+    <Parameter Name="CreateBy" Parameter="createBy" Type="System.String" DbType="NVarChar(250)" />
+    <Parameter Name="Customer" Parameter="customer" Type="System.String" DbType="NVarChar(250)" />
+    <Parameter Name="Serial" Parameter="serial" Type="System.String" DbType="NVarChar(100)" />
+    <ElementType Name="ICC_Get_List_Approval_ReprocessingResult">
+      <Column Name="DocEntry" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="PostingDate" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="DocNumRef" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="DocNum" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="ApprovalStage" Type="System.String" DbType="NVarChar(250)" CanBeNull="true" />
+      <Column Name="TemplateDesc" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
+      <Column Name="NextApprover" Type="System.String" DbType="NVarChar(250)" CanBeNull="true" />
+      <Column Name="CreateDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="CreateBy" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
+      <Column Name="Status" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
+      <Column Name="Remark" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
+      <Column Name="CardCode" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="CardName" Type="System.String" DbType="NVarChar(250)" CanBeNull="true" />
+      <Column Name="Serail" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.ICC_Get_List_Approval_ChangeItem" Method="ICC_Get_List_Approval_ChangeItem">
+    <Parameter Name="Status" Parameter="status" Type="System.String" DbType="NVarChar(50)" />
+    <Parameter Name="fdate" Type="System.DateTime" DbType="Date" />
+    <Parameter Name="tdate" Type="System.DateTime" DbType="Date" />
+    <Parameter Name="CreateBy" Parameter="createBy" Type="System.String" DbType="NVarChar(250)" />
+    <Parameter Name="Serial" Parameter="serial" Type="System.String" DbType="NVarChar(100)" />
+    <Parameter Name="Customer" Parameter="customer" Type="System.String" DbType="NVarChar(250)" />
+    <ElementType Name="ICC_Get_List_Approval_ChangeItemResult">
+      <Column Name="DocEntry" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="PostingDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="DeliveryDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="StartPayDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="MaturityDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="DocNumRef" Type="System.String" DbType="NVarChar(250)" CanBeNull="true" />
+      <Column Name="ApprovalStage" Type="System.String" DbType="NVarChar(250)" CanBeNull="true" />
+      <Column Name="TemplateDesc" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
+      <Column Name="NextApprover" Type="System.String" DbType="NVarChar(250)" CanBeNull="true" />
+      <Column Name="CreateDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="CreateBy" Type="System.String" DbType="NVarChar(250)" CanBeNull="true" />
+      <Column Name="Status" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Remark" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
+      <Column Name="OldItemCode" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="OldSerial" Type="System.String" DbType="NVarChar(250)" CanBeNull="true" />
+      <Column Name="OldItemName" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
+      <Column Name="ChangeRef" Type="System.String" DbType="NVarChar(250)" CanBeNull="true" />
+      <Column Name="NewItemCode" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="NewItemName" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
+      <Column Name="NewSerial" Type="System.String" DbType="NVarChar(250)" CanBeNull="true" />
+      <Column Name="OldAR" Type="System.Decimal" DbType="Decimal(19,6)" CanBeNull="true" />
+      <Column Name="NewAR" Type="System.Decimal" DbType="Decimal(19,6)" CanBeNull="true" />
+      <Column Name="GeneratedAR" Type="System.Decimal" DbType="Decimal(19,6)" CanBeNull="true" />
+      <Column Name="OutstandingAmt" Type="System.Decimal" DbType="Decimal(19,6)" CanBeNull="true" />
+      <Column Name="InstallmentAmt" Type="System.Decimal" DbType="Decimal(19,6)" CanBeNull="true" />
+      <Column Name="BuyBackAmt" Type="System.Decimal" DbType="Decimal(19,6)" CanBeNull="true" />
+      <Column Name="VarainAmt" Type="System.Decimal" DbType="Decimal(19,6)" CanBeNull="true" />
+      <Column Name="CardCode" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="CardName" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
+      <Column Name="CntCode" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="PhoneNumber" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
+      <Column Name="ItemCode" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="ItemName" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
+      <Column Name="Serial" Type="System.String" DbType="NVarChar(250)" CanBeNull="true" />
+      <Column Name="CardCode1" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="CardName1" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.ICC_Get_List_Approval_Penalty" Method="ICC_Get_List_Approval_Penalty">
+    <Parameter Name="Status" Parameter="status" Type="System.String" DbType="NVarChar(50)" />
+    <Parameter Name="fdate" Type="System.DateTime" DbType="Date" />
+    <Parameter Name="tdate" Type="System.DateTime" DbType="Date" />
+    <Parameter Name="CreateBy" Parameter="createBy" Type="System.String" DbType="NVarChar(250)" />
+    <Parameter Name="Serial" Parameter="serial" Type="System.String" DbType="NVarChar(100)" />
+    <Parameter Name="Customer" Parameter="customer" Type="System.String" DbType="NVarChar(250)" />
+    <ElementType Name="ICC_Get_List_Approval_PenaltyResult">
+      <Column Name="DocEntry" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="PenaltyDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="DocNumRef" Type="System.String" DbType="NVarChar(250)" CanBeNull="true" />
+      <Column Name="WaiveOption" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
+      <Column Name="Name" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="U_Percentage" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
+      <Column Name="ApprovalStage" Type="System.String" DbType="NVarChar(250)" CanBeNull="true" />
+      <Column Name="TemplateDesc" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
+      <Column Name="NextApprover" Type="System.String" DbType="NVarChar(250)" CanBeNull="true" />
+      <Column Name="CreateDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="CreateBy" Type="System.String" DbType="NVarChar(250)" CanBeNull="true" />
+      <Column Name="Status" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Remark" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
+      <Column Name="BPCode" Type="System.String" DbType="NVarChar(4000)" CanBeNull="true" />
+      <Column Name="BPName" Type="System.String" DbType="NVarChar(4000)" CanBeNull="true" />
+      <Column Name="SerialNo" Type="System.String" DbType="NVarChar(4000)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.ICC_Get_List_Approval_Restructure" Method="ICC_Get_List_Approval_Restructure">
+    <Parameter Name="Status" Parameter="status" Type="System.String" DbType="NVarChar(50)" />
+    <Parameter Name="fdate" Type="System.DateTime" DbType="Date" />
+    <Parameter Name="tdate" Type="System.DateTime" DbType="Date" />
+    <Parameter Name="CreateBy" Parameter="createBy" Type="System.String" DbType="NVarChar(250)" />
+    <Parameter Name="Serial" Parameter="serial" Type="System.String" DbType="NVarChar(100)" />
+    <Parameter Name="Customer" Parameter="customer" Type="System.String" DbType="NVarChar(250)" />
+    <ElementType Name="ICC_Get_List_Approval_RestructureResult">
+      <Column Name="DocEntry" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="PostingDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="DocNumRef" Type="System.String" DbType="NVarChar(250)" CanBeNull="true" />
+      <Column Name="RestructureOption" Type="System.String" DbType="VarChar(13) NOT NULL" CanBeNull="false" />
+      <Column Name="ApprovalStage" Type="System.String" DbType="NVarChar(250)" CanBeNull="true" />
+      <Column Name="TemplateDesc" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
+      <Column Name="NextApprover" Type="System.String" DbType="NVarChar(250)" CanBeNull="true" />
+      <Column Name="CreateDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="CreateBy" Type="System.String" DbType="NVarChar(250)" CanBeNull="true" />
+      <Column Name="Status" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Remark" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
+      <Column Name="ItemCode" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="ItemName" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
+      <Column Name="Serial" Type="System.String" DbType="NVarChar(250)" CanBeNull="true" />
+      <Column Name="CardCode" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="CardName" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
     </ElementType>
   </Function>
 </Database>

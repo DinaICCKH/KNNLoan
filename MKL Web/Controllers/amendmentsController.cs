@@ -157,10 +157,12 @@ namespace MKL_Web.Controllers
 
 
         public ActionResult PenaltyApporovalListing(
-           string Status = "Draf",
-           DateTime? fdate = null,
-           DateTime? tdate = null,
-           string CreateBy = "")
+             string Status = "Draf",
+             DateTime? fdate = null,
+             DateTime? tdate = null,
+             string CreateBy = "",
+             string Serial = "",
+             string Customer = "")
         {
             // Use default date if null
             DateTime fromDate = fdate ?? new DateTime(1999, 1, 1);
@@ -170,9 +172,10 @@ namespace MKL_Web.Controllers
                 Status ?? "Draf",
                 fromDate,
                 toDate,
-                CreateBy ?? ""
+                CreateBy ?? "",
+                Serial ?? "",
+                Customer ?? ""
             ).ToList();
-
 
             ViewBag.ApprovalPenaltyListing = result;
 
@@ -976,7 +979,13 @@ namespace MKL_Web.Controllers
             return Json(new { status, LastEntry,message }, JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult RestructureApporovalListing(string Status = "Draf",DateTime? fdate = null,DateTime? tdate = null,string CreateBy = "")
+        public ActionResult RestructureApporovalListing(
+            string Status = "Draf",
+            DateTime? fdate = null,
+            DateTime? tdate = null,
+            string CreateBy = "",
+            string Serial = "",
+            string Customer = "")
         {
             // Use default date if null
             DateTime fromDate = fdate ?? new DateTime(1999, 1, 1);
@@ -986,9 +995,10 @@ namespace MKL_Web.Controllers
                 Status ?? "Draf",
                 fromDate,
                 toDate,
-                CreateBy ?? ""
+                CreateBy ?? "",
+                Serial ?? "",
+                Customer ?? ""
             ).ToList();
-
 
             ViewBag.ApprovalRestructureListing = result;
 
@@ -1534,7 +1544,14 @@ namespace MKL_Web.Controllers
             return Json(new { status = status, LastEntry = LastEntry , message = Message.ToString() }, JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult RescheduleApporovalListing(string Status = "Draf", DateTime? fdate = null, DateTime? tdate = null, string CreateBy = "")
+        public ActionResult RescheduleApporovalListing(
+            string Status = "Draf",
+            DateTime? fdate = null,
+            DateTime? tdate = null,
+            string CreateBy = "",
+            string Item = "",
+            string Serial = "",
+            string Customer = "")
         {
             // Use default date if null
             DateTime fromDate = fdate ?? new DateTime(1999, 1, 1);
@@ -1544,9 +1561,11 @@ namespace MKL_Web.Controllers
                 Status ?? "Draf",
                 fromDate,
                 toDate,
-                CreateBy ?? ""
+                CreateBy ?? "",
+                Item ?? "",
+                Serial ?? "",
+                Customer ?? ""
             ).ToList();
-
 
             ViewBag.Listing = result;
 
@@ -1649,7 +1668,13 @@ namespace MKL_Web.Controllers
             return Json(new { status, lastEntry });
         }
 
-        public ActionResult ResprocessingApporovalListing(string Status = "Draf", DateTime? fdate = null, DateTime? tdate = null, string CreateBy = "")
+        public ActionResult ResprocessingApporovalListing(
+             string Status = "Draf",
+             DateTime? fdate = null,
+             DateTime? tdate = null,
+             string CreateBy = "",
+             string Customer = "",
+             string Serial = "")
         {
             // Use default date if null
             DateTime fromDate = fdate ?? new DateTime(1999, 1, 1);
@@ -1659,16 +1684,17 @@ namespace MKL_Web.Controllers
                 Status ?? "Draf",
                 fromDate,
                 toDate,
-                CreateBy ?? ""
+                CreateBy ?? "",
+                Customer ?? "",
+                Serial ?? ""
             ).ToList();
-
 
             ViewBag.Listing = result;
 
             return View();
         }
 
-       
+
 
 
         public JsonResult save_change_Item(InstallmentRowDrafH header, List<InstallmentRowDraf> installment_row)
@@ -1907,7 +1933,13 @@ namespace MKL_Web.Controllers
             return Json(new { status = status, LastEntry = LastEntry,message }, JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult ChangeproductApporovalListing(string Status = "Draf", DateTime? fdate = null, DateTime? tdate = null, string CreateBy = "")
+        public ActionResult ChangeproductApporovalListing(
+            string Status = "Draf",
+            DateTime? fdate = null,
+            DateTime? tdate = null,
+            string CreateBy = "",
+            string Serial = "",
+            string Customer = "")
         {
             // Use default date if null
             DateTime fromDate = fdate ?? new DateTime(1999, 1, 1);
@@ -1917,9 +1949,10 @@ namespace MKL_Web.Controllers
                 Status ?? "Draf",
                 fromDate,
                 toDate,
-                CreateBy ?? ""
+                CreateBy ?? "",
+                Serial ?? "",
+                Customer ?? ""
             ).ToList();
-
 
             ViewBag.Listing = result;
 

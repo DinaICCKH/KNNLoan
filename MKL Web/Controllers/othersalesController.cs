@@ -123,7 +123,12 @@ namespace MKL_Web.Controllers
             return View();
         }
 
-        public ActionResult BuyBackList(DateTime? fdate = null, DateTime? tdate = null, string CreateBy = "")
+        public ActionResult BuyBackList(
+             DateTime? fdate = null,
+             DateTime? tdate = null,
+             string CreateBy = "",
+             string Customer = "",
+             string Serial = "")
         {
             // Use default date if null
             DateTime fromDate = fdate ?? new DateTime(1999, 1, 1);
@@ -132,9 +137,10 @@ namespace MKL_Web.Controllers
             var result = db.ICC_Get_RepocessingList_Approved(
                 fromDate,
                 toDate,
-                CreateBy ?? ""
+                CreateBy ?? "",
+                Customer ?? "",
+                Serial ?? ""
             ).ToList();
-
 
             ViewBag.BuyBackList = result;
 

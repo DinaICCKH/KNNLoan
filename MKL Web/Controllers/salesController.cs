@@ -1806,7 +1806,14 @@ namespace MKL_Web.Controllers
 
             return Json(new { status, lastEntry });
         }
-        public ActionResult LoanInstallmentApprovalListing(string Status = "Draf", DateTime? fdate = null, DateTime? tdate = null, string CreateBy = "")
+        public ActionResult LoanInstallmentApprovalListing(
+          string Status = "Draf",
+          DateTime? fdate = null,
+          DateTime? tdate = null,
+          string CreateBy = "",
+          string Item = "",
+          string Serial = "",
+          string Customer = "")
         {
             // Use default date if null
             DateTime fromDate = fdate ?? new DateTime(1999, 1, 1);
@@ -1816,10 +1823,14 @@ namespace MKL_Web.Controllers
                 Status ?? "Draf",
                 fromDate,
                 toDate,
-                CreateBy ?? ""
+                CreateBy ?? "",
+                Item ?? "",
+                Serial ?? "",
+                Customer ?? ""
             ).ToList();
 
             ViewBag.Listing = result;
+
             return View();
         }
 
@@ -1876,14 +1887,29 @@ namespace MKL_Web.Controllers
 
             return Json(new { status, lastEntry });
         }
-        public ActionResult LoanListing()
+        public ActionResult LoanListing(
+             string Status = "SLD",
+             DateTime? fdate = null,
+             DateTime? tdate = null,
+             string Item = "",
+             string Serial = "",
+             string Customer = ""
+        )
         {
-            ViewBag.ChangeOwnerApporovalListing = db.ICC_Get_List_Loan(
-                "SLD",
-                new DateTime(1999, 1, 1),
-                new DateTime(1999, 1, 1),
-                "", "", ""
+            // Default date when not selected
+            DateTime fromDate = fdate ?? new DateTime(1999, 1, 1);
+            DateTime toDate = tdate ?? new DateTime(1999, 1, 1);
+
+            var result = db.ICC_Get_List_Loan(
+                Status ?? "SLD",
+                fromDate,
+                toDate,
+                Item ?? "",
+                Serial ?? "",
+                Customer ?? ""
             ).ToList();
+
+            ViewBag.ChangeOwnerApporovalListing = result;
 
             return View();
         }
@@ -3048,7 +3074,7 @@ namespace MKL_Web.Controllers
             });
         }
 
-        public ActionResult InterestWizardApprovalListing(string Status = "Draf", DateTime? fdate = null, DateTime? tdate = null, string CreateBy = "")
+        public ActionResult InterestWizardApprovalListing(string Status = "Draf", DateTime? fdate = null, DateTime? tdate = null, string CreateBy = "",string Serial="",string Customer="")
         {
             // Use default date if null
             DateTime fromDate = fdate ?? new DateTime(1999, 1, 1);
@@ -3058,7 +3084,9 @@ namespace MKL_Web.Controllers
                 Status ?? "Draf",
                 fromDate,
                 toDate,
-                CreateBy ?? ""
+                CreateBy ?? "",
+                Serial ?? "",
+                Customer ?? ""
             ).ToList();
 
             ViewBag.Listing = result;
