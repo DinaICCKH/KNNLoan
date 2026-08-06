@@ -12,6 +12,78 @@
     <script src="~/Scripts/js/Dina_CustomizationFormSettingandCopytoClibord.js"></script>
     <link href="~/Content/Printing.css" rel="stylesheet" />
 </head>
+<style>
+    /* SAP-Style Enterprise Table Design */
+    .sap-table-container {
+        border: 1px solid #d9d9d9;
+        border-radius: 3px;
+        background-color: #ffffff;
+    }
+
+    #relationshipTable {
+        margin-bottom: 0;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        color: #32363a;
+    }
+
+        /* SAP Table Header */
+        #relationshipTable thead th {
+            background-color: #f7f7f7 !important;
+            color: #32363a;
+            font-weight: 600;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border-bottom: 2px solid #b3b3b3 !important;
+            border-right: 1px solid #e0e0e0;
+            padding: 10px 12px;
+            vertical-align: middle;
+        }
+
+        /* SAP Table Cells */
+        #relationshipTable tbody td {
+            font-size: 12px;
+            padding: 8px 12px;
+            border-top: 1px solid #f0f0f0;
+            border-right: 1px solid #f0f0f0;
+            vertical-align: middle;
+        }
+
+        /* Alternating Striped Rows */
+        #relationshipTable tbody tr:nth-child(even) {
+            background-color: #fafafa;
+        }
+
+        /* Hover Effect */
+        #relationshipTable tbody tr:hover {
+            background-color: #edf5fc !important;
+        }
+
+    /* SAP Modal Header Styling */
+    .modal-content {
+        border-radius: 4px;
+        border: none;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    }
+
+    .modal-header.sap-header {
+        background-color: #354a5f !important; /* SAP dark slate blue theme */
+        color: #ffffff;
+        border-top-left-radius: 4px;
+        border-top-right-radius: 4px;
+        padding: 15px 20px;
+    }
+
+        .modal-header.sap-header .close {
+            color: #ffffff;
+            opacity: 0.8;
+            text-shadow: none;
+        }
+
+            .modal-header.sap-header .close:hover {
+                opacity: 1;
+            }
+</style>
 
 <div class="row">
 
@@ -57,6 +129,52 @@
         </thead>
         <tbody></tbody>
     </table>
+
+
+
+    <div class="modal fade" id="loanRelationshipModal" tabindex="-1" role="dialog" aria-labelledby="loanRelationshipModalLabel">
+        <div class="modal-dialog modal-lg" role="document" style="width: 95%; max-width: 1400px;">
+            <div class="modal-content">
+
+                <!-- SAP Dark Slate Header -->
+                <div class="modal-header sap-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="loanRelationshipModalLabel"><i class="fa fa-sitemap"></i> Loan Relationship Map</h4>
+                </div>
+
+                <div class="modal-body">
+                    <!-- SAP Table Container -->
+                    <div class="table-responsive sap-table-container" style="max-height: 500px; overflow-y: auto;">
+                        <table class="table table-bordered" id="relationshipTable">
+                            <thead>
+                                <tr>
+                                    <th>Relation Type</th>
+                                    <th>Loan ID</th>
+                                    <th>Base Entry</th>
+                                    <th>Payment Date</th>
+                                    <th>Card Code</th>
+                                    <th>Card Name</th>
+                                    <th>Remarks</th>
+                                    <th>Reason</th>
+                                    <th>SAP Number</th>
+                                    <th>SAP Type</th>
+                                    <th>Last Message</th>
+                                </tr>
+                            </thead>
+                            <tbody id="relationshipTableBody">
+                                <!-- Data rows injected via JavaScript -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default btn-flat" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="col-md-12">
         <div class="box box-primary">
             <div class="box-header with-border">
@@ -310,7 +428,8 @@
                                         <thead style="position:sticky; top: 0; z-index: 1000;">
                                             <tr class="bg-gray" role="row">
 
-                                                <td style="width:3%;">#</td>
+                                                <td style="width:2%;">#</td>
+                                                <th style="width:2%;">Loan ID</th>
 
                                                 <td style="width:5%;">DocDate</td>
                                                 <td style="width:5%;">DueDate</td>
@@ -348,32 +467,36 @@
                                                 {
                                                     // Determine row style
                                                     var rowStyle = item.ARNo != -1 ? "background-color: lightblue;" : "";
-                                                    <tr style="@rowStyle">
-                                                        <td>@index</td>
-                                                        <td>@Convert.ToDateTime(item.PaymentDate).ToString("dd-MMM-yyyy")</td>
-                                                        <td>@Convert.ToDateTime(item.DueDate).ToString("dd-MMM-yyyy")</td>
-                                                        <td class="principle">@String.Format("{0:N2}", item.Principle)</td>
-                                                        <td class="interest">@String.Format("{0:N2}", item.Interest)</td>
-                                                        <td class="monthly">@String.Format("{0:N2}", item.Monthly)</td>
-                                                        <td>@String.Format("{0:N2}", item.Remaining)</td>
-                                                        <td>@String.Format("{0:N2}", item.Remaining + item.Interest)</td>
-                                                        <td>@String.Format("{0:N2}", item.CuPayment)</td>
-                                                        <td>@String.Format("{0:N2}", item.CuInterest)</td>
-                                                        <td>@String.Format("{0:N2}", item.CuPayment + item.CuInterest)</td>
-                                                        <td>@item.Method</td>
+                                                                                        <tr style="@rowStyle">
+                                                                                            <td>@index</td>
+                                                                                 
+                                                                                            <td class="context-menu-row" data-loanid="@item.ID" style="cursor: pointer; color: #3c8dbc;">
+                                                                                                <u>@item.ID</u>
+                                                                                            </td>
+                                                                                            <td>@Convert.ToDateTime(item.PaymentDate).ToString("dd-MMM-yyyy")</td>
+                                                                                            <td>@Convert.ToDateTime(item.DueDate).ToString("dd-MMM-yyyy")</td>
+                                                                                            <td class="principle">@String.Format("{0:N2}", item.Principle)</td>
+                                                                                            <td class="interest">@String.Format("{0:N2}", item.Interest)</td>
+                                                                                            <td class="monthly">@String.Format("{0:N2}", item.Monthly)</td>
+                                                                                            <td>@String.Format("{0:N2}", item.Remaining)</td>
+                                                                                            <td>@String.Format("{0:N2}", item.Remaining + item.Interest)</td>
+                                                                                            <td>@String.Format("{0:N2}", item.CuPayment)</td>
+                                                                                            <td>@String.Format("{0:N2}", item.CuInterest)</td>
+                                                                                            <td>@String.Format("{0:N2}", item.CuPayment + item.CuInterest)</td>
+                                                                                            <td>@item.Method</td>
 
-                                                        <td>@item.ARNo</td>
-                                                        <td>@item.PaymentNo</td>
-                                                        <td>@item.ARNoInterest</td>
-                                                        <td>@item.PaymentNoInterest</td>
-                                                        <td>@item.ErrorLog</td>
-                                                        <td>@item.Remarks</td>
-                                                        <td>@item.ChequeNo</td>
-                                                        <td>@item.ChequeName</td>
-                                                        <td>@item.ChequeBankName</td>
-                                                        <td>@item.PayeeName</td>
+                                                                                            <td>@item.ARNo</td>
+                                                                                            <td>@item.PaymentNo</td>
+                                                                                            <td>@item.ARNoInterest</td>
+                                                                                            <td>@item.PaymentNoInterest</td>
+                                                                                            <td>@item.ErrorLog</td>
+                                                                                            <td>@item.Remarks</td>
+                                                                                            <td>@item.ChequeNo</td>
+                                                                                            <td>@item.ChequeName</td>
+                                                                                            <td>@item.ChequeBankName</td>
+                                                                                            <td>@item.PayeeName</td>
 
-                                                    </tr>
+                                                                                        </tr>
                                                     index++;
                                                 }
                                             }
@@ -387,6 +510,7 @@
                                                 <td class="bg-gray" style="text-align:left;" id="txt_total_principle">0.00</td>
                                                 <td class="bg-gray" style="text-align:left;" id="txt_total_interest">0.00</td>
                                                 <td class="bg-gray" style="text-align:left;" id="txt_total_monthly">0.00</td>
+                                                <td class="bg-gray" style="text-align:right;"></td>
                                                 <td class="bg-gray" style="text-align:right;"></td>
                                                 <td class="bg-gray" style="text-align:right;"></td>
                                                 <td class="bg-gray" style="text-align:right;"></td>
@@ -470,6 +594,70 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
 <script>
+    // ==========================================
+    // 1. LOAN RELATIONSHIP MODAL AJAX HANDLER
+    // ==========================================
+    $(document).on("click", ".context-menu-row", function () {
+        let loanID = $(this).data("loanid");
+        if (!loanID) return;
+
+        let $tbody = $("#relationshipTableBody");
+
+        // Show loading indicator spanning all 11 columns
+        $tbody.html('<tr><td colspan="11" class="text-center" style="padding: 20px;"><i class="fa fa-spinner fa-spin fa-2x"></i> Loading relationship map...</td></tr>');
+
+        // Open the modal
+        $("#loanRelationshipModal").modal("show");
+
+        // Fetch JSON data via AJAX
+        $.get('@Url.Action("PreviewLoanRelationship", "sales")', { LoanID: loanID }, function (response) {
+            $tbody.empty(); // Clear loading spinner
+
+            if (!response || response.length === 0) {
+                $tbody.html('<tr><td colspan="11" class="text-center text-muted" style="padding: 20px;">No relationship data found.</td></tr>');
+                return;
+            }
+
+            // Loop through the results and build table rows
+            $.each(response, function (index, item) {
+
+                // Helper function to clean up ASP.NET JSON dates if needed
+                let formatDate = function (dateVal) {
+                    if (!dateVal) return '';
+                    if (typeof dateVal === 'string' && dateVal.indexOf('/Date(') === 0) {
+                        let timestamp = parseInt(dateVal.replace(/\/Date\((\d+)\)\//, '$1'));
+                        let d = new Date(timestamp);
+                        return d.toISOString().slice(0, 10); // Formats to YYYY-MM-DD
+                    }
+                    return dateVal;
+                };
+
+                let rowHtml = '<tr style="white-space: nowrap;">' +
+                    '<td>' + (item.RelationType || '') + '</td>' +
+                    '<td>' + (item.InstalmentKey || '') + '</td>' +
+                    '<td>' + (item.BaseEntry || '') + '</td>' +
+                    '<td>' + formatDate(item.PaymentDate) + '</td>' +
+                    '<td>' + (item.CardCode || '') + '</td>' +
+                    '<td>' + (item.CardName || '') + '</td>' +
+                    '<td>' + (item.Remarks || '') + '</td>' +
+                    '<td>' + (item.Reason || '') + '</td>' +
+                    '<td>' + (item.SAP_Number || item.SAPNumber || '') + '</td>' +
+                    '<td>' + (item.SAP_Type || item.SAPType || '') + '</td>' +
+                    '<td>' + (item.LastMessage || '') + '</td>' +
+                    '</tr>';
+
+                $tbody.append(rowHtml);
+            });
+
+        }).fail(function (jqXHR, textStatus, errorThrown) {
+            $tbody.html('<tr><td colspan="11" class="text-center text-danger" style="padding: 20px;">Failed to load relationship data.</td></tr>');
+            console.log("AJAX Error:", errorThrown);
+        });
+    });
+
+    // ==========================================
+    // 2. DOCUMENT READY & COLUMN SUMMING
+    // ==========================================
     $(document).ready(function () {
         function sumColumn(className) {
             let total = 0;
@@ -485,6 +673,9 @@
         $('#txt_total_monthly').text(sumColumn("monthly"));
     });
 
+    // ==========================================
+    // 3. HISTORY & ACTIVITY NAVIGATION FUNCTIONS
+    // ==========================================
     function cmd_ShowHistory() {
         const fdate = "1999/01/01";
         const tdate = "1999/01/01";
@@ -513,15 +704,11 @@
         // redirect to the new form page
         window.location.href = '/Sales/Activity';
     }
-</script>
 
-
-
-
-<script>
-    // Print Preview with font size 12px, Khmer OS Battambang font, and row numbers
+    // ==========================================
+    // 4. PRINT PREVIEW FUNCTION
+    // ==========================================
     function cmd_Print() {
-
         const table = document.getElementById("table_payment_schedule");
         if (!table) return;
 
@@ -710,7 +897,6 @@
                 <button class="btn-print" onclick="window.print()">
                     <i class="fa fa-print"></i> Print PDF
                 </button>
-
             </div>
 
             <div class="company-info">
@@ -754,7 +940,9 @@
         printWindow.document.close();
     }
 
-    // Simple Export to Excel function (basic, no styling)
+    // ==========================================
+    // 5. EXPORT TO EXCEL FUNCTION
+    // ==========================================
     function exportToExcel(tableID, filename = '') {
         const table = document.getElementById(tableID);
         if (!table) {
@@ -763,7 +951,6 @@
         }
 
         let dataType = 'application/vnd.ms-excel';
-        let tableHTML = table.outerHTML.replace(/ /g, '%20');
 
         const downloadLink = document.createElement("a");
         document.body.appendChild(downloadLink);

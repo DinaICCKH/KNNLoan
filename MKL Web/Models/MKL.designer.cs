@@ -1391,6 +1391,13 @@ namespace MKL_Web.Models
 			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), status, fdate, tdate, createBy, serial, customer);
 			return ((ISingleResult<ICC_Get_List_Approval_RestructureResult>)(result.ReturnValue));
 		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.ICC_GET_LoanRelationship")]
+		public ISingleResult<ICC_GET_LoanRelationshipResult> ICC_GET_LoanRelationship([global::System.Data.Linq.Mapping.ParameterAttribute(Name="LoanID", DbType="Int")] System.Nullable<int> loanID)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), loanID);
+			return ((ISingleResult<ICC_GET_LoanRelationshipResult>)(result.ReturnValue));
+		}
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Controller")]
@@ -55804,6 +55811,212 @@ namespace MKL_Web.Models
 				if ((this._CardName != value))
 				{
 					this._CardName = value;
+				}
+			}
+		}
+	}
+	
+	public partial class ICC_GET_LoanRelationshipResult
+	{
+		
+		private string _RelationType;
+		
+		private int _InstalmentKey;
+		
+		private System.Nullable<int> _BaseEntry;
+		
+		private System.Nullable<System.DateTime> _PaymentDate;
+		
+		private string _CardCode;
+		
+		private string _CardName;
+		
+		private string _Remarks;
+		
+		private string _Reason;
+		
+		private System.Nullable<int> _SAP_Number;
+		
+		private string _SAP_Type;
+		
+		private string _LastMessage;
+		
+		public ICC_GET_LoanRelationshipResult()
+		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_RelationType", DbType="VarChar(13) NOT NULL", CanBeNull=false)]
+		public string RelationType
+		{
+			get
+			{
+				return this._RelationType;
+			}
+			set
+			{
+				if ((this._RelationType != value))
+				{
+					this._RelationType = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_InstalmentKey", DbType="Int NOT NULL")]
+		public int InstalmentKey
+		{
+			get
+			{
+				return this._InstalmentKey;
+			}
+			set
+			{
+				if ((this._InstalmentKey != value))
+				{
+					this._InstalmentKey = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_BaseEntry", DbType="Int")]
+		public System.Nullable<int> BaseEntry
+		{
+			get
+			{
+				return this._BaseEntry;
+			}
+			set
+			{
+				if ((this._BaseEntry != value))
+				{
+					this._BaseEntry = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PaymentDate", DbType="DateTime")]
+		public System.Nullable<System.DateTime> PaymentDate
+		{
+			get
+			{
+				return this._PaymentDate;
+			}
+			set
+			{
+				if ((this._PaymentDate != value))
+				{
+					this._PaymentDate = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CardCode", DbType="NVarChar(100)")]
+		public string CardCode
+		{
+			get
+			{
+				return this._CardCode;
+			}
+			set
+			{
+				if ((this._CardCode != value))
+				{
+					this._CardCode = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CardName", DbType="NVarChar(250)")]
+		public string CardName
+		{
+			get
+			{
+				return this._CardName;
+			}
+			set
+			{
+				if ((this._CardName != value))
+				{
+					this._CardName = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Remarks", DbType="NVarChar(568)")]
+		public string Remarks
+		{
+			get
+			{
+				return this._Remarks;
+			}
+			set
+			{
+				if ((this._Remarks != value))
+				{
+					this._Remarks = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Reason", DbType="VarChar(27) NOT NULL", CanBeNull=false)]
+		public string Reason
+		{
+			get
+			{
+				return this._Reason;
+			}
+			set
+			{
+				if ((this._Reason != value))
+				{
+					this._Reason = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="[SAP Number]", Storage="_SAP_Number", DbType="Int")]
+		public System.Nullable<int> SAP_Number
+		{
+			get
+			{
+				return this._SAP_Number;
+			}
+			set
+			{
+				if ((this._SAP_Number != value))
+				{
+					this._SAP_Number = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="[SAP Type]", Storage="_SAP_Type", DbType="VarChar(7) NOT NULL", CanBeNull=false)]
+		public string SAP_Type
+		{
+			get
+			{
+				return this._SAP_Type;
+			}
+			set
+			{
+				if ((this._SAP_Type != value))
+				{
+					this._SAP_Type = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_LastMessage", DbType="NVarChar(500)")]
+		public string LastMessage
+		{
+			get
+			{
+				return this._LastMessage;
+			}
+			set
+			{
+				if ((this._LastMessage != value))
+				{
+					this._LastMessage = value;
 				}
 			}
 		}

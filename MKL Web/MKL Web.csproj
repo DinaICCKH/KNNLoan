@@ -7368,6 +7368,10 @@
     <Content Include="Scripts\js\Material_PR_NON.js" />
     <Content Include="Scripts\js\Document_SubCon.js" />
     <Content Include="Scripts\js\PaymentSchedule.js" />
+    <Content Include="Scripts\js\printcd2.js" />
+    <Content Include="Scripts\js\Printcdn3.js" />
+    <Content Include="Scripts\js\printcdn4.js" />
+    <Content Include="Scripts\js\PrintCdnDatatable.js" />
     <Content Include="Scripts\js\purgrpo.js" />
     <Content Include="Scripts\js\purgrpomat.js" />
     <Content Include="Scripts\js\purGRPOMatBOQ.js" />

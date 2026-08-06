@@ -1923,6 +1923,14 @@ namespace MKL_Web.Controllers
             return View();
         }
 
+        public JsonResult PreviewLoanRelationship(int LoanID)
+        {
+            var results = db.ICC_GET_LoanRelationship(LoanID)?.ToList();
+
+            // Return the data as JSON
+            return Json(results, JsonRequestBehavior.AllowGet);
+        }
+
 
         public ActionResult InterestWizard()
         {
