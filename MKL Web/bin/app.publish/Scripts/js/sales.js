@@ -825,7 +825,6 @@ function set_date_of_payment() {
 
                 $("#txt_start_payment").val(firstDateText);
 
-
                 console.log("Firt", firstDateText);
                 console.log("Last", firstDateText);
 
@@ -835,12 +834,13 @@ function set_date_of_payment() {
                     let date = new Date(firstDateText);
                     date.setMonth(date.getMonth() + 1);
 
-                    // format back to dd-M-yyyy
-                    const formatted = date.toLocaleDateString('en-GB', {
-                        day: '2-digit',
-                        month: 'short',
-                        year: 'numeric'
-                    }).replace(/ /g, '-');
+                    // Format back to dd-M-yyyy using a custom array to avoid 'Sept' bug
+                    const day = String(date.getDate()).padStart(2, '0');
+                    const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+                    const month = months[date.getMonth()];
+                    const year = date.getFullYear();
+
+                    const formatted = `${day}-${month}-${year}`;
 
                     $("#txt_maturity_payment").val(formatted);
                 } else {
@@ -2424,6 +2424,8 @@ function get_special_payment() {
 
     var moduleId = document.getElementById("txt_module_id").value;
 
+    
+
     var method = "";
     var paymentdate = "";
     var amount = "";
@@ -2448,6 +2450,7 @@ function get_special_payment() {
         var finalRemark = "";
 
 
+        
 
         $("#table_pop_special_payment >tbody>tr").each(function () {
             var id = $(this).attr('id').replace("tr_pop_speical_payment_", "");
@@ -2638,24 +2641,30 @@ function get_special_payment() {
                 /*    var afterdis = returnstringvalue($("#txt_after_discount").val());*/
 
 
+                console.log("beforedis Amt:", beforedis);
+                console.log("totalPrinciple Amt:", totalPrinciple);
+
                 var remainingAmt = parseFloat(beforedis) - parseFloat(totalPrinciple);
+
                 var newremainingAmt = parseFloat(returnstringvalue($("#txt_remaining_amount").val())) - parseFloat(totalPrinciple);
 
-                if (moduleId = "ChangeHouse") {
+                if (moduleId === "ChangeHouse") {
+                    // Parse each value individually with a 0 fallback
+                    var generatedAR = parseFloat(returnstringvalue($("#txt_generated_ar_amt").val())) || 0;
+                    var outoldamount = parseFloat(returnstringvalue($("#txt_outstanding_amount").val())) || 0;
+                    var newaramount = parseFloat(returnstringvalue($("#txt_before_discount_amount").val())) || 0;
 
-
-                    var generatedAR = returnstringvalue($("#txt_generated_ar_amt").val());
-                    var outoldamount = returnstringvalue($("#txt_outstanding_amount").val());
-                    var newaramount = returnstringvalue($("#txt_before_discount_amount").val());
-
-                    remainingAmt = parseFloat(newaramount - outoldamount - generatedAR) - parseFloat(totalPrinciple);
+                    // Perform subtraction cleanly with pre-parsed numbers
+                    remainingAmt = (newaramount - outoldamount - generatedAR) - parseFloat(totalPrinciple);
                 }
+
+                console.log("Module ID:", moduleId);
+                console.log("remaining Amt:", remainingAmt);
+                console.log("New remaining Amt:", newremainingAmt);
 
 
 
                 if (parseFloat(convert2digit(remainingAmt)) == 0) {
-
-                    
 
                     $("#txt_installment_rate").attr('readonly', 'readonly');
                     $("#txt_period").attr('readonly', 'readonly');

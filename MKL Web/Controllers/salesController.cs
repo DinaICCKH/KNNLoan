@@ -3310,7 +3310,8 @@ namespace MKL_Web.Controllers
             string Type = "",
             DateTime? fdate = null,
             DateTime? tdate = null,
-            string CreateBy = ""
+            string CreateBy = "",
+            string Customer = ""  // Fixed spelling from 'Cusomer' to 'Customer'
         )
         {
             // Use default dates if null
@@ -3319,18 +3320,18 @@ namespace MKL_Web.Controllers
 
             // Call the new stored procedure
             var result = db.ICC_Get_List_Activity(
-                Status ?? "",       // If null, pass empty string to include all
+                Status ?? "",
                 Activity ?? "",
                 Type ?? "",
                 fromDate,
                 toDate,
-                CreateBy ?? ""
+                CreateBy ?? "",
+                Customer ?? ""   // Fixed spelling here too
             ).ToList();
 
             ViewBag.Listing = result;
             return View();
         }
-
 
         public ActionResult EditActivity(int headerID)
         {

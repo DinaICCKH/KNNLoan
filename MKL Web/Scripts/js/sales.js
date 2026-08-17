@@ -825,7 +825,6 @@ function set_date_of_payment() {
 
                 $("#txt_start_payment").val(firstDateText);
 
-
                 console.log("Firt", firstDateText);
                 console.log("Last", firstDateText);
 
@@ -835,12 +834,13 @@ function set_date_of_payment() {
                     let date = new Date(firstDateText);
                     date.setMonth(date.getMonth() + 1);
 
-                    // format back to dd-M-yyyy
-                    const formatted = date.toLocaleDateString('en-GB', {
-                        day: '2-digit',
-                        month: 'short',
-                        year: 'numeric'
-                    }).replace(/ /g, '-');
+                    // Format back to dd-M-yyyy using a custom array to avoid 'Sept' bug
+                    const day = String(date.getDate()).padStart(2, '0');
+                    const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+                    const month = months[date.getMonth()];
+                    const year = date.getFullYear();
+
+                    const formatted = `${day}-${month}-${year}`;
 
                     $("#txt_maturity_payment").val(formatted);
                 } else {

@@ -74,11 +74,33 @@
                    readonly placeholder="To Date" />
         </div>
 
+        <!-- Customer -->
+        <div class="form-group mb-2">
+
+            <label style="margin-left:10px;margin-right:5px;">
+                Customer
+            </label>
+
+
+            @Html.TextBox("Customer",
+                Request["Customer"],
+                new
+                {
+                    @class = "form-control input-sm",
+                    placeholder = "Customer",
+                    style = "width:160px;"
+                })
+
+        </div>
+
+
         <!-- CreateBy -->
         <div class="form-group mb-2">
             <label for="CreateBy" class="mr-2">Create By</label>
             @Html.TextBox("CreateBy", Request["CreateBy"], new { @class = "form-control form-control-sm", style = "width: 140px;" })
         </div>
+
+
 
         <div class="form-group mb-2 ml-2">
             <button type="submit" class="btn btn-primary btn-sm">Search</button>
