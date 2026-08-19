@@ -2670,7 +2670,7 @@ namespace MKL_Web.Controllers
                     {
                         status = checkHeader.Message,
                         LastEntry = 0,
-                        Message = checkHeader.Message,
+                        message = checkHeader.Message,
                     }, JsonRequestBehavior.AllowGet);
                 }
 
@@ -2689,7 +2689,7 @@ namespace MKL_Web.Controllers
                         {
                             status = check.Message,
                             LastEntry = 0,
-                            Message = check.Message,
+                            message = check.Message,
                         }, JsonRequestBehavior.AllowGet);
                     }
                 }

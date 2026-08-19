@@ -5399,6 +5399,23 @@ function get_selected_payment_schedule_by_so_restructure_Amt() {
                         (isOpen ? "contenteditable='true'" : "") +
                         " style='text-align:Left; vertical-align: middle; color:blue' " +
                         "id='tr_payment_detail_remarks_line_" + index + "'>" + x.Remarks + "</td>";
+                    data = data + "<td contenteditable='true' style='text-align:Left; vertical-align: middle; color:blue' id='tr_chequeno_line_" + rowindex + "'></td>";
+
+                    data = data + "<td contenteditable='true' style='text-align:Left; vertical-align: middle; color:blue' id='tr_nameoncheque_line_" + rowindex + "'></td>";
+
+                    var bankOptions = "<option value=''></option>";
+                    $.each(window.bankList, function (i, bank) {
+                        bankOptions += "<option value='" + bank.Code + "'>" + bank.Name + "</option>";
+                    });
+
+                    data += "<td style='vertical-align: middle;'>" +
+                        "<select class='form-control' id='tr_bank_line_" + rowindex + "'>" +
+                        bankOptions +
+                        "</select>" +
+                        "</td>";
+                    data = data + "<td contenteditable='true' style='text-align:Left; vertical-align: middle; color:blue' id='tr_payee_line_" + rowindex + "'></td>";
+
+
                     data = data + "<td style='display:none;' id='tr_payment_detail_status_line_" + index + "'>" + x.Status.trim() + "</td>";
                     data = data + "<td style='display:none;' id='tr_payment_detail_itemcode_line_" + index + "'>" + x.ItemCode + "</td>";
                     data = data + "<td style='display:none;' id='tr_payment_detail_itemname_line_" + index + "'>" + x.ItemName + "</td>";
