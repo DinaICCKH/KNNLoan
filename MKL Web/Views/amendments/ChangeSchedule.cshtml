@@ -13,6 +13,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
     <script>
         var originalInstallmentDates = [];
+        var formChanged = false;
 
         $(document).ready(function () {
 
@@ -21,160 +22,328 @@
             // ===============================
             window.storeOriginalDates = function () {
                 originalInstallmentDates = [];
+
                 $("input[id^='InstallmentDate_']").each(function () {
                     originalInstallmentDates.push($(this).val());
                 });
             };
+
+
+            // ===============================
+            // DETECT USER CHANGE
+            // ===============================
+            $(document).on(
+                "change input",
+                "input:not([type='hidden']), select, textarea",
+                function () {
+
+                    // Ignore fields that are readonly/disabled
+                    if ($(this).prop("readonly") || $(this).prop("disabled")) {
+                        return;
+                    }
+
+                    formChanged = true;
+                }
+            );
+
 
             // ===============================
             // UPDATE VARIAN DAY (ONLY OPEN ROWS)
             // ===============================
             function updateVarianDays() {
 
-                // Loop through all table rows
                 $("#table_payment_schedule tbody tr").each(function (index) {
 
                     let rowIndex = index + 1;
-                    let rowStatus = $("#tr_payment_detail_status_line_" + rowIndex).text().trim();
+
+                    let rowStatus = $(
+                        "#tr_payment_detail_status_line_" + rowIndex
+                    ).text().trim();
 
                     // Only process OPEN rows
-                    if (rowStatus !== "O") return;
+                    if (rowStatus !== "O") {
+                        return;
+                    }
 
-                    // Get the scheduled due date
-                    let dueDateText = $("#tr_payment_detail_paymentdate_line_" + rowIndex).text().trim();
-                    let dueDate = moment(dueDateText, "DD-MMM-YYYY");
-                    if (!dueDate.isValid()) return;
+                    // Get scheduled due date
+                    let dueDateText = $(
+                        "#tr_payment_detail_paymentdate_line_" + rowIndex
+                    ).text().trim();
 
-                    // Get the posted installment date
-                    let postDateText = $("#InstallmentDate_" + rowIndex).val();
-                    let postDate = moment(postDateText, "DD-MMM-YYYY");
-                    if (!postDate.isValid()) return;
+                    let dueDate = moment(
+                        dueDateText,
+                        "DD-MMM-YYYY"
+                    );
 
-                    // Calculate varianDay for all open rows the same way
-                    let varianDay = postDate.diff(dueDate, 'days');
-                    if (isNaN(varianDay) || varianDay < 0) varianDay = 0;
+                    if (!dueDate.isValid()) {
+                        return;
+                    }
 
-                    // Update the table display
-                    $("#tr_payment_detail_varianday_line_" + rowIndex)
+                    // Get posted installment date
+                    let postDateText = $(
+                        "#InstallmentDate_" + rowIndex
+                    ).val();
+
+                    let postDate = moment(
+                        postDateText,
+                        "DD-MMM-YYYY"
+                    );
+
+                    if (!postDate.isValid()) {
+                        return;
+                    }
+
+                    // Calculate variance day
+                    let varianDay = postDate.diff(
+                        dueDate,
+                        "days"
+                    );
+
+                    if (isNaN(varianDay) || varianDay < 0) {
+                        varianDay = 0;
+                    }
+
+                    // Update variance day
+                    $(
+                        "#tr_payment_detail_varianday_line_" + rowIndex
+                    )
                         .text(varianDay)
-                        .css("color", varianDay === 0 ? "black" : "red");
+                        .css(
+                            "color",
+                            varianDay === 0 ? "black" : "red"
+                        );
 
-                    // Get the monthly payment amount
+                    // Get monthly payment
                     let monthlyPay = parseFloat(
-                        $("#tr_payment_detail_monthlypay_line_" + rowIndex)
+                        $(
+                            "#tr_payment_detail_monthlypay_line_" + rowIndex
+                        )
                             .text()
-                            .replace(/,/g, '')
+                            .replace(/,/g, "")
                     ) || 0;
 
-                    // Calculate interest only if varianDay > 7
+                    // Calculate interest only if variance > 7 days
                     let interestOnSchedule = varianDay > 7
                         ? (monthlyPay * 0.0125 / 30) * varianDay
                         : 0;
 
-                    if (isNaN(interestOnSchedule)) interestOnSchedule = 0;
+                    if (isNaN(interestOnSchedule)) {
+                        interestOnSchedule = 0;
+                    }
 
-                    // Update interest on schedule in table
-                    $("#tr_payment_detail_interestonscheduleamt_line_" + rowIndex)
+                    // Update interest
+                    $(
+                        "#tr_payment_detail_interestonscheduleamt_line_" + rowIndex
+                    )
                         .text(interestOnSchedule.toFixed(2))
-                        .css("color", interestOnSchedule === 0 ? "black" : "red");
+                        .css(
+                            "color",
+                            interestOnSchedule === 0 ? "black" : "red"
+                        );
                 });
             }
+
 
             // ===============================
             // INSTALLMENT DATE CHANGE
             // ===============================
-            $(document).on("change", "input[id^='InstallmentDate_']", function () {
+            $(document).on(
+                "change",
+                "input[id^='InstallmentDate_']",
+                function () {
 
-                let changedInput = $(this);
-                let changedId = changedInput.attr("id");
-                let changedIndex = parseInt(changedId.split("_")[1]);
+                    // User changed installment date
+                    formChanged = true;
 
-                let newDate = moment(changedInput.val(), "DD-MMM-YYYY");
-                if (!newDate.isValid()) return;
+                    let changedInput = $(this);
 
-                let targetDay = newDate.date();
+                    let changedId = changedInput.attr("id");
 
-                Swal.fire({
-                    title: 'Apply date change to all next OPEN rows?',
-                    text: "Yes = update all next OPEN rows. No = only this row.",
-                    icon: 'question',
-                    showCancelButton: true,
-                    confirmButtonText: 'Yes, update all',
-                    cancelButtonText: 'No, only this'
-                }).then((result) => {
+                    let changedIndex = parseInt(
+                        changedId.split("_")[1]
+                    );
 
-                    if (result.isConfirmed) {
+                    let newDate = moment(
+                        changedInput.val(),
+                        "DD-MMM-YYYY"
+                    );
 
-                        let monthOffset = 0;
+                    if (!newDate.isValid()) {
+                        return;
+                    }
 
-                        $("#table_payment_schedule tbody tr").each(function (index) {
+                    let targetDay = newDate.date();
 
-                            let rowIndex = index + 1;
-                            let rowStatus = $("#tr_payment_detail_status_line_" + rowIndex).text().trim();
+                    Swal.fire({
+                        title: "Apply date change to all next OPEN rows?",
+                        text: "Yes = update all next OPEN rows. No = only this row.",
+                        icon: "question",
+                        showCancelButton: true,
+                        confirmButtonText: "Yes, update all",
+                        cancelButtonText: "No, only this"
+                    }).then((result) => {
 
-                            if (rowIndex >= changedIndex && rowStatus === "O") {
+                        if (result.isConfirmed) {
 
-                                let updatedDate = moment(newDate).add(monthOffset, 'months');
-                                updatedDate.date(Math.min(targetDay, updatedDate.daysInMonth()));
+                            let monthOffset = 0;
 
-                                let formattedDate = updatedDate.format("DD-MMM-YYYY");
+                            $("#table_payment_schedule tbody tr").each(
+                                function (index) {
 
-                                // ✅ Update InstallmentDate
-                                $("#InstallmentDate_" + rowIndex).val(formattedDate);
+                                    let rowIndex = index + 1;
 
-                                // 🔥 ADD THIS: Sync New DueDate with DocDate (same as InstallmentDate now)
-                                $("#tr_payment_detail_newduedate_line_" + rowIndex)
-                                    .text(formattedDate)
-                                    .css("color", "blue"); // optional highlight
+                                    let rowStatus = $(
+                                        "#tr_payment_detail_status_line_" +
+                                        rowIndex
+                                    ).text().trim();
 
-                                monthOffset++;
+                                    if (
+                                        rowIndex >= changedIndex &&
+                                        rowStatus === "O"
+                                    ) {
+
+                                        let updatedDate = moment(newDate)
+                                            .add(monthOffset, "months");
+
+                                        updatedDate.date(
+                                            Math.min(
+                                                targetDay,
+                                                updatedDate.daysInMonth()
+                                            )
+                                        );
+
+                                        let formattedDate =
+                                            updatedDate.format(
+                                                "DD-MMM-YYYY"
+                                            );
+
+                                        // Update installment date
+                                        $(
+                                            "#InstallmentDate_" +
+                                            rowIndex
+                                        ).val(formattedDate);
+
+                                        // Update new due date
+                                        $(
+                                            "#tr_payment_detail_newduedate_line_" +
+                                            rowIndex
+                                        )
+                                            .text(formattedDate)
+                                            .css("color", "blue");
+
+                                        monthOffset++;
+                                    }
+                                }
+                            );
+
+                        } else {
+
+                            // Only current row
+                            let formattedDate =
+                                newDate.format("DD-MMM-YYYY");
+
+                            $(
+                                "#tr_payment_detail_newduedate_line_" +
+                                changedIndex
+                            )
+                                .text(formattedDate)
+                                .css("color", "blue");
+                        }
+
+                        updateVarianDays();
+
+                        // Store dates only.
+                        // Do NOT reset formChanged here.
+                        storeOriginalDates();
+                    });
+                }
+            );
+
+
+            // ===============================
+            // VENDOR FILTER SCRIPT
+            // ===============================
+            $("#txt_pop_filter_vendor_name").on(
+                "keyup",
+                function () {
+
+                    let keyword = $(this)
+                        .val()
+                        .replace(/\s+/g, "")
+                        .toLowerCase();
+
+                    $("#table_pop_customer_list > tbody > tr")
+                        .each(function () {
+
+                            let id = $(this)
+                                .attr("id")
+                                .replace(
+                                    "tr_pop_customer_",
+                                    ""
+                                );
+
+                            let text =
+                                $(
+                                    "#td_pop_vendor_cust_code_" +
+                                    id
+                                ).text().toLowerCase() +
+
+                                $(
+                                    "#td_pop_vendor_cust_name_" +
+                                    id
+                                ).text().toLowerCase() +
+
+                                $(
+                                    "#td_pop_vendor_phone_" +
+                                    id
+                                ).text().toLowerCase();
+
+                            text = text.replace(
+                                /\s+/g,
+                                ""
+                            );
+
+                            if (text.indexOf(keyword) === -1) {
+                                $(this).hide();
+                            } else {
+                                $(this).show();
                             }
                         });
+                }
+            );
 
-                    } else {
-                        // ❗ If user choose "No" → update only current row
-
-                        let formattedDate = newDate.format("DD-MMM-YYYY");
-
-                        // Update only this row
-                        $("#tr_payment_detail_newduedate_line_" + changedIndex)
-                            .text(formattedDate)
-                            .css("color", "blue");
-                    }
-
-                    updateVarianDays();
-                    storeOriginalDates();
-
-                });
-            });
 
             // ===============================
-            // VENDOR FILTER SCRIPT (ADDED)
+            // CHECK BEFORE SUBMIT
             // ===============================
-            $("#txt_pop_filter_vendor_name").on("keyup", function () {
+            window.checkBeforeSubmit = function () {
 
-                let keyword = $(this).val()
-                    .replace(/\s+/g, '')
-                    .toLowerCase();
+                if (!formChanged) {
 
-                $("#table_pop_customer_list > tbody > tr").each(function () {
+                    Swal.fire({
+                        icon: "warning",
+                        title: "No Changes",
+                        text: "Please change or update something before submitting.",
+                        confirmButtonText: "OK"
+                    });
 
-                    let id = $(this).attr('id').replace("tr_pop_customer_", "");
+                    return false;
+                }
 
-                    let text =
-                        $("#td_pop_vendor_cust_code_" + id).text().toLowerCase() +
-                        $("#td_pop_vendor_cust_name_" + id).text().toLowerCase() +
-                        $("#td_pop_vendor_phone_" + id).text().toLowerCase();
+                // User has changed something
+                cmd_save_change_schedule();
 
-                    text = text.replace(/\s+/g, '');
+                return true;
+            };
 
-                    if (text.indexOf(keyword) === -1) {
-                        $(this).hide();
-                    } else {
-                        $(this).show();
-                    }
-                });
-            });
+
+            // ===============================
+            // OPTIONAL:
+            // RESET CHANGE STATUS AFTER SUCCESSFUL SAVE
+            // ===============================
+            window.resetFormChanged = function () {
+                formChanged = false;
+            };
 
         });
     </script>
@@ -783,7 +952,11 @@
                         <li><button type="button" style="width:90%;" class="btn btn-warning btn-flat" onclick="cmd_copy_from_payment_schedule(1)">Payment Schedule</button></li>
                     </ul>
                 </div>
-                <button type="button" class="btn btn-primary btn-flat" onclick="cmd_save_change_schedule()">Submit</button>
+                <button type="button"
+                        class="btn btn-primary btn-flat"
+                        onclick="checkBeforeSubmit()">
+                    Submit
+                </button>
                 
             </div>
         </div>
@@ -804,11 +977,8 @@
     font-size: 16px;
     z-index: 9999;
     text-align: center;
-    max-width: 80%;
-    ">
-
+    max-width: 80%;">
 </div>
-
 
 <div id="alert-container" style="position: fixed; top: 20px; right: 20px; z-index: 9999;"></div>
 <style>
@@ -818,12 +988,9 @@
         overflow-x: auto;
         border: 1px solid #ccc;
     }
-
         #schedule_table_scroll table thead th {
             position: sticky;
             top: 0;
             background: #f1f1f1;
         }
-
-
 </style>

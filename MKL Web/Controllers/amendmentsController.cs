@@ -530,6 +530,7 @@ namespace MKL_Web.Controllers
         {
             status = "OK";
             int LastEntry = 0;
+            string message = "Success";
 
             if (status == "OK")
             {
@@ -540,6 +541,21 @@ namespace MKL_Web.Controllers
                     {
                         using (trans)
                         {
+
+                            var resultHeader = db.ICC_Notification_PostingPeriod(header.PenaltyDate, "Header");
+
+                            var checkHeader = resultHeader.FirstOrDefault();
+
+                            if (checkHeader != null && checkHeader.Code == 0)
+                            {
+                                return Json(new
+                                {
+                                    status = checkHeader.Message,
+                                    LastEntry = 0,
+                                    message = checkHeader.Message,
+                                }, JsonRequestBehavior.AllowGet);
+                            }
+
                             var rawResult = db.ICC_ApprovalTempate_Check("PE", header.WaiveOption, 0);
 
                             var list = rawResult.Select(x => new ApprovalTemplate
@@ -557,8 +573,9 @@ namespace MKL_Web.Controllers
 
                             if (!list.Any())
                             {
-                                status = "Error: No approval template found.";
-                                return Json(new { status, LastEntry }, JsonRequestBehavior.AllowGet);
+                                status = "Error";
+                                message = "Error: No approval template found.";
+                                return Json(new { status, LastEntry,message }, JsonRequestBehavior.AllowGet);
                             }
                             else
                             {
@@ -578,6 +595,7 @@ namespace MKL_Web.Controllers
                                     if (header == null || rows == null)
                                     {
                                         status = "blank";
+                                        message = "Error: Blank Data.";
                                     }
                                     else
                                     {
@@ -633,6 +651,7 @@ namespace MKL_Web.Controllers
                                             else
                                             {
                                                 status = "Error";
+                                                message = "Error: Blank Data.";
                                             }
 
 
@@ -650,6 +669,7 @@ namespace MKL_Web.Controllers
                                         if (resultvalue.Result != "Success")
                                         {
                                             status = "Fail";
+                                            message = "Error: While saving the approval data.";
                                         }
                                     }
 
@@ -662,6 +682,7 @@ namespace MKL_Web.Controllers
                                     else
                                     {
                                         status = "Error";
+                                        message = "Error: Blank Data.";
                                     }
 
                                 }
@@ -672,15 +693,17 @@ namespace MKL_Web.Controllers
                     else
                     {
                         status = "Error";
+                        message = "Error: Blank Data.";
                     }
                 }
                 catch (Exception ex)
                 {
                     status = "Failed";
-                    //ErrorDes = ex.Message;
+         
+                    message = ex.Message;
                 }
             }
-            return Json(new { status = status, LastEntry = LastEntry }, JsonRequestBehavior.AllowGet);
+            return Json(new { status = status, LastEntry = LastEntry,message }, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult EditPenaltyDraf(int DocEntry)

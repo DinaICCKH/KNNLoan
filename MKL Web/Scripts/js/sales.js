@@ -5006,7 +5006,7 @@ function cmd_save_penaltyDraf() {
                     location.reload();
                     
                 } else {
-                    ShowAlertCus("Error while saving penalty Wizard!","warning");
+                    ShowAlertCus(data.message,"warning");
                 }
             },
             failure: function (response) {
